@@ -1,0 +1,7 @@
+[Desktop Entry]
+Type=Application
+Exec=sxhkd
+Hidden=false
+Autostart-enabled=true
+Name=keybind
+Comment=hotkey daemon
