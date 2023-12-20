@@ -5,11 +5,19 @@ local Event = api.events.Event
 api.events.subscribe(Event.TreeOpen, function()
   if api.tree.is_visible() then
     utils.set_nvim_tree_overlay_title()
+    local bufnr = vim.api.nvim_get_current_buf()
+    if api.tree.is_tree_buf(bufnr) and vim.api.nvim_buf_is_valid(bufnr) then
+      vim.opt_local.scrolloff = 0
+    end
   end
 end)
 
 api.events.subscribe(Event.Resize, function()
   utils.set_nvim_tree_overlay_title()
+  local bufnr = vim.api.nvim_get_current_buf()
+  if api.tree.is_tree_buf(bufnr) and vim.api.nvim_buf_is_valid(bufnr) then
+    vim.opt_local.scrolloff = 0
+  end
 end)
 
 api.events.subscribe(Event.TreeClose, function()

@@ -5,4 +5,4 @@ super + k
   pkill -USR1 -x sxhkd || /usr/bin/sxhkd &
 
 super + 2
-  google-chrome
+  google-chrome https://music.youtube.com/

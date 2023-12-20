@@ -224,6 +224,27 @@ function M.contains(container, sub)
   return string.find(container, sub) ~= nil
 end
 
+--- Is the buffer named NvimTree_[0-9]+ a tree? filetype is "NvimTree" or not readable file.
+--- This is cheap, as the readable test should only ever be needed when resuming a vim session.
+---@param bufnr number|nil may be 0 or nil for current
+---@return boolean
+function M.is_nvim_tree_buf(bufnr)
+  if bufnr == nil then
+    bufnr = 0
+  end
+  if vim.api.nvim_buf_is_valid(bufnr) then
+    local bufname = vim.api.nvim_buf_get_name(bufnr)
+    if vim.fn.fnamemodify(bufname, ':t'):match('^NvimTree_[0-9]+$') then
+      if vim.bo[bufnr].filetype == 'NvimTree' then
+        return true
+      elseif vim.fn.filereadable(bufname) == 0 then
+        return true
+      end
+    end
+  end
+  return false
+end
+
 -- Function to prevent harpoon from crashing the nvimtree buffer
 -- function M.check_buf()
 --   if api.tree.

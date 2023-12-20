@@ -48,8 +48,10 @@ POWERLEVEL10k_MODE="nerdfont-complete"
 DISABLE_AUTO_TITLE="true"
 ZLE_RPROMPT_INDENT=0
 DISABLE_UNTRACKED_FILES_DIRTY="true"
+ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 
 plugins=(
+  zsh-vi-mode
   git
   zsh-autosuggestions
   fzf
@@ -61,7 +63,7 @@ source "$ZSH"/oh-my-zsh.sh
 alias vim="nvim"
 
 go_to_nvim_config() {
-  cd && cd '.config/nvim' && vim .
+  cd "$HOME/.dotfiles/nvim/.config/nvim" && vim .
 }
 
 nvims() {

@@ -77,6 +77,9 @@ M.disabled = {
     ['<leader>q'] = '',
     ['<leader>v'] = '',
   },
+  t = {
+    ['<esc>'] = '',
+  },
 }
 
 M.general = {
@@ -141,10 +144,10 @@ M.general = {
     },
   },
 
-  t = {
-    ['<C-x>'] = { vim.api.nvim_replace_termcodes('<C-\\><C-N>', true, true, true), 'Escape terminal mode' },
-    ['<C-k>'] = { '<C-x><C-k>', 'Escape terminal to the window above' },
-  },
+  -- t = {
+  --   ['<C-x>'] = { vim.api.nvim_replace_termcodes('<C-\\><C-N>', true, true, true), 'Escape terminal mode' },
+  --   ['<C-k>'] = { '<C-x><C-k>', 'Escape terminal to the window above' },
+  -- },
 
   v = {
     ['<Up>'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
