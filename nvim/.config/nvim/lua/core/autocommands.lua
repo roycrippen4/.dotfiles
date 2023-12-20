@@ -103,13 +103,15 @@ autocmd('CursorMoved', {
 autocmd({ 'BufAdd', 'BufDelete', 'BufEnter', 'TabNew' }, {
   callback = function()
     local current_buf = vim.api.nvim_get_current_buf()
-    if #vim.t.bufs == 0 then
-      return
-    else
-      if vim.t.bufs[1] == current_buf then
-        vim.api.nvim_set_hl(0, 'NvimTreeTitleSep', { link = 'NvimTreeTitleSepOn' })
+    if vim.t.bufs ~= nil then
+      if #vim.t.bufs == 0 then
+        return
       else
-        vim.api.nvim_set_hl(0, 'NvimTreeTitleSep', { link = 'NvimTreeTitleSepOff' })
+        if vim.t.bufs[1] == current_buf then
+          vim.api.nvim_set_hl(0, 'NvimTreeTitleSep', { link = 'NvimTreeTitleSepOn' })
+        else
+          vim.api.nvim_set_hl(0, 'NvimTreeTitleSep', { link = 'NvimTreeTitleSepOff' })
+        end
       end
     end
   end,
