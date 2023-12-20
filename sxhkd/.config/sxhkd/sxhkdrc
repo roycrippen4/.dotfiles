@@ -1,5 +1,8 @@
 control + space
   tdrop -t -P 'wmctrl $wid -b add,sticky' -am kitty --start-as fullscreen
   
-super + esc
-  pgrep -x sxhkd > /dev/null || sxhkd &
+super + k
+  pkill -USR1 -x sxhkd || /usr/bin/sxhkd &
+
+super + 2
+  google-chrome
