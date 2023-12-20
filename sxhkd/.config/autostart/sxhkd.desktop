@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=sxhkd
+Exec=bash -c 'sxhkd'
 Hidden=false
 Autostart-enabled=true
 Name=keybind
