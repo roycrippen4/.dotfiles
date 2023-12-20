@@ -1,2 +1,5 @@
 control + space
   tdrop -t -P 'wmctrl $wid -b add,sticky' -am kitty --start-as fullscreen
+  
+super + esc
+  pgrep -x sxhkd > /dev/null || sxhkd &
