@@ -315,4 +315,30 @@ M.set_node_version = function(cwd)
   end
 end
 
+---@return Array returns the names of currently open buffers that are marked
+function M.get_marked_bufs()
+  local paths = {}
+  local buffers = vim.api.nvim_list_bufs()
+
+  for _, bufnr in ipairs(buffers) do
+    if vim.api.nvim_buf_is_valid(bufnr) then
+      local name = vim.api.nvim_buf_get_name(bufnr)
+      local path = require('plenary.path'):new(name):make_relative()
+      if path ~= '.' then
+        table.insert(paths, path)
+      end
+    end
+  end
+
+  local marked_bufs = {}
+  local items = require('harpoon'):list('default').items
+
+  for _, item in ipairs(items) do
+    if vim.tbl_contains(paths, item.value) then
+      table.insert(marked_bufs, item.value)
+    end
+  end
+  return marked_bufs
+end
+
 return M

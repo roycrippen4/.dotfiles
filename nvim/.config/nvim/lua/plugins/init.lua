@@ -360,8 +360,8 @@ local default_plugins = {
 
   {
     'theprimeagen/harpoon',
+    lazy = false,
     branch = 'harpoon2',
-    keys = { '<C-e>, <C-a>' },
     init = function()
       require('core.utils').load_mappings('harpoon')
     end,
@@ -372,6 +372,7 @@ local default_plugins = {
           save_on_toggle = true,
           sync_on_ui_close = true,
         },
+        default = {},
       })
     end,
   },

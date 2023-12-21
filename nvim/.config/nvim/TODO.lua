@@ -1,4 +1,14 @@
--- TODO: Figure out how to send terminal commands via the code in nvterm v2.0 so I can send commands to the terminal via autocommands
--- TODO: Add harpoon icons to tabufline if a that file has been marked by harpoon
+-- TODO: In progress -> Add harpoon icons to tabufline if a that file has been marked by harpoon
+-- TODO: Fix the statusline, e.g. get the color scheme, icons, etc more in sync
+-- TODO: Move the position of the mode indicators for the prompt to the right hand side
+-- TODO: Figure out how to sync the kitty terminal color settings to the neovim colorscheme
+-- TODO: Add a setting for folke/todo for DONE:
+-- TODO: Explore emacs?
+-- TODO: Add icons for lazy-lock:  , and luarc.json 
+-- TODO: Fix the annoying tabufline title length bug.
+-- TODO: Maybe figure out a way to mark a file from nvimtree?
+-- TODO: Prevent which key from opening in command mode
 
--- NOTE: DONE Highjack the terminal code from nvterm v3.0 and override the builtin terminal with my own local code
+-- NOTE: DONE -> Highjack the terminal code from nvterm v3.0 and override the builtin terminal with my own local code
+-- NOTE: DONE -> Figure out how to send terminal commands via the code in nvterm v2.0 so I can send commands to the terminal via autocommands
+-- NOTE: DONE -> Remove scrolloff from terminal buffer

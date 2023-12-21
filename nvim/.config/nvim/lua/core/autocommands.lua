@@ -11,11 +11,11 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
 autocmd({ 'TermOpen', 'TermEnter', 'BufEnter' }, {
   pattern = { 'term://*' },
   callback = function()
+    vim.wo.scrolloff = 0
     vim.wo.relativenumber = false
     vim.wo.number = false
     vim.wo.signcolumn = 'no'
     vim.wo.statuscolumn = ''
-    vim.cmd([[ startinsert ]])
   end,
 })
 
