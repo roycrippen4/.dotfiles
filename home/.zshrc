@@ -79,6 +79,7 @@ go_to_kitty_config() {
 alias nconf=go_to_nvim_config
 alias hconf=go_to_home_config
 alias kconf=go_to_kitty_config
+alias lg="lazygit"
 alias ls="lsd"
 alias l='ls -l'
 alias la='ls -a'

@@ -106,5 +106,6 @@ autocmd({ 'VimEnter' }, {
     local cwd = vim.fn.getcwd()
     utils.set_titlestring(cwd)
     utils.set_node_version(cwd)
+    vim.env.PATH = '~/.nvm/versions/node/v20.10.0/bin:' .. vim.env.PATH
   end,
 })

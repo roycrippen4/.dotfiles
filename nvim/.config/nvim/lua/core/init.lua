@@ -43,16 +43,7 @@ opt.fillchars = {
   horizdown = '/',
   horiz = ' ',
 }
--- opt.fillchars = {
---   eob = ' ',
---   vert = '▏',
---   vertright = '▏',
---   vertleft = '▏',
---   horizup = '▏',
---   verthoriz = '▏',
---   horizdown = '▁',
---   horiz = '▁',
--- }
+
 opt.ignorecase = true
 opt.smartcase = true
 opt.mouse = 'a'
