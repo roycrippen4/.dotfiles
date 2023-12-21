@@ -1,5 +1,5 @@
 local autocmd = vim.api.nvim_create_autocmd
--- local utils = require('core.utils')
+local utils = require('core.utils')
 
 -- Disable diagnostics in node_modules (0 is current buffer only)
 autocmd({ 'BufRead', 'BufNewFile' }, {
@@ -101,20 +101,10 @@ autocmd({ 'BufAdd', 'BufDelete', 'BufEnter', 'TabNew' }, {
   end,
 })
 
-autocmd({ 'VimEnter', 'DirChanged' }, {
+autocmd({ 'VimEnter' }, {
   callback = function()
     local cwd = vim.fn.getcwd()
-    local env = os.getenv('HOME')
-
-    if cwd == env then
-      vim.o.titlestring = '~/' .. '  '
-      return
-    end
-    local match = string.match(cwd, env)
-    if match then
-      vim.o.titlestring = cwd:gsub(match, '~') .. '  '
-      return
-    end
-    vim.o.titlestring = cwd
+    utils.set_titlestring(cwd)
+    utils.set_node_version(cwd)
   end,
 })

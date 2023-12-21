@@ -1,6 +1,38 @@
 local M = {}
 local merge_tb = vim.tbl_deep_extend
 
+---@param param any item to look for in case_table
+---@param case_table table the cases
+---@return any result the definition for the match in the case_table
+---or the default function/nil if no match
+--[[
+```lua
+switch(a, { 
+  [1] = function()	-- for case 1
+		print "Case 1."
+	end,
+	[2] = function()	-- for case 2
+		print "Case 2."
+	end,
+	[3] = function()	-- for case 3
+		print "Case 3."
+	end
+  ['default'] = function()
+    -- handle default case here
+  end
+})
+
+```
+]]
+_G.switch = function(param, case_table)
+  local case = case_table[param]
+  if case then
+    return case()
+  end
+  local def = case_table['default']
+  return def and def() or nil
+end
+
 M.load_config = function()
   local config = require('core.default_config')
   local chadrc_path = vim.api.nvim_get_runtime_file('lua/custom/chadrc.lua', false)[1]
@@ -106,6 +138,7 @@ M.lazy_load = function(plugin)
             if plugin == 'nvim-lspconfig' then
               vim.cmd('silent! do FileType')
             end
+            ---@diagnostic disable-next-line
           end, 0)
         else
           require('lazy').load({ plugins = plugin })
@@ -245,9 +278,41 @@ function M.is_nvim_tree_buf(bufnr)
   return false
 end
 
--- Function to prevent harpoon from crashing the nvimtree buffer
--- function M.check_buf()
---   if api.tree.
--- end
+M.set_titlestring = function(cwd)
+  local env = os.getenv('HOME')
+
+  if cwd == env then
+    vim.o.titlestring = '~/' .. '  '
+    return
+  end
+
+  if cwd and type(env) == 'string' then
+    local match = string.match(cwd, env)
+    if match then
+      vim.o.titlestring = cwd:gsub(match, '~') .. '  '
+      return
+    end
+    vim.o.titlestring = cwd
+  end
+end
+
+M.on_stdout = function(_, _, data, _)
+  print(data)
+end
+
+M.set_node_version = function(cwd)
+  local nvmrc_filepath = cwd .. '/.nvmrc'
+  local nvmrc_exists = vim.fn.filereadable(nvmrc_filepath) == 1
+  if cwd and vim.fn.isdirectory(vim.fn.expand(cwd)) == 0 then
+    cwd = nil
+  end
+
+  if nvmrc_exists then
+    local term = require('toggleterm.terminal').get_or_create_term(1001, cwd, 'horizontal')
+    term:spawn()
+    term:send('nvm use')
+    vim.notify('Detected .nvmrc file. Switching node version...')
+  end
+end
 
 return M

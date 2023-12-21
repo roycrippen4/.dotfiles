@@ -80,12 +80,6 @@ M.options = {
   direction = 'horizontal',
   close_on_exit = true, -- close the terminal window when the process exits
   shell = nil, -- change the default shell
-  -- winbar = {
-  --   enabled = true,
-  --   name_formatter = function(term) --  term: Terminal
-  --     return term.count
-  --   end,
-  -- },
 }
 
 function _G.set_terminal_keymaps()
@@ -102,11 +96,11 @@ end
 -- if you only want these mappings for toggle term use term://*toggleterm#* instead
 vim.cmd('autocmd! TermOpen term://* lua set_terminal_keymaps()')
 
--- vim.cmd([[
---   augroup terminal_setup | au!
---   autocmd TermOpen * nnoremap <buffer><LeftRelease> <LeftRelease>i
---   autocmd TermEnter * startinsert!
---   augroup end
---   ]])
+vim.cmd([[
+  augroup terminal_setup | au!
+  autocmd TermOpen * nnoremap <buffer><LeftRelease> <LeftRelease>i
+  autocmd TermEnter * startinsert!
+  augroup end
+  ]])
 
 return M
