@@ -76,6 +76,7 @@ lspconfig['emmet_language_server'].setup({
 lspconfig['eslint'].setup({
   capabilities = capabilities,
   on_attach = M.on_attach,
+  filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'mjs', 'vue', 'svelte' },
   settings = {
     workingDirectory = {
       mode = 'auto',
@@ -177,31 +178,6 @@ lspconfig['tailwindcss'].setup({
 lspconfig['taplo'].setup({
   capabilities = capabilities,
   on_attach = M.on_attach,
-})
-
-local api = require('typescript-tools.api')
-require('typescript-tools').setup({
-  on_attach = M.on_attach,
-  settings = {
-    tsserver_plugins = {
-      '@styled/typescript-styled-plugin',
-    },
-    tsserver_file_preferences = {
-      includeInlayParameterNameHints = 'all',
-      includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-      includeInlayFunctionParameterTypeHints = true,
-      includeInlayVariableTypeHints = true,
-      includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-      includeInlayPropertyDeclarationTypeHints = true,
-      includeInlayFunctionLikeReturnTypeHints = true,
-      includeInlayEnumMemberValueHints = true,
-      jsxAttributeCompletionStyle = 'auto',
-    },
-  },
-  handlers = {
-    ['textDocument/publishDiagnostics'] = api.filter_diagnostics({ 80001 }),
-  },
-  vim.keymap.set('n', 'fi', '<cmd> TSToolsOrganizeImports<CR>', { desc = 'Organize imports' }),
 })
 
 lspconfig['yamlls'].setup({

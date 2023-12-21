@@ -1,5 +1,3 @@
--- n, v, i, t = mode names
-
 local M = {}
 
 M.harpoon = {
@@ -12,7 +10,13 @@ M.harpoon = {
     },
     ['<C-e>'] = {
       function()
-        require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
+        local api = require('nvim-tree.api')
+        if api.tree.is_tree_buf() then
+          vim.cmd(':NvimTreeClose')
+          require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
+        else
+          require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
+        end
       end,
     },
     ['<C-1>'] = {
@@ -102,25 +106,36 @@ M.general = {
       end,
       opts = {},
     },
+    -- newline with shift/ctrl enter
     ['<S-CR>'] = { 'o<Esc>k', 'New line above', opts = { silent = true } },
     ['<C-CR>'] = { 'O<Esc>j', 'New line above', opts = { silent = true } },
+
+    -- probably the best keybind ever
     [';'] = { ':', 'enter command mode', opts = { nowait = true } },
     ['yil'] = { '^y$', 'yank in line', opts = { noremap = true } },
-    ['<Leader>z'] = { ':ZenMode<CR>', 'Zen', opts = { nowait = true } },
-    ['<Leader>v'] = { '<C-w>v', 'Vertical split', opts = { nowait = true } },
-    ['<Leader>h'] = { '<C-w>s', 'Horizontal split', opts = { nowait = true } },
-    ['<Esc>'] = { '<cmd> noh <CR>', 'Clear highlights' },
-    -- switch between windows
+
+    -- window binds
     ['<C-h>'] = { '<C-w>h', 'Window left' },
     ['<C-l>'] = { '<C-w>l', 'Window right' },
     ['<C-j>'] = { '<C-w>j', 'Window down' },
     ['<C-k>'] = { '<C-w>k', 'Window up' },
+    ['<Leader>v'] = { '<C-w>v', 'Vertical split', opts = { nowait = true } },
+    ['<Leader>h'] = { '<C-w>s', 'Horizontal split', opts = { nowait = true } },
+
+    --zen-mode
+    ['<Leader>z'] = { ':ZenMode<CR>', 'Zen', opts = { nowait = true } },
 
     -- save
     ['<C-s>'] = { '<cmd> w <CR>', 'Save file' },
 
     -- Copy all
     ['<C-c>'] = { '<cmd> %y+ <CR>', 'Copy whole file' },
+
+    -- movement
+    ['j'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
+    ['k'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
+    ['<Up>'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
+    ['<Down>'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
 
     -- toggle lsp inlay hints
     ['<Leader>lh'] = {
@@ -130,24 +145,7 @@ M.general = {
       end,
       'Toggle lsp inlay hints',
     },
-
-    ['j'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
-    ['k'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
-    ['<Up>'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
-    ['<Down>'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
-
-    ['<leader>fm'] = {
-      function()
-        vim.lsp.buf.format({ async = true })
-      end,
-      'LSP formatting',
-    },
   },
-
-  -- t = {
-  --   ['<C-x>'] = { vim.api.nvim_replace_termcodes('<C-\\><C-N>', true, true, true), 'Escape terminal mode' },
-  --   ['<C-k>'] = { '<C-x><C-k>', 'Escape terminal to the window above' },
-  -- },
 
   v = {
     ['<Up>'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },

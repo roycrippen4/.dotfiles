@@ -1,27 +1,11 @@
 local autocmd = vim.api.nvim_create_autocmd
-local utils = require('core.utils')
+-- local utils = require('core.utils')
 
 -- Disable diagnostics in node_modules (0 is current buffer only)
 autocmd({ 'BufRead', 'BufNewFile' }, {
   pattern = '*/node_modules/*',
   command = 'lua vim.diagnostic.disable(0)',
 })
-
--- autocmd({ 'WinEnter', 'BufEnter', 'BufNew' }, {
---   callback = function()
---     if utils.is_nvim_tree_buf(0) then
---       print('Tree buffer detected')
---       return
---     else
---       if utils.contains(vim.bo[0].filetype, 'term') then
---         print('Terminal buffer detected')
---         return
---       end
---     end
---
---     print(vim.bo[0].filetype)
---   end,
--- })
 
 -- Remove columns from the terminal buffer
 autocmd({ 'TermOpen', 'TermEnter', 'BufEnter' }, {

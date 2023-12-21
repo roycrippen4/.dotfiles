@@ -1,5 +1,10 @@
 local devicons = require('nvim-web-devicons')
 devicons.set_icon({
+  ['jsx'] = {
+    icon = '',
+    color = '#ccaa00',
+    name = 'bun.lockb',
+  },
   ['bun.lockb'] = {
     icon = '󰯮',
     color = '#EEEE00',
