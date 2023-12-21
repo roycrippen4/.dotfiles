@@ -40,8 +40,24 @@ local function getBtnsWidth() -- close, theme toggle btn etc
   return width
 end
 
+local function is_buf_marked(bufnr)
+  local path = ''
+  local items = require('harpoon'):list('default').items
+
+  if vim.api.nvim_buf_is_valid(bufnr) then
+    local name = vim.api.nvim_buf_get_name(bufnr)
+    path = require('plenary.path'):new(name):make_relative()
+  end
+
+  for _, item in ipairs(items) do
+    if item.value == path then
+      return true
+    end
+  end
+  return nil
+end
+
 local function add_fileInfo(name, bufnr)
-  -- check for same buffer names under different dirs
   for _, value in ipairs(vim.t.bufs) do
     if isBufValid(value) then
       if name == fn.fnamemodify(api.nvim_buf_get_name(value), ':t') and value ~= bufnr then
@@ -75,13 +91,24 @@ local function add_fileInfo(name, bufnr)
     end
 
     -- padding around bufname; 24 = bufame length (icon + filename)
-    local padding = (24 - #name - 5) / 2
+    local pad = (24 - #name - 5) / 2
+    local r_pad = math.floor(pad / 2)
+    local l_pad = pad - r_pad
     local maxname_len = 16
+
+    -- 󰐾   󰨙
+    local on = '%#TbLineHarpoonBufOn# ' .. ' '
+    local off = '%#TbLineHarpoonBufOff# ' .. ' '
 
     name = (#name > maxname_len and string.sub(name, 1, 14) .. '..') or name
     name = (api.nvim_get_current_buf() == bufnr and '%#TbLineBufOn# ' .. name) or ('%#TbLineBufOff# ' .. name)
 
-    return string.rep(' ', padding) .. name .. string.rep(' ', padding)
+    if is_buf_marked(bufnr) then
+      local harpoon_icon = (api.nvim_get_current_buf() == bufnr and on) or off
+      return string.rep(' ', l_pad) .. (harpoon_icon .. name) .. string.rep(' ', r_pad)
+    end
+
+    return string.rep(' ', l_pad) .. name .. string.rep(' ', r_pad)
   end
 end
 
@@ -156,15 +183,6 @@ M.tablist = function()
   end
 
   return ''
-end
-
-M.run = function()
-  local modules = {
-    M.bufferlist(),
-    M.tablist(),
-  }
-
-  return table.concat(modules)
 end
 
 return M

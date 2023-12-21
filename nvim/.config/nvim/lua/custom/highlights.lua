@@ -9,7 +9,7 @@ local green = { 'green', -10 }
 local l_blue = '#00C5FF'
 local orange = { 'orange', -10 }
 local pink = { 'pink', -10 }
-local white = 'white'
+-- local white = 'white'
 
 -- stylua: ignore
 M.add = {
@@ -31,6 +31,8 @@ M.add = {
   WinBar              = { fg = "red", bg = black },
   WinBarNC            = { bg = black },
 
+  TbLineHarpoonBufOn = {fg = { 'blue', -20}, bg = 'black' },
+  TbLineHarpoonBufOff = {fg = 'grey', bg = 'darker_black', sp = sep_color, underline = true},
   -- St_SPECIAL          = { fg = l_blue,    bg = white },
   -- St_SPECIAL_sep      = { fg = bg_link,    bg = black },
 }

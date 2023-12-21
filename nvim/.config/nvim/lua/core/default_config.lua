@@ -1,6 +1,5 @@
 local M = {}
 local status_modules = require('plugins.configs.statusline')
-local tab_modules = require('plugins.configs.tabufline')
 
 M.options = {
   nvchad_branch = 'v3.0',
@@ -16,7 +15,6 @@ M.ui = {
   transparency = false,
   lsp_semantic_tokens = false, -- needs nvim v0.9, just adds highlight groups for lsp semantic tokens
 
-  extended_integrations = {},
   cmp = {
     icons = true,
     lspkind_text = true,
@@ -38,13 +36,9 @@ M.ui = {
   },
 
   tabufline = {
-    overriden_modules = function(modules)
-      modules[1] = vim.g.NvimTreeOverlayTitle
-      modules[2] = tab_modules.bufferlist()
-      modules[4] = ''
-    end,
+    overriden_modules = nil,
     enabled = true,
-    lazyload = false,
+    lazyload = true,
   },
 
   -- nvdash (dashboard)
