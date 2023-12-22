@@ -31,8 +31,11 @@ M.add = {
   WinBar              = { fg = "red", bg = black },
   WinBarNC            = { bg = black },
 
-  TbLineHarpoonBufOn = {fg = { 'blue', -20}, bg = 'black' },
-  TbLineHarpoonBufOff = {fg = 'grey', bg = 'darker_black', sp = sep_color, underline = true},
+  TbLineMarkedBufOn = {fg = { 'blue', -20}, bg = 'black' },
+  TbLineMarkedBufOff = {fg = 'grey', bg = 'darker_black', sp = sep_color, underline = true},
+  TbLineUnmarkedBufOn = {fg = { 'blue', -20}, bg = 'black' },
+  TbLineUnmarkedBufOff = {fg = 'grey', bg = 'darker_black', sp = sep_color, underline = true},
+
   -- St_SPECIAL          = { fg = l_blue,    bg = white },
   -- St_SPECIAL_sep      = { fg = bg_link,    bg = black },
 }

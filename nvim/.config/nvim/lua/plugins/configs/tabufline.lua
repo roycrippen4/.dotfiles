@@ -49,9 +49,9 @@ local function is_buf_marked(bufnr)
     path = require('plenary.path'):new(name):make_relative()
   end
 
-  for _, item in ipairs(items) do
+  for idx, item in ipairs(items) do
     if item.value == path then
-      return true
+      return idx
     end
   end
   return nil
@@ -96,15 +96,17 @@ local function add_fileInfo(name, bufnr)
     local l_pad = pad - r_pad
     local maxname_len = 16
 
-    -- 󰐾   󰨙
-    local on = '%#TbLineHarpoonBufOn# ' .. ' '
-    local off = '%#TbLineHarpoonBufOff# ' .. ' '
+    -- 󰐾 󰐾 󰽢  󰽤    󰝦 󰄳 󰗡 󰗡        󰀚          ⭘ ⏼ 󰫈 󰋙 󰝥
+    local idx = is_buf_marked(bufnr)
+    local marked_on = '%#TbLineMarkedBufOn# ' .. '󰫈 '
+    local marked_off = '%#TbLineMarkedBufOff# ' .. '󰋙 '
 
     name = (#name > maxname_len and string.sub(name, 1, 14) .. '..') or name
     name = (api.nvim_get_current_buf() == bufnr and '%#TbLineBufOn# ' .. name) or ('%#TbLineBufOff# ' .. name)
 
-    if is_buf_marked(bufnr) then
-      local harpoon_icon = (api.nvim_get_current_buf() == bufnr and on) or off
+    if idx ~= nil then
+      local harpoon_icon = (api.nvim_get_current_buf() == bufnr and '%#TbLineMarkedBufOn#' .. idx .. marked_on)
+        or idx .. marked_off
       return string.rep(' ', l_pad) .. (harpoon_icon .. name) .. string.rep(' ', r_pad)
     end
 
