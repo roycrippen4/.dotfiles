@@ -4,6 +4,14 @@ local function stbufnr()
   return vim.api.nvim_win_get_buf(vim.g.statusline_winid)
 end
 
+-- default = { left = "", right = "" },
+-- round = { left = "", right = "" },
+-- block = { left = "█", right = "█" },
+-- arrow = { left = "", right = "" },
+-- round = { left = "", right = "" },
+-- block = { left = "█", right = "█" },
+
+-- local spinners = { '', '󰪞', '󰪟', '󰪠', '󰪢', '󰪣', '󰪤', '󰪥' }
 local sep_l, sep_r = '', ''
 
 local M = {}
@@ -118,22 +126,8 @@ M.mode_module = function()
   local current_mode = '%#' .. M.modes[m][2] .. '#' .. (M.modes[m][3] or '  ') .. M.modes[m][1] .. ' '
   local mode_sep1 = '%#' .. M.modes[m][2] .. 'Sep' .. '#' .. ''
 
-  -- if utils.contains(vim.bo.ft, 'toggleterm') then
-  -- return '%#St_TOGGLETERM#' .. '  ' .. 'TOGGLETERM ' .. '%#St_file_sep#' .. sep_r
-  -- else
-  --   if utils.contains(vim.bo.ft, 'harpoon') then
-  -- return '%#St_file_info#' .. '  ' .. 'HARPOON ' .. '%#St_file_sep#' .. sep_r
-  -- else
-  --   if utils.contains(vim.bo.ft, 'NvimTree') then
-  -- return '%#St_file_info#' .. '  ' .. 'TREE ' .. '%#St_file_sep#' .. sep_r
-  -- else
   return current_mode .. mode_sep1 .. '%#ST_EmptySpace#' .. ''
-  --   end
-  -- end
-  -- end
 end
-
--- local special = '%#St_SPECIAL#'
 
 M.fileInfo = function()
   local icon = ' 󰈚 '
@@ -151,19 +145,52 @@ M.fileInfo = function()
     name = ' ' .. name .. ' '
   end
 
-  if utils.contains(vim.bo.ft, 'toggleterm') then
-    return '%#St_file_info#' .. '  ' .. 'TOGGLETERM ' .. '%#St_file_sep#' .. sep_r
-  else
-    if utils.contains(vim.bo.ft, 'harpoon') then
-      return '%#St_file_info#' .. '  ' .. 'HARPOON ' .. '%#St_file_sep#' .. sep_r
-    else
-      if utils.contains(vim.bo.ft, 'NvimTree') then
-        return '%#St_file_info#' .. '  ' .. 'TREE ' .. '%#St_file_sep#' .. sep_r
-      else
-        return '%#St_file_info#' .. icon .. name .. '%#St_file_sep#' .. sep_r
-      end
+  local filetypes = {
+    toggleterm = {
+      icon = '%#St_toggleterm_icon#  ',
+      label = '%#St_toggleterm#TOGGLETERM ',
+      sep_hl = '%#St_toggleterm_sep#',
+    },
+    harpoon = {
+      icon = '%#St_harpoon_icon#  ',
+      label = '%#St_harpoon#HARPOON ',
+      sep_hl = '%#St_harpoon_sep#',
+    },
+    NvimTree = {
+      icon = '%#St_nvimtree_icon#  ',
+      label = '%#St_nvimtree#NVIMTREE ',
+      sep_hl = '%#St_nvimtree_sep#',
+    },
+    lazygit = {
+      icon = '%#St_lazygit_icon#  ',
+      label = '%#St_lazygit#LAZYGIT ',
+      sep_hl = '%#St_lazygit_sep#',
+    },
+  }
+
+  local ft = vim.bo.ft
+  for ftype, info in pairs(filetypes) do
+    if utils.contains(ft, ftype) then
+      return info.icon .. info.label .. info.sep_hl .. sep_r
     end
   end
+
+  return '%#St_file_info#' .. icon .. name .. '%#St_file_sep#' .. sep_r
+end
+
+M.git = function()
+  if not vim.b[stbufnr()].gitsigns_head or vim.b[stbufnr()].gitsigns_git_status then
+    return ''
+  end
+
+  local git_status = vim.b[stbufnr()].gitsigns_status_dict
+
+  local added = (git_status.added and git_status.added ~= 0) and ('  ' .. git_status.added) or ''
+  local changed = (git_status.changed and git_status.changed ~= 0) and ('  ' .. git_status.changed) or ''
+  local removed = (git_status.removed and git_status.removed ~= 0) and ('  ' .. git_status.removed) or ''
+  local branch_name = '  ' .. git_status.head
+
+  return '%#St_gitIcons#' .. branch_name .. added .. changed .. removed
 end
 
 return M

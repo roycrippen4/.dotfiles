@@ -1,5 +1,4 @@
 local M = {}
-local status_modules = require('plugins.configs.statusline')
 
 M.options = {
   nvchad_branch = 'v3.0',
@@ -29,10 +28,7 @@ M.ui = {
   statusline = {
     theme = 'default', -- default/vscode/vscode_colored/minimal
     separator_style = 'default',
-    overriden_modules = function(modules)
-      modules[1] = status_modules.mode_module()
-      modules[2] = status_modules.fileInfo()
-    end,
+    overriden_modules = nil,
   },
 
   tabufline = {

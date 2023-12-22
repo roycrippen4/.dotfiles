@@ -7,6 +7,15 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
   command = 'lua vim.diagnostic.disable(0)',
 })
 
+autocmd('ModeChanged', {
+  callback = function()
+    local m = vim.api.nvim_get_mode().mode
+    local m_hl = require('plugins.configs.statusline').modes[m][2]
+    local hl = vim.api.nvim_get_hl(0, { name = m_hl })
+    vim.api.nvim_set_hl(0, 'St_nvimtree', { fg = hl.fg, italic = true })
+  end,
+})
+
 -- Remove columns from the terminal buffer
 autocmd({ 'TermOpen', 'TermEnter', 'BufEnter' }, {
   pattern = { 'term://*' },

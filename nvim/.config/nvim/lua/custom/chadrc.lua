@@ -1,5 +1,6 @@
 local M = {}
 local tab_modules = require('plugins.configs.tabufline')
+local status_modules = require('plugins.configs.statusline')
 
 local highlights = require('custom.highlights')
 
@@ -15,6 +16,22 @@ M.ui = {
     end,
     enabled = true,
     lazyload = false,
+  },
+  statusline = {
+    theme = 'default', -- default/vscode/vscode_colored/minimal
+    separator_style = 'default',
+    overriden_modules = function(modules)
+      modules[1] = status_modules.mode_module()
+      modules[2] = status_modules.fileInfo()
+      modules[4] = ''
+      modules[5] = ''
+      modules[6] = ''
+      modules[7] = ''
+      modules[8] = ''
+      modules[9] = ''
+      modules[10] = ''
+      modules[11] = ''
+    end,
   },
 }
 
