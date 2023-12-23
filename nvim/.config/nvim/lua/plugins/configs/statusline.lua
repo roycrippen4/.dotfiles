@@ -1,18 +1,11 @@
 local utils = require('core.utils')
+-- local config = require('nvconfig').ui.statusline
 
 local function stbufnr()
   return vim.api.nvim_win_get_buf(vim.g.statusline_winid)
 end
 
--- default = { left = "", right = "" },
--- round = { left = "", right = "" },
--- block = { left = "█", right = "█" },
--- arrow = { left = "", right = "" },
--- round = { left = "", right = "" },
--- block = { left = "█", right = "█" },
-
--- local spinners = { '', '󰪞', '󰪟', '󰪠', '󰪢', '󰪣', '󰪤', '󰪥' }
-local sep_l, sep_r = '', ''
+local sep_r = ''
 
 local M = {}
 --   󰈈       󱡠 󰴍       
@@ -129,6 +122,299 @@ M.mode_module = function()
   return current_mode .. mode_sep1 .. '%#ST_EmptySpace#' .. ''
 end
 
+local spinner_colors = {
+  SpinnerRed = '%#SpinnerRed#',
+  SpinnerNeonCarrot = '%#SpinnerNeonCarrot#',
+  SpinnerOrange = '%#SpinnerOrange#',
+  SpinnerGold = '%#SpinnerGold#',
+  SpinnerYellow = '%#SpinnerYellow#',
+  SpinnerLimeGreen = '%#SpinnerLimeGreen#',
+  SpinnerBrightGreen = '%#SpinnerBrightGreen#',
+  SpinnerSpringGreen = '%#SpinnerSpringGreen#',
+  SpinnerCyan = '%#SpinnerCyan#',
+  SpinnerAzure = '%#SpinnerAzure#',
+  SpinnerBlue = '%#SpinnerBlue#',
+  SpinnerViolet = '%#SpinnerViolet#',
+  SpinnerVioleter = '%#SpinnerVioleter#',
+  SpinnerHotPink = '%#SpinnerHotPink#',
+}
+
+M.spinner = {
+  rainbow_wave = function()
+    local zero = spinner_colors.SpinnerRed .. '▁'
+    local one = spinner_colors.SpinnerNeonCarrot .. '▂'
+    local two = spinner_colors.SpinnerOrange .. '▃'
+    local three = spinner_colors.SpinnerGold .. '▄'
+    local four = spinner_colors.SpinnerYellow .. '▅'
+    local five = spinner_colors.SpinnerLimeGreen .. '▆'
+    local six = spinner_colors.SpinnerBrightGreen .. '▇'
+    local seven = spinner_colors.SpinnerSpringGreen .. '█'
+    local eight = spinner_colors.SpinnerCyan .. '▇'
+    local nine = spinner_colors.SpinnerAzure .. '▆'
+    local ten = spinner_colors.SpinnerBlue .. '▅'
+    local eleven = spinner_colors.SpinnerViolet .. '▄'
+    local twelve = spinner_colors.SpinnerVioleter .. '▃'
+    local thirteen = spinner_colors.SpinnerHotPink .. '▂'
+
+    local chars = {
+      zero
+        .. one
+        .. two
+        .. three
+        .. four
+        .. five
+        .. six
+        .. seven
+        .. eight
+        .. nine
+        .. ten
+        .. eleven
+        .. twelve
+        .. thirteen,
+      one
+        .. two
+        .. three
+        .. four
+        .. five
+        .. six
+        .. seven
+        .. eight
+        .. nine
+        .. ten
+        .. eleven
+        .. twelve
+        .. thirteen
+        .. zero,
+      two
+        .. three
+        .. four
+        .. five
+        .. six
+        .. seven
+        .. eight
+        .. nine
+        .. ten
+        .. eleven
+        .. twelve
+        .. thirteen
+        .. zero
+        .. one,
+      three
+        .. four
+        .. five
+        .. six
+        .. seven
+        .. eight
+        .. nine
+        .. ten
+        .. eleven
+        .. twelve
+        .. thirteen
+        .. zero
+        .. one
+        .. two,
+      four
+        .. five
+        .. six
+        .. seven
+        .. eight
+        .. nine
+        .. ten
+        .. eleven
+        .. twelve
+        .. thirteen
+        .. zero
+        .. one
+        .. two
+        .. three,
+      five
+        .. six
+        .. seven
+        .. eight
+        .. nine
+        .. ten
+        .. eleven
+        .. twelve
+        .. thirteen
+        .. zero
+        .. one
+        .. two
+        .. three
+        .. four,
+      six
+        .. seven
+        .. eight
+        .. nine
+        .. ten
+        .. eleven
+        .. twelve
+        .. thirteen
+        .. zero
+        .. one
+        .. two
+        .. three
+        .. four
+        .. five,
+      seven
+        .. eight
+        .. nine
+        .. ten
+        .. eleven
+        .. twelve
+        .. thirteen
+        .. zero
+        .. one
+        .. two
+        .. three
+        .. four
+        .. five
+        .. six,
+      eight
+        .. nine
+        .. ten
+        .. eleven
+        .. twelve
+        .. thirteen
+        .. zero
+        .. one
+        .. two
+        .. three
+        .. four
+        .. five
+        .. six
+        .. seven,
+      nine
+        .. ten
+        .. eleven
+        .. twelve
+        .. thirteen
+        .. zero
+        .. one
+        .. two
+        .. three
+        .. four
+        .. five
+        .. six
+        .. seven
+        .. eight,
+      ten
+        .. eleven
+        .. twelve
+        .. thirteen
+        .. zero
+        .. one
+        .. two
+        .. three
+        .. four
+        .. five
+        .. six
+        .. seven
+        .. eight
+        .. nine,
+      eleven
+        .. twelve
+        .. thirteen
+        .. zero
+        .. one
+        .. two
+        .. three
+        .. four
+        .. five
+        .. six
+        .. seven
+        .. eight
+        .. nine
+        .. ten,
+      twelve
+        .. thirteen
+        .. zero
+        .. one
+        .. two
+        .. three
+        .. four
+        .. five
+        .. six
+        .. seven
+        .. eight
+        .. nine
+        .. ten
+        .. eleven,
+      thirteen
+        .. zero
+        .. one
+        .. two
+        .. three
+        .. four
+        .. five
+        .. six
+        .. seven
+        .. eight
+        .. nine
+        .. ten
+        .. eleven
+        .. twelve,
+    }
+    return chars, 100
+  end,
+
+  mutating_lines = function()
+    local chars = {
+      spinner_colors.SpinnerRed .. '︷',
+      spinner_colors.SpinnerRed .. '︵',
+      spinner_colors.SpinnerRed .. '︹',
+      spinner_colors.SpinnerRed .. '︺',
+      spinner_colors.SpinnerRed .. '︶',
+      spinner_colors.SpinnerRed .. '︸',
+      spinner_colors.SpinnerRed .. '︶',
+      spinner_colors.SpinnerRed .. '︺',
+      spinner_colors.SpinnerRed .. '︹',
+      spinner_colors.SpinnerRed .. '︵',
+    }
+    return chars, 200
+  end,
+
+  braille_6_circle_worm = function()
+    local chars = {
+      spinner_colors.SpinnerRed .. '⠋',
+      spinner_colors.SpinnerRed .. '⠙',
+      spinner_colors.SpinnerRed .. '⠹',
+      spinner_colors.SpinnerRed .. '⠸',
+      spinner_colors.SpinnerRed .. '⠼',
+      spinner_colors.SpinnerRed .. '⠴',
+      spinner_colors.SpinnerRed .. '⠦',
+      spinner_colors.SpinnerRed .. '⠧',
+      spinner_colors.SpinnerRed .. '⠇',
+      spinner_colors.SpinnerRed .. '⠏',
+    }
+    return chars, 200
+  end,
+
+  braille_8_circle_worm = function(color)
+    local chars = {
+      color .. '⠋',
+      color .. '⠙',
+      color .. '⠹',
+      color .. '⠸',
+      color .. '⢰',
+      color .. '⣰',
+      color .. '⣠',
+      color .. '⣄',
+      color .. '⣆',
+      color .. '⡆',
+      color .. '⠇',
+      color .. '⠏',
+    }
+    return chars, 60
+  end,
+}
+
+M.run_spinner = function(chars, speed)
+  local ms = vim.loop.hrtime() / 1000000
+  local frame = math.floor(ms / speed) % #chars
+  local content = string.format('%%<%s', chars[frame + 1])
+  return content
+end
+
 M.fileInfo = function()
   local icon = ' 󰈚 '
   local path = vim.api.nvim_buf_get_name(stbufnr())
@@ -149,32 +435,52 @@ M.fileInfo = function()
     toggleterm = {
       icon = '%#St_toggleterm_icon#  ',
       label = '%#St_toggleterm#TOGGLETERM ',
+      label_hl = '%#St_toggleterm#',
       sep_hl = '%#St_toggleterm_sep#',
     },
     harpoon = {
       icon = '%#St_harpoon_icon#  ',
       label = '%#St_harpoon#HARPOON ',
+      label_hl = '%#St_harpoon#',
       sep_hl = '%#St_harpoon_sep#',
     },
     NvimTree = {
       icon = '%#St_nvimtree_icon#  ',
       label = '%#St_nvimtree#NVIMTREE ',
+      label_hl = '%#St_nvimtree#',
       sep_hl = '%#St_nvimtree_sep#',
     },
     lazygit = {
       icon = '%#St_lazygit_icon#  ',
       label = '%#St_lazygit#LAZYGIT ',
+      label_hl = '%#St_lazygit#',
       sep_hl = '%#St_lazygit_sep#',
+    },
+    Trouble = {
+      icon = '%#St_trouble_icon# 𝍐 ',
+      label = '%#St_trouble#TROUBLE ',
+      label_hl = '%#St_trouble#',
+      sep_hl = '%#St_trouble_sep#',
     },
   }
 
   local ft = vim.bo.ft
   for ftype, info in pairs(filetypes) do
     if utils.contains(ft, ftype) then
-      return info.icon .. info.label .. info.sep_hl .. sep_r
+      utils.start_clock()
+      local chars, speed = M.spinner.braille_8_circle_worm(info.label_hl)
+      return info.icon
+        .. info.label
+        .. M.run_spinner(chars, speed)
+        .. ' '
+        .. info.sep_hl
+        .. ''
+        .. info.sep_hl
+        .. ' '
     end
   end
 
+  utils.stop_clock()
   return '%#St_file_info#' .. icon .. name .. '%#St_file_sep#' .. sep_r
 end
 
@@ -185,12 +491,56 @@ M.git = function()
 
   local git_status = vim.b[stbufnr()].gitsigns_status_dict
 
-  local added = (git_status.added and git_status.added ~= 0) and ('  ' .. git_status.added) or ''
-  local changed = (git_status.changed and git_status.changed ~= 0) and ('  ' .. git_status.changed) or ''
-  local removed = (git_status.removed and git_status.removed ~= 0) and ('  ' .. git_status.removed) or ''
+  local added = (git_status.added and git_status.added ~= 0) and ('%#St_gitAdd#  ' .. git_status.added) or ''
+  local changed = (git_status.changed and git_status.changed ~= 0) and ('%#St_gitChange#  ' .. git_status.changed)
+    or ''
+  local removed = (git_status.removed and git_status.removed ~= 0) and ('%#St_gitRemove#  ' .. git_status.removed)
+    or ''
   local branch_name = '  ' .. git_status.head
 
-  return '%#St_gitIcons#' .. branch_name .. added .. changed .. removed
+  return '%#ST_EmptySpace2#' .. '' .. '%#St_gitIcons#' .. branch_name .. added .. changed .. removed
+end
+--
+
+M.LSP_Diagnostics = function()
+  ---@type integer|string
+  local errors = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.ERROR })
+  ---@type integer|string
+  local warnings = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.WARN })
+  ---@type integer|string
+  local hints = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.HINT })
+  ---@type integer|string
+  local info = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.INFO })
+
+  errors = (errors and errors > 0) and ('%#St_lspError# 󰅚 ' .. errors .. ' ') or ''
+  warnings = (warnings and warnings > 0) and ('%#St_lspWarning# ' .. warnings .. ' ') or ''
+  hints = (hints and hints > 0) and ('%#St_LspHints#󱧣 ' .. hints .. ' ') or ''
+  info = (info and info > 0) and ('%#St_lspInfo# ' .. info .. ' ') or ''
+
+  return vim.o.columns > 140 and errors .. warnings .. hints .. info or ''
+end
+
+M.LSP_status = function()
+  if rawget(vim, 'lsp') then
+    ---@diagnostic disable-next-line
+    for _, client in ipairs(vim.lsp.get_active_clients()) do
+      if client.attached_buffers[stbufnr()] and client.name ~= 'null-ls' then
+        return (
+          vim.o.columns > 100 --[[ '%#St_LspStatus#╱' .. ]]
+          and '%#St_LspStatus#' .. '   LSP ~ ' .. client.name .. ' '
+        ) or '   LSP '
+      end
+    end
+  end
+end
+
+M.cursor_position = function()
+  return vim.o.columns > 140 and '%#St_pos_sep#' .. '' .. '%#St_pos_text# Ln %l, Col %c  ' or ''
+end
+
+M.cwd = function()
+  local dir_name = '%#St_cwd_sep#' .. '' .. ' 󰉖 ' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t') .. ' '
+  return (vim.o.columns > 85 and dir_name) or ''
 end
 
 return M

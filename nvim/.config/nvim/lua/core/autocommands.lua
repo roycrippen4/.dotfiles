@@ -13,6 +13,7 @@ autocmd('ModeChanged', {
     local m_hl = require('plugins.configs.statusline').modes[m][2]
     local hl = vim.api.nvim_get_hl(0, { name = m_hl })
     vim.api.nvim_set_hl(0, 'St_nvimtree', { fg = hl.fg, italic = true })
+    vim.api.nvim_set_hl(0, 'St_EmptySpace', { fg = hl.fg, bg = hl.bg })
   end,
 })
 

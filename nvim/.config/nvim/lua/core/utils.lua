@@ -341,4 +341,25 @@ function M.get_marked_bufs()
   return marked_bufs
 end
 
+M.clock = nil
+
+function M.start_clock()
+  if not M.clock or not M.clock:is_active() then
+    M.clock = vim.loop.new_timer()
+    M.clock:start(
+      0,
+      100,
+      vim.schedule_wrap(function()
+        vim.api.nvim_command('redrawstatus')
+      end)
+    )
+  end
+end
+
+function M.stop_clock()
+  if M.clock and M.clock:is_active() then
+    M.clock:stop()
+  end
+end
+
 return M

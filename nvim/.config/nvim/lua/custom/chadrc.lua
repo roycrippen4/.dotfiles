@@ -17,20 +17,22 @@ M.ui = {
     enabled = true,
     lazyload = false,
   },
+
   statusline = {
     theme = 'default', -- default/vscode/vscode_colored/minimal
     separator_style = 'default',
     overriden_modules = function(modules)
       modules[1] = status_modules.mode_module()
       modules[2] = status_modules.fileInfo()
-      modules[4] = ''
+      modules[3] = status_modules.git()
       modules[5] = ''
-      modules[6] = ''
-      modules[7] = ''
-      modules[8] = ''
-      modules[9] = ''
-      modules[10] = ''
-      modules[11] = ''
+      modules[7] = status_modules.LSP_Diagnostics()
+      modules[8] = status_modules.LSP_status()
+      modules[9] = status_modules.cursor_position()
+      modules[10] = status_modules.cwd()
+
+      -- modules[10] = ''
+      -- modules[11] = ''
     end,
   },
 }
