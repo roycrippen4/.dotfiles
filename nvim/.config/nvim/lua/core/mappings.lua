@@ -3,7 +3,7 @@ local M = {}
 M.harpoon = {
   plugin = true,
   n = {
-    ['<C-a>'] = {
+    ['<C-f>'] = {
       function()
         require('harpoon'):list('default'):append()
       end,
@@ -17,11 +17,6 @@ M.harpoon = {
         else
           require('harpoon').ui:toggle_quick_menu(require('harpoon'):list('default'))
         end
-      end,
-    },
-    ['<M-CR>'] = {
-      function()
-        print(unpack(require('core.utils').get_marked_bufs()))
       end,
     },
     ['<C-1>'] = {
@@ -105,12 +100,6 @@ M.general = {
   },
 
   n = {
-    ['<leader><leader>'] = {
-      function()
-        print(vim.fn.expand('%:p'))
-      end,
-      opts = {},
-    },
     -- newline with shift/ctrl enter
     ['<S-CR>'] = { 'o<Esc>k', 'New line above', opts = { silent = true } },
     ['<C-CR>'] = { 'O<Esc>j', 'New line above', opts = { silent = true } },
@@ -332,6 +321,7 @@ M.telescope = {
     ['<leader>fs'] = { '<cmd> Telescope themes <CR>', 'Find scheme' },
     ['<leader>fm'] = { '<cmd> Telescope marks <CR>', 'Find bookmarks' },
     ['<leader>fl'] = { '<cmd> Telescope highlights <CR>', 'Find highlight groups' },
+    ['<leader>fk'] = { '<cmd> Telescope keymaps <CR>', 'Find keymaps' },
   },
 }
 

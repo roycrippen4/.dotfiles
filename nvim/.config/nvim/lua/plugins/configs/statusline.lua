@@ -1,5 +1,4 @@
 local utils = require('core.utils')
--- local config = require('nvconfig').ui.statusline
 
 local function stbufnr()
   return vim.api.nvim_win_get_buf(vim.g.statusline_winid)

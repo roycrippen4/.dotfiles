@@ -1,8 +1,10 @@
 local default_plugins = {
 
+  -- https://github.com/nvim-lua/plenary.nvim
   'nvim-lua/plenary.nvim',
 
   {
+    -- https://github.com/kdheepak/lazygit.nvim
     'kdheepak/lazygit.nvim',
     keys = { '<leader>gg' },
     config = function()
@@ -16,6 +18,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/akinsho/toggleterm.nvim
     'akinsho/toggleterm.nvim',
     lazy = false,
     opts = function()
@@ -28,6 +31,24 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/zbirenbaum/copilot.lua
+    'zbirenbaum/copilot.lua',
+    event = 'InsertEnter',
+    config = function()
+      require('copilot').setup({
+        suggestion = {
+          enabled = true,
+          auto_trigger = true,
+          keymap = {
+            accept = '<Tab>',
+          },
+        },
+      })
+    end,
+  },
+
+  {
+    -- https://github.com/NvChad/base46
     'NvChad/base46',
     branch = 'v3.0',
     build = function()
@@ -36,6 +57,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/NvChad/ui
     'NvChad/ui',
     branch = 'v3.0',
     lazy = false,
@@ -45,6 +67,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/nvimdev/lspsaga.nvim
     'nvimdev/lspsaga.nvim',
     event = 'LspAttach',
     config = function()
@@ -53,6 +76,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/ziontee113/icon-picker.nvim
     'ziontee113/icon-picker.nvim',
     cmd = { 'IconPickerNormal' },
     keys = { '<C-i>' },
@@ -66,6 +90,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/NvChad/nvim-colorizer.lua
     'NvChad/nvim-colorizer.lua',
     init = function()
       require('core.utils').lazy_load('nvim-colorizer.lua')
@@ -81,13 +106,16 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/williamboman/mason.nvim
     'williamboman/mason.nvim',
     dependencies = {
+      -- https://github.com/williamboman/mason-lspconfig.nvim
       'williamboman/mason-lspconfig.nvim',
     },
   },
 
   {
+    -- https://github.com/nvim-tree/nvim-web-devicons
     'nvim-tree/nvim-web-devicons',
     opts = function()
       return { override = require('nvchad.icons.devicons') }
@@ -101,6 +129,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/nvim-treesitter/nvim-treesitter
     'nvim-treesitter/nvim-treesitter',
     init = function()
       require('core.utils').lazy_load('nvim-treesitter')
@@ -117,6 +146,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/lewis6991/gitsigns.nvim
     'lewis6991/gitsigns.nvim',
     ft = { 'gitcommit', 'diff' },
     init = function()
@@ -143,11 +173,12 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/hrsh7th/nvim-cmp
     'hrsh7th/nvim-cmp',
     event = 'InsertEnter',
     dependencies = {
       {
-        -- snippet plugin
+        -- https://github.com/L3MON4D3/LuaSnip
         'L3MON4D3/LuaSnip',
         dependencies = 'rafamadriz/friendly-snippets',
         opts = { history = true, updateevents = 'TextChanged,TextChangedI' },
@@ -161,6 +192,7 @@ local default_plugins = {
       },
 
       {
+        -- https://github.com/windwp/nvim-autopairs
         'windwp/nvim-autopairs',
         opts = {
           fast_wrap = {},
@@ -173,10 +205,15 @@ local default_plugins = {
         end,
       },
       {
+        -- https://github.com/saadparwaiz1/cmp_luasnip
         'saadparwaiz1/cmp_luasnip',
+        -- https://github.com/hrsh7th/cmp-nvim-lua
         'hrsh7th/cmp-nvim-lua',
+        -- https://github.com/hrsh7th/cmp-nvim-lsp
         'hrsh7th/cmp-nvim-lsp',
+        -- https://github.com/hrsh7th/cmp-buffer
         'hrsh7th/cmp-buffer',
+        -- https://github.com/hrsh7th/cmp-path
         'hrsh7th/cmp-path',
       },
     },
@@ -189,6 +226,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/nvim-tree/nvim-tree.lua
     'nvim-tree/nvim-tree.lua',
     lazy = false,
     event = 'UIEnter',
@@ -206,6 +244,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/nvim-telescope/telescope.nvim
     'nvim-telescope/telescope.nvim',
     dependencies = {
       'nvim-treesitter/nvim-treesitter',
@@ -230,6 +269,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/folke/which-key.nvim
     'folke/which-key.nvim',
     keys = { '<leader>', '<c-r>', '<c-w>', '"', "'", '`', 'c', 'v', 'g' },
     init = function()
@@ -243,12 +283,14 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/folke/zen-mode.nvim
     'folke/zen-mode.nvim',
     cmd = 'ZenMode',
     opts = require('plugins.configs.zenmode'),
   },
 
   {
+    -- https://github.com/neovim/nvim-lspconfig
     'neovim/nvim-lspconfig',
     event = 'VimEnter',
     dependencies = {
@@ -260,6 +302,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/pmizio/typescript-tools.nvim
     'pmizio/typescript-tools.nvim',
     ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' },
     dependencies = {
@@ -297,12 +340,14 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/mrcjkb/rustaceanvim
     'mrcjkb/rustaceanvim',
     version = '^3', -- Recommended
     ft = { 'rust' },
   },
 
   {
+    -- https://github.com/Aasim-A/scrollEOF.nvim
     'Aasim-A/scrollEOF.nvim',
     event = 'BufRead',
     config = function()
@@ -311,11 +356,13 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
     'JoosepAlviste/nvim-ts-context-commentstring',
     event = 'VimEnter',
   },
 
   {
+    -- https://github.com/numToStr/Comment.nvim
     'numToStr/Comment.nvim',
     keys = {
       { 'gc', mode = { 'n', 'v' }, 'gcc' },
@@ -324,11 +371,13 @@ local default_plugins = {
       ---@diagnostic disable-next-line
       require('Comment').setup({
         pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+        ignore = '^$', -- ignore empty lines
       })
     end,
   },
 
   {
+    -- https://github.com/folke/trouble.nvim
     'folke/trouble.nvim',
     keys = {
       { '<leader>tf', mode = { 'n' } },
@@ -341,16 +390,19 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/hiphish/rainbow-delimiters.nvim
     'hiphish/rainbow-delimiters.nvim',
     event = 'BufReadPost',
   },
 
   {
+    -- https://github.com/mbbill/undotree
     'mbbill/undotree',
     cmd = 'UndotreeToggle',
   },
 
   {
+    -- https://github.com/max397574/better-escape.nvim
     'max397574/better-escape.nvim',
     event = 'InsertEnter',
     config = function()
@@ -359,6 +411,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/theprimeagen/harpoon
     'theprimeagen/harpoon',
     lazy = false,
     branch = 'harpoon2',
@@ -378,6 +431,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/windwp/nvim-ts-autotag
     'windwp/nvim-ts-autotag',
     ft = {
       'typescript',
@@ -401,6 +455,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/stevearc/conform.nvim
     'stevearc/conform.nvim',
     event = { 'BufReadPre', 'BufNewFile' },
     config = function()
@@ -434,6 +489,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/kylechui/nvim-surround
     'kylechui/nvim-surround',
     event = 'VimEnter',
     config = function()
@@ -442,6 +498,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/iamcco/markdown-preview.nvim
     'iamcco/markdown-preview.nvim',
     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
     keys = {
@@ -461,6 +518,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/folke/todo-comments.nvim
     'folke/todo-comments.nvim',
     event = 'BufReadPre',
     dependencies = { 'nvim-lua/plenary.nvim' },
@@ -471,6 +529,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/lukas-reineke/indent-blankline.nvim
     'lukas-reineke/indent-blankline.nvim',
     init = function()
       require('core.utils').lazy_load('indent-blankline.nvim')
@@ -484,6 +543,7 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/luukvbaal/statuscol.nvim
     'luukvbaal/statuscol.nvim',
     init = function()
       require('core.utils').lazy_load('statuscol.nvim')

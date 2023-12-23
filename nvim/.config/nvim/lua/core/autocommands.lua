@@ -1,6 +1,14 @@
 local autocmd = vim.api.nvim_create_autocmd
 local utils = require('core.utils')
 
+-- Disable new line comments for all filetypes
+autocmd('BufEnter', {
+  callback = function()
+    vim.opt.formatoptions:remove({ 'c', 'r', 'o' })
+  end,
+  desc = 'Disable New Line Comment',
+})
+
 -- Disable diagnostics in node_modules (0 is current buffer only)
 autocmd({ 'BufRead', 'BufNewFile' }, {
   pattern = '*/node_modules/*',

@@ -1,7 +1,7 @@
 local api = vim.api
 local fn = vim.fn
 
-local isBufValid = function(bufnr)
+local is_buf_valid = function(bufnr)
   return vim.api.nvim_buf_is_valid(bufnr) and vim.bo[bufnr].buflisted
 end
 ---------------------------------------------------------- btn onclick functions ----------------------------------------------
@@ -22,7 +22,7 @@ vim.cmd('function! TbToggleTabs(a,b,c,d) \n let g:TbTabsToggled = !g:TbTabsToggl
 
 -------------------------------------------------------- functions ------------------------------------------------------------
 
-local function getNvimTreeWidth()
+local function get_nvim_tree_width()
   for _, win in pairs(api.nvim_tabpage_list_wins(0)) do
     if vim.bo[api.nvim_win_get_buf(win)].ft == 'NvimTree' then
       return api.nvim_win_get_width(win) + 1
@@ -31,7 +31,7 @@ local function getNvimTreeWidth()
   return 0
 end
 
-local function getBtnsWidth() -- close, theme toggle btn etc
+local function get_btns_width() -- close, theme toggle btn etc
   local width = 6
   if fn.tabpagenr('$') ~= 1 then
     width = width + ((3 * fn.tabpagenr('$')) + 2) + 10
@@ -59,7 +59,7 @@ end
 
 local function add_fileInfo(name, bufnr)
   for _, value in ipairs(vim.t.bufs) do
-    if isBufValid(value) then
+    if is_buf_valid(value) then
       if name == fn.fnamemodify(api.nvim_buf_get_name(value), ':t') and value ~= bufnr then
         local other = {}
         for match in (vim.fs.normalize(api.nvim_buf_get_name(value)) .. '/'):gmatch('(.-)' .. '/') do
@@ -114,7 +114,7 @@ local function add_fileInfo(name, bufnr)
   end
 end
 
-local function styleBufferTab(nr)
+local function style_buffer_tab(nr)
   local close_btn = '%' .. nr .. '@TbKillBuf@ 󰅖 %X'
   local name = (#api.nvim_buf_get_name(nr) ~= 0) and fn.fnamemodify(api.nvim_buf_get_name(nr), ':t') or ' No Name '
   name = '%' .. nr .. '@TbGoToBuf@' .. add_fileInfo(name, nr) .. '%X'
@@ -136,18 +136,18 @@ end
 ---------------------------------------------------------- components ------------------------------------------------------------
 local M = {}
 
-M.NvimTreeOverlay = function()
-  return '%#NvimTreeNormal#' .. (vim.g.nvimtree_side == 'right' and '' or string.rep(' ', getNvimTreeWidth()))
+M.nvimtree_overlay = function()
+  return '%#NvimTreeNormal#' .. (vim.g.nvimtree_side == 'right' and '' or string.rep(' ', get_nvim_tree_width()))
 end
 
 M.bufferlist = function()
   local buffers = {} -- buffersults
-  local available_space = vim.o.columns - getNvimTreeWidth() - getBtnsWidth()
+  local available_space = vim.o.columns - get_nvim_tree_width() - get_btns_width()
   local current_buf = api.nvim_get_current_buf()
   local has_current = false -- have we seen current buffer yet?
 
   for _, bufnr in ipairs(vim.t.bufs) do
-    if isBufValid(bufnr) then
+    if is_buf_valid(bufnr) then
       if ((#buffers + 1) * 21) > available_space then
         if has_current then
           break
@@ -157,7 +157,7 @@ M.bufferlist = function()
       end
 
       has_current = (bufnr == current_buf and true) or has_current
-      table.insert(buffers, styleBufferTab(bufnr))
+      table.insert(buffers, style_buffer_tab(bufnr))
     end
   end
 

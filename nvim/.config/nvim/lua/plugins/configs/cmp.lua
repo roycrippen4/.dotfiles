@@ -61,9 +61,9 @@ local options = {
   experimental = {
     ghost_text = true,
   },
-  completion = {
-    completeopt = 'menu,menuone',
-  },
+  -- completion = {
+  --   completeopt = 'menu,menuone',
+  -- },
 
   window = {
     completion = {
@@ -85,6 +85,16 @@ local options = {
   formatting = formatting_style,
 
   mapping = {
+    ['<ESC>'] = cmp.mapping(function(fallback)
+      if cmp.visible() then
+        cmp.abort()
+      else
+        fallback()
+      end
+    end, {
+      'i',
+      's',
+    }),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-d>'] = cmp.mapping.scroll_docs(-4),
