@@ -55,7 +55,7 @@ noice.setup({
     hover = {
       enabled = true,
       silent = true,
-      view = nil,
+      -- view = nil,
       opts = {},
     },
     signature = {
@@ -85,12 +85,18 @@ noice.setup({
   views = {
     cmdline_popup = {
       position = {
+        col = 13,
         row = 70,
         height = 1,
       },
     },
   },
   cmdline = {
+    format = {
+      cmdline = {
+        icon = '',
+      },
+    },
     enabled = true,
     opts = {
       border = 'none',

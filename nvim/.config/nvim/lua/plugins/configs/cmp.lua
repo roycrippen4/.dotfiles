@@ -1,31 +1,7 @@
 local cmp = require('cmp')
 local copilot_cmp_comparators = require('copilot_cmp.comparators')
-local lspkind = require('lspkind')
 
 dofile(vim.g.base46_cache .. 'cmp')
-
-local function deprioritize_snippet(entry1, entry2)
-  local types = require('cmp.types')
-
-  if entry1:get_kind() == types.lsp.CompletionItemKind.Snippet then
-    return false
-  end
-  if entry2:get_kind() == types.lsp.CompletionItemKind.Snippet then
-    return true
-  end
-end
-
-local function under(entry1, entry2)
-  local _, entry1_under = entry1.completion_item.label:find('^_+')
-  local _, entry2_under = entry2.completion_item.label:find('^_+')
-  entry1_under = entry1_under or 0
-  entry2_under = entry2_under or 0
-  if entry1_under > entry2_under then
-    return false
-  elseif entry1_under < entry2_under then
-    return true
-  end
-end
 
 local cmp_ui = require('core.utils').load_config().ui.cmp
 local cmp_style = cmp_ui.style
@@ -43,26 +19,9 @@ local function border(hl_name)
   }
 end
 
-local source_icons = {
-  copilot = ' ',
-  nvim_lsp = '󰒠',
-  luasnip = '󰏿',
-  nvim_lua = '󰔷 ',
-  path = '󰘧',
-}
-
 local options = {
-  enabled = function()
-    local in_prompt = vim.api.nvim_get_option_value('buftype', { buf = 0 }) == 'prompt'
-    if in_prompt then -- this will disable cmp in the Telescope window (taken from the default config)
-      return false
-    end
-    local context = require('cmp.config.context')
-    return not (context.in_treesitter_capture('comment') == true)
-  end,
-
   sources = {
-    { name = 'copilot', group_index = 2 },
+    { name = 'copilot' },
     {
       name = 'nvim_lsp',
       trigger_characters = { '.' },
@@ -74,7 +33,7 @@ local options = {
       name = 'luasnip',
       entry_filter = function()
         local context = require('cmp.config.context')
-        return not context.in_treesitter_capture('string') and not context.in_syntax_group('String')
+        return not context.in_treesitter_capture('string') and not context.in_treesitter_capture('comment')
       end,
     },
     {
@@ -92,20 +51,6 @@ local options = {
   completion = {
     completeopt = 'menu,menuone,noselect',
     autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged },
-    keyword_length = 2,
-  },
-
-  formatting = {
-    format = lspkind.cmp_format({
-      mode = 'symbol_text',
-      maxwidth = 80,
-      ellipsis_char = '...',
-
-      before = function(entry, vim_item)
-        vim_item.menu = source_icons[entry.source.name]
-        return vim_item
-      end,
-    }),
   },
 
   performance = {
@@ -139,11 +84,9 @@ local options = {
     comparators = {
       -- Definitions of compare function https://github.com/hrsh7th/nvim-cmp/blob/main/lua/cmp/config/compare.lua
       copilot_cmp_comparators.prioritize or function() end,
-      deprioritize_snippet,
       cmp.config.compare.exact,
       cmp.config.compare.locality,
       cmp.config.compare.recently_used,
-      under,
       cmp.config.compare.score,
       cmp.config.compare.kind,
       cmp.config.compare.length,
@@ -198,24 +141,6 @@ local options = {
     }),
   },
 }
-
-cmp.setup.cmdline('/', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = {
-    { name = 'buffer' },
-  },
-})
-
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources({
-    { name = 'path' },
-  }, {
-    { name = 'cmdline', option = {
-      ignore_cmds = { 'Man', '!' },
-    } },
-  }),
-})
 
 if cmp_style ~= 'atom' and cmp_style ~= 'atom_colored' then
   options.window.completion.border = border('CmpBorder')

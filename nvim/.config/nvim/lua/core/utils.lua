@@ -1,5 +1,34 @@
 local M = {}
 local merge_tb = vim.tbl_deep_extend
+local api = vim.api
+
+M.highlight_group = api.nvim_create_augroup('YankHighlight', { clear = true })
+M.hlsearch_ns = api.nvim_create_namespace('search')
+
+local function manage_noice_virt_text()
+  local noice_id = api.nvim_get_namespaces()['noice']
+  local extmark_id = api.nvim_buf_get_extmarks(0, noice_id, 0, -1, {})
+
+  if noice_id and extmark_id[1] then
+    api.nvim_buf_del_extmark(0, noice_id, extmark_id[1][1])
+  end
+end
+
+function M.manage_hlsearch(char)
+  local key = vim.fn.keytrans(char)
+  local keys = { '<CR>', 'n', 'N', '*', '#', '?', '/' }
+
+  if vim.fn.mode() == 'n' then
+    if not vim.tbl_contains(keys, key) then
+      vim.o.hlsearch = false
+      manage_noice_virt_text()
+    elseif vim.tbl_contains(keys, key) then
+      vim.o.hlsearch = true
+    end
+  end
+  ---@diagnostic disable next-line
+  vim.on_key(nil, hl_ns)
+end
 
 --- Debounces a function on the trailing edge. Automatically
 --- `schedule_wrap()`s.
@@ -300,10 +329,9 @@ function M.set_nvim_tree_overlay_title()
   local padding = string.rep(' ', math.floor(width / 2))
   local title_with_pad = padding .. title .. padding
   if tree_width % 2 == 0 then
-    vim.g.NvimTreeOverlayTitle = '%#NvimTreeTitle#' .. title_with_pad .. '%#NvimTreeTitleSep#' --[[ .. ' ▏' ]]
+    vim.g.NvimTreeOverlayTitle = '%#NvimTreeTitle#' .. title_with_pad
   else
-    vim.g.NvimTreeOverlayTitle = '%#NvimTreeTitle#' .. string.sub(title_with_pad, 0, -2) .. '%#NvimTreeTitleSep#'
-    --[[ .. ' ▏' ]]
+    vim.g.NvimTreeOverlayTitle = '%#NvimTreeTitle#' .. string.sub(title_with_pad, 0, -2)
   end
 end
 
@@ -397,6 +425,36 @@ function M.get_marked_bufs()
     end
   end
   return marked_bufs
+end
+
+M.toggle = 0
+
+function M.toggle_recording_hl()
+  if M.toggle == 0 then
+    vim.api.nvim_set_hl(0, 'ST_Macro', { link = 'ST_MacroB' })
+    vim.api.nvim_set_hl(0, 'ST_MacroSep', { link = 'ST_MacroSepB' })
+    M.toggle = 1
+  else
+    vim.api.nvim_set_hl(0, 'ST_Macro', { link = 'ST_MacroA' })
+    vim.api.nvim_set_hl(0, 'ST_MacroSep', { link = 'ST_MacroSepA' })
+    M.toggle = 0
+  end
+end
+
+M.hl_timer = vim.loop.new_timer()
+
+function M.start_record_highlight()
+  M.hl_timer:start(
+    0,
+    500,
+    vim.schedule_wrap(function()
+      M.toggle_recording_hl()
+    end)
+  )
+end
+
+function M.stop_timer()
+  M.hl_timer:stop()
 end
 
 return M

@@ -422,7 +422,7 @@ M.run_spinner = function(chars, speed)
   return content
 end
 
-M.fileInfo = function()
+M.file_info = function()
   local icon = ' 󰈚 '
   local path = vim.api.nvim_buf_get_name(stbufnr())
   local name = (path == '' and 'Empty ') or path:match('([^/\\]+)[/\\]*$')
@@ -513,7 +513,7 @@ M.git = function()
   return '%#ST_EmptySpace2#' .. '' .. '%#St_gitIcons#' .. branch_name .. added .. changed .. removed
 end
 
-M.LSP_Diagnostics = function()
+M.lsp_diagnostics = function()
   ---@type integer|string
   local errors = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.ERROR })
   ---@type integer|string
@@ -531,7 +531,7 @@ M.LSP_Diagnostics = function()
   return vim.o.columns > 140 and errors .. warnings .. hints .. info or ''
 end
 
-M.LSP_status = function()
+M.lsp_status = function()
   if rawget(vim, 'lsp') then
     ---@diagnostic disable-next-line
     for _, client in ipairs(vim.lsp.get_active_clients()) do

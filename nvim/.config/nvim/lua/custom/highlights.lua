@@ -1,5 +1,6 @@
 local M = {}
 
+local cursorline = '#252931'
 local sep_color = '#454951'
 local bg_link = { 'grey', -5 }
 local black = { 'black', 0 }
@@ -42,17 +43,17 @@ M.add = {
   NvimTreeBookmark    = { fg = { "red", -10 } },
   NvimTreeBookmarkHL  = { fg = { "red", -10 } },
   NvimTreeOpenedFile  = { fg = { "yellow", -10 } },
-  NvimTreeTitle       = { fg = { "yellow", -10 }, bg = "darker_black", sp = sep_color, underline = true },
-  NvimTreeTitleSepOn  = { fg = sep_color,         bg = "black",        sp = sep_color, underline = false },
-  NvimTreeTitleSepOff = { fg = sep_color,         bg = "darker_black", sp = sep_color, underline = true,  },
+  NvimTreeTitle       = { fg = { "yellow", -10 }, bg = "darker_black", sp = sep_color, --[[ underline = true ]] },
+  NvimTreeTitleSepOn  = { fg = sep_color,         bg = "black",        sp = sep_color, --[[ underline = false ]] },
+  NvimTreeTitleSepOff = { fg = sep_color,         bg = "darker_black", sp = sep_color, --[[ underline = true, ]]  },
 
   WinBar              = { fg = "red", bg = black },
-  WinBarNC            = { bg = black },
+  WinBarNC            = { fg = black, bg = black },
 
   TbLineMarkedBufOn    = {fg = { 'blue', -20}, bg = 'black' },
-  TbLineMarkedBufOff   = {fg = { 'grey',  0 }, bg = 'darker_black', sp = sep_color, underline = true},
+  TbLineMarkedBufOff   = {fg = { 'grey',  0 }, bg = 'darker_black', sp = sep_color --[[ underline = true ]]},
   TbLineUnmarkedBufOn  = {fg = { 'blue', -20}, bg = 'black' },
-  TbLineUnmarkedBufOff = {fg = { 'grey',  0 }, bg = 'darker_black', sp = sep_color, underline = true},
+  TbLineUnmarkedBufOff = {fg = { 'grey',  0 }, bg = 'darker_black', sp = sep_color--[[ , underline = true ]]},
 
   -- Statusline special buffers
   St_toggleterm          = { fg = green,           bg = "black", italic = true },
@@ -83,16 +84,18 @@ M.add = {
   St_MacroB              = { fg = 'yellow', bg = 'black' },
   St_MacroSepB           = { fg = 'yellow', bg = 'black' },
 
+  -- NoiceCmdlineIcon       = { fg = d_red, bg = 'yellow', sp = sep_color, --[[ underline = true ]] },
+  NoiceVirtualTextOn     = { fg = l_blue, bg = cursorline },
 }
 
 -- stylua: ignore
 M.override = {
   -- Tabufline
   TbLineBufOn          = { fg = d_yellow },
-  TbLineBufOff         = { fg = "grey", bg = "darker_black", sp = sep_color, underline = true },
-  TbLineBufOffModified = { bg = "darker_black", sp = sep_color, underline = true },
-  TbLineBufOffClose    = { bg = "darker_black", sp = sep_color, underline = true },
-  TblineFill           = { bg = "darker_black", sp = sep_color, underline = true },
+  TbLineBufOff         = { fg = "grey", bg = "darker_black", sp = sep_color, --[[ underline = true ]] },
+  TbLineBufOffModified = { bg = "darker_black", sp = sep_color, --[[ underline = true ]] },
+  TbLineBufOffClose    = { bg = "darker_black", sp = sep_color, --[[ underline = true ]] },
+  TblineFill           = { bg = "darker_black", sp = sep_color, --[[ underline = true ]] },
 
   -- Statusline modes
   St_NormalMode      = { fg = l_blue,   bg = black },

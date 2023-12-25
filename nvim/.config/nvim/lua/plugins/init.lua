@@ -82,15 +82,6 @@ local default_plugins = {
     end,
   },
 
-  -- {
-  --   -- https://github.com/nvimdev/lspsaga.nvim
-  --   'nvimdev/lspsaga.nvim',
-  --   event = 'LspAttach',
-  --   config = function()
-  --     require('plugins.configs.lsp.lspsaga')
-  --   end,
-  -- },
-
   {
     -- https://github.com/NvChad/nvim-colorizer.lua
     'NvChad/nvim-colorizer.lua',
@@ -177,7 +168,7 @@ local default_plugins = {
   {
     -- https://github.com/hrsh7th/nvim-cmp
     'hrsh7th/nvim-cmp',
-    event = 'InsertEnter',
+    event = { 'InsertEnter' },
     dependencies = {
       {
         -- https://github.com/L3MON4D3/LuaSnip
@@ -217,9 +208,6 @@ local default_plugins = {
         'hrsh7th/cmp-buffer',
         -- https://github.com/hrsh7th/cmp-path
         'hrsh7th/cmp-path',
-        -- https://github.com/hrsh7th/cmp-cmdline
-        'hrsh7th/cmp-cmdline',
-        'onsails/lspkind.nvim',
       },
     },
     opts = function()

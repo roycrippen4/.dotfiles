@@ -1,40 +1,17 @@
 local autocmd = vim.api.nvim_create_autocmd
 local utils = require('core.utils')
 
-local toggle = 0
-
-local function toggle_recording_hl()
-  if toggle == 0 then
-    vim.api.nvim_set_hl(0, 'ST_Macro', { link = 'ST_MacroB' })
-    vim.api.nvim_set_hl(0, 'ST_MacroSep', { link = 'ST_MacroSepB' })
-    toggle = 1
-  else
-    vim.api.nvim_set_hl(0, 'ST_Macro', { link = 'ST_MacroA' })
-    vim.api.nvim_set_hl(0, 'ST_MacroSep', { link = 'ST_MacroSepA' })
-    toggle = 0
-  end
-end
-
-local hl_timer = vim.loop.new_timer()
-local function start_record_highlight()
-  hl_timer:start(
-    0,
-    500,
-    vim.schedule_wrap(function()
-      toggle_recording_hl()
-    end)
-  )
-end
-
+-- Toggles highlight group for the statusline macro segment
 autocmd('RecordingEnter', {
   callback = function()
-    start_record_highlight()
+    utils.start_record_highlight()
   end,
 })
 
+-- Stops toggling the highlight group for the statusline macro segment
 autocmd('RecordingLeave', {
   callback = function()
-    hl_timer:stop()
+    utils.stop_timer()
   end,
 })
 
@@ -47,8 +24,12 @@ autocmd('BufEnter', {
 })
 
 -- Disable diagnostics in node_modules (0 is current buffer only)
-autocmd({ 'BufRead', 'BufNewFile' }, { pattern = '*/node_modules/*', command = 'lua vim.diagnostic.disable(0)' })
+autocmd({ 'BufRead', 'BufNewFile' }, {
+  pattern = '*/node_modules/*',
+  command = 'lua vim.diagnostic.disable(0)',
+})
 
+-- Dynamically changes the highlight group of the statusline mode segment based on the current mode
 autocmd('ModeChanged', {
   callback = function()
     local m = vim.api.nvim_get_mode().mode
@@ -93,66 +74,53 @@ autocmd('QuitPre', {
   end,
 })
 
-local highlight_group = vim.api.nvim_create_augroup('YankHighlight', { clear = true })
 autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()
   end,
-  group = highlight_group,
+  group = utils.highlight_group,
   pattern = '*',
 })
 
-local hl_ns = vim.api.nvim_create_namespace('search')
-local hlsearch_group = vim.api.nvim_create_augroup('hlsearch_group', { clear = true })
+autocmd('CursorMoved', {
+  -- group = utils.hlsearch_group,
+  callback = function()
+    vim.on_key(utils.manage_hlsearch, utils.hlsearch_ns)
+  end,
+})
 
-local function manage_hlsearch(char)
-  local key = vim.fn.keytrans(char)
-  local keys = { '<CR>', 'n', 'N', '*', '#', '?', '/' }
-
-  if vim.fn.mode() == 'n' then
-    if not vim.tbl_contains(keys, key) then
-      vim.cmd([[ :set nohlsearch ]])
-    elseif vim.tbl_contains(keys, key) then
-      vim.cmd([[ :set hlsearch ]])
-    end
-  end
-  ---@diagnostic disable next-line
-  vim.on_key(nil, hl_ns)
-end
-
+-- Turns off the cursorline
 autocmd({ 'InsertLeave', 'WinEnter', 'BufEnter' }, {
   callback = function()
-    vim.cmd([[ set cursorline ]])
+    vim.o.cursorline = true
     vim.api.nvim_set_hl(0, 'CursorLine', { link = 'NvimTreeCursorLine' })
   end,
 })
 
-autocmd({ 'InsertEnter', 'WinLeave' }, { command = 'set nocursorline', group = group })
-
-autocmd('CursorMoved', {
-  group = hlsearch_group,
-  callback = function()
-    vim.on_key(manage_hlsearch, hl_ns)
-  end,
+-- Turns on the cursorline
+autocmd({ 'InsertEnter', 'WinLeave' }, {
+  command = 'set nocursorline',
 })
 
-autocmd({ 'BufAdd', 'BufDelete', 'BufEnter', 'TabNew' }, {
-  callback = function()
-    local current_buf = vim.api.nvim_get_current_buf()
-    if vim.t.bufs ~= nil then
-      if #vim.t.bufs == 0 then
-        return
-      else
-        if vim.t.bufs[1] == current_buf then
-          vim.api.nvim_set_hl(0, 'NvimTreeTitleSep', { link = 'NvimTreeTitleSepOn' })
-        else
-          vim.api.nvim_set_hl(0, 'NvimTreeTitleSep', { link = 'NvimTreeTitleSepOff' })
-        end
-      end
-    end
-  end,
-})
+-- autocmd({ 'BufAdd', 'BufDelete', 'BufEnter', 'TabNew' }, {
+--   callback = function()
+--     local current_buf = vim.api.nvim_get_current_buf()
+--     if vim.t.bufs ~= nil then
+--       if #vim.t.bufs == 0 then
+--         return
+--       else
+--         if vim.t.bufs[1] == current_buf then
+--           vim.api.nvim_set_hl(0, 'NvimTreeTitleSep', { link = 'NvimTreeTitleSepOn' })
+--         else
+--           vim.api.nvim_set_hl(0, 'NvimTreeTitleSep', { link = 'NvimTreeTitleSepOff' })
+--         end
+--       end
+--     end
+--   end,
+-- })
 
+-- Checks to see if a .nvmrc exists and sets node version if one is found.
+-- Also sets the title string for the kitty tabs
 autocmd({ 'VimEnter' }, {
   callback = function()
     local cwd = vim.fn.getcwd()
