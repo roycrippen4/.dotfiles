@@ -115,6 +115,13 @@ M.general = {
     ['<C-k>'] = { '<C-w>k', 'Window up' },
     ['<Leader>v'] = { '<C-w>v', 'Vertical split', opts = { nowait = true } },
     ['<Leader>h'] = { '<C-w>s', 'Horizontal split', opts = { nowait = true } },
+    -- ['<Leader><Leader>'] = { '<cmd> Lazy<CR>', 'Open Lazy' },
+    ['<Leader><Leader>'] = {
+      function()
+        require('core.utils').Log('testing')
+      end,
+      'Open Lazy',
+    },
 
     --zen-mode
     ['<Leader>z'] = { ':ZenMode<CR>', 'Zen', opts = { nowait = true } },
@@ -233,7 +240,7 @@ M.lspconfig = {
       'Goto Type Definition',
     },
 
-    ['K'] = { '<cmd>Lspsaga hover_doc<CR>', 'LSP Hover' },
+    -- ['K'] = { '<cmd>Lspsaga hover_doc<CR>', 'LSP Hover' },
 
     ['<C-S-K>'] = {
       function()

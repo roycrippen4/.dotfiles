@@ -1,5 +1,7 @@
 local utils = require('core.utils')
 
+local timer = require('core.Clock'):new()
+
 local function stbufnr()
   return vim.api.nvim_win_get_buf(vim.g.statusline_winid)
 end
@@ -464,9 +466,14 @@ M.fileInfo = function()
   }
 
   local ft = vim.bo.ft
+
+  local function redraw_status()
+    vim.api.nvim_command('redrawstatus')
+  end
+
   for ftype, info in pairs(filetypes) do
     if utils.contains(ft, ftype) then
-      utils.start_clock()
+      timer:start(100, redraw_status)
       local chars, speed = M.spinner.braille_8_circle_worm(info.label_hl)
       return info.icon
         .. info.label
@@ -479,7 +486,7 @@ M.fileInfo = function()
     end
   end
 
-  utils.stop_clock()
+  timer:stop()
   return '%#St_file_info#' .. icon .. name .. '%#St_file_sep#' .. sep_r
 end
 

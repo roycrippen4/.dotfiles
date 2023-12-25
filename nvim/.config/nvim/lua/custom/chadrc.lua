@@ -12,14 +12,14 @@ M.ui = {
     overriden_modules = function(modules)
       modules[1] = vim.g.NvimTreeOverlayTitle
       modules[2] = tab_modules.bufferlist()
-      modules[4] = ''
+      -- modules[4] = ''
     end,
     enabled = true,
     lazyload = false,
   },
 
   statusline = {
-    theme = 'default', -- default/vscode/vscode_colored/minimal
+    theme = 'default',
     separator_style = 'default',
     overriden_modules = function(modules)
       modules[1] = status_modules.mode_module()
@@ -30,32 +30,7 @@ M.ui = {
       modules[8] = status_modules.LSP_status()
       modules[9] = status_modules.cursor_position()
       modules[10] = status_modules.cwd()
-
-      -- modules[10] = ''
-      -- modules[11] = ''
     end,
-  },
-}
-
-M.base46 = {
-  integrations = {
-    'blankline',
-    'cmp',
-    'defaults',
-    'devicons',
-    'git',
-    'lsp',
-    'mason',
-    'nvchad_updater',
-    'nvcheatsheet',
-    'nvdash',
-    'nvimtree',
-    'statusline',
-    'syntax',
-    'treesitter',
-    'tbline',
-    'telescope',
-    'whichkey',
   },
 }
 

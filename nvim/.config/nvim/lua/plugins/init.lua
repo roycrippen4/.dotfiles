@@ -4,6 +4,19 @@ local default_plugins = {
   'nvim-lua/plenary.nvim',
 
   {
+    -- https://github.com/folke/noice.nvim
+    'folke/noice.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'rcarriga/nvim-notify',
+    },
+    config = function()
+      require('plugins.configs.noice')
+    end,
+  },
+
+  {
     -- https://github.com/kdheepak/lazygit.nvim
     'kdheepak/lazygit.nvim',
     keys = { '<leader>gg' },
@@ -36,14 +49,17 @@ local default_plugins = {
     event = 'InsertEnter',
     config = function()
       require('copilot').setup({
-        suggestion = {
-          enabled = true,
-          auto_trigger = true,
-          keymap = {
-            accept = '<Tab>',
-          },
-        },
+        suggestion = { enabled = false },
+        panel = { enabled = false },
       })
+    end,
+  },
+
+  {
+    'zbirenbaum/copilot-cmp',
+    event = { 'InsertEnter', 'LspAttach' },
+    config = function()
+      require('copilot_cmp').setup()
     end,
   },
 
@@ -66,28 +82,14 @@ local default_plugins = {
     end,
   },
 
-  {
-    -- https://github.com/nvimdev/lspsaga.nvim
-    'nvimdev/lspsaga.nvim',
-    event = 'LspAttach',
-    config = function()
-      require('plugins.configs.lsp.lspsaga')
-    end,
-  },
-
-  {
-    -- https://github.com/ziontee113/icon-picker.nvim
-    'ziontee113/icon-picker.nvim',
-    cmd = { 'IconPickerNormal' },
-    keys = { '<C-i>' },
-    dependencies = { 'stevearc/dressing.nvim' },
-    config = function()
-      require('icon-picker').setup({
-        disable_legacy_commands = true,
-      })
-      vim.keymap.set('n', '<C-i>', '<cmd>IconPickerNormal<cr>', { desc = 'Pick icons', noremap = true, silent = true })
-    end,
-  },
+  -- {
+  --   -- https://github.com/nvimdev/lspsaga.nvim
+  --   'nvimdev/lspsaga.nvim',
+  --   event = 'LspAttach',
+  --   config = function()
+  --     require('plugins.configs.lsp.lspsaga')
+  --   end,
+  -- },
 
   {
     -- https://github.com/NvChad/nvim-colorizer.lua
@@ -215,6 +217,9 @@ local default_plugins = {
         'hrsh7th/cmp-buffer',
         -- https://github.com/hrsh7th/cmp-path
         'hrsh7th/cmp-path',
+        -- https://github.com/hrsh7th/cmp-cmdline
+        'hrsh7th/cmp-cmdline',
+        'onsails/lspkind.nvim',
       },
     },
     opts = function()

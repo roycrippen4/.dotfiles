@@ -43,6 +43,8 @@ export MANPATH="/usr/local/man:$MANPATH"
 export NODE_PATH="which node"
 # kitty
 export PATH="$HOME/.local/bin:$PATH"
+#Julia
+export PATH="$PATH:$HOME/Opt/julia-1.9.4/bin"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL10k_MODE="nerdfont-complete"

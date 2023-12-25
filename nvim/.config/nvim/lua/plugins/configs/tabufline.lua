@@ -57,41 +57,45 @@ local function is_buf_marked(bufnr)
   return nil
 end
 
-local function add_fileInfo(name, bufnr)
-  for _, value in ipairs(vim.t.bufs) do
-    if is_buf_valid(value) then
-      if name == fn.fnamemodify(api.nvim_buf_get_name(value), ':t') and value ~= bufnr then
-        local other = {}
-        for match in (vim.fs.normalize(api.nvim_buf_get_name(value)) .. '/'):gmatch('(.-)' .. '/') do
-          table.insert(other, match)
-        end
-
-        local current = {}
-        for match in (vim.fs.normalize(api.nvim_buf_get_name(bufnr)) .. '/'):gmatch('(.-)' .. '/') do
-          table.insert(current, match)
-        end
-
-        name = current[#current]
-
-        for i = #current - 1, 1, -1 do
-          local value_current = current[i]
-          local other_current = other[i]
-
-          if value_current ~= other_current then
-            if (#current - i) < 2 then
-              name = value_current .. '/' .. name
-            else
-              name = value_current .. '/../' .. name
-            end
-            break
+local function add_file_info(name, bufnr)
+  local x = nil
+  if name ~= ' No Name ' then
+    for _, value in ipairs(vim.t.bufs) do
+      if is_buf_valid(value) then
+        if name == api.nvim_buf_get_name(value):match('^.+/(.+)$') and value ~= bufnr then
+          x = true
+          local other = {}
+          for match in (vim.fs.normalize(api.nvim_buf_get_name(value)) .. '/'):gmatch('(.-)' .. '/') do
+            table.insert(other, match)
           end
+
+          local current = {}
+          for match in (vim.fs.normalize(api.nvim_buf_get_name(bufnr)) .. '/'):gmatch('(.-)' .. '/') do
+            table.insert(current, match)
+          end
+
+          name = current[#current]
+
+          for i = #current - 1, 1, -1 do
+            local value_current = current[i]
+            local other_current = other[i]
+
+            if value_current ~= other_current then
+              if (#current - i) < 2 then
+                name = value_current .. '/' .. name
+              else
+                name = value_current .. '/../' .. name
+              end
+              break
+            end
+          end
+          break
         end
-        break
       end
     end
 
     -- padding around bufname; 24 = bufame length (icon + filename)
-    local pad = (24 - #name - 5) / 2
+    local pad = (30 - #name - 5) / 2
     local r_pad = math.floor(pad / 2)
     local l_pad = pad - r_pad
     local maxname_len = 16
@@ -116,8 +120,9 @@ end
 
 local function style_buffer_tab(nr)
   local close_btn = '%' .. nr .. '@TbKillBuf@ 󰅖 %X'
-  local name = (#api.nvim_buf_get_name(nr) ~= 0) and fn.fnamemodify(api.nvim_buf_get_name(nr), ':t') or ' No Name '
-  name = '%' .. nr .. '@TbGoToBuf@' .. add_fileInfo(name, nr) .. '%X'
+  local filepath = api.nvim_buf_get_name(nr)
+  local name = (filepath == '' and ' No Name') or filepath:match('([^/\\]+)[/\\]*$')
+  name = '%' .. nr .. '@TbGoToBuf@' .. add_file_info(name, nr) .. '%X'
 
   -- color close btn for focused / hidden  buffers
   if nr == api.nvim_get_current_buf() then
@@ -142,7 +147,7 @@ end
 
 M.bufferlist = function()
   local buffers = {} -- buffersults
-  local available_space = vim.o.columns - get_nvim_tree_width() - get_btns_width()
+  local available_space = vim.o.columns - get_nvim_tree_width() - get_btns_width() - 5
   local current_buf = api.nvim_get_current_buf()
   local has_current = false -- have we seen current buffer yet?
 
@@ -161,30 +166,7 @@ M.bufferlist = function()
     end
   end
 
-  vim.g.visibuffers = buffers
   return table.concat(buffers) .. '%#TblineFill#' .. '%=' -- buffers + empty space
-end
-
-vim.g.TbTabsToggled = 0
-
-M.tablist = function()
-  local result, number_of_tabs = '', fn.tabpagenr('$')
-
-  if number_of_tabs > 1 then
-    for i = 1, number_of_tabs, 1 do
-      local tab_hl = ((i == fn.tabpagenr()) and '%#TbLineTabOn# ') or '%#TbLineTabOff# '
-      result = result .. ('%' .. i .. '@TbGotoTab@' .. tab_hl .. i .. ' ')
-      result = (i == fn.tabpagenr() and result .. '%#TbLineTabCloseBtn#' .. '%@TbTabClose@󰅙 %X') or result
-    end
-
-    local new_tabtn = '%#TblineTabNewBtn#' .. '%@TbNewTab@  %X'
-    local tabstoggleBtn = '%@TbToggleTabs@ %#TBTabTitle# TABS %X'
-
-    return vim.g.TbTabsToggled == 1 and tabstoggleBtn:gsub('()', { [36] = ' ' })
-      or new_tabtn .. tabstoggleBtn .. result
-  end
-
-  return ''
 end
 
 return M

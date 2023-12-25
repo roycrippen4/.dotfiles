@@ -1,6 +1,22 @@
 local M = {}
 local merge_tb = vim.tbl_deep_extend
 
+M.Log = function(msg)
+  local log_path = './debug.log'
+  local file = io.open(log_path, 'a')
+
+  if type(msg) ~= 'string' then
+    msg = vim.inspect(msg)
+  end
+
+  if file then
+    file:write(os.date('%Y-%m-%d %H:%M:%S') .. ' - ' .. msg .. '\n')
+    file:close()
+  else
+    print('Error opening log file!')
+  end
+end
+
 ---@param param any item to look for in case_table
 ---@param case_table table the cases
 ---@return any result the definition for the match in the case_table
@@ -341,25 +357,26 @@ function M.get_marked_bufs()
   return marked_bufs
 end
 
-M.clock = nil
+-- ---@class Clock
+-- local M.Clock = {}
 
-function M.start_clock()
-  if not M.clock or not M.clock:is_active() then
-    M.clock = vim.loop.new_timer()
-    M.clock:start(
-      0,
-      100,
-      vim.schedule_wrap(function()
-        vim.api.nvim_command('redrawstatus')
-      end)
-    )
-  end
-end
+-- function M.start_clock()
+--   if not M.clock or not M.clock:is_active() then
+--     M.clock = vim.loop.new_timer()
+--     M.clock:start(
+--       0,
+--       100,
+--       vim.schedule_wrap(function()
+--         vim.api.nvim_command('redrawstatus')
+--       end)
+--     )
+--   end
+-- end
 
-function M.stop_clock()
-  if M.clock and M.clock:is_active() then
-    M.clock:stop()
-  end
-end
+-- function M.stop_clock()
+--   if M.clock and M.clock:is_active() then
+--     M.clock:stop()
+--   end
+-- end
 
 return M

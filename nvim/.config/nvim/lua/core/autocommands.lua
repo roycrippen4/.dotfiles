@@ -1,6 +1,16 @@
 local autocmd = vim.api.nvim_create_autocmd
 local utils = require('core.utils')
 
+autocmd('CmdLineLeave', {
+  callback = function()
+    vim.defer_fn(function()
+      vim.cmd('echom ""')
+    end, 3000)
+  end,
+})
+
+-- autocmd('CmdLineEnter')
+
 -- Disable new line comments for all filetypes
 autocmd('BufEnter', {
   callback = function()
@@ -10,10 +20,7 @@ autocmd('BufEnter', {
 })
 
 -- Disable diagnostics in node_modules (0 is current buffer only)
-autocmd({ 'BufRead', 'BufNewFile' }, {
-  pattern = '*/node_modules/*',
-  command = 'lua vim.diagnostic.disable(0)',
-})
+autocmd({ 'BufRead', 'BufNewFile' }, { pattern = '*/node_modules/*', command = 'lua vim.diagnostic.disable(0)' })
 
 autocmd('ModeChanged', {
   callback = function()
