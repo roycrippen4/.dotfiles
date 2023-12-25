@@ -1,15 +1,42 @@
 local autocmd = vim.api.nvim_create_autocmd
 local utils = require('core.utils')
 
-autocmd('CmdLineLeave', {
+local toggle = 0
+
+local function toggle_recording_hl()
+  if toggle == 0 then
+    vim.api.nvim_set_hl(0, 'ST_Macro', { link = 'ST_MacroB' })
+    vim.api.nvim_set_hl(0, 'ST_MacroSep', { link = 'ST_MacroSepB' })
+    toggle = 1
+  else
+    vim.api.nvim_set_hl(0, 'ST_Macro', { link = 'ST_MacroA' })
+    vim.api.nvim_set_hl(0, 'ST_MacroSep', { link = 'ST_MacroSepA' })
+    toggle = 0
+  end
+end
+
+local hl_timer = vim.loop.new_timer()
+local function start_record_highlight()
+  hl_timer:start(
+    0,
+    500,
+    vim.schedule_wrap(function()
+      toggle_recording_hl()
+    end)
+  )
+end
+
+autocmd('RecordingEnter', {
   callback = function()
-    vim.defer_fn(function()
-      vim.cmd('echom ""')
-    end, 3000)
+    start_record_highlight()
   end,
 })
 
--- autocmd('CmdLineEnter')
+autocmd('RecordingLeave', {
+  callback = function()
+    hl_timer:stop()
+  end,
+})
 
 -- Disable new line comments for all filetypes
 autocmd('BufEnter', {

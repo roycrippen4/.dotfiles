@@ -42,7 +42,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 # export NVM_DIR='~/.nvm/'
 export NODE_PATH="which node"
 # kitty
-export PATH="$HOME/.local/bin:$PATH"
+export PATH="$PATH:$HOME/.local/bin"
 #Julia
 export PATH="$PATH:$HOME/Opt/julia-1.9.4/bin"
 
@@ -95,3 +95,4 @@ alias dot='cd && cd .dotfiles'
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+export PATH="$HOME/bin/nvim.sh:$PATH"

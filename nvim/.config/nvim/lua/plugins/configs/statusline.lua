@@ -120,7 +120,13 @@ M.mode_module = function()
   local current_mode = '%#' .. M.modes[m][2] .. '#' .. (M.modes[m][3] or '  ') .. M.modes[m][1] .. ' '
   local mode_sep1 = '%#' .. M.modes[m][2] .. 'Sep' .. '#' .. ''
 
-  return current_mode .. mode_sep1 .. '%#ST_EmptySpace#' .. ''
+  local recording_register = vim.fn.reg_recording()
+
+  if recording_register == '' then
+    return current_mode .. mode_sep1 .. '%#ST_EmptySpace#' .. ''
+  else
+    return ' %#ST_Macro#󰑊 MACRO ' .. recording_register .. '%#ST_MacroSep# '
+  end
 end
 
 local spinner_colors = {
@@ -506,7 +512,6 @@ M.git = function()
 
   return '%#ST_EmptySpace2#' .. '' .. '%#St_gitIcons#' .. branch_name .. added .. changed .. removed
 end
---
 
 M.LSP_Diagnostics = function()
   ---@type integer|string

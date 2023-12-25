@@ -75,6 +75,13 @@ M.add = {
   St_gitAdd              = { fg = 'green',  bg = 'black' },
   St_gitRemove           = { fg = 'red',    bg = 'black' },
   St_gitChange           = { fg = 'yellow', bg = 'black' },
+  St_Macro              = { fg = d_red,     bg = 'black' },
+  St_MacroSep           = { fg = d_red,     bg = 'black' },
+
+  St_MacroA              = { fg = d_red,    bg = 'black' },
+  St_MacroSepA           = { fg = d_red,    bg = 'black' },
+  St_MacroB              = { fg = 'yellow', bg = 'black' },
+  St_MacroSepB           = { fg = 'yellow', bg = 'black' },
 
 }
 

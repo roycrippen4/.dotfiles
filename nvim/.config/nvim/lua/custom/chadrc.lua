@@ -26,6 +26,7 @@ M.ui = {
       modules[2] = status_modules.fileInfo()
       modules[3] = status_modules.git()
       modules[5] = ''
+      -- modules[6] = status_modules
       modules[7] = status_modules.LSP_Diagnostics()
       modules[8] = status_modules.LSP_status()
       modules[9] = status_modules.cursor_position()

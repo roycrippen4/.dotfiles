@@ -8,22 +8,40 @@ noice.setup({
   routes = {
     {
       filter = {
-        event = '*',
+        event = 'msg_show',
         kind = '',
+        find = 'written',
       },
-      opts = { skip = true },
+      opts = {
+        skip = true,
+      },
+    },
+    {
+      filter = {
+        event = 'msg_show',
+        kind = '',
+        find = 'lines',
+      },
+      opts = {
+        skip = true,
+      },
     },
     {
       view = 'notify',
-      filter = { event = 'msg_showmode' },
-      opts = { skip = true },
+      filter = {
+        event = 'msg_showmode',
+      },
+      opts = {
+        skip = true,
+      },
     },
-  },
-  notify = {
-    enabled = false,
-  },
-  messages = {
-    enabled = false,
+    {
+      view = 'virtualtext',
+      filter = {
+        event = 'msg_show',
+        kind = 'search_count',
+      },
+    },
   },
   lsp = {
     progress = {
@@ -36,7 +54,7 @@ noice.setup({
     },
     hover = {
       enabled = true,
-      silent = false,
+      silent = true,
       view = nil,
       opts = {},
     },
@@ -66,16 +84,19 @@ noice.setup({
   },
   views = {
     cmdline_popup = {
-      border = {
-        style = 'none',
-      },
       position = {
-        row = 2,
-        col = '100%',
+        row = 70,
+        height = 1,
       },
     },
   },
   cmdline = {
-    enabled = false,
+    enabled = true,
+    opts = {
+      border = 'none',
+    },
+  },
+  presets = {
+    bottom_search = false,
   },
 })
