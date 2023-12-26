@@ -44,7 +44,7 @@ noice.setup({
   views = {
     cmdline_popup = {
       position = {
-        col = 13,
+        col = 15,
         row = 70,
         height = 1,
       },
@@ -53,7 +53,28 @@ noice.setup({
   cmdline = {
     format = {
       cmdline = {
-        icon = ' :',
+        icon = '',
+      },
+      selectionfilter = {
+        kind = 'Filter',
+        pattern = "^:%s*%'<,%'>%s*.*",
+        -- icon = '',
+        icon = '',
+      },
+      substitute = {
+        pattern = '^:%%?s/',
+        icon = '',
+        -- icon = ' ',
+        ft = 'regex',
+      },
+      search_up = {
+        icon = '',
+      },
+      search_down = {
+        icon = '',
+      },
+      help = {
+        icon = '❔',
       },
     },
     enabled = true,

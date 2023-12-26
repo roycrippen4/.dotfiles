@@ -1,7 +1,5 @@
 local utils = require('core.utils')
 
-local timer = require('core.Clock'):new()
-
 local function stbufnr()
   return vim.api.nvim_win_get_buf(vim.g.statusline_winid)
 end
@@ -473,26 +471,12 @@ M.file_info = function()
 
   local ft = vim.bo.ft
 
-  local function redraw_status()
-    vim.api.nvim_command('redrawstatus')
-  end
-
   for ftype, info in pairs(filetypes) do
     if utils.contains(ft, ftype) then
-      timer:start(100, redraw_status)
-      local chars, speed = M.spinner.braille_8_circle_worm(info.label_hl)
-      return info.icon
-        .. info.label
-        .. M.run_spinner(chars, speed)
-        .. ' '
-        .. info.sep_hl
-        .. ''
-        .. info.sep_hl
-        .. ' '
+      return info.icon .. info.label .. ' ' .. info.sep_hl .. '' .. info.sep_hl .. ' '
     end
   end
 
-  timer:stop()
   return '%#St_file_info#' .. icon .. name .. '%#St_file_sep#' .. sep_r
 end
 
@@ -536,10 +520,7 @@ M.lsp_status = function()
     ---@diagnostic disable-next-line
     for _, client in ipairs(vim.lsp.get_active_clients()) do
       if client.attached_buffers[stbufnr()] and client.name ~= 'null-ls' then
-        return (
-          vim.o.columns > 100 --[[ '%#St_LspStatus#╱' .. ]]
-          and '%#St_LspStatus#' .. '   LSP ~ ' .. client.name .. ' '
-        ) or '   LSP '
+        return (vim.o.columns > 100 and '%#St_LspStatus#' .. '   LSP ~ ' .. client.name .. ' ') or '   LSP '
       end
     end
   end
@@ -554,8 +535,54 @@ M.cwd = function()
   return (vim.o.columns > 85 and dir_name) or ''
 end
 
+local patterns = {
+  selectionfilter = "^:%s*%'<,%'>%s*.*",
+  substitute = '^:%%?s/.*',
+  -- help = '^:%s*h%s+',
+  help = '^:%s*he?l?p?%s+',
+  lua2 = '^:=',
+  lua = '^:%s*lua%s+.*',
+  cmdline = '^:',
+  search = '^/',
+}
+
+local chars, speed = M.spinner.braille_8_circle_worm('')
+
 M.noice_cmdline = function()
-  return vim.api.nvim_get_mode().mode
+  local type = vim.fn.getcmdtype()
+  local text = vim.fn.getcmdline()
+  local last = nil
+  local input = type .. text
+
+  if string.match(input, patterns.selectionfilter) then
+    last = '  SELECTSUB  '
+    return last
+  end
+  if string.match(input, patterns.substitute) then
+    last = '  SUBSTITUTE  '
+    return last
+  end
+  if string.match(input, patterns.help) then
+    last = '╱ HELP ' .. M.run_spinner(chars, speed) .. '  '
+    return last
+  end
+  if string.match(input, patterns.lua) then
+    last = ' LUA ' .. M.run_spinner(chars, speed) .. '  '
+    return last
+  end
+  if string.match(input, patterns.lua2) then
+    last = ' LUA ' .. M.run_spinner(chars, speed) .. '  '
+    return last
+  end
+  if string.match(input, patterns.search) then
+    last = '  SEARCH ' .. M.run_spinner(chars, speed) .. ' '
+    return last
+  end
+  if string.match(input, patterns.cmdline) then
+    last = '  COMMAND ' .. M.run_spinner(chars, speed) .. '  '
+    return last
+  end
+  return last
 end
 
 return M

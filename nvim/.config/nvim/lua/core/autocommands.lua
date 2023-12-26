@@ -1,6 +1,6 @@
 local autocmd = vim.api.nvim_create_autocmd
 local utils = require('core.utils')
-vim.api.nvim_create_augroup('bufcheck', {clear = true})
+vim.api.nvim_create_augroup('bufcheck', { clear = true })
 -- local patterns = {
 --   cmdline = '^:',
 --   search_down = '^/',
