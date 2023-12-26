@@ -4,6 +4,7 @@ local config = require('core.utils').load_config()
 require('core.autocommands')
 require('core.commands')
 require('core.diagnostic')
+require('core.hlsearch')
 
 -------------------------------------- globals -----------------------------------------
 g.nvchad_theme = config.ui.theme

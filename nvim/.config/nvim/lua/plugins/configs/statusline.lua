@@ -554,4 +554,8 @@ M.cwd = function()
   return (vim.o.columns > 85 and dir_name) or ''
 end
 
+M.noice_cmdline = function()
+  return vim.api.nvim_get_mode().mode
+end
+
 return M

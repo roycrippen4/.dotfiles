@@ -1,5 +1,35 @@
 local autocmd = vim.api.nvim_create_autocmd
 local utils = require('core.utils')
+vim.api.nvim_create_augroup('bufcheck', {clear = true})
+-- local patterns = {
+--   cmdline = '^:',
+--   search_down = '^/',
+--   search_up = '^%?',
+--   filter = '^:%s*!',
+--   help = '^:%s*he?l?p?%s+',
+--   calculator = '^=',
+-- lua         =  { '^:%s*lua%s+', '^:%s*lua%s*=%s*', '^:%s*=%s*' }'},
+-- }
+
+-- autocmd({ 'CmdlineEnter', 'CmdlineChanged' }, {
+--   callback = function()
+--     local type = vim.fn.getcmdtype()
+--     local text = vim.fn.getcmdline()
+--     print(type .. text)
+--   end,
+-- })
+
+autocmd('BufReadPost', {
+  group = 'bufcheck',
+  pattern = '*',
+  callback = function()
+    if vim.fn.line('\'"') > 0 and vim.fn.line('\'"') <= vim.fn.line('$') then
+      vim.fn.setpos('.', vim.fn.getpos('\'"'))
+      -- vim.cmd('normal zz') -- how do I center the buffer in a sane way??
+      vim.cmd('silent! foldopen')
+    end
+  end,
+})
 
 -- Toggles highlight group for the statusline macro segment
 autocmd('RecordingEnter', {
@@ -74,19 +104,12 @@ autocmd('QuitPre', {
   end,
 })
 
+-- highlights the yanked portion of the buffer on yank
 autocmd('TextYankPost', {
   callback = function()
     vim.highlight.on_yank()
   end,
-  group = utils.highlight_group,
   pattern = '*',
-})
-
-autocmd('CursorMoved', {
-  -- group = utils.hlsearch_group,
-  callback = function()
-    vim.on_key(utils.manage_hlsearch, utils.hlsearch_ns)
-  end,
 })
 
 -- Turns off the cursorline

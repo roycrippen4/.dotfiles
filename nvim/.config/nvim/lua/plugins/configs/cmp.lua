@@ -61,6 +61,7 @@ local options = {
       side_padding = (cmp_style ~= 'atom' and cmp_style ~= 'atom_colored') and 1 or 0,
       winhighlight = 'Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel',
       scrollbar = false,
+      border = border('CmpBorder'),
     },
     documentation = {
       border = border('CmpDocBorder'),
@@ -142,8 +143,8 @@ local options = {
   },
 }
 
-if cmp_style ~= 'atom' and cmp_style ~= 'atom_colored' then
-  options.window.completion.border = border('CmpBorder')
-end
+-- if cmp_style ~= 'atom' and cmp_style ~= 'atom_colored' then
+--   options.window.completion.border = border('CmpBorder')
+-- end
 
 return options

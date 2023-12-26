@@ -5,58 +5,17 @@ if not ok then
 end
 
 noice.setup({
-  routes = {
-    {
-      filter = {
-        event = 'msg_show',
-        kind = '',
-        find = 'written',
-      },
-      opts = {
-        skip = true,
-      },
-    },
-    {
-      filter = {
-        event = 'msg_show',
-        kind = '',
-        find = 'lines',
-      },
-      opts = {
-        skip = true,
-      },
-    },
-    {
-      view = 'notify',
-      filter = {
-        event = 'msg_showmode',
-      },
-      opts = {
-        skip = true,
-      },
-    },
-    {
-      view = 'virtualtext',
-      filter = {
-        event = 'msg_show',
-        kind = 'search_count',
-      },
-    },
-  },
   lsp = {
     progress = {
       enabled = false,
     },
     override = {
-      ['vim.lsp.util.convert_input_to_markdown_lines'] = false,
-      ['vim.lsp.util.stylize_markdown'] = false,
-      ['cmp.entry.get_documentation'] = false,
+      ['vim.lsp.util.convert_input_to_markdown_lines'] = true,
+      ['vim.lsp.util.stylize_markdown'] = true,
+      ['cmp.entry.get_documentation'] = true,
     },
     hover = {
       enabled = true,
-      silent = true,
-      -- view = nil,
-      opts = {},
     },
     signature = {
       enabled = true,
@@ -94,7 +53,7 @@ noice.setup({
   cmdline = {
     format = {
       cmdline = {
-        icon = '',
+        icon = ' :',
       },
     },
     enabled = true,
@@ -102,7 +61,21 @@ noice.setup({
       border = 'none',
     },
   },
-  presets = {
-    bottom_search = false,
+  messages = {
+    view_search = false,
+  },
+  routes = {
+    { filter = { find = 'E162' }, view = 'mini' },
+    { filter = { find = 'E37' }, skip = true },
+    { filter = { find = 'E486' }, opts = { skip = true } },
+    { filter = { event = 'emsg', find = 'E23' }, skip = true },
+    { filter = { event = 'emsg', find = 'E20' }, skip = true },
+    { filter = { find = 'No signature help' }, skip = true },
+    { filter = { event = 'msg_show', kind = '', find = 'written' }, opts = { skip = true } },
+    { filter = { event = 'msg_show', kind = '', find = 'lines' }, opts = { skip = true } },
+    { filter = { event = 'msg_show', kind = '', find = 'yanked' }, opts = { skip = true } },
+    { filter = { event = 'msg_show', kind = '', find = '%s/*' }, opts = { skip = true } },
+    { filter = { event = 'msg_show', find = 'search hit BOTTOM' }, skip = true },
+    { filter = { event = 'msg_show', find = 'search hit TOP' }, skip = true },
   },
 })
