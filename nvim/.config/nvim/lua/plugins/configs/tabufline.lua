@@ -141,6 +141,11 @@ end
 ---------------------------------------------------------- components ------------------------------------------------------------
 local M = {}
 
+M.host = function()
+  --        
+  return '%#St_HostSep#  %#St_Host#IV%#St_HostSep# '
+end
+
 M.nvimtree_overlay = function()
   return '%#NvimTreeNormal#' .. (vim.g.nvimtree_side == 'right' and '' or string.rep(' ', get_nvim_tree_width()))
 end

@@ -1,14 +1,11 @@
 local utils = require('core.utils')
 
 local function stbufnr()
-  return vim.api.nvim_win_get_buf(vim.g.statusline_winid)
+  return vim.api.nvim_win_get_buf(0)
 end
 
-local sep_r = ''
-
 local M = {}
---   󰈈       󱡠 󰴍       
-local command_icon = '  '
+-- local command_icon = '  '
 local normal_icon = '  '
 local insert_icon = '  '
 local select_icon = '  '
@@ -52,6 +49,9 @@ M.modes = {
   ['c'] = { 'COMMAND', 'St_CommandMode' },
   ['cv'] = { 'COMMAND', 'St_CommandMode' },
   ['ce'] = { 'COMMAND', 'St_CommandMode' },
+  -- ['c'] = { 'COMMAND',  'St_CommandMode' },
+  -- ['cv'] = { 'COMMAND', 'St_CommandMode' },
+  -- ['ce'] = { 'COMMAND', 'St_CommandMode' },
   ['r'] = { 'PROMPT', 'St_ConfirmMode' },
   ['rm'] = { 'MORE', 'St_ConfirmMode' },
   ['r?'] = { 'CONFIRM', 'St_ConfirmMode' },
@@ -59,7 +59,7 @@ M.modes = {
   ['!'] = { 'SHELL', 'St_TerminalMode' },
 }
 
-M.mode_module = function()
+M.mode = function()
   -- Normal
   M.modes['n'][3] = normal_icon
   M.modes['no'][3] = normal_icon
@@ -101,9 +101,9 @@ M.mode_module = function()
   M.modes[''][3] = select_icon
 
   -- Command
-  M.modes['c'][3] = command_icon
-  M.modes['cv'][3] = command_icon
-  M.modes['ce'][3] = command_icon
+  -- M.modes['c'][3] = command_icon
+  -- M.modes['cv'][3] = command_icon
+  -- M.modes['ce'][3] = command_icon
 
   -- Confirm
   M.modes['r'][3] = confirm_icon
@@ -115,315 +115,62 @@ M.mode_module = function()
   M.modes['!'][3] = '  '
 
   local m = vim.api.nvim_get_mode().mode
-  local current_mode = '%#' .. M.modes[m][2] .. '#' .. (M.modes[m][3] or '  ') .. M.modes[m][1] .. ' '
-  local mode_sep1 = '%#' .. M.modes[m][2] .. 'Sep' .. '#' .. ''
+  local current_mode = --[[ host .. ]]
+    '%#' .. M.modes[m][2] .. '#' .. (M.modes[m][3] or '  ') .. M.modes[m][1] .. ' '
+  local mode_sep1 = '%#' .. M.modes[m][2] .. 'Sep#'
 
   local recording_register = vim.fn.reg_recording()
 
   if recording_register == '' then
-    return current_mode .. mode_sep1 .. '%#ST_EmptySpace#' .. ''
+    return current_mode .. mode_sep1 --[[  .. '%#ST_EmptySpace#' .. '' ]]
   else
-    return ' %#ST_Macro#󰑊 MACRO ' .. recording_register .. '%#ST_MacroSep# '
+    return  --[[ host .. ]]'%#ST_Macro# 󰑊 MACRO ' .. recording_register .. '%#ST_MacroSep# '
   end
 end
 
-local spinner_colors = {
-  SpinnerRed = '%#SpinnerRed#',
-  SpinnerNeonCarrot = '%#SpinnerNeonCarrot#',
-  SpinnerOrange = '%#SpinnerOrange#',
-  SpinnerGold = '%#SpinnerGold#',
-  SpinnerYellow = '%#SpinnerYellow#',
-  SpinnerLimeGreen = '%#SpinnerLimeGreen#',
-  SpinnerBrightGreen = '%#SpinnerBrightGreen#',
-  SpinnerSpringGreen = '%#SpinnerSpringGreen#',
-  SpinnerCyan = '%#SpinnerCyan#',
-  SpinnerAzure = '%#SpinnerAzure#',
-  SpinnerBlue = '%#SpinnerBlue#',
-  SpinnerViolet = '%#SpinnerViolet#',
-  SpinnerVioleter = '%#SpinnerVioleter#',
-  SpinnerHotPink = '%#SpinnerHotPink#',
-}
+local function truncate_filename(filename, max_length)
+  local max_len = max_length or 20
+  local len = #filename
 
-M.spinner = {
-  rainbow_wave = function()
-    local zero = spinner_colors.SpinnerRed .. '▁'
-    local one = spinner_colors.SpinnerNeonCarrot .. '▂'
-    local two = spinner_colors.SpinnerOrange .. '▃'
-    local three = spinner_colors.SpinnerGold .. '▄'
-    local four = spinner_colors.SpinnerYellow .. '▅'
-    local five = spinner_colors.SpinnerLimeGreen .. '▆'
-    local six = spinner_colors.SpinnerBrightGreen .. '▇'
-    local seven = spinner_colors.SpinnerSpringGreen .. '█'
-    local eight = spinner_colors.SpinnerCyan .. '▇'
-    local nine = spinner_colors.SpinnerAzure .. '▆'
-    local ten = spinner_colors.SpinnerBlue .. '▅'
-    local eleven = spinner_colors.SpinnerViolet .. '▄'
-    local twelve = spinner_colors.SpinnerVioleter .. '▃'
-    local thirteen = spinner_colors.SpinnerHotPink .. '▂'
+  if len <= max_len then
+    return filename
+  end
 
-    local chars = {
-      zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen,
-      one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero,
-      two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one,
-      three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two,
-      four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three,
-      five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four,
-      six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five,
-      seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six,
-      eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven,
-      nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight,
-      ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine,
-      eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten,
-      twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven,
-      thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve,
-    }
-    return chars, 100
-  end,
+  local base_name, extension = filename:match('(.*)%.(.*)')
+  if not base_name then
+    base_name = filename
+    extension = ''
+  end
 
-  mutating_lines = function()
-    local chars = {
-      spinner_colors.SpinnerRed .. '︷',
-      spinner_colors.SpinnerRed .. '︵',
-      spinner_colors.SpinnerRed .. '︹',
-      spinner_colors.SpinnerRed .. '︺',
-      spinner_colors.SpinnerRed .. '︶',
-      spinner_colors.SpinnerRed .. '︸',
-      spinner_colors.SpinnerRed .. '︶',
-      spinner_colors.SpinnerRed .. '︺',
-      spinner_colors.SpinnerRed .. '︹',
-      spinner_colors.SpinnerRed .. '︵',
-    }
-    return chars, 200
-  end,
+  local base_len = max_len - #extension - 1
+  local partial_len = math.floor(base_len / 2)
 
-  braille_6_circle_worm = function()
-    local chars = {
-      spinner_colors.SpinnerRed .. '⠋',
-      spinner_colors.SpinnerRed .. '⠙',
-      spinner_colors.SpinnerRed .. '⠹',
-      spinner_colors.SpinnerRed .. '⠸',
-      spinner_colors.SpinnerRed .. '⠼',
-      spinner_colors.SpinnerRed .. '⠴',
-      spinner_colors.SpinnerRed .. '⠦',
-      spinner_colors.SpinnerRed .. '⠧',
-      spinner_colors.SpinnerRed .. '⠇',
-      spinner_colors.SpinnerRed .. '⠏',
-    }
-    return chars, 200
-  end,
+  return base_name:sub(1, partial_len) .. '…' .. base_name:sub(-partial_len) .. '.' .. extension
+end
 
-  braille_8_circle_worm = function(color)
-    local chars = {
-      color .. '⠋',
-      color .. '⠙',
-      color .. '⠹',
-      color .. '⠸',
-      color .. '⢰',
-      color .. '⣰',
-      color .. '⣠',
-      color .. '⣄',
-      color .. '⣆',
-      color .. '⡆',
-      color .. '⠇',
-      color .. '⠏',
-    }
-    return chars, 60
-  end,
-}
+M.fileformat = function()
+  local symbols = {
+    unix = '%#St_unix#  ', -- e712
+    dos = '%#St_windows#  ', -- e70f
+    mac = '%#St_mac#  ', -- e711
+  }
 
-M.run_spinner = function(chars, speed)
-  local ms = vim.loop.hrtime() / 1000000
-  local frame = math.floor(ms / speed) % #chars
-  local content = string.format('%%<%s', chars[frame + 1])
-  return content
+  local format = symbols[vim.bo.fileformat]
+  return format or ''
 end
 
 M.file_info = function()
   local icon = ' 󰈚 '
   local path = vim.api.nvim_buf_get_name(stbufnr())
   local name = (path == '' and 'Empty ') or path:match('([^/\\]+)[/\\]*$')
+
+  if name == '[Command Line]' then
+    return '  CmdHistory '
+  end
+
+  if #name > 25 then
+    name = truncate_filename(name)
+  end
 
   if name ~= 'Empty ' then
     local devicons_present, devicons = pcall(require, 'nvim-web-devicons')
@@ -438,51 +185,45 @@ M.file_info = function()
 
   local filetypes = {
     toggleterm = {
-      icon = '%#St_toggleterm_icon#  ',
-      label = '%#St_toggleterm#TOGGLETERM ',
-      label_hl = '%#St_toggleterm#',
-      sep_hl = '%#St_toggleterm_sep#',
+      icon = '%#St_toggleterm#  ',
+      label = 'TOGGLETERM',
     },
     harpoon = {
-      icon = '%#St_harpoon_icon#  ',
-      label = '%#St_harpoon#HARPOON ',
-      label_hl = '%#St_harpoon#',
-      sep_hl = '%#St_harpoon_sep#',
+      icon = '  ',
+      label = 'HARPOON',
     },
     NvimTree = {
-      icon = '%#St_nvimtree_icon#  ',
-      label = '%#St_nvimtree#NVIMTREE ',
-      label_hl = '%#St_nvimtree#',
-      sep_hl = '%#St_nvimtree_sep#',
+      icon = '%#St_nvimtree#  ',
+      label = 'NVIMTREE',
     },
     lazygit = {
-      icon = '%#St_lazygit_icon#  ',
-      label = '%#St_lazygit#LAZYGIT ',
-      label_hl = '%#St_lazygit#',
-      sep_hl = '%#St_lazygit_sep#',
+      icon = '%#St_lazygit#  ',
+      label = 'LAZYGIT',
     },
     Trouble = {
-      icon = '%#St_trouble_icon# 𝍐 ',
-      label = '%#St_trouble#TROUBLE ',
-      label_hl = '%#St_trouble#',
-      sep_hl = '%#St_trouble_sep#',
+      icon = '%#St_trouble# 𝍐 ',
+      label = 'TROUBLE',
+    },
+    TelescopePrompt = {
+      icon = '  ',
+      label = 'TELESCOPE',
     },
   }
 
   local ft = vim.bo.ft
 
-  for ftype, info in pairs(filetypes) do
-    if utils.contains(ft, ftype) then
-      return info.icon .. info.label .. ' ' .. info.sep_hl .. '' .. info.sep_hl .. ' '
+  for k, v in pairs(filetypes) do
+    if utils.contains(ft, k) then
+      return v.icon .. v.label .. ' ' .. ''
     end
   end
 
-  return '%#St_file_info#' .. icon .. name .. '%#St_file_sep#' .. sep_r
+  return '%#St_file_info#' .. icon .. name .. '%#St_file_sep#' .. ''
 end
 
 M.git = function()
   if not vim.b[stbufnr()].gitsigns_head or vim.b[stbufnr()].gitsigns_git_status then
-    return ''
+    return '%#St_EmptySpace#'
   end
 
   local git_status = vim.b[stbufnr()].gitsigns_status_dict
@@ -494,7 +235,7 @@ M.git = function()
     or ''
   local branch_name = '  ' .. git_status.head
 
-  return '%#ST_EmptySpace2#' .. '' .. '%#St_gitIcons#' .. branch_name .. added .. changed .. removed
+  return '%#St_gitIcons#' .. branch_name .. added .. changed .. removed
 end
 
 M.lsp_diagnostics = function()
@@ -524,10 +265,49 @@ M.lsp_status = function()
       end
     end
   end
+  return ''
 end
 
 M.cursor_position = function()
-  return vim.o.columns > 140 and '%#St_pos_sep#' .. '' .. '%#St_pos_text# Ln %l, Col %c  ' or ''
+  local mode = vim.fn.mode(true)
+
+  local v_line, v_col = vim.fn.line('v'), vim.fn.col('v')
+  local cur_line, cur_col = vim.fn.line('.'), vim.fn.col('.')
+
+  if mode == '' then
+    return '%#St_VisualMode#'
+      .. ''
+      .. ' Ln '
+      .. math.abs(v_line - cur_line) + 1
+      .. ', Col '
+      .. math.abs(v_col - cur_col) + 1
+      .. ' '
+  end
+
+  local total_lines = math.abs(v_line - cur_line) + 1
+  if mode == 'V' then
+    local cur_line_is_bigger = v_line and cur_line and v_line < cur_line
+
+    if cur_line_is_bigger then
+      return '%#St_VisualMode#' .. ' Ln ' .. v_line .. ' - Ln %l ⎸ ' .. total_lines
+    else
+      return '%#St_VisualMode#' .. ' Ln %l - Ln ' .. v_line .. ' ⎸ ' .. total_lines
+    end
+  end
+
+  if mode == 'v' then
+    if v_line == cur_line then
+      return '%#St_VisualMode#' .. ' Col ' .. math.abs(v_col - cur_col) + 1 .. ' '
+    else
+      return '%#St_VisualMode#' .. ' Ln ' .. total_lines .. ' '
+    end
+  end
+
+  return vim.o.columns > 140 and '%#St_pos_sep#' .. '' .. '%#St_pos_text# Ln %l, Col %c ' or ''
+end
+
+M.time = function()
+  return '%#St_Time# ' .. os.date('%I:%M:%S %p ', os.time())
 end
 
 M.cwd = function()
@@ -535,54 +315,8 @@ M.cwd = function()
   return (vim.o.columns > 85 and dir_name) or ''
 end
 
-local patterns = {
-  selectionfilter = "^:%s*%'<,%'>%s*.*",
-  substitute = '^:%%?s/.*',
-  -- help = '^:%s*h%s+',
-  help = '^:%s*he?l?p?%s+',
-  lua2 = '^:=',
-  lua = '^:%s*lua%s+.*',
-  cmdline = '^:',
-  search = '^/',
-}
-
-local chars, speed = M.spinner.braille_8_circle_worm('')
-
-M.noice_cmdline = function()
-  local type = vim.fn.getcmdtype()
-  local text = vim.fn.getcmdline()
-  local last = nil
-  local input = type .. text
-
-  if string.match(input, patterns.selectionfilter) then
-    last = '  SELECTSUB  '
-    return last
-  end
-  if string.match(input, patterns.substitute) then
-    last = '  SUBSTITUTE  '
-    return last
-  end
-  if string.match(input, patterns.help) then
-    last = '╱ HELP ' .. M.run_spinner(chars, speed) .. '  '
-    return last
-  end
-  if string.match(input, patterns.lua) then
-    last = ' LUA ' .. M.run_spinner(chars, speed) .. '  '
-    return last
-  end
-  if string.match(input, patterns.lua2) then
-    last = ' LUA ' .. M.run_spinner(chars, speed) .. '  '
-    return last
-  end
-  if string.match(input, patterns.search) then
-    last = '  SEARCH ' .. M.run_spinner(chars, speed) .. ' '
-    return last
-  end
-  if string.match(input, patterns.cmdline) then
-    last = '  COMMAND ' .. M.run_spinner(chars, speed) .. '  '
-    return last
-  end
-  return last
+M.max_length = function()
+  return #M.mode() + #M.file_info() + #M.git()
 end
 
 return M

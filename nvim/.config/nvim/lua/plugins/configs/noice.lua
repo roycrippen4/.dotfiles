@@ -16,6 +16,8 @@ noice.setup({
     },
     hover = {
       enabled = true,
+      view = nil,
+      opts = {},
     },
     signature = {
       enabled = true,
@@ -26,6 +28,28 @@ noice.setup({
         throttle = 100,
       },
     },
+    message = {
+      enabled = true,
+      view = 'mini',
+    },
+    documentation = {
+      view = 'hover',
+      opts = {
+        lang = 'markdown',
+        replace = true,
+        render = 'plain',
+        format = { '{message}' },
+        win_options = { concealcursor = 'n', conceallevel = 3 },
+      },
+    },
+  },
+  messages = {
+    enabled = true,
+    view_search = false,
+    view = 'mini',
+    view_error = 'mini',
+    view_warn = 'mini',
+    view_history = 'mini',
   },
   markdown = {
     hover = {
@@ -41,40 +65,73 @@ noice.setup({
       ['{%S-}'] = '@parameter',
     },
   },
+  popupmenu = {
+    enabled = true, -- enables the Noice popupmenu UI
+    ---@type 'nui'|'cmp'
+    backend = 'cmp', -- backend to use to show regular cmdline completions
+    ---@type NoicePopupmenuItemKind|false
+    -- Icons for completion item kinds (see defaults at noice.config.icons.kinds)
+    kind_icons = {}, -- set to `false` to disable icons
+  },
+  commands = {
+    all = {
+      view = 'split',
+      opts = {
+        enter = true,
+        format = 'details',
+      },
+      filter = {},
+    },
+  },
   views = {
     cmdline_popup = {
       position = {
-        col = 15,
-        row = 70,
-        height = 1,
+        col = 0,
+        row = 65,
       },
+      size = {
+        width = 150,
+      },
+    },
+    split = {
+      enter = true,
+    },
+    hover = {
+      scrollbar = false,
     },
   },
   cmdline = {
     format = {
       cmdline = {
-        icon = '',
+        icon = '  EXCOMMAND ',
+        icon_hl_group = 'CmdlineEx',
+      },
+      lua = {
+        icon = '  EVAL LUA ',
+        icon_hl_group = 'CmdlineLua',
       },
       selectionfilter = {
-        kind = 'Filter',
-        pattern = "^:%s*%'<,%'>%s*.*",
-        -- icon = '',
-        icon = '',
+        pattern = "^:%s*%'<,%'>",
+        icon = '   VISUAL SUB ',
+        icon_hl_group = 'CmdlineVisualSub',
       },
       substitute = {
         pattern = '^:%%?s/',
-        icon = '',
-        -- icon = ' ',
+        icon = '  SUBSTITUTE ',
+        icon_hl_group = 'CmdlineSub',
         ft = 'regex',
       },
       search_up = {
-        icon = '',
+        icon = '  SEARCH ',
+        icon_hl_group = 'CmdlineSearch',
       },
       search_down = {
-        icon = '',
+        icon = '  SEARCH ',
+        icon_hl_group = 'CmdlineSearch',
       },
       help = {
-        icon = '❔',
+        icon = ' 󰋖 MAN PAGES ',
+        icon_hl_group = 'CmdlineHelp',
       },
     },
     enabled = true,
@@ -82,8 +139,8 @@ noice.setup({
       border = 'none',
     },
   },
-  messages = {
-    view_search = false,
+  notify = {
+    enabled = false,
   },
   routes = {
     { filter = { find = 'E162' }, view = 'mini' },
@@ -99,4 +156,20 @@ noice.setup({
     { filter = { event = 'msg_show', find = 'search hit BOTTOM' }, skip = true },
     { filter = { event = 'msg_show', find = 'search hit TOP' }, skip = true },
   },
+  presets = {
+    long_message_to_split = true,
+    lsp_doc_border = true,
+  },
 })
+
+vim.keymap.set({ 'n', 'i', 's' }, '<C-S-N>', function()
+  if not require('noice.lsp').scroll(4) then
+    return '<C-S-N>'
+  end
+end, { silent = true, expr = true })
+
+vim.keymap.set({ 'n', 'i', 's' }, '<C-S-P>', function()
+  if not require('noice.lsp').scroll(-4) then
+    return '<C-S-P>'
+  end
+end, { silent = true, expr = true })

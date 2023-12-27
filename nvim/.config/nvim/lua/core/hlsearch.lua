@@ -25,14 +25,14 @@ end
 vim.keymap.set(
   'n',
   'n',
-  "n<cmd>lua require('core.hlsearch').hl_search()<CR>",
+  "nzz<cmd>lua require('core.hlsearch').hl_search()<CR>",
   { desc = 'go to next search and highlight' }
 )
 
 vim.keymap.set(
   'n',
   'N',
-  "N<cmd>lua require('core.hlsearch').hl_search()<CR>",
+  "Nzz<cmd>lua require('core.hlsearch').hl_search()<CR>",
   { desc = 'go to prev search and highlight' }
 )
 

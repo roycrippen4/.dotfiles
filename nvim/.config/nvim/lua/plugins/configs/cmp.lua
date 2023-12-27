@@ -3,9 +3,6 @@ local copilot_cmp_comparators = require('copilot_cmp.comparators')
 
 dofile(vim.g.base46_cache .. 'cmp')
 
-local cmp_ui = require('core.utils').load_config().ui.cmp
-local cmp_style = cmp_ui.style
-
 local function border(hl_name)
   return {
     { '╭', hl_name },
@@ -24,7 +21,7 @@ local options = {
     { name = 'copilot' },
     {
       name = 'nvim_lsp',
-      trigger_characters = { '.' },
+      trigger_characters = { '.', ':' },
       entry_filter = function(entry)
         return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
       end,
@@ -52,13 +49,11 @@ local options = {
     completeopt = 'menu,menuone,noselect',
     autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged },
   },
-
   performance = {
     max_view_entries = 20,
   },
   window = {
     completion = {
-      side_padding = (cmp_style ~= 'atom' and cmp_style ~= 'atom_colored') and 1 or 0,
       winhighlight = 'Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel',
       scrollbar = false,
       border = border('CmpBorder'),
@@ -143,8 +138,27 @@ local options = {
   },
 }
 
--- if cmp_style ~= 'atom' and cmp_style ~= 'atom_colored' then
---   options.window.completion.border = border('CmpBorder')
--- end
+-- `/` cmdline setup.
+cmp.setup.cmdline('/', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = {
+    { name = 'buffer' },
+  },
+})
+
+-- `:` cmdline setup.
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' },
+  }, {
+    {
+      name = 'cmdline',
+      option = {
+        ignore_cmds = { 'Man', '!' },
+      },
+    },
+  }),
+})
 
 return options

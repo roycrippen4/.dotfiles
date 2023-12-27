@@ -1,49 +1,18 @@
 local M = {}
 local merge_tb = vim.tbl_deep_extend
 
---- Debounces a function on the trailing edge. Automatically
---- `schedule_wrap()`s.
----
---@param fn (function) Function to debounce
---@param timeout (number) Timeout in ms
---@param first (boolean, optional) Whether to use the arguments of the first
----call to `fn` within the timeframe. Default: Use arguments of the last call.
---@returns (function, timer) Debounced function and timer. Remember to call
----`timer:close()` at the end or you will leak memory!
-function M.debounce_trailing(fn, ms, first)
+function M.debounce(ms, fn)
   local timer = vim.loop.new_timer()
-
-  local wrapped_fn = {
-    call = nil,
-    cancel = function()
+  return function(...)
+    local argv = { ... }
+    timer:start(ms, 0, function()
       timer:stop()
-    end,
-  }
-
-  if not first then
-    wrapped_fn.call = function(...)
-      local argv = { ... }
-      local argc = select('#', ...)
-
-      timer:start(ms, 0, function()
-        pcall(vim.schedule_wrap(fn), unpack(argv, 1, argc))
-      end)
-    end
-  else
-    local argv, argc
-    wrapped_fn.call = function(...)
-      argv = argv or { ... }
-      argc = argc or select('#', ...)
-
-      timer:start(ms, 0, function()
-        pcall(vim.schedule_wrap(fn), unpack(argv, 1, argc))
-      end)
-    end
+      vim.schedule_wrap(fn)(unpack(argv))
+    end)
   end
-  return wrapped_fn, timer
 end
 
-M.Log = function(msg)
+_G.log = function(msg)
   local log_path = './debug.log'
   local file = io.open(log_path, 'a')
 
@@ -54,9 +23,19 @@ M.Log = function(msg)
   if file then
     file:write(os.date('%Y-%m-%d %H:%M:%S') .. ' - ' .. msg .. '\n')
     file:close()
+    vim.cmd('checktime')
   else
     print('Error opening log file!')
   end
+end
+
+function _G.get_col()
+  local modules = require('plugins.configs.statusline')
+  local length = --[[ #modules.git() + ]]
+    #modules.mode() --[[ + #modules.file_info() ]]
+  print(length)
+  return length
+  -- M.log(length)
 end
 
 ---@param param any item to look for in case_table

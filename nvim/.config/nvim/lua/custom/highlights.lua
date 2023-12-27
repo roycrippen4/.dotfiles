@@ -2,17 +2,14 @@ local M = {}
 
 local cursorline = '#252931'
 local sep_color = '#454951'
-local bg_link = { 'grey', -5 }
 local black = { 'black', 0 }
+local darkest_black = { 'black', -0.9 }
 local d_yellow = { 'yellow', -20 }
 local d_red = { 'red', -10 }
 local green = { 'green', -10 }
 local l_blue = '#00C5FF'
 local orange = { 'orange', -10 }
-local pink = { 'pink', -15 }
--- local white = 'white'
-
-local st_sb_sep_bg = 'black'
+local pink = { 'pink', -10 }
 
 -- stylua: ignore
 M.add = {
@@ -56,36 +53,44 @@ M.add = {
   TbLineUnmarkedBufOff = {fg = { 'grey',  0 }, bg = 'darker_black', sp = sep_color--[[ , underline = true ]]},
 
   -- Statusline special buffers
-  St_toggleterm          = { fg = green,           bg = "black", italic = true },
-  St_toggleterm_icon     = { fg = 'green',         bg = "black" },
-  St_harpoon             = { fg = { 'blue', -20 }, bg = "black", italic = true, bold = true },
-  St_harpoon_icon        = { fg = { 'blue', -20 }, bg = "black" },
-  St_nvimtree            = { fg = l_blue,          bg = black, italic = true },
-  St_nvimtree_icon       = { fg = l_blue,          bg = "black" },
-  St_lazygit             = { fg = green,           bg = black, italic = true },
-  St_lazygit_icon        = { fg = green,           bg = "black" },
-  St_trouble             = { fg = d_red,           bg = black, italic = true, bold = true },
-  St_trouble_icon        = { fg = d_red,           bg = "black" },
+  St_toggleterm          = { fg = green,           bg = darkest_black, italic = true },
+  St_toggleterm_icon     = { fg = 'green',         bg = darkest_black },
+  St_nvimtree            = { fg = l_blue,          bg = darkest_black, italic = true },
+  St_nvimtree_icon       = { fg = l_blue,          bg = darkest_black },
+  St_lazygit             = { fg = green,           bg = darkest_black, italic = true },
+  St_lazygit_icon        = { fg = green,           bg = darkest_black },
+  St_trouble             = { fg = d_red,           bg = darkest_black, italic = true, bold = true },
+  St_trouble_icon        = { fg = d_red,           bg = darkest_black },
 
-  St_lazygit_sep         = { fg = green,           bg = st_sb_sep_bg },
-  St_toggleterm_sep      = { fg = green,           bg = st_sb_sep_bg },
-  St_nvimtree_sep        = { fg = l_blue,          bg = st_sb_sep_bg },
-  St_harpoon_sep         = { fg = { 'blue', -20 }, bg = st_sb_sep_bg },
-  St_trouble_sep         = { fg = d_red,           bg = st_sb_sep_bg },
+  St_lazygit_sep         = { fg = green,           bg = darkest_black },
+  St_toggleterm_sep      = { fg = green,           bg = darkest_black },
+  St_nvimtree_sep        = { fg = l_blue,          bg = darkest_black },
+  St_trouble_sep         = { fg = d_red,           bg = darkest_black },
 
-  St_gitAdd              = { fg = 'green',  bg = 'black' },
-  St_gitRemove           = { fg = 'red',    bg = 'black' },
-  St_gitChange           = { fg = 'yellow', bg = 'black' },
-  St_Macro              = { fg = d_red,     bg = 'black' },
-  St_MacroSep           = { fg = d_red,     bg = 'black' },
+  St_gitAdd              = { fg = 'green',   bg = darkest_black },
+  St_gitRemove           = { fg = 'red',     bg = darkest_black },
+  St_gitChange           = { fg = 'yellow',  bg = darkest_black },
+  St_Macro               = { fg = d_red,     bg = darkest_black },
+  St_MacroSep            = { fg = d_red,     bg = darkest_black },
+  St_MacroA              = { fg = d_red,     bg = darkest_black },
+  St_MacroSepA           = { fg = d_red,     bg = darkest_black },
+  St_MacroB              = { fg = 'yellow',  bg = darkest_black },
+  St_MacroSepB           = { fg = 'yellow',  bg = darkest_black },
+  St_Host                = { fg = { 'grey', -5 }, bg = darkest_black, italic = true },
+  St_HostSep             = { fg = { 'grey', -5 }, bg = darkest_black, italic = true },
+  St_Time                = { fg = '#cc5e00', bg = darkest_black },
+  St_unix                = { fg = '#00EE6e', bg = darkest_black },
 
-  St_MacroA              = { fg = d_red,    bg = 'black' },
-  St_MacroSepA           = { fg = d_red,    bg = 'black' },
-  St_MacroB              = { fg = 'yellow', bg = 'black' },
-  St_MacroSepB           = { fg = 'yellow', bg = 'black' },
-
-  -- NoiceCmdlineIcon       = { fg = d_red, bg = 'yellow', sp = sep_color, --[[ underline = true ]] },
   NoiceVirtualTextOn     = { fg = l_blue, bg = cursorline },
+  NoiceCmdlinePopup      = { bg = darkest_black },
+
+  CmdlineEx        = { fg =  {'red', -15}, bg = darkest_black },
+  CmdlineLua       = { fg =  green,        bg = darkest_black },
+  CmdlineVisualSub = { fg =  pink,         bg = darkest_black },
+  CmdlineSub       = { fg =  l_blue,       bg = darkest_black },
+  CmdlineSearch    = { fg = '#cc5e00',     bg = darkest_black },
+  CmdlineHelp      = { fg = '#53bf00',     bg = darkest_black },
+
 }
 
 -- stylua: ignore
@@ -98,38 +103,41 @@ M.override = {
   TblineFill           = { bg = "darker_black", sp = sep_color, --[[ underline = true ]] },
 
   -- Statusline modes
-  St_NormalMode      = { fg = l_blue,   bg = black },
-  St_NormalModeSep   = { fg = black,    bg = l_blue },
-  St_InsertMode      = { fg = d_yellow, bg = black },
-  St_InsertModeSep   = { fg = black,    bg = d_yellow },
-  St_TerminalMode    = { fg = green,    bg = black, bold = true },
-  St_TerminalModeSep = { fg = black,    bg = green },
-  St_NTerminalMode    = { fg = green,    bg = black, bold = true },
-  St_NTerminalModeSep = { fg = black,    bg = green },
-  St_CommandMode     = { fg = d_red,    bg = black, bold = true },
-  St_CommandModeSep  = { fg = black,    bg = d_red },
-  St_ReplaceMode     = { fg = orange,   bg = black, bold = true },
-  St_ReplaceModeSep  = { fg = black,    bg = orange },
-  St_VisualMode      = { fg = pink,     bg = black, bold = true },
-  St_VisualModeSep   = { fg = black,    bg = pink },
-  St_SelectMode      = { fg = pink,     bg = black, bold = true },
-  St_SelectModeSep   = { fg = black,    bg = pink },
-  St_ConfirmMode     = { fg = d_red,    bg = black, bold = true },
-  St_ConfirmModeSep  = { fg = black,    bg = d_red },
-  St_EmptySpace      = { fg = l_blue, bg = "black" },
-  St_EmptySpace2      = { fg = bg_link, bg = "black" },
+  St_NormalMode       = { fg = l_blue,         bg = darkest_black },
+  St_NormalModeSep    = { fg = l_blue,         bg = darkest_black },
+  St_InsertMode       = { fg = d_yellow,       bg = darkest_black },
+  St_InsertModeSep    = { fg = d_yellow,       bg = darkest_black },
+  St_TerminalMode     = { fg = green,          bg = darkest_black },
+  St_TerminalModeSep  = { fg = green,          bg = darkest_black },
+  St_NTerminalMode    = { fg = green,          bg = darkest_black },
+  St_NTerminalModeSep = { fg = green,          bg = darkest_black },
+  St_CommandMode      = { fg = d_red,          bg = darkest_black },
+  St_CommandModeSep   = { fg = d_red,          bg = darkest_black },
+  -- St_CommandMode      = { link = 'NoiceCmdlineIcon' },
+  -- St_CommandModeSep   = { link = 'NoiceCmdlineIcon' },
+  St_ReplaceMode      = { fg = orange,         bg = darkest_black },
+  St_ReplaceModeSep   = { fg = orange,         bg = darkest_black },
+  St_VisualMode       = { fg = pink,           bg = darkest_black },
+  St_VisualModeSep    = { fg = pink,           bg = darkest_black },
+  St_SelectMode       = { fg = pink,           bg = darkest_black },
+  St_SelectModeSep    = { fg = pink,           bg = darkest_black },
+  St_ConfirmMode      = { fg = d_red,          bg = darkest_black },
+  St_ConfirmModeSep   = { fg = d_red ,         bg = darkest_black },
+  St_EmptySpace       = { fg = '#00C5FF',      bg = darkest_black },
+  St_EmptySpace2      = { fg = darkest_black, bg = darkest_black },
 
-  St_file_info  = { fg = { 'white', -10 },    bg = "black", bold = true },
-  St_file_sep   = { fg = 'black',    bg = bg_link, bold = true },
-  St_gitIcons   = { fg = { 'white', -10 }, bg = "black" },
-  St_lspError   = { bg = 'black' },
-  St_lspWarning = { bg = 'black' },
-  St_LspHints   = { bg = 'black' },
-  St_LspInfo    = { bg = 'black' },
-  St_LspStatus  = { bg = 'black' },
-  St_pos_text   = { bg = 'black' },
-  St_cwd_sep    = { bg = 'black'},
-  St_pos_sep    = { bg = 'black'},
+  St_file_info        = { fg = { 'white', -10 },     bg = darkest_black },
+  St_gitIcons         = { fg = { 'white', -10 },     bg = darkest_black, italic = true, bold = false },
+  St_file_sep         = { fg = { 'grey',   10 },     bg = darkest_black, bold = true },
+
+  St_lspError   = { bg = darkest_black },
+  St_lspWarning = { bg = darkest_black },
+  St_LspHints   = { bg = darkest_black },
+  St_LspInfo    = { bg = darkest_black },
+  St_LspStatus  = { fg = '#53bf00', bg = darkest_black },
+  St_pos_text   = { fg = '#d6a000', bg = darkest_black, bold = false },
+  St_cwd_sep    = { fg = {'red', -15}, bg = darkest_black},
+  St_pos_sep    = { fg = '#d6a000', bg = darkest_black, bold = false },
 
   -- Misc
   FloatBorder = { bg = "black" },

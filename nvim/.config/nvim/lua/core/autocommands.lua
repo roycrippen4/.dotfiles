@@ -1,35 +1,6 @@
 local autocmd = vim.api.nvim_create_autocmd
 local utils = require('core.utils')
 vim.api.nvim_create_augroup('bufcheck', { clear = true })
--- local patterns = {
---   cmdline = '^:',
---   search_down = '^/',
---   search_up = '^%?',
---   filter = '^:%s*!',
---   help = '^:%s*he?l?p?%s+',
---   calculator = '^=',
--- lua         =  { '^:%s*lua%s+', '^:%s*lua%s*=%s*', '^:%s*=%s*' }'},
--- }
-
--- autocmd({ 'CmdlineEnter', 'CmdlineChanged' }, {
---   callback = function()
---     local type = vim.fn.getcmdtype()
---     local text = vim.fn.getcmdline()
---     print(type .. text)
---   end,
--- })
-
-autocmd('BufReadPost', {
-  group = 'bufcheck',
-  pattern = '*',
-  callback = function()
-    if vim.fn.line('\'"') > 0 and vim.fn.line('\'"') <= vim.fn.line('$') then
-      vim.fn.setpos('.', vim.fn.getpos('\'"'))
-      -- vim.cmd('normal zz') -- how do I center the buffer in a sane way??
-      vim.cmd('silent! foldopen')
-    end
-  end,
-})
 
 -- Toggles highlight group for the statusline macro segment
 autocmd('RecordingEnter', {
@@ -65,8 +36,8 @@ autocmd('ModeChanged', {
     local m = vim.api.nvim_get_mode().mode
     local m_hl = require('plugins.configs.statusline').modes[m][2]
     local hl = vim.api.nvim_get_hl(0, { name = m_hl })
-    vim.api.nvim_set_hl(0, 'St_nvimtree', { fg = hl.fg, italic = true })
-    vim.api.nvim_set_hl(0, 'St_EmptySpace', { fg = hl.fg, bg = hl.bg })
+    vim.api.nvim_set_hl(0, 'St_nvimtree', { fg = hl.fg, bg = hl.bg, italic = true })
+    vim.api.nvim_set_hl(0, 'St_harpoon', { fg = hl.fg, bg = hl.bg, italic = true })
   end,
 })
 
@@ -122,25 +93,10 @@ autocmd({ 'InsertLeave', 'WinEnter', 'BufEnter' }, {
 
 -- Turns on the cursorline
 autocmd({ 'InsertEnter', 'WinLeave' }, {
-  command = 'set nocursorline',
+  callback = function()
+    vim.o.cursorline = false
+  end,
 })
-
--- autocmd({ 'BufAdd', 'BufDelete', 'BufEnter', 'TabNew' }, {
---   callback = function()
---     local current_buf = vim.api.nvim_get_current_buf()
---     if vim.t.bufs ~= nil then
---       if #vim.t.bufs == 0 then
---         return
---       else
---         if vim.t.bufs[1] == current_buf then
---           vim.api.nvim_set_hl(0, 'NvimTreeTitleSep', { link = 'NvimTreeTitleSepOn' })
---         else
---           vim.api.nvim_set_hl(0, 'NvimTreeTitleSep', { link = 'NvimTreeTitleSepOff' })
---         end
---       end
---     end
---   end,
--- })
 
 -- Checks to see if a .nvmrc exists and sets node version if one is found.
 -- Also sets the title string for the kitty tabs

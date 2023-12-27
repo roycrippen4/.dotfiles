@@ -6,17 +6,18 @@ M.harpoon = {
     ['<C-f>'] = {
       function()
         require('harpoon'):list('default'):append()
+        vim.cmd('redrawtabline')
       end,
     },
     ['<C-e>'] = {
       function()
-        local api = require('nvim-tree.api')
-        if api.tree.is_tree_buf() then
-          vim.cmd(':NvimTreeClose')
-          require('harpoon').ui:toggle_quick_menu(require('harpoon'):list('default'))
-        else
-          require('harpoon').ui:toggle_quick_menu(require('harpoon'):list('default'))
-        end
+        -- local api = require('nvim-tree.api')
+        -- if api.tree.is_tree_buf() then
+        -- vim.cmd(':NvimTreeClose')
+        -- require('harpoon').ui:toggle_quick_menu(require('harpoon'):list('default'))
+        -- else
+        require('harpoon').ui:toggle_quick_menu(require('harpoon'):list('default'))
+        -- end
       end,
     },
     ['<C-1>'] = {
@@ -98,7 +99,6 @@ M.general = {
     ['<C-j>'] = { '<Down>', 'Move down' },
     ['<C-k>'] = { '<Up>', 'Move up' },
   },
-
   n = {
     -- newline with shift/ctrl enter
     ['<S-CR>'] = { 'o<Esc>k', 'New line above', opts = { silent = true } },
@@ -118,7 +118,7 @@ M.general = {
     -- ['<Leader><Leader>'] = { '<cmd> Lazy<CR>', 'Open Lazy' },
     ['<Leader><Leader>'] = {
       function()
-        require('core.utils').Log('testing')
+        get_col()
       end,
       'Open Lazy',
     },

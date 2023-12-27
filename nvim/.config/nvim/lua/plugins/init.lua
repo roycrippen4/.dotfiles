@@ -124,6 +124,7 @@ local default_plugins = {
   {
     -- https://github.com/nvim-treesitter/nvim-treesitter
     'nvim-treesitter/nvim-treesitter',
+    lazy = false,
     init = function()
       require('core.utils').lazy_load('nvim-treesitter')
     end,
@@ -208,6 +209,8 @@ local default_plugins = {
         'hrsh7th/cmp-buffer',
         -- https://github.com/hrsh7th/cmp-path
         'hrsh7th/cmp-path',
+        -- https://github.com/hrsh7th/cmp-cmdline
+        'hrsh7th/cmp-cmdline',
       },
     },
     opts = function()
