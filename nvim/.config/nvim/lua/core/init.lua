@@ -20,6 +20,7 @@ g.markdown_fenced_languages = {
 vim.treesitter.language.register('markdown', 'mdx')
 
 -------------------------------------- options ------------------------------------------
+opt.cmdheight = 0
 opt.formatoptions = ''
 opt.laststatus = 3 -- global statusline
 opt.showmode = false
@@ -63,7 +64,7 @@ opt.signcolumn = 'yes'
 opt.splitbelow = true
 opt.splitright = true
 opt.termguicolors = true
-opt.timeoutlen = 200
+opt.timeoutlen = 300
 opt.undofile = true
 opt.scrolloff = 14
 

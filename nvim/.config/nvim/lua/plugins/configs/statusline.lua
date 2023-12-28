@@ -5,7 +5,7 @@ local function stbufnr()
 end
 
 local M = {}
--- local command_icon = '  '
+local command_icon = '  '
 local normal_icon = '  '
 local insert_icon = '  '
 local select_icon = '  '
@@ -49,9 +49,6 @@ M.modes = {
   ['c'] = { 'COMMAND', 'St_CommandMode' },
   ['cv'] = { 'COMMAND', 'St_CommandMode' },
   ['ce'] = { 'COMMAND', 'St_CommandMode' },
-  -- ['c'] = { 'COMMAND',  'St_CommandMode' },
-  -- ['cv'] = { 'COMMAND', 'St_CommandMode' },
-  -- ['ce'] = { 'COMMAND', 'St_CommandMode' },
   ['r'] = { 'PROMPT', 'St_ConfirmMode' },
   ['rm'] = { 'MORE', 'St_ConfirmMode' },
   ['r?'] = { 'CONFIRM', 'St_ConfirmMode' },
@@ -101,9 +98,9 @@ M.mode = function()
   M.modes[''][3] = select_icon
 
   -- Command
-  -- M.modes['c'][3] = command_icon
-  -- M.modes['cv'][3] = command_icon
-  -- M.modes['ce'][3] = command_icon
+  M.modes['c'][3] = command_icon
+  M.modes['cv'][3] = command_icon
+  M.modes['ce'][3] = command_icon
 
   -- Confirm
   M.modes['r'][3] = confirm_icon

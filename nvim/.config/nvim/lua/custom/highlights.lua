@@ -82,7 +82,6 @@ M.add = {
   St_unix                = { fg = '#00EE6e', bg = darkest_black },
 
   NoiceVirtualTextOn     = { fg = l_blue, bg = cursorline },
-  NoiceCmdlinePopup      = { bg = darkest_black },
 
   CmdlineEx        = { fg =  {'red', -15}, bg = darkest_black },
   CmdlineLua       = { fg =  green,        bg = darkest_black },
@@ -113,8 +112,6 @@ M.override = {
   St_NTerminalModeSep = { fg = green,          bg = darkest_black },
   St_CommandMode      = { fg = d_red,          bg = darkest_black },
   St_CommandModeSep   = { fg = d_red,          bg = darkest_black },
-  -- St_CommandMode      = { link = 'NoiceCmdlineIcon' },
-  -- St_CommandModeSep   = { link = 'NoiceCmdlineIcon' },
   St_ReplaceMode      = { fg = orange,         bg = darkest_black },
   St_ReplaceModeSep   = { fg = orange,         bg = darkest_black },
   St_VisualMode       = { fg = pink,           bg = darkest_black },

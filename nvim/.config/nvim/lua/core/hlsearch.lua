@@ -22,17 +22,19 @@ M.hl_search = function()
   vim.cmd('redraw')
 end
 
+vim.keymap.set('c', '<CR>', '<CR><cmd>redraw<CR>', { desc = 'redraw screen once the search has been initiated' })
+
 vim.keymap.set(
   'n',
   'n',
-  "nzz<cmd>lua require('core.hlsearch').hl_search()<CR>",
+  "n<cmd>lua require('core.hlsearch').hl_search()<CR>",
   { desc = 'go to next search and highlight' }
 )
 
 vim.keymap.set(
   'n',
   'N',
-  "Nzz<cmd>lua require('core.hlsearch').hl_search()<CR>",
+  "N<cmd>lua require('core.hlsearch').hl_search()<CR>",
   { desc = 'go to prev search and highlight' }
 )
 

@@ -1,16 +1,19 @@
 local autocmd = vim.api.nvim_create_autocmd
-local utils = require('core.utils')
-vim.api.nvim_create_augroup('bufcheck', { clear = true })
+local augroup = vim.api.nvim_create_augroup
 
+local utils = require('core.utils')
+
+local macrohl = augroup('MacroHL', { clear = true })
 -- Toggles highlight group for the statusline macro segment
 autocmd('RecordingEnter', {
+  group = macrohl,
   callback = function()
     utils.start_record_highlight()
   end,
 })
-
 -- Stops toggling the highlight group for the statusline macro segment
 autocmd('RecordingLeave', {
+  group = macrohl,
   callback = function()
     utils.stop_timer()
   end,
@@ -106,5 +109,23 @@ autocmd({ 'VimEnter' }, {
     utils.set_titlestring(cwd)
     utils.set_node_version(cwd)
     vim.env.PATH = '~/.nvm/versions/node/v20.10.0/bin:' .. vim.env.PATH
+  end,
+})
+
+local CmdlineEvents = augroup('CmdlineEvents', { clear = true })
+autocmd('CmdlineEnter', {
+  group = CmdlineEvents,
+  callback = function()
+    if vim.o.cmdheight == 0 then
+      vim.o.cmdheight = 1
+    end
+  end,
+})
+autocmd('CmdlineLeave', {
+  group = CmdlineEvents,
+  callback = function()
+    if vim.o.cmdheight == 1 then
+      vim.o.cmdheight = 0
+    end
   end,
 })

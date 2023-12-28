@@ -28,6 +28,9 @@ export PATH="$BUN_INSTALL/bin:$PATH"
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.dotfiles/home/.oh-my-zsh"
 
+# bob
+export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
+
 # NVM stuff
 export NVM_DIR="$HOME/.nvm"
 # shellcheck source=../../.nvm/nvm.sh

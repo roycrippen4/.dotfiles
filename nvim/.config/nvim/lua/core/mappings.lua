@@ -11,13 +11,8 @@ M.harpoon = {
     },
     ['<C-e>'] = {
       function()
-        -- local api = require('nvim-tree.api')
-        -- if api.tree.is_tree_buf() then
-        -- vim.cmd(':NvimTreeClose')
-        -- require('harpoon').ui:toggle_quick_menu(require('harpoon'):list('default'))
-        -- else
         require('harpoon').ui:toggle_quick_menu(require('harpoon'):list('default'))
-        -- end
+        vim.wo.cursorline = true
       end,
     },
     ['<C-1>'] = {
@@ -300,13 +295,6 @@ M.nvimtree = {
 
   n = {
     ['<C-n>'] = { '<cmd> NvimTreeToggle <CR>', 'Toggle nvimtree' },
-    -- ['<C-n>'] = {
-    --   function()
-    --     vim.cmd([[NvimTreeToggle]])
-    --     -- print(vim.g.TreeVisible)
-    --   end,
-    --   'Toggle nvimtree',
-    -- },
     ['.'] = { '<C-]>', 'rebind tree cd', 'Set CWD' },
   },
 }
@@ -334,25 +322,25 @@ M.telescope = {
 
 M.terminal = {}
 
-M.whichkey = {
-  plugin = true,
+-- M.whichkey = {
+-- plugin = true,
 
-  n = {
-    ['<leader>wK'] = {
-      function()
-        vim.cmd('WhichKey')
-      end,
-      'Which-key all keymaps',
-    },
-    ['<leader>wk'] = {
-      function()
-        local input = vim.fn.input('WhichKey: ')
-        vim.cmd('WhichKey ' .. input)
-      end,
-      'Which-key query lookup',
-    },
-  },
-}
+-- n = {
+--   ['<leader>wK'] = {
+--     function()
+--       vim.cmd('WhichKey')
+--     end,
+--     'Which-key all keymaps',
+--   },
+--   ['<leader>wk'] = {
+--     function()
+--       local input = vim.fn.input('WhichKey: ')
+--       vim.cmd('WhichKey ' .. input)
+--     end,
+--     'Which-key query lookup',
+--   },
+-- },
+-- }
 
 -- M.dap = {
 --   plugin = true,

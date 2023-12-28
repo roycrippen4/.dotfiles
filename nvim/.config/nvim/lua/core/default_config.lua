@@ -92,7 +92,7 @@ M.base46 = {
     'treesitter',
     'tbline',
     'telescope',
-    'whichkey',
+    -- 'whichkey',
   },
 }
 

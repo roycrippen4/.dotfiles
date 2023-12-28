@@ -1,4 +1,11 @@
-local options = {
+local ok, statuscol = pcall(require, 'statuscol')
+local builtin = require('statuscol.builtin')
+
+if not ok then
+  return
+end
+
+statuscol.setup({
   ft_ignore = { 'NvimTree', 'terminal' },
   relculright = true,
   segments = {
@@ -25,7 +32,7 @@ local options = {
     },
     {
       text = {
-        require('statuscol.builtin').lnumfunc,
+        builtin.lnumfunc,
         ' ',
       },
     },
@@ -37,6 +44,4 @@ local options = {
       },
     },
   },
-}
-
-return options
+})

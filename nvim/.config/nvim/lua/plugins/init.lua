@@ -4,19 +4,6 @@ local default_plugins = {
   'nvim-lua/plenary.nvim',
 
   {
-    -- https://github.com/folke/noice.nvim
-    'folke/noice.nvim',
-    event = 'VeryLazy',
-    dependencies = {
-      'MunifTanjim/nui.nvim',
-      -- 'rcarriga/nvim-notify',
-    },
-    config = function()
-      require('plugins.configs.noice')
-    end,
-  },
-
-  {
     -- https://github.com/kdheepak/lazygit.nvim
     'kdheepak/lazygit.nvim',
     keys = { '<leader>gg' },
@@ -33,7 +20,7 @@ local default_plugins = {
   {
     -- https://github.com/akinsho/toggleterm.nvim
     'akinsho/toggleterm.nvim',
-    lazy = false,
+    keys = { '<M-h>', '<M-v>', '<M-f>' },
     opts = function()
       return require('plugins.configs.toggleterm').options
     end,
@@ -46,7 +33,7 @@ local default_plugins = {
   {
     -- https://github.com/zbirenbaum/copilot.lua
     'zbirenbaum/copilot.lua',
-    event = 'InsertEnter',
+    event = { 'InsertEnter', 'LspAttach' },
     config = function()
       require('copilot').setup({
         suggestion = { enabled = false },
@@ -101,6 +88,7 @@ local default_plugins = {
   {
     -- https://github.com/williamboman/mason.nvim
     'williamboman/mason.nvim',
+    event = 'VeryLazy',
     dependencies = {
       -- https://github.com/williamboman/mason-lspconfig.nvim
       'williamboman/mason-lspconfig.nvim',
@@ -169,7 +157,7 @@ local default_plugins = {
   {
     -- https://github.com/hrsh7th/nvim-cmp
     'hrsh7th/nvim-cmp',
-    event = { 'InsertEnter' },
+    event = 'BufReadPost',
     dependencies = {
       {
         -- https://github.com/L3MON4D3/LuaSnip
@@ -225,7 +213,6 @@ local default_plugins = {
     -- https://github.com/nvim-tree/nvim-tree.lua
     'nvim-tree/nvim-tree.lua',
     lazy = false,
-    event = 'UIEnter',
     cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
     init = function()
       require('core.utils').load_mappings('nvimtree')
@@ -265,20 +252,6 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/folke/which-key.nvim
-    'folke/which-key.nvim',
-    keys = { '<leader>', '<c-r>', '<c-w>', '"', "'", '`', 'c', 'v', 'g' },
-    init = function()
-      require('core.utils').load_mappings('whichkey')
-    end,
-    cmd = 'WhichKey',
-    config = function()
-      dofile(vim.g.base46_cache .. 'whichkey')
-      require('plugins.configs.whichkey')
-    end,
-  },
-
-  {
     -- https://github.com/folke/zen-mode.nvim
     'folke/zen-mode.nvim',
     cmd = 'ZenMode',
@@ -288,7 +261,7 @@ local default_plugins = {
   {
     -- https://github.com/neovim/nvim-lspconfig
     'neovim/nvim-lspconfig',
-    event = 'VimEnter',
+    event = 'BufRead',
     dependencies = {
       'folke/neodev.nvim',
     },
@@ -354,7 +327,7 @@ local default_plugins = {
   {
     -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
     'JoosepAlviste/nvim-ts-context-commentstring',
-    event = 'VimEnter',
+    event = 'BufRead',
   },
 
   {
@@ -389,6 +362,32 @@ local default_plugins = {
     -- https://github.com/hiphish/rainbow-delimiters.nvim
     'hiphish/rainbow-delimiters.nvim',
     event = 'BufReadPost',
+    config = function()
+      local rainbow_delims = require('rainbow-delimiters')
+      require('rainbow-delimiters.setup').setup({
+        strategy = {
+          [''] = rainbow_delims.strategy['global'],
+          vim = rainbow_delims.strategy['local'],
+        },
+        query = {
+          [''] = 'rainbow-delimiters',
+          lua = 'rainbow-blocks',
+        },
+        priority = {
+          [''] = 110,
+          lua = 210,
+        },
+        highlight = {
+          'RainbowDelimiterRed',
+          'RainbowDelimiterYellow',
+          'RainbowDelimiterBlue',
+          'RainbowDelimiterOrange',
+          'RainbowDelimiterGreen',
+          'RainbowDelimiterViolet',
+          'RainbowDelimiterCyan',
+        },
+      })
+    end,
   },
 
   {
@@ -409,7 +408,7 @@ local default_plugins = {
   {
     -- https://github.com/theprimeagen/harpoon
     'theprimeagen/harpoon',
-    lazy = false,
+    lazy = true,
     branch = 'harpoon2',
     init = function()
       require('core.utils').load_mappings('harpoon')
@@ -487,7 +486,7 @@ local default_plugins = {
   {
     -- https://github.com/kylechui/nvim-surround
     'kylechui/nvim-surround',
-    event = 'VimEnter',
+    event = 'BufRead',
     config = function()
       require('nvim-surround').setup()
     end,
@@ -516,7 +515,7 @@ local default_plugins = {
   {
     -- https://github.com/folke/todo-comments.nvim
     'folke/todo-comments.nvim',
-    event = 'BufReadPre',
+    event = 'BufRead',
     dependencies = { 'nvim-lua/plenary.nvim' },
     init = function()
       dofile(vim.g.base46_cache .. 'todo')
@@ -527,66 +526,43 @@ local default_plugins = {
   {
     -- https://github.com/lukas-reineke/indent-blankline.nvim
     'lukas-reineke/indent-blankline.nvim',
+    lazy = true,
     init = function()
       require('core.utils').lazy_load('indent-blankline.nvim')
     end,
-    config = function(_, opts)
+    config = function()
       dofile(vim.g.base46_cache .. 'blankline')
       local hooks = require('ibl.hooks')
-      hooks.register(hooks.type.WHITESPACE, hooks.builtin.hide_first_space_indent_level)
-      require('ibl').setup(opts)
+      local highlight = {
+        'RainbowDelimiterRed',
+        'RainbowDelimiterYellow',
+        'RainbowDelimiterBlue',
+        'RainbowDelimiterOrange',
+        'RainbowDelimiterGreen',
+        'RainbowDelimiterViolet',
+        'RainbowDelimiterCyan',
+      }
+      require('ibl').setup({
+        scope = {
+          highlight = highlight,
+          include = {
+            node_type = { lua = { 'return_statement', 'table_constructor' } },
+          },
+        },
+      })
+      hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
     end,
   },
 
   {
     -- https://github.com/luukvbaal/statuscol.nvim
     'luukvbaal/statuscol.nvim',
+    branch = '0.10',
     init = function()
       require('core.utils').lazy_load('statuscol.nvim')
     end,
-    branch = '0.10',
     config = function()
-      local builtin = require('statuscol.builtin')
-      require('statuscol').setup({
-        ft_ignore = { 'NvimTree', 'terminal' },
-        relculright = true,
-        segments = {
-          {
-            sign = {
-              name = { 'Diagnostic' },
-              maxwidth = 1,
-              auto = false,
-            },
-          },
-          {
-            sign = {
-              name = { 'Dap' },
-              maxwidth = 1,
-              auto = true,
-            },
-          },
-          {
-            sign = {
-              name = { 'todo' },
-              maxwidth = 1,
-              auto = true,
-            },
-          },
-          {
-            text = {
-              builtin.lnumfunc,
-              ' ',
-            },
-          },
-          {
-            sign = {
-              namespace = { 'gitsign' },
-              maxwidth = 1,
-              auto = true,
-            },
-          },
-        },
-      })
+      require('plugins.configs.statuscol')
     end,
   },
 }
