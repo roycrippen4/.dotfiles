@@ -84,9 +84,16 @@ go_to_kitty_config() {
   cd "$HOME/.dotfiles/kitty/.config/kitty" && vim .
 }
 
+go_to_harpoon_config() {
+  while nvim $HOME/dev/neodev/harpoon/; do
+    echo 'restarting'
+  done
+}
+
 alias nconf=go_to_nvim_config
 alias hconf=go_to_home_config
 alias kconf=go_to_kitty_config
+alias harp=go_to_harpoon_config
 alias lg="lazygit"
 alias ls="lsd"
 alias l='ls -l'

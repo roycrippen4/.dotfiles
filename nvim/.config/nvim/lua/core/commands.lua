@@ -41,3 +41,8 @@ end, {})
 vim.keymap.set('n', '<leader>a', function()
   autosave()
 end, { desc = 'Toggle Autosave' })
+
+create_cmd('Log', function()
+  local logger = require('harpoon.logger')
+  logger:show()
+end, {})

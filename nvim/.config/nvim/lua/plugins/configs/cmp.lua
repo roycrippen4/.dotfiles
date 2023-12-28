@@ -26,6 +26,7 @@ local options = {
         return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
       end,
     },
+    { name = 'nvim_lsp_signature_help' },
     {
       name = 'luasnip',
       entry_filter = function()

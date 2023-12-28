@@ -5,64 +5,64 @@ M.harpoon = {
   n = {
     ['<C-f>'] = {
       function()
-        require('harpoon'):list('default'):append()
+        require('harpoon'):list():append()
         vim.cmd('redrawtabline')
       end,
     },
     ['<C-e>'] = {
       function()
-        require('harpoon').ui:toggle_quick_menu(require('harpoon'):list('default'))
+        require('harpoon').ui:toggle_quick_menu(require('harpoon'):list())
         vim.wo.cursorline = true
       end,
     },
     ['<C-1>'] = {
       function()
-        require('harpoon'):list('default'):select(1)
+        require('harpoon'):list():select(1)
       end,
     },
     ['<C-2>'] = {
       function()
-        require('harpoon'):list('default'):select(2)
+        require('harpoon'):list():select(2)
       end,
     },
     ['<C-3>'] = {
       function()
-        require('harpoon'):list('default'):select(3)
+        require('harpoon'):list():select(3)
       end,
     },
     ['<C-4>'] = {
       function()
-        require('harpoon'):list('default'):select(4)
+        require('harpoon'):list():select(4)
       end,
     },
     ['<C-5>'] = {
       function()
-        require('harpoon'):list('default'):select(5)
+        require('harpoon'):list():select(5)
       end,
     },
     ['<C-6>'] = {
       function()
-        require('harpoon'):list('default'):select(6)
+        require('harpoon'):list():select(6)
       end,
     },
     ['<C-7>'] = {
       function()
-        require('harpoon'):list('default'):select(7)
+        require('harpoon'):list():select(7)
       end,
     },
     ['<C-8>'] = {
       function()
-        require('harpoon'):list('default'):select(8)
+        require('harpoon'):list():select(8)
       end,
     },
     ['<C-9>'] = {
       function()
-        require('harpoon'):list('default'):select(9)
+        require('harpoon'):list():select(9)
       end,
     },
     ['<C-0>'] = {
       function()
-        require('harpoon'):list('default'):select(0)
+        require('harpoon'):list():select(0)
       end,
     },
   },
@@ -110,13 +110,7 @@ M.general = {
     ['<C-k>'] = { '<C-w>k', 'Window up' },
     ['<Leader>v'] = { '<C-w>v', 'Vertical split', opts = { nowait = true } },
     ['<Leader>h'] = { '<C-w>s', 'Horizontal split', opts = { nowait = true } },
-    -- ['<Leader><Leader>'] = { '<cmd> Lazy<CR>', 'Open Lazy' },
-    ['<Leader><Leader>'] = {
-      function()
-        get_col()
-      end,
-      'Open Lazy',
-    },
+    ['<Leader><Leader>'] = { '<cmd> Lazy<CR>', 'Open Lazy' },
 
     --zen-mode
     ['<Leader>z'] = { ':ZenMode<CR>', 'Zen', opts = { nowait = true } },
@@ -322,25 +316,25 @@ M.telescope = {
 
 M.terminal = {}
 
--- M.whichkey = {
--- plugin = true,
+M.whichkey = {
+  plugin = true,
 
--- n = {
---   ['<leader>wK'] = {
---     function()
---       vim.cmd('WhichKey')
---     end,
---     'Which-key all keymaps',
---   },
---   ['<leader>wk'] = {
---     function()
---       local input = vim.fn.input('WhichKey: ')
---       vim.cmd('WhichKey ' .. input)
---     end,
---     'Which-key query lookup',
---   },
--- },
--- }
+  n = {
+    ['<leader>wK'] = {
+      function()
+        vim.cmd('WhichKey')
+      end,
+      'Which-key all keymaps',
+    },
+    ['<leader>wk'] = {
+      function()
+        local input = vim.fn.input('WhichKey: ')
+        vim.cmd('WhichKey ' .. input)
+      end,
+      'Which-key query lookup',
+    },
+  },
+}
 
 -- M.dap = {
 --   plugin = true,

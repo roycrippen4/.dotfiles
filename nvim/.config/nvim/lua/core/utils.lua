@@ -29,15 +29,6 @@ _G.log = function(msg)
   end
 end
 
-function _G.get_col()
-  local modules = require('plugins.configs.statusline')
-  local length = --[[ #modules.git() + ]]
-    #modules.mode() --[[ + #modules.file_info() ]]
-  print(length)
-  return length
-  -- M.log(length)
-end
-
 ---@param param any item to look for in case_table
 ---@param case_table table the cases
 ---@return any result the definition for the match in the case_table
@@ -367,7 +358,7 @@ function M.get_marked_bufs()
   end
 
   local marked_bufs = {}
-  local items = require('harpoon'):list('default').items
+  local items = require('harpoon'):list().items
 
   for _, item in ipairs(items) do
     if vim.tbl_contains(paths, item.value) then

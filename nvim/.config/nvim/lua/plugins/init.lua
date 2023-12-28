@@ -199,6 +199,8 @@ local default_plugins = {
         'hrsh7th/cmp-path',
         -- https://github.com/hrsh7th/cmp-cmdline
         'hrsh7th/cmp-cmdline',
+        -- https://github.com/hrsh7th/cmp-nvim-lsp-signature-help
+        'hrsh7th/cmp-nvim-lsp-signature-help',
       },
     },
     opts = function()
@@ -409,7 +411,8 @@ local default_plugins = {
     -- https://github.com/theprimeagen/harpoon
     'theprimeagen/harpoon',
     lazy = true,
-    branch = 'harpoon2',
+    dir = '~/dev/neodev/harpoon',
+    -- branch = 'harpoon2',
     init = function()
       require('core.utils').load_mappings('harpoon')
     end,
@@ -417,8 +420,8 @@ local default_plugins = {
       local harpoon = require('harpoon')
       harpoon:setup({
         settings = {
-          save_on_toggle = true,
-          sync_on_ui_close = true,
+          save_on_toggle = false,
+          sync_on_ui_close = false,
         },
         default = {},
       })
@@ -532,25 +535,25 @@ local default_plugins = {
     end,
     config = function()
       dofile(vim.g.base46_cache .. 'blankline')
-      local hooks = require('ibl.hooks')
-      local highlight = {
-        'RainbowDelimiterRed',
-        'RainbowDelimiterYellow',
-        'RainbowDelimiterBlue',
-        'RainbowDelimiterOrange',
-        'RainbowDelimiterGreen',
-        'RainbowDelimiterViolet',
-        'RainbowDelimiterCyan',
-      }
+      -- local hooks = require('ibl.hooks')
+      -- local highlight = {
+      --   'RainbowDelimiterRed',
+      --   'RainbowDelimiterYellow',
+      --   'RainbowDelimiterBlue',
+      --   'RainbowDelimiterOrange',
+      --   'RainbowDelimiterGreen',
+      --   'RainbowDelimiterViolet',
+      --   'RainbowDelimiterCyan',
+      -- }
       require('ibl').setup({
         scope = {
-          highlight = highlight,
+          -- highlight = highlight,
           include = {
             node_type = { lua = { 'return_statement', 'table_constructor' } },
           },
         },
       })
-      hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+      -- hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
     end,
   },
 
@@ -563,6 +566,20 @@ local default_plugins = {
     end,
     config = function()
       require('plugins.configs.statuscol')
+    end,
+  },
+
+  {
+    -- https://github.com/folke/which-key.nvim
+    'folke/which-key.nvim',
+    keys = { '<leader>', '<c-r>', '<c-w>', '"', "'", '`', 'c', 'v', 'g' },
+    init = function()
+      require('core.utils').load_mappings('whichkey')
+    end,
+    cmd = 'WhichKey',
+    config = function()
+      dofile(vim.g.base46_cache .. 'whichkey')
+      require('plugins.configs.whichkey')
     end,
   },
 }

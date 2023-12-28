@@ -28,6 +28,7 @@ end)
 
 local function my_on_attach(bufnr)
   api.config.mappings.default_on_attach(bufnr)
+
   vim.keymap.del('n', '<C-]>', { buffer = bufnr })
   vim.keymap.del('n', '<C-t>', { buffer = bufnr })
   vim.keymap.del('n', '<C-e>', { buffer = bufnr })

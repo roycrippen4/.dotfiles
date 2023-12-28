@@ -106,26 +106,32 @@ autocmd({ 'InsertEnter', 'WinLeave' }, {
 autocmd({ 'VimEnter' }, {
   callback = function()
     local cwd = vim.fn.getcwd()
+
+    if cwd == '/home/roy/dev/neodev/harpoon/' then
+      local harpoon = require('harpoon')
+      harpoon.logger:show()
+    end
+
     utils.set_titlestring(cwd)
     utils.set_node_version(cwd)
     vim.env.PATH = '~/.nvm/versions/node/v20.10.0/bin:' .. vim.env.PATH
   end,
 })
 
-local CmdlineEvents = augroup('CmdlineEvents', { clear = true })
-autocmd('CmdlineEnter', {
-  group = CmdlineEvents,
-  callback = function()
-    if vim.o.cmdheight == 0 then
-      vim.o.cmdheight = 1
-    end
-  end,
-})
-autocmd('CmdlineLeave', {
-  group = CmdlineEvents,
-  callback = function()
-    if vim.o.cmdheight == 1 then
-      vim.o.cmdheight = 0
-    end
-  end,
-})
+-- local CmdlineEvents = augroup('CmdlineEvents', { clear = true })
+-- autocmd('CmdlineEnter', {
+--   group = CmdlineEvents,
+--   callback = function()
+--     if vim.o.cmdheight == 0 then
+--       vim.o.cmdheight = 1
+--     end
+--   end,
+-- })
+-- autocmd('CmdlineLeave', {
+--   group = CmdlineEvents,
+--   callback = function()
+--     if vim.o.cmdheight == 1 then
+--       vim.o.cmdheight = 0
+--     end
+--   end,
+-- })
