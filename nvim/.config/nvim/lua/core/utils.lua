@@ -24,7 +24,7 @@ _G.log = function(msg)
   if type(msg) ~= 'string' then
     msg = vim.inspect(msg)
   end
-  require('core.logger'):log(msg)
+  require('core.proto_plugs.logger'):log(msg)
 end
 
 ---@param param any item to look for in case_table

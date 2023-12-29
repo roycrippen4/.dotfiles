@@ -88,11 +88,6 @@ autocmd({ 'TermOpen', 'TermEnter', 'BufEnter' }, {
   end,
 })
 
--- autocmd('CmdlineLeave', {
---   callback = function()
---   end,
--- })
-
 autocmd('QuitPre', {
   callback = function()
     local tree_wins = {}

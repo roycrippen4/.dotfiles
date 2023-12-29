@@ -43,6 +43,6 @@ vim.keymap.set('n', '<leader>a', function()
 end, { desc = 'Toggle Autosave' })
 
 create_cmd('Log', function()
-  local logger = require('core.logger')
+  local logger = require('core.proto_plugs.logger')
   logger:show()
 end, {})

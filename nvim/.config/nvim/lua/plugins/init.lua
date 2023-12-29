@@ -4,6 +4,18 @@ local default_plugins = {
   'nvim-lua/plenary.nvim',
 
   {
+    'folke/noice.nvim',
+    event = 'VeryLazy',
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'rcarriga/nvim-notify',
+    },
+    config = function()
+      require('plugins.configs.noice')
+    end,
+  },
+
+  {
     -- https://github.com/kdheepak/lazygit.nvim
     'kdheepak/lazygit.nvim',
     keys = { '<leader>gg' },
