@@ -12,21 +12,19 @@ function M.debounce(ms, fn)
   end
 end
 
-_G.log = function(msg)
-  local log_path = './debug.log'
-  local file = io.open(log_path, 'a')
+--- test description
+function M.simple_write()
+  vim.cmd([[
+    silent w
+    echo 'File Saved'
+  ]])
+end
 
+_G.log = function(msg)
   if type(msg) ~= 'string' then
     msg = vim.inspect(msg)
   end
-
-  if file then
-    file:write(os.date('%Y-%m-%d %H:%M:%S') .. ' - ' .. msg .. '\n')
-    file:close()
-    vim.cmd('checktime')
-  else
-    print('Error opening log file!')
-  end
+  require('core.logger'):log(msg)
 end
 
 ---@param param any item to look for in case_table
@@ -292,14 +290,11 @@ function M.is_nvim_tree_buf(bufnr)
   if bufnr == nil then
     bufnr = 0
   end
+
   if vim.api.nvim_buf_is_valid(bufnr) then
     local bufname = vim.api.nvim_buf_get_name(bufnr)
-    if vim.fn.fnamemodify(bufname, ':t'):match('^NvimTree_[0-9]+$') then
-      if vim.bo[bufnr].filetype == 'NvimTree' then
-        return true
-      elseif vim.fn.filereadable(bufname) == 0 then
-        return true
-      end
+    if vim.fn.filereadable(bufname) == 0 then
+      return true
     end
   end
   return false
@@ -358,7 +353,7 @@ function M.get_marked_bufs()
   end
 
   local marked_bufs = {}
-  local items = require('harpoon'):list().items
+  local items = require('harpoon'):list('default').items
 
   for _, item in ipairs(items) do
     if vim.tbl_contains(paths, item.value) then

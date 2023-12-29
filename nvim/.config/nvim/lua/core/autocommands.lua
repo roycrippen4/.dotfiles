@@ -1,5 +1,7 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
+---@type integer[]|nil
+local cursor_pos = {}
 
 local utils = require('core.utils')
 
@@ -16,6 +18,36 @@ autocmd('RecordingLeave', {
   group = macrohl,
   callback = function()
     utils.stop_timer()
+  end,
+})
+
+augroup('yankpost', { clear = true })
+autocmd({ 'VimEnter', 'CursorMoved' }, {
+  group = 'yankpost',
+  pattern = '*',
+  callback = function()
+    cursor_pos = vim.fn.getpos('.')
+  end,
+})
+autocmd('TextYankPost', {
+  group = 'yankpost',
+  pattern = '*',
+  callback = function()
+    if vim.v.event.operator == 'y' then
+      vim.fn.setpos('.', cursor_pos)
+    end
+  end,
+})
+
+local vert_help = augroup('VertHelp', {})
+autocmd('FileType', {
+  pattern = 'help',
+  group = vert_help,
+  callback = function(event)
+    vim.api.nvim_set_option_value('bufhidden', 'unload', { scope = 'local' })
+    vim.cmd('wincmd L')
+    vim.api.nvim_win_set_width(0, 100)
+    vim.keymap.set('n', 'q', '<cmd>q<CR>', { buffer = event.buf, silent = true })
   end,
 })
 
@@ -55,6 +87,11 @@ autocmd({ 'TermOpen', 'TermEnter', 'BufEnter' }, {
     vim.wo.statuscolumn = ''
   end,
 })
+
+-- autocmd('CmdlineLeave', {
+--   callback = function()
+--   end,
+-- })
 
 autocmd('QuitPre', {
   callback = function()
@@ -103,35 +140,16 @@ autocmd({ 'InsertEnter', 'WinLeave' }, {
 
 -- Checks to see if a .nvmrc exists and sets node version if one is found.
 -- Also sets the title string for the kitty tabs
-autocmd({ 'VimEnter' }, {
+autocmd('VimEnter', {
   callback = function()
-    local cwd = vim.fn.getcwd()
-
-    if cwd == '/home/roy/dev/neodev/harpoon/' then
-      local harpoon = require('harpoon')
-      harpoon.logger:show()
+    if os.getenv('DEBUG') == '1' then
+      vim.cmd('Log')
+      log('Debug enabled')
     end
 
+    local cwd = vim.fn.getcwd()
     utils.set_titlestring(cwd)
     utils.set_node_version(cwd)
     vim.env.PATH = '~/.nvm/versions/node/v20.10.0/bin:' .. vim.env.PATH
   end,
 })
-
--- local CmdlineEvents = augroup('CmdlineEvents', { clear = true })
--- autocmd('CmdlineEnter', {
---   group = CmdlineEvents,
---   callback = function()
---     if vim.o.cmdheight == 0 then
---       vim.o.cmdheight = 1
---     end
---   end,
--- })
--- autocmd('CmdlineLeave', {
---   group = CmdlineEvents,
---   callback = function()
---     if vim.o.cmdheight == 1 then
---       vim.o.cmdheight = 0
---     end
---   end,
--- })

@@ -5,6 +5,7 @@ require('core.autocommands')
 require('core.commands')
 require('core.diagnostic')
 require('core.hlsearch')
+require('core.logger')
 
 -------------------------------------- globals -----------------------------------------
 g.nvchad_theme = config.ui.theme
@@ -57,8 +58,9 @@ opt.relativenumber = true
 opt.numberwidth = 2
 opt.ruler = false
 
+-- FoOCItTsl
 -- disable nvim intro
-opt.shortmess:append('sI')
+opt.shortmess:append('WcsI')
 
 opt.signcolumn = 'yes'
 opt.splitbelow = true
@@ -100,7 +102,10 @@ autocmd('FileType', {
 -- reload some chadrc options on-save
 autocmd('BufWritePost', {
   pattern = vim.tbl_map(function(path)
-    return vim.fs.normalize(vim.loop.fs_realpath(path))
+    local realpath = vim.loop.fs_realpath(path)
+    if realpath then
+      return vim.fs.normalize(realpath)
+    end
   end, vim.fn.glob(vim.fn.stdpath('config') .. '/lua/custom/**/*.lua', true, true, true)),
   group = vim.api.nvim_create_augroup('ReloadNvChad', {}),
 

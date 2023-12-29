@@ -1,5 +1,5 @@
 local create_cmd = vim.api.nvim_create_user_command
-local utils = require('core.utils')
+-- local utils = require('core.utils')
 
 local function clear_cmdarea()
   vim.defer_fn(function()
@@ -43,6 +43,6 @@ vim.keymap.set('n', '<leader>a', function()
 end, { desc = 'Toggle Autosave' })
 
 create_cmd('Log', function()
-  local logger = require('harpoon.logger')
+  local logger = require('core.logger')
   logger:show()
 end, {})
