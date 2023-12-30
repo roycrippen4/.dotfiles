@@ -1,6 +1,5 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
----@type integer[]|nil
 local cursor_pos = {}
 
 local utils = require('core.utils')
@@ -96,6 +95,9 @@ autocmd('QuitPre', {
     for _, w in ipairs(wins) do
       local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(w))
       if bufname:match('NvimTree_') ~= nil then
+        table.insert(tree_wins, w)
+      end
+      if bufname:match('logger') ~= nil then
         table.insert(tree_wins, w)
       end
       if vim.api.nvim_win_get_config(w).relative ~= '' then

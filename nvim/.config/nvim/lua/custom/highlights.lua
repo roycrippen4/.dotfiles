@@ -137,8 +137,9 @@ M.override = {
   St_pos_sep    = { fg = '#d6a000', bg = darkest_black, bold = false },
 
   -- Misc
-  FloatBorder = { bg = "black" },
-  CmpDocBorder = { fg = { "blue", -25 }, bg = "black" },
+  FloatBorder  = { fg = { "red", -15 }, bg = "black" },
+  CmpPmenu    = { bg = { "black", -5 } },
+  -- CmpDocBorder = { fg = { "red", -30 }, bg = "black" },
   Comment = { italic = true },
   WinSeparator = { fg = "yellow", bg = "black" },
   NvimTreeWinSeparator = { fg = black, bg = "black" },

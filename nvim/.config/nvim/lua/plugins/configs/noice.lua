@@ -16,6 +16,7 @@ noice.setup({
     },
     hover = {
       enabled = true,
+      silent = true,
       view = nil,
       opts = {},
     },
@@ -70,16 +71,6 @@ noice.setup({
     backend = 'cmp', -- backend to use to show regular cmdline completions
     kind_icons = {}, -- set to `false` to disable icons
   },
-  commands = {
-    all = {
-      view = 'split',
-      opts = {
-        enter = true,
-        format = 'details',
-      },
-      filter = {},
-    },
-  },
   views = {
     cmdline_popup = {
       position = {
@@ -91,7 +82,7 @@ noice.setup({
       },
     },
     split = {
-      enter = true,
+      enter = false,
     },
     hover = {
       scrollbar = false,
@@ -136,9 +127,9 @@ noice.setup({
       border = 'none',
     },
   },
-  notify = {
-    enabled = false,
-  },
+  -- notify = {
+  --   enabled = false,
+  -- },
   routes = {
     { filter = { find = 'E162' }, view = 'mini' },
     { filter = { find = 'E37' }, skip = true },
@@ -153,9 +144,10 @@ noice.setup({
     { filter = { event = 'msg_show', find = 'search hit BOTTOM' }, skip = true },
     { filter = { event = 'msg_show', find = 'search hit TOP' }, skip = true },
   },
+
   presets = {
     long_message_to_split = true,
-    lsp_doc_border = true,
+    cmdline_output_to_split = true,
   },
 })
 

@@ -231,7 +231,12 @@ M.lspconfig = {
       'Goto Type Definition',
     },
 
-    -- ['K'] = { '<cmd>Lspsaga hover_doc<CR>', 'LSP Hover' },
+    ['K'] = {
+      function()
+        vim.lsp.buf.hover()
+      end,
+      'LSP Hover',
+    },
 
     ['<C-S-K>'] = {
       function()

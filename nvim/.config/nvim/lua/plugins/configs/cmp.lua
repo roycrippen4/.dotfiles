@@ -3,18 +3,27 @@ local copilot_cmp_comparators = require('copilot_cmp.comparators')
 
 dofile(vim.g.base46_cache .. 'cmp')
 
-local function border(hl_name)
-  return {
-    { '╭', hl_name },
-    { '─', hl_name },
-    { '╮', hl_name },
-    { '│', hl_name },
-    { '╯', hl_name },
-    { '─', hl_name },
-    { '╰', hl_name },
-    { '│', hl_name },
-  }
-end
+-- local function border(hl_name)
+--   return {
+-- { '╭', hl_name },
+-- { '─', hl_name },
+-- { '╮', hl_name },
+-- { '│', hl_name },
+-- { '╯', hl_name },
+-- { '─', hl_name },
+-- { '╰', hl_name },
+-- { '│', hl_name },
+-- ┈ ┐ ─ ┌ └ ┘  ┆ ┊
+-- { '┌', hl_name },
+-- { '─', hl_name },
+-- { '┐', hl_name },
+-- { '│', hl_name },
+-- { '┘', hl_name },
+-- { '─', hl_name },
+-- { '└', hl_name },
+-- { '│', hl_name },
+--   }
+-- end
 
 local options = {
   sources = {
@@ -26,7 +35,7 @@ local options = {
         return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
       end,
     },
-    { name = 'nvim_lsp_signature_help' },
+    -- { name = 'nvim_lsp_signature_help' },
     {
       name = 'luasnip',
       entry_filter = function()
@@ -57,10 +66,10 @@ local options = {
     completion = {
       winhighlight = 'Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel',
       scrollbar = false,
-      border = border('CmpBorder'),
+      -- border = border('CmpBorder'),
     },
     documentation = {
-      border = border('CmpDocBorder'),
+      -- border = border('CmpDocBorder'),
       winhighlight = 'Normal:CmpDoc',
     },
   },

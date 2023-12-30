@@ -1,55 +1,52 @@
-local api = vim.api
-local autocmd = vim.api.nvim_create_autocmd
+local function is_new_search(char)
+  return vim.fn.mode() == 'c' and vim.fn.keytrans(char) == '<CR>' and vim.fn.getcmdtype() == '/'
+end
 
-local M = {}
+local id = nil
+local ns = vim.api.nvim_create_namespace('search_virt')
 
-M.hl_search = function()
-  vim.o.hlsearch = true
-  M.ns = api.nvim_create_namespace('search')
-  vim.api.nvim_buf_clear_namespace(0, M.ns, 0, -1)
+local function clear()
+  if id ~= nil then
+    vim.api.nvim_buf_del_extmark(0, ns, id)
+  end
+end
 
-  local search_pat = '\\c\\%#' .. vim.fn.getreg('/')
-  local ring = vim.fn.matchadd('IncSearch', search_pat)
-  vim.cmd('redraw')
-
-  local sc = vim.fn.searchcount()
-  M.id = vim.api.nvim_buf_set_extmark(0, M.ns, vim.api.nvim_win_get_cursor(0)[1] - 1, 0, {
-    virt_text = { { '[' .. sc.current .. '/' .. sc.total .. ']', 'NoiceVirtualTextOn' } },
+---@param cur integer search item the mouse is on
+---@param total integer total count of search items
+local function draw_virt(cur, total)
+  clear()
+  if cur == 0 and total == 0 then
+    return
+  end
+  return vim.api.nvim_buf_set_extmark(0, ns, vim.api.nvim_win_get_cursor(0)[1] - 1, 0, {
+    virt_text = { { '[' .. cur .. '/' .. total .. ']', 'NoiceVirtualTextOn' } },
     virt_text_pos = 'eol',
   })
-
-  vim.fn.matchdelete(ring)
-  vim.cmd('redraw')
 end
 
-vim.keymap.set('c', '<CR>', '<CR><cmd>redraw<CR>', { desc = 'redraw screen once the search has been initiated' })
-
-vim.keymap.set(
-  'n',
-  'n',
-  "n<cmd>lua require('core.proto_plugs.hlsearch').hl_search()<CR>",
-  { desc = 'go to next search and highlight' }
-)
-
-vim.keymap.set(
-  'n',
-  'N',
-  "N<cmd>lua require('core.proto_plugs.hlsearch').hl_search()<CR>",
-  { desc = 'go to prev search and highlight' }
-)
-
-function M.clear()
-  if M.ns and M.id then
-    vim.api.nvim_buf_del_extmark(0, M.ns, M.id)
+vim.on_key(function(char)
+  if is_new_search(char) then
+    vim.defer_fn(function()
+      local searchcount = vim.fn.searchcount()
+      id = draw_virt(searchcount.current, searchcount.total)
+    end, 0)
   end
-  vim.o.hlsearch = false
-end
 
--- disables hlsearch highlight and extmarks
-autocmd('CursorMoved', {
-  callback = function()
-    M.clear()
-  end,
-})
+  if vim.fn.mode() == 'n' then
+    vim.defer_fn(function()
+      local new_hlsearch = vim.tbl_contains({ 'n', 'N', '*', '#', '?', '/' }, vim.fn.keytrans(char))
+      local searchcount = vim.fn.searchcount()
 
-return M
+      if new_hlsearch and searchcount.current ~= 0 then
+        id = draw_virt(searchcount.current, searchcount.total)
+      end
+
+      if vim.opt.hlsearch:get() ~= new_hlsearch then
+        vim.opt.hlsearch = new_hlsearch
+        if not new_hlsearch then
+          clear()
+        end
+      end
+    end, 0)
+  end
+end, vim.api.nvim_create_namespace('auto_hlsearch'))

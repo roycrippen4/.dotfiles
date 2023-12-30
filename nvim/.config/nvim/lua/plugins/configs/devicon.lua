@@ -73,12 +73,12 @@ devicons.set_icon({
   ['package.json'] = {
     icon = '',
     color = '#e8274b',
-    name = 'package.json',
+    name = 'PackageJson',
   },
   ['package-lock.json'] = {
     icon = '',
     color = '#7a0d21',
-    name = 'package-lock.json',
+    name = 'PackageLockJson',
   },
   ['.prettierrc'] = {
     icon = '',

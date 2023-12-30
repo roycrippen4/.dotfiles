@@ -212,7 +212,7 @@ local default_plugins = {
         -- https://github.com/hrsh7th/cmp-cmdline
         'hrsh7th/cmp-cmdline',
         -- https://github.com/hrsh7th/cmp-nvim-lsp-signature-help
-        'hrsh7th/cmp-nvim-lsp-signature-help',
+        -- 'hrsh7th/cmp-nvim-lsp-signature-help',
       },
     },
     opts = function()
