@@ -19,6 +19,11 @@ g.markdown_fenced_languages = {
 
 vim.treesitter.language.register('markdown', 'mdx')
 
+-- Fold
+-- vim.o.foldlevel = 99
+-- vim.o.foldlevelstart = 99
+-- vim.o.foldenable = true
+
 -------------------------------------- options ------------------------------------------
 -- opt.cmdheight = 0
 opt.formatoptions = ''
@@ -45,6 +50,9 @@ opt.fillchars = {
   verthoriz = ' ',
   horizdown = '/',
   horiz = ' ',
+  foldopen = '',
+  foldclose = '',
+  foldsep = ' ',
 }
 
 opt.ignorecase = true

@@ -4,6 +4,7 @@ local default_plugins = {
   'nvim-lua/plenary.nvim',
 
   {
+    -- https://github.com/folke/nvim-noice
     'folke/noice.nvim',
     event = 'VeryLazy',
     dependencies = {

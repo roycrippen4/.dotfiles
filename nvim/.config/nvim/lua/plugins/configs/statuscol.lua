@@ -36,11 +36,14 @@ statuscol.setup({
         ' ',
       },
     },
+
     {
       sign = {
         namespace = { 'gitsign' },
         maxwidth = 1,
-        auto = true,
+        auto = false,
+        wrap = false,
+        fillchar = ' ',
       },
     },
   },
