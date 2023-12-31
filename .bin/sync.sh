@@ -36,5 +36,5 @@ if [ -n "$unmerged_files" ]; then
   printf %"s\n" "$unmerged_files" # Ensure newlines are printed
 else
   # Run stow to ensure all new dotfiles are linked
-  stow .
+  stow */
 fi

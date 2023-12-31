@@ -54,8 +54,8 @@ noice.setup({
   },
   markdown = {
     hover = {
-      ['|(%S-)|'] = vim.cmd.help, -- vim help links
-      ['%[.-%]%((%S-)%)'] = require('noice.util').open, -- markdown links
+      ['|(%S-)|'] = vim.cmd.help,
+      ['%[.-%]%((%S-)%)'] = require('noice.util').open,
     },
     highlights = {
       ['|%S-|'] = '@text.reference',
@@ -67,9 +67,9 @@ noice.setup({
     },
   },
   popupmenu = {
-    enabled = true, -- enables the Noice popupmenu UI
-    backend = 'cmp', -- backend to use to show regular cmdline completions
-    kind_icons = {}, -- set to `false` to disable icons
+    enabled = true,
+    backend = 'cmp',
+    kind_icons = {},
   },
   views = {
     cmdline_popup = {
@@ -127,9 +127,6 @@ noice.setup({
       border = 'none',
     },
   },
-  -- notify = {
-  --   enabled = false,
-  -- },
   routes = {
     { filter = { find = 'E162' }, view = 'mini' },
     { filter = { find = 'E37' }, skip = true },

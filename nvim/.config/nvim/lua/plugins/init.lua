@@ -547,25 +547,25 @@ local default_plugins = {
     end,
     config = function()
       dofile(vim.g.base46_cache .. 'blankline')
-      -- local hooks = require('ibl.hooks')
-      -- local highlight = {
-      --   'RainbowDelimiterRed',
-      --   'RainbowDelimiterYellow',
-      --   'RainbowDelimiterBlue',
-      --   'RainbowDelimiterOrange',
-      --   'RainbowDelimiterGreen',
-      --   'RainbowDelimiterViolet',
-      --   'RainbowDelimiterCyan',
-      -- }
+      local hooks = require('ibl.hooks')
+      local highlight = {
+        'RainbowDelimiterRed',
+        'RainbowDelimiterYellow',
+        'RainbowDelimiterBlue',
+        'RainbowDelimiterOrange',
+        'RainbowDelimiterGreen',
+        'RainbowDelimiterViolet',
+        'RainbowDelimiterCyan',
+      }
       require('ibl').setup({
         scope = {
-          -- highlight = highlight,
+          highlight = highlight,
           include = {
             node_type = { lua = { 'return_statement', 'table_constructor' } },
           },
         },
       })
-      -- hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+      hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
     end,
   },
 

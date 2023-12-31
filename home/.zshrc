@@ -68,29 +68,23 @@ plugins=(
   zsh-syntax-highlighting
 )
 
-# shellcheck source=../../.dotfiles/home/.oh-my-zsh/oh-my-zsh.sh
 source "$ZSH"/oh-my-zsh.sh
+alias nvim='$HOME/.bin/nvim.bash'
 alias vim="nvim"
 
 go_to_nvim_config() {
-  cd "$HOME/.dotfiles/nvim/.config/nvim" && vim .
+  cd "$HOME/.dotfiles/nvim/.config/nvim/"
 }
 
 go_to_home_config() {
-  cd "$HOME/.dotfiles/home" && vim .
+  cd "$HOME/.dotfiles/home"
 }
 
 go_to_kitty_config() {
-  cd "$HOME/.dotfiles/kitty/.config/kitty" && vim .
+  cd "$HOME/.dotfiles/kitty/.config/kitty"
 }
 
-# go_to_harpoon_config() {
-#   while nvim $HOME/dev/neodev/harpoon/; do
-#     echo 'restarting'
-#   done
-# }
-
-# alias nconf=go_to_nvim_config
+alias nconf=go_to_nvim_config
 alias hconf=go_to_home_config
 alias kconf=go_to_kitty_config
 alias harp=go_to_harpoon_config
@@ -102,7 +96,6 @@ alias lla='ls -la'
 alias lt='ls --tree'
 alias lp='echo "${PATH//:/\n}"'
 alias dot='cd && cd .dotfiles'
-alias nvim='.bin/nvim.bash'
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

@@ -1,46 +1,60 @@
 #!/bin/bash
 
-# Set DEBUG based on the first argument passed; default is 0 (off)
+# Default values
 DEBUG=0
-DIRECTORY="$HOME/.dotfiles/nvim/.config/nvim"
-RELAUNCH=0
+RELAUNCH=0       # By default, relaunch is turned off
+DIRECTORY=$(pwd) # Set default directory to current working directory
 
 # Function to display help message
 usage() {
-  echo "Usage: $0 [-d] [-a directory] [-h]"
+  echo "Usage: $0 [-d] [-r] [-v] [-h] [path]"
   echo "  -d            Run in debug mode"
-  echo "  -a directory  Specify a directory to open with nvim"
-  echo "  -r            Enables automatic relaunching of nvim on :q. Use :cq to break the loop."
+  echo "  -r            Enable re-launching of nvim upon exit"
+  echo "  -v            Display version information and exit"
   echo "  -h            Display this help and exit"
+  echo "  path          Specify a path to a file or directory (optional)"
 }
 
-while getopts "da:" opt; do
+# Process options
+while getopts "dhrv" opt; do
   case $opt in
   d) DEBUG=1 ;;
-  a) DIRECTORY=$OPTARG ;;
   r) RELAUNCH=1 ;;
+  v)
+    nvim -v
+    exit 0
+    ;;
   h)
     usage
     exit 0
     ;;
   *)
-    echo 'Usage: nvim.bash [-d] [-a directory]' >&2
+    usage >&2
     exit 1
     ;;
   esac
 done
 
+# Shift off all the options that were processed
+shift $((OPTIND - 1))
+
+# If there's an additional argument, treat it as the directory or file path
+if [ "$1" ]; then
+  DIRECTORY=$1
+fi
+
 export DEBUG
 
 if [ $RELAUNCH -eq 1 ]; then
   while true; do
-    nvim $DIRECTORY
+    nvim "$DIRECTORY" # Quoted to handle paths with spaces
 
-    # If nvim exits with a non-zero exit code, break the loop
     if [ $? -ne 0 ]; then
       break
     fi
 
     echo 'restarting'
   done
+else
+  nvim "$DIRECTORY" # Quoted to handle paths with spaces
 fi
