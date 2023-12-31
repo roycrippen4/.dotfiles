@@ -81,7 +81,7 @@ M.add = {
   St_Time                = { fg = '#cc5e00', bg = darkest_black },
   St_unix                = { fg = '#00EE6e', bg = darkest_black },
 
-  NoiceVirtualTextOn     = { fg = l_blue, bg = cursorline },
+  NoiceVirtualTextOn     = { fg = '#53bf00', bg = cursorline, italic = true },
 
   CmdlineEx        = { fg =  {'red', -15}, bg = darkest_black },
   CmdlineLua       = { fg =  green,        bg = darkest_black },

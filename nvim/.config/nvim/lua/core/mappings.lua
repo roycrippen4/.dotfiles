@@ -97,8 +97,8 @@ M.general = {
 
   n = {
     -- newline with shift/ctrl enter
-    ['<S-CR>'] = { 'o<Esc>k', 'New line above', opts = { silent = true } },
-    ['<C-CR>'] = { 'O<Esc>j', 'New line above', opts = { silent = true } },
+    -- ['<S-CR>'] = { 'o<Esc>k', 'New line above', opts = { silent = true } },
+    -- ['<C-CR>'] = { 'O<Esc>j', 'New line above', opts = { silent = true } },
 
     -- probably the best keybind ever
     [';'] = { ':', 'enter command mode', opts = { nowait = true } },

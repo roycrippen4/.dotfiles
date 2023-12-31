@@ -7,8 +7,8 @@ end
 
 local cwd = vim.fn.getcwd(-1, -1)
 if cwd ~= nil then
-  if string.sub(cwd, -4) then
-    require('neodev').setup({})
+  if string.sub(cwd, -4) == 'nvim' then
+    require('neodev').setup()
   end
 end
 

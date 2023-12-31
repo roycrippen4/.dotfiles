@@ -27,38 +27,6 @@ _G.log = function(msg)
   require('core.proto_plugs.logger'):log(msg)
 end
 
----@param param any item to look for in case_table
----@param case_table table the cases
----@return any result the definition for the match in the case_table
----or the default function/nil if no match
---[[
-```lua
-switch(a, { 
-  [1] = function()	-- for case 1
-		print "Case 1."
-	end,
-	[2] = function()	-- for case 2
-		print "Case 2."
-	end,
-	[3] = function()	-- for case 3
-		print "Case 3."
-	end
-  ['default'] = function()
-    -- handle default case here
-  end
-})
-
-```
-]]
-_G.switch = function(param, case_table)
-  local case = case_table[param]
-  if case then
-    return case()
-  end
-  local def = case_table['default']
-  return def and def() or nil
-end
-
 M.load_config = function()
   local config = require('core.default_config')
   local chadrc_path = vim.api.nvim_get_runtime_file('lua/custom/chadrc.lua', false)[1]
@@ -78,8 +46,6 @@ M.remove_disabled_keys = function(chadrc_mappings, default_mappings)
   if not chadrc_mappings then
     return default_mappings
   end
-
-  -- store keys in a array with true value to compare
   local keys_to_disable = {}
   for _, mappings in pairs(chadrc_mappings) do
     for mode, section_keys in pairs(mappings) do
@@ -154,17 +120,12 @@ M.lazy_load = function(plugin)
 
       if condition then
         vim.api.nvim_del_augroup_by_name('BeLazyOnFileOpen' .. plugin)
-
-        -- dont defer for treesitter as it will show slow highlighting
-        -- This deferring only happens only when we do "nvim filename"
         if plugin ~= 'nvim-treesitter' then
-          vim.schedule(function()
+          vim.defer_fn(function()
             require('lazy').load({ plugins = plugin })
-
             if plugin == 'nvim-lspconfig' then
               vim.cmd('silent! do FileType')
             end
-            ---@diagnostic disable-next-line
           end, 0)
         else
           require('lazy').load({ plugins = plugin })

@@ -3,28 +3,6 @@ local copilot_cmp_comparators = require('copilot_cmp.comparators')
 
 dofile(vim.g.base46_cache .. 'cmp')
 
--- local function border(hl_name)
---   return {
--- { '╭', hl_name },
--- { '─', hl_name },
--- { '╮', hl_name },
--- { '│', hl_name },
--- { '╯', hl_name },
--- { '─', hl_name },
--- { '╰', hl_name },
--- { '│', hl_name },
--- ┈ ┐ ─ ┌ └ ┘  ┆ ┊
--- { '┌', hl_name },
--- { '─', hl_name },
--- { '┐', hl_name },
--- { '│', hl_name },
--- { '┘', hl_name },
--- { '─', hl_name },
--- { '└', hl_name },
--- { '│', hl_name },
---   }
--- end
-
 local options = {
   sources = {
     { name = 'copilot' },
@@ -35,7 +13,6 @@ local options = {
         return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
       end,
     },
-    -- { name = 'nvim_lsp_signature_help' },
     {
       name = 'luasnip',
       entry_filter = function()
@@ -66,10 +43,8 @@ local options = {
     completion = {
       winhighlight = 'Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel',
       scrollbar = false,
-      -- border = border('CmpBorder'),
     },
     documentation = {
-      -- border = border('CmpDocBorder'),
       winhighlight = 'Normal:CmpDoc',
     },
   },
@@ -88,7 +63,6 @@ local options = {
   sorting = {
     priority_weight = 2,
     comparators = {
-      -- Definitions of compare function https://github.com/hrsh7th/nvim-cmp/blob/main/lua/cmp/config/compare.lua
       copilot_cmp_comparators.prioritize or function() end,
       cmp.config.compare.exact,
       cmp.config.compare.locality,
@@ -148,7 +122,6 @@ local options = {
   },
 }
 
--- `/` cmdline setup.
 cmp.setup.cmdline('/', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = {
@@ -156,7 +129,6 @@ cmp.setup.cmdline('/', {
   },
 })
 
--- `:` cmdline setup.
 cmp.setup.cmdline(':', {
   mapping = cmp.mapping.preset.cmdline(),
   sources = cmp.config.sources({

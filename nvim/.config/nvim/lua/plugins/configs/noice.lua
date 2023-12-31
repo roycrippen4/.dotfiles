@@ -82,7 +82,7 @@ noice.setup({
       },
     },
     split = {
-      enter = false,
+      enter = true,
     },
     hover = {
       scrollbar = false,

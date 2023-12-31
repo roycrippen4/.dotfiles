@@ -34,6 +34,9 @@ local default_plugins = {
     -- https://github.com/akinsho/toggleterm.nvim
     'akinsho/toggleterm.nvim',
     keys = { '<M-h>', '<M-v>', '<M-f>' },
+    init = function()
+      require('core.utils').lazy_load('toggleterm.nvim')
+    end,
     opts = function()
       return require('plugins.configs.toggleterm').options
     end,
@@ -46,20 +49,19 @@ local default_plugins = {
   {
     -- https://github.com/zbirenbaum/copilot.lua
     'zbirenbaum/copilot.lua',
-    event = { 'InsertEnter', 'LspAttach' },
+    event = 'InsertEnter',
+    dependencies = {
+      'zbirenbaum/copilot-cmp',
+      event = 'InsertEnter',
+      config = function()
+        require('copilot_cmp').setup()
+      end,
+    },
     config = function()
       require('copilot').setup({
         suggestion = { enabled = false },
         panel = { enabled = false },
       })
-    end,
-  },
-
-  {
-    'zbirenbaum/copilot-cmp',
-    event = { 'InsertEnter', 'LspAttach' },
-    config = function()
-      require('copilot_cmp').setup()
     end,
   },
 
@@ -115,17 +117,15 @@ local default_plugins = {
       return { override = require('nvchad.icons.devicons') }
     end,
     config = function(_, opts)
-      local devicon = require('nvim-web-devicons')
-      dofile(vim.g.base46_cache .. 'devicons')
-      devicon.setup(opts)
       require('plugins.configs.devicon')
+      dofile(vim.g.base46_cache .. 'devicons')
+      require('nvim-web-devicons').setup(opts)
     end,
   },
 
   {
     -- https://github.com/nvim-treesitter/nvim-treesitter
     'nvim-treesitter/nvim-treesitter',
-    lazy = false,
     init = function()
       require('core.utils').lazy_load('nvim-treesitter')
     end,
@@ -148,13 +148,16 @@ local default_plugins = {
       vim.api.nvim_create_autocmd({ 'BufRead' }, {
         group = vim.api.nvim_create_augroup('GitSignsLazyLoad', { clear = true }),
         callback = function()
-          vim.fn.system('git -C ' .. '"' .. vim.fn.expand('%:p:h') .. '"' .. ' rev-parse')
-          if vim.v.shell_error == 0 then
-            vim.api.nvim_del_augroup_by_name('GitSignsLazyLoad')
-            vim.schedule(function()
-              require('lazy').load({ plugins = { 'gitsigns.nvim' } })
-            end)
-          end
+          vim.fn.jobstart({ 'git', '-C', vim.loop.cwd(), 'rev-parse' }, {
+            on_exit = function(_, return_code)
+              if return_code == 0 then
+                vim.api.nvim_del_augroup_by_name('GitSignsLazyLoad')
+                vim.schedule(function()
+                  require('lazy').load({ plugins = { 'gitsigns.nvim' } })
+                end)
+              end
+            end,
+          })
         end,
       })
     end,
@@ -168,9 +171,54 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/ggandor/leap.nvim
+    'ggandor/leap.nvim',
+    lazy = false,
+    config = function()
+      require('leap').add_default_mappings()
+    end,
+  },
+
+  {
+    'chrisgrieser/nvim-spider',
+    event = 'InsertEnter',
+    keys = {
+      {
+        'e',
+        "<cmd>lua require('spider').motion('e')<CR>",
+        mode = { 'n', 'o', 'x' },
+      },
+      {
+        'w',
+        "<cmd>lua require('spider').motion('w')<CR>",
+        mode = { 'n', 'o', 'x' },
+      },
+      {
+        'b',
+        "<cmd>lua require('spider').motion('b')<CR>",
+        mode = { 'n', 'o', 'x' },
+      },
+    },
+  },
+
+  {
+    'altermo/ultimate-autopair.nvim',
+    event = 'VeryLazy',
+    branch = 'v0.6',
+    config = function()
+      require('ultimate-autopair').setup({
+        space2 = {
+          enable = true,
+        },
+        { '<', '>', newline = true, space = true, ft = { 'lua' } },
+      })
+    end,
+  },
+
+  {
     -- https://github.com/hrsh7th/nvim-cmp
     'hrsh7th/nvim-cmp',
-    event = 'BufReadPost',
+    event = 'InsertEnter',
     dependencies = {
       {
         -- https://github.com/L3MON4D3/LuaSnip
@@ -182,21 +230,6 @@ local default_plugins = {
           local luasnip = require('luasnip')
           luasnip.filetype_extend('javascriptreact', { 'html' })
           luasnip.filetype_extend('typescriptreact', { 'html' })
-          require('luasnip/loaders/from_vscode').lazy_load()
-        end,
-      },
-
-      {
-        -- https://github.com/windwp/nvim-autopairs
-        'windwp/nvim-autopairs',
-        opts = {
-          fast_wrap = {},
-          disable_filetype = { 'TelescopePrompt', 'vim' },
-        },
-        config = function(_, opts)
-          require('nvim-autopairs').setup(opts)
-          local cmp_autopairs = require('nvim-autopairs.completion.cmp')
-          require('cmp').event:on('confirm_done', cmp_autopairs.on_confirm_done())
         end,
       },
       {
@@ -212,8 +245,6 @@ local default_plugins = {
         'hrsh7th/cmp-path',
         -- https://github.com/hrsh7th/cmp-cmdline
         'hrsh7th/cmp-cmdline',
-        -- https://github.com/hrsh7th/cmp-nvim-lsp-signature-help
-        -- 'hrsh7th/cmp-nvim-lsp-signature-help',
       },
     },
     opts = function()
@@ -259,7 +290,6 @@ local default_plugins = {
       dofile(vim.g.base46_cache .. 'telescope')
       local telescope = require('telescope')
       telescope.setup(opts)
-      -- load extensions
       for _, ext in ipairs(opts.extensions_list) do
         telescope.load_extension(ext)
       end
@@ -276,7 +306,7 @@ local default_plugins = {
   {
     -- https://github.com/neovim/nvim-lspconfig
     'neovim/nvim-lspconfig',
-    event = 'BufRead',
+    event = 'VeryLazy',
     dependencies = {
       'folke/neodev.nvim',
     },
@@ -293,33 +323,11 @@ local default_plugins = {
       'nvim-lua/plenary.nvim',
       'neovim/nvim-lspconfig',
     },
-    config = function()
-      local M = require('plugins.configs.lsp.lspconfig')
-      local api = require('typescript-tools.api')
-      require('typescript-tools').setup({
-
-        on_attach = M.on_attach,
-        settings = {
-          tsserver_plugins = {
-            '@styled/typescript-styled-plugin',
-          },
-          tsserver_file_preferences = {
-            includeInlayParameterNameHints = 'all',
-            includeInlayParameterNameHintsWhenArgumentMatchesName = true,
-            includeInlayFunctionParameterTypeHints = true,
-            includeInlayVariableTypeHints = true,
-            includeInlayVariableTypeHintsWhenTypeMatchesName = true,
-            includeInlayPropertyDeclarationTypeHints = true,
-            includeInlayFunctionLikeReturnTypeHints = true,
-            includeInlayEnumMemberValueHints = true,
-            jsxAttributeCompletionStyle = 'auto',
-          },
-        },
-        handlers = {
-          ['textDocument/publishDiagnostics'] = api.filter_diagnostics({ 80001 }),
-        },
-      })
-      vim.keymap.set('n', 'fi', '<cmd> TSToolsOrganizeImports<CR>', { desc = 'Organize imports' })
+    opts = function()
+      return require('plugins.configs.lsp.typescript-tools')
+    end,
+    config = function(_, opts)
+      require('typescript-tools').setup(opts)
     end,
   },
 
@@ -333,7 +341,7 @@ local default_plugins = {
   {
     -- https://github.com/Aasim-A/scrollEOF.nvim
     'Aasim-A/scrollEOF.nvim',
-    event = 'BufRead',
+    event = 'VeryLazy',
     config = function()
       require('scrollEOF').setup({})
     end,
@@ -342,7 +350,7 @@ local default_plugins = {
   {
     -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
     'JoosepAlviste/nvim-ts-context-commentstring',
-    event = 'BufRead',
+    event = 'VeryLazy',
   },
 
   {
@@ -355,7 +363,7 @@ local default_plugins = {
       ---@diagnostic disable-next-line
       require('Comment').setup({
         pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
-        ignore = '^$', -- ignore empty lines
+        ignore = '^$',
       })
     end,
   },
@@ -376,32 +384,14 @@ local default_plugins = {
   {
     -- https://github.com/hiphish/rainbow-delimiters.nvim
     'hiphish/rainbow-delimiters.nvim',
-    event = 'BufReadPost',
-    config = function()
-      local rainbow_delims = require('rainbow-delimiters')
-      require('rainbow-delimiters.setup').setup({
-        strategy = {
-          [''] = rainbow_delims.strategy['global'],
-          vim = rainbow_delims.strategy['local'],
-        },
-        query = {
-          [''] = 'rainbow-delimiters',
-          lua = 'rainbow-blocks',
-        },
-        priority = {
-          [''] = 110,
-          lua = 210,
-        },
-        highlight = {
-          'RainbowDelimiterRed',
-          'RainbowDelimiterYellow',
-          'RainbowDelimiterBlue',
-          'RainbowDelimiterOrange',
-          'RainbowDelimiterGreen',
-          'RainbowDelimiterViolet',
-          'RainbowDelimiterCyan',
-        },
-      })
+    init = function()
+      require('core.utils').lazy_load('rainbow-delimiters.nvim')
+    end,
+    opts = function()
+      return require('plugins.configs.rainbow_delimiters')
+    end,
+    config = function(_, opts)
+      require('rainbow-delimiters.setup').setup(opts)
     end,
   },
 
@@ -468,41 +458,19 @@ local default_plugins = {
   {
     -- https://github.com/stevearc/conform.nvim
     'stevearc/conform.nvim',
-    event = { 'BufReadPre', 'BufNewFile' },
-    config = function()
-      require('conform').setup({
-        quiet = true,
-        formatters_by_ft = {
-          lua = { 'stylua' },
-          typescript = { 'prettier' },
-          typescriptreact = { 'prettier' },
-          javascript = { 'prettier' },
-          javascriptreact = { 'prettier' },
-          json = { 'pretter' },
-          html = { 'prettier' },
-          css = { 'prettier' },
-          markdown = { 'prettier' },
-          sh = { 'shfmt' },
-          yaml = { 'prettier' },
-        },
-        format_on_save = {
-          timeout_ms = 500,
-          async = false,
-          lsp_fallback = true,
-        },
-        formatters = {
-          shfmt = {
-            prepend_args = { '-i', '2' },
-          },
-        },
-      })
+    event = 'BufWritePre',
+    opts = function()
+      return require('plugins.configs.conform')
+    end,
+    config = function(_, opts)
+      require('conform').setup(opts)
     end,
   },
 
   {
     -- https://github.com/kylechui/nvim-surround
     'kylechui/nvim-surround',
-    event = 'BufRead',
+    event = 'VeryLazy',
     config = function()
       require('nvim-surround').setup()
     end,
@@ -531,7 +499,7 @@ local default_plugins = {
   {
     -- https://github.com/folke/todo-comments.nvim
     'folke/todo-comments.nvim',
-    event = 'BufRead',
+    event = 'VeryLazy',
     dependencies = { 'nvim-lua/plenary.nvim' },
     init = function()
       dofile(vim.g.base46_cache .. 'todo')
@@ -542,7 +510,7 @@ local default_plugins = {
   {
     -- https://github.com/lukas-reineke/indent-blankline.nvim
     'lukas-reineke/indent-blankline.nvim',
-    lazy = true,
+    event = 'VeryLazy',
     init = function()
       require('core.utils').lazy_load('indent-blankline.nvim')
     end,
@@ -599,7 +567,7 @@ local default_plugins = {
 
 local config = require('core.utils').load_config()
 
-if #config.plugins > 0 then
+if #config.plugins ~= 0 then
   table.insert(default_plugins, { import = config.plugins })
 end
 
