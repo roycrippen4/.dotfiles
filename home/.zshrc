@@ -49,7 +49,7 @@ export PATH="$PATH:$HOME/.local/bin"
 #Julia
 export PATH="$PATH:$HOME/Opt/julia-1.9.4/bin"
 
-export PATH="$HOME/.bin/nvim.bash:$PATH"
+export PATH="$HOME/.bin/nvim.sh:$PATH"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL10k_MODE="nerdfont-complete"
@@ -58,9 +58,6 @@ DISABLE_AUTO_TITLE="true"
 ZLE_RPROMPT_INDENT=0
 DISABLE_UNTRACKED_FILES_DIRTY="true"
 ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
-# ZVM_INSERT_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BEAM
-# ZVM_NORMAL_MODE_CURSOR=$ZVM_CURSOR_BLINKING_BLOCK
-# ZVM_OPPEND_MODE_CURSOR=$ZVM_CURSOR_BLINKING_UNDERLINE
 
 plugins=(
   zsh-vi-mode
@@ -71,8 +68,8 @@ plugins=(
 )
 
 source "$ZSH"/oh-my-zsh.sh
-alias nvim='$HOME/.bin/nvim.bash'
-alias vim="nvim"
+alias nvim="$HOME/.dotfiles/home/.bin/nvim.sh"
+alias vim="$HOME/.dotfiles/home/.bin/nvim.sh"
 
 go_to_nvim_config() {
   cd "$HOME/.dotfiles/nvim/.config/nvim/"
@@ -90,14 +87,16 @@ alias nconf=go_to_nvim_config
 alias hconf=go_to_home_config
 alias kconf=go_to_kitty_config
 alias harp=go_to_harpoon_config
-alias lg="lazygit"
-alias ls="lsd"
+alias lg='lazygit'
+alias ls='lsd'
 alias l='ls -l'
 alias la='ls -a'
 alias lla='ls -la'
 alias lt='ls --tree'
 alias lp='echo "${PATH//:/\n}"'
 alias dot='cd && cd .dotfiles'
+alias so="$HOME/.dotfiles/home/.bin/source.zsh"
+alias sync="$HOME/.dotfiles/home/.bin/sync.sh"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
