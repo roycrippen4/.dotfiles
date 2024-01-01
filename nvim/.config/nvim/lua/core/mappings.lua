@@ -284,7 +284,7 @@ M.lspconfig = {
 
     ['<leader>la'] = {
       function()
-        vim.lsp.buf.code_action()
+        require('actions-preview').code_actions()
       end,
       'Code Action',
     },
