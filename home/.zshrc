@@ -49,6 +49,8 @@ export PATH="$PATH:$HOME/.local/bin"
 #Julia
 export PATH="$PATH:$HOME/Opt/julia-1.9.4/bin"
 
+export PATH="$HOME/.bin/nvim.bash:$PATH"
+
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL10k_MODE="nerdfont-complete"
 
@@ -102,4 +104,3 @@ alias dot='cd && cd .dotfiles'
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
-export PATH="$HOME/bin/nvim.sh:$PATH"
