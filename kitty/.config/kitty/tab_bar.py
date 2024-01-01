@@ -28,7 +28,7 @@ DATE_FG = as_rgb(color_as_int(opts.active_tab_background))
 
 bat_text_color = as_rgb(color_as_int(opts.color15))
 SEPARATOR_SYMBOL, SOFT_SEPARATOR_SYMBOL = ("", "")
-RIGHT_MARGIN = 0
+# RIGHT_MARGIN = 0
 REFRESH_TIME = 1
 
 
@@ -42,7 +42,7 @@ def _draw_left_status(
     is_last: bool,
     extra_data: ExtraData,
 ) -> int:
-    if screen.cursor.x >= screen.columns - right_status_length:
+    if screen.cursor.x >= screen.columns:
         return screen.cursor.x
     tab_bg = screen.cursor.bg
     tab_fg = screen.cursor.fg
@@ -78,18 +78,18 @@ def _draw_left_status(
     return end
 
 
-def _draw_right_status(screen: Screen, is_last: bool, cells: list) -> int:
-    if not is_last:
-        return 0
-    draw_attributed_string(Formatter.reset, screen)
-    screen.cursor.x = screen.columns - right_status_length
-    screen.cursor.fg = 0
-    for bgColor, fgColor, status in cells:
-        screen.cursor.fg = fgColor
-        screen.cursor.bg = bgColor
-        screen.draw(status)
-    screen.cursor.bg = 0
-    return screen.cursor.x
+# def _draw_right_status(screen: Screen, is_last: bool, cells: list) -> int:
+#     if not is_last:
+#         return 0
+#     draw_attributed_string(Formatter.reset, screen)
+#     screen.cursor.x = screen.columns - right_status_length
+#     screen.cursor.fg = 0
+#     for bgColor, fgColor, status in cells:
+#         screen.cursor.fg = fgColor
+#         screen.cursor.bg = bgColor
+#         screen.draw(status)
+#     screen.cursor.bg = 0
+#     return screen.cursor.x
 
 
 def _redraw_tab_bar(_):
@@ -99,7 +99,7 @@ def _redraw_tab_bar(_):
 
 
 timer_id = None
-right_status_length = -1
+# right_status_length = -1
 
 
 def draw_tab(
@@ -113,7 +113,7 @@ def draw_tab(
     extra_data: ExtraData,
 ) -> int:
     global timer_id
-    global right_status_length
+    # global right_status_length
     if timer_id is None:
         timer_id = add_timer(_redraw_tab_bar, REFRESH_TIME, True)
     cells = [
@@ -122,9 +122,9 @@ def draw_tab(
         (DATE_FG, DATE_BG, CLOCK_SEP),
         (DATE_FG, DATE_BG, datetime.now().strftime("%m/%d/%Y ")),
     ]
-    right_status_length = RIGHT_MARGIN
-    for cell in cells:
-        right_status_length += len(str(cell[2]))
+    # right_status_length = RIGHT_MARGIN
+    # for cell in cells:
+    #     right_status_length += len(str(cell[2]))
 
     # _draw_icon(screen, index)
     _draw_left_status(
@@ -137,9 +137,9 @@ def draw_tab(
         is_last,
         extra_data,
     )
-    _draw_right_status(
-        screen,
-        is_last,
-        cells,
-    )
+    # _draw_right_status(
+    #     screen,
+    #     is_last,
+    #     cells,
+    # )
     return screen.cursor.x
