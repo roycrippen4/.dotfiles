@@ -5,11 +5,13 @@ RED='\033[1;30m'
 GREEN='\033[1;32m'
 
 echo "${BLUE} Navigating to .zshrc..."
-cd_result=$(cd && cd "$HOME/.dotfiles/home/")
+cd && cd "$HOME/.dotfiles/home/"
 
 if [ $? -ne 0 ]; then
   echo "${RED}Error: Failed to navigate to .zshrc directory. (Exit Code: $?)"
 fi
+
+ls
 
 echo "${BLUE} Sourcing .zshrc..."
 source .zshrc
