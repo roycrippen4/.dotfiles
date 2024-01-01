@@ -414,8 +414,8 @@ local default_plugins = {
     -- https://github.com/theprimeagen/harpoon
     'theprimeagen/harpoon',
     lazy = true,
-    dir = '~/dev/neodev/harpoon',
-    -- branch = 'harpoon2',
+    -- dir = '~/dev/neodev/harpoon',
+    branch = 'harpoon2',
     init = function()
       require('core.utils').load_mappings('harpoon')
     end,
