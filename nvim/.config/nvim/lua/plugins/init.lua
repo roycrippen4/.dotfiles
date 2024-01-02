@@ -161,6 +161,31 @@ local default_plugins = {
   },
 
   {
+    'folke/flash.nvim',
+    evfnt = 'VeryLazy',
+    opts = {},
+    keys = {
+      {
+        's',
+        mode = { 'n', 'x', 'o' },
+        function()
+          require('flash').jump()
+        end,
+        desc = 'Flash',
+      },
+      {
+        'S',
+        mode = { 'n', 'o', 'x' },
+        function()
+          -- show labeled treesitter nodes around the cursor
+          require('flash').treesitter()
+        end,
+        desc = 'Flash Treesitter',
+      },
+    },
+  },
+
+  {
     -- https://github.com/lewis6991/gitsigns.nvim
     'lewis6991/gitsigns.nvim',
     ft = { 'gitcommit', 'diff' },
