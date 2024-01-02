@@ -537,10 +537,24 @@ local default_plugins = {
     'folke/todo-comments.nvim',
     event = 'VeryLazy',
     dependencies = { 'nvim-lua/plenary.nvim' },
-    init = function()
+    opts = {
+      keywords = {
+        TODO = { icon = '', color = 'info' },
+        DONE = {
+          icon = '',
+          color = 'done',
+        },
+      },
+      colors = {
+        done = {
+          '#53bf00',
+        },
+      },
+    },
+    config = function(_, opts)
       dofile(vim.g.base46_cache .. 'todo')
+      require('todo-comments').setup(opts)
     end,
-    opts = {},
   },
 
   {
