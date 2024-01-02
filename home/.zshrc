@@ -84,10 +84,14 @@ go_to_kitty_config() {
   cd "$HOME/.dotfiles/kitty/.config/kitty"
 }
 
+go_to_neodev_config() {
+  cd "$HOME/dev/neodev/"
+}
+
 alias nconf=go_to_nvim_config
 alias hconf=go_to_home_config
 alias kconf=go_to_kitty_config
-alias harp=go_to_harpoon_config
+alias ndev=go_to_neodev_config
 alias lg='lazygit'
 alias ls='lsd'
 alias l='ls -l'

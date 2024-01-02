@@ -198,7 +198,9 @@ local default_plugins = {
               if return_code == 0 then
                 vim.api.nvim_del_augroup_by_name('GitSignsLazyLoad')
                 vim.schedule(function()
-                  require('lazy').load({ plugins = { 'gitsigns.nvim' } })
+                  require('lazy').load({ plugins = {
+                    'gitsigns.nvim',
+                  } })
                 end)
               end
             end,
@@ -216,22 +218,54 @@ local default_plugins = {
   },
 
   {
-    'chrisgrieser/nvim-spider',
-    event = 'InsertEnter',
+    'roycrippen4/nvim-spider',
+    branch = 'merge_customPatterns_with_defaultPatterns',
+    -- name = 'nvim-spider',
+    -- dir = '~/dev/neodev/nvim-spider/',
     keys = {
       {
         'e',
-        "<cmd>lua require('spider').motion('e')<CR>",
+        function()
+          require('spider').motion('e', {
+            customPatterns = {
+              patterns = {
+                '%(',
+                '%)',
+              },
+              overrideDefault = false,
+            },
+          })
+        end,
         mode = { 'n', 'o', 'x' },
       },
       {
         'w',
-        "<cmd>lua require('spider').motion('w')<CR>",
+        function()
+          require('spider').motion('w', {
+            customPatterns = {
+              patterns = {
+                '%(',
+                '%)',
+              },
+              overrideDefault = false,
+            },
+          })
+        end,
         mode = { 'n', 'o', 'x' },
       },
       {
         'b',
-        "<cmd>lua require('spider').motion('b')<CR>",
+        function()
+          require('spider').motion('b', {
+            customPatterns = {
+              patterns = {
+                '%(',
+                '%)',
+              },
+              overrideDefault = false,
+            },
+          })
+        end,
         mode = { 'n', 'o', 'x' },
       },
     },
