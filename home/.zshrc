@@ -47,7 +47,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 export NODE_PATH="which node"
 # kitty
 export PATH="$PATH:$HOME/.local/bin"
-#Julia
+# Julia
 export PATH="$PATH:$HOME/Opt/julia-1.9.4/bin"
 
 export PATH="$HOME/.bin/nvim.sh:$PATH"

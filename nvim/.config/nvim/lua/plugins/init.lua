@@ -173,15 +173,15 @@ local default_plugins = {
         end,
         desc = 'Flash',
       },
-      {
-        'S',
-        mode = { 'n', 'o', 'x' },
-        function()
-          -- show labeled treesitter nodes around the cursor
-          require('flash').treesitter()
-        end,
-        desc = 'Flash Treesitter',
-      },
+      -- {
+      --   'S',
+      --   mode = { 'n', 'o', 'x' },
+      --   function()
+      --     -- show labeled treesitter nodes around the cursor
+      --     require('flash').treesitter()
+      --   end,
+      --   desc = 'Flash Treesitter',
+      -- },
     },
   },
 
@@ -218,10 +218,7 @@ local default_plugins = {
   },
 
   {
-    'roycrippen4/nvim-spider',
-    branch = 'merge_customPatterns_with_defaultPatterns',
-    -- name = 'nvim-spider',
-    -- dir = '~/dev/neodev/nvim-spider/',
+    'chrisgrieser/nvim-spider',
     keys = {
       {
         'e',
