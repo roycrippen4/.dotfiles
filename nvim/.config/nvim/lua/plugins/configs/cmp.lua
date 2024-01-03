@@ -1,7 +1,17 @@
 local cmp = require('cmp')
-local copilot_cmp_comparators = require('copilot_cmp.comparators')
+local kind = cmp.lsp.CompletionItemKind
+-- local copilot_cmp_comparators = require('copilot_cmp.comparators')
 
 dofile(vim.g.base46_cache .. 'cmp')
+
+cmp.event:on('confirm_done', function(event)
+  local completion_kind = event.entry:get_completion_item().kind
+
+  if vim.tbl_contains({ kind.Function, kind.Method }, completion_kind) then
+    local left = vim.api.nvim_replace_termcodes('<Left>', true, true, true)
+    vim.api.nvim_feedkeys('()' .. left, 'n', false)
+  end
+end)
 
 local options = {
   sources = {
@@ -28,6 +38,7 @@ local options = {
       end,
     },
     { name = 'path' },
+    { name = 'nvim_lsp_signature_help' },
   },
   experimental = {
     ghost_text = true,
@@ -60,20 +71,20 @@ local options = {
     disallow_partial_matching = false,
     disallow_prefix_unmatching = true,
   },
-  sorting = {
-    priority_weight = 2,
-    comparators = {
-      copilot_cmp_comparators.prioritize or function() end,
-      cmp.config.compare.exact,
-      cmp.config.compare.locality,
-      cmp.config.compare.recently_used,
-      cmp.config.compare.score,
-      cmp.config.compare.kind,
-      cmp.config.compare.length,
-      cmp.config.compare.order,
-      cmp.config.compare.sort_text,
-    },
-  },
+  -- sorting = {
+  --   priority_weight = 2,
+  --   comparators = {
+  -- copilot_cmp_comparators.prioritize or function() end,
+  --     cmp.config.compare.exact,
+  --     cmp.config.compare.locality,
+  --     cmp.config.compare.recently_used,
+  --     cmp.config.compare.score,
+  --     cmp.config.compare.kind,
+  --     cmp.config.compare.length,
+  --     cmp.config.compare.order,
+  --     cmp.config.compare.sort_text,
+  --   },
+  -- },
   mapping = {
     ['<ESC>'] = cmp.mapping(function(fallback)
       if cmp.visible() then

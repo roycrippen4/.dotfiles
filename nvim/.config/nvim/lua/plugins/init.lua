@@ -4,39 +4,6 @@ local default_plugins = {
   'nvim-lua/plenary.nvim',
 
   {
-    'aznhe21/actions-preview.nvim',
-    event = 'LspAttach',
-    opts = {
-      telescope = {
-        sorting_strategy = 'ascending',
-        layout_strategy = 'vertical',
-        layout_config = {
-          width = 0.8,
-          height = 0.9,
-          prompt_position = 'top',
-          preview_cutoff = 20,
-          preview_height = function(_, _, max_lines)
-            return max_lines - 15
-          end,
-        },
-      },
-    },
-  },
-
-  {
-    -- https://github.com/folke/nvim-noice
-    'folke/noice.nvim',
-    event = 'VeryLazy',
-    dependencies = {
-      'MunifTanjim/nui.nvim',
-      'rcarriga/nvim-notify',
-    },
-    config = function()
-      require('plugins.configs.noice')
-    end,
-  },
-
-  {
     -- https://github.com/kdheepak/lazygit.nvim
     'kdheepak/lazygit.nvim',
     keys = { '<leader>gg' },
@@ -46,7 +13,7 @@ local default_plugins = {
       vim.g.lazygit_floating_window_border_chars = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' }
       vim.g.lazygit_floating_window_use_plenary = 0
       vim.g.lazygit_use_custom_config_file_path = 0
-      vim.keymap.set('n', '<leader>gg', '<cmd> LazyGit<CR>', { noremap = true, silent = true })
+      vim.keymap.set('n', '<leader>gg', '<cmd> LazyGit<CR>', { noremap = true, silent = true, desc = 'Open Lazygit' })
     end,
   },
 
@@ -57,31 +24,9 @@ local default_plugins = {
     init = function()
       require('core.utils').lazy_load('toggleterm.nvim')
     end,
-    opts = function()
-      return require('plugins.configs.toggleterm').options
-    end,
-    config = function(opts)
-      require('plugins.configs.toggleterm').config()
-      require('toggleterm').setup(opts)
-    end,
-  },
-
-  {
-    -- https://github.com/zbirenbaum/copilot.lua
-    'zbirenbaum/copilot.lua',
-    event = 'InsertEnter',
-    dependencies = {
-      'zbirenbaum/copilot-cmp',
-      event = 'InsertEnter',
-      config = function()
-        require('copilot_cmp').setup()
-      end,
-    },
     config = function()
-      require('copilot').setup({
-        suggestion = { enabled = false },
-        panel = { enabled = false },
-      })
+      require('plugins.configs.toggleterm').config()
+      require('toggleterm').setup()
     end,
   },
 
@@ -146,6 +91,7 @@ local default_plugins = {
   {
     -- https://github.com/nvim-treesitter/nvim-treesitter
     'nvim-treesitter/nvim-treesitter',
+    lazy = false,
     init = function()
       require('core.utils').lazy_load('nvim-treesitter')
     end,
@@ -158,31 +104,6 @@ local default_plugins = {
       dofile(vim.g.base46_cache .. 'syntax')
       require('nvim-treesitter.configs').setup(opts)
     end,
-  },
-
-  {
-    'folke/flash.nvim',
-    evfnt = 'VeryLazy',
-    opts = {},
-    keys = {
-      {
-        's',
-        mode = { 'n', 'x', 'o' },
-        function()
-          require('flash').jump()
-        end,
-        desc = 'Flash',
-      },
-      -- {
-      --   'S',
-      --   mode = { 'n', 'o', 'x' },
-      --   function()
-      --     -- show labeled treesitter nodes around the cursor
-      --     require('flash').treesitter()
-      --   end,
-      --   desc = 'Flash Treesitter',
-      -- },
-    },
   },
 
   {
@@ -221,49 +142,49 @@ local default_plugins = {
     'chrisgrieser/nvim-spider',
     keys = {
       {
-        'e',
-        function()
-          require('spider').motion('e', {
-            customPatterns = {
-              patterns = {
-                '%(',
-                '%)',
-              },
-              overrideDefault = false,
-            },
-          })
-        end,
-        mode = { 'n', 'o', 'x' },
-      },
-      {
         'w',
         function()
           require('spider').motion('w', {
-            customPatterns = {
+            custompatterns = {
               patterns = {
                 '%(',
                 '%)',
               },
-              overrideDefault = false,
+              overridedefault = false,
             },
           })
         end,
-        mode = { 'n', 'o', 'x' },
+        mode = { 'n', 'x', 'o' },
+      },
+      {
+        'e',
+        function()
+          require('spider').motion('e', {
+            custompatterns = {
+              patterns = {
+                '%(',
+                '%)',
+              },
+              overridedefault = false,
+            },
+          })
+        end,
+        mode = { 'n', 'x', 'o' },
       },
       {
         'b',
         function()
           require('spider').motion('b', {
-            customPatterns = {
+            custompatterns = {
               patterns = {
                 '%(',
                 '%)',
               },
-              overrideDefault = false,
+              overridedefault = false,
             },
           })
         end,
-        mode = { 'n', 'o', 'x' },
+        mode = { 'n', 'x', 'o' },
       },
     },
   },
@@ -312,6 +233,8 @@ local default_plugins = {
         'hrsh7th/cmp-path',
         -- https://github.com/hrsh7th/cmp-cmdline
         'hrsh7th/cmp-cmdline',
+        -- https://github.com/hrsh7th/cmp-nvim-lsp-signature-help
+        'hrsh7th/cmp-nvim-lsp-signature-help',
       },
     },
     opts = function()
@@ -376,6 +299,7 @@ local default_plugins = {
     event = 'VeryLazy',
     dependencies = {
       'folke/neodev.nvim',
+      -- 'nvimdev/lspsaga.nvim',
     },
     config = function()
       require('plugins.configs.lsp.servers')
@@ -403,15 +327,6 @@ local default_plugins = {
     'mrcjkb/rustaceanvim',
     version = '^3', -- Recommended
     ft = { 'rust' },
-  },
-
-  {
-    -- https://github.com/Aasim-A/scrollEOF.nvim
-    'Aasim-A/scrollEOF.nvim',
-    event = 'VeryLazy',
-    config = function()
-      require('scrollEOF').setup({})
-    end,
   },
 
   {
@@ -451,6 +366,7 @@ local default_plugins = {
   {
     -- https://github.com/hiphish/rainbow-delimiters.nvim
     'hiphish/rainbow-delimiters.nvim',
+    event = 'VeryLazy',
     init = function()
       require('core.utils').lazy_load('rainbow-delimiters.nvim')
     end,
@@ -481,7 +397,6 @@ local default_plugins = {
     -- https://github.com/theprimeagen/harpoon
     'theprimeagen/harpoon',
     lazy = true,
-    -- dir = '~/dev/neodev/harpoon',
     branch = 'harpoon2',
     init = function()
       require('core.utils').load_mappings('harpoon')
@@ -623,6 +538,7 @@ local default_plugins = {
     -- https://github.com/luukvbaal/statuscol.nvim
     'luukvbaal/statuscol.nvim',
     branch = '0.10',
+    event = 'VeryLazy',
     init = function()
       require('core.utils').lazy_load('statuscol.nvim')
     end,

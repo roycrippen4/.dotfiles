@@ -5,7 +5,9 @@ if not present then
 end
 
 whichkey.register({
-  ------------------------------DEBUG------------------------------
+  --[===========================================================================]
+  --[-------------------------------  DEBUG  -----------------------------------]
+  --[===========================================================================]
   -- ['<leader>d'] = { name = 'Debug', _ = 'which_key_ignore' },
   -- ['<leader>ds'] = { name = 'Step', _ = 'which_key_ignore' },
   -- ['<Leader>c'] = { name = 'Continue', _ = 'which_key_ignore' },
@@ -23,19 +25,27 @@ whichkey.register({
   -- ['<Leader>dt'] = { name = 'Toggle Debug UI', _ = 'which_key_ignore' },
   -- ['<Leader>dp'] = { name = 'Toggle Log Point', _ = 'which_key_ignore' },
 
-  ------------------------------      DEBUG     ------------------------------
+  --[===========================================================================]
+  --[-------------------------------Find/LSP------------------------------------]
+  --[===========================================================================]
   ['<leader>f'] = { name = 'Find', _ = 'which_key_ignore' },
   ['<leader>l'] = { name = 'LSP', _ = 'which_key_ignore' },
+  ['<leader>r'] = { name = 'Refactor/rename', _ = 'which_key_ignore' },
 
-  ------------------------------MARKDOWN PREVIEW------------------------------
+  --[===========================================================================]
+  --[-------------------------- Markdown Preview -------------------------------]
+  --[===========================================================================]
   ['<leader>m'] = { name = 'Markdown Preview', _ = 'which_key_ignore' },
   ['<leader>mt'] = { name = 'Toggle Markdown Preview', _ = 'which_key_ignore' },
   ['<leader>mp'] = { name = 'Start Markdown Preview', _ = 'which_key_ignore' },
   ['<leader>ms'] = { name = 'Stop Markdown Preview', _ = 'which_key_ignore' },
 
-  ------------------------------      MISC     ------------------------------
+  --[===========================================================================]
+  --[-------------------------------- MISC -------------------------------------]
+  --[===========================================================================]
   -- ['<leader>a'] = { name = 'Autosave', _ = 'which_key_ignore' },
   ['<leader>t'] = { name = 'Trouble', _ = 'which_key_ignore' },
   ['<leader>w'] = { name = 'Lookup Keymaps', _ = 'which_key_ignore' },
   ['<leader>z'] = { name = 'Zen', _ = 'which_key_ignore' },
+  ['<leader>gg'] = { name = 'Lazygit', _ = 'which_key_ignore' },
 })

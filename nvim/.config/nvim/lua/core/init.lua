@@ -2,11 +2,11 @@ local opt = vim.opt
 local g = vim.g
 local config = require('core.utils').load_config()
 require('core.autocommands')
-require('core.commands')
 require('core.diagnostic')
-require('core.proto_plugs')
+require('plugins.local_plugs')
 
 -------------------------------------- globals -----------------------------------------
+g.autosave = false
 g.nvchad_theme = config.ui.theme
 g.base46_cache = vim.fn.stdpath('data') .. '/nvchad/base46/'
 g.toggle_theme_icon = '   '

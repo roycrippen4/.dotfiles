@@ -24,7 +24,7 @@ _G.log = function(msg)
   if type(msg) ~= 'string' then
     msg = vim.inspect(msg)
   end
-  require('core.proto_plugs.logger'):log(msg)
+  require('plugins.local_plugs.logger'):log(msg)
 end
 
 M.load_config = function()

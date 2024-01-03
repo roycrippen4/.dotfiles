@@ -13,22 +13,6 @@ local pink = { 'pink', -10 }
 
 -- stylua: ignore
 M.add = {
-  SpinnerRed         = { fg =  '#FF2400' },
-  SpinnerNeonCarrot  = { fg =  '#FF7500' },
-  SpinnerOrange      = { fg =  '#FFA500' },
-  SpinnerGold        = { fg =  '#FFBF00' },
-  SpinnerYellow      = { fg =  '#FFFF00' },
-  SpinnerLimeGreen   = { fg =  '#BFFF00' },
-  SpinnerBrightGreen = { fg =  '#6FFF00' },
-  SpinnerSpringGreen = { fg =  '#00FF7F' },
-  SpinnerCyan        = { fg =  '#00FFFF' },
-  SpinnerAzure       = { fg =  '#007FFF' },
-  SpinnerBlue        = { fg =  '#0000FF' },
-  SpinnerViolet      = { fg =  '#7F00FF' },
-  SpinnerVioleter    = { fg =  '#FF00FF' },
-  SpinnerHotPink     = { fg =  '#FF2477' },
-
-
   RainbowDelimiterRed    = { fg = 'red' },
   RainbowDelimiterYellow = { fg = 'yellow' },
   RainbowDelimiterBlue   = { fg = 'blue' },

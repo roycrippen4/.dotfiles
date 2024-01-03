@@ -1,6 +1,8 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
-local cursor_pos = {}
+
+---@type integer[]|nil
+local cursor_pos
 
 local utils = require('core.utils')
 

@@ -1,3 +1,5 @@
+local create_cmd = vim.api.nvim_create_user_command
+
 local function remove_duplicate_whitespace(str)
   return str:gsub('%s+', ' ')
 end
@@ -114,5 +116,10 @@ function Logger:show()
     vim.api.nvim_win_set_buf(self.winnr, self.bufnr)
   end
 end
+
+create_cmd('Log', function()
+  local logger = require('plugins.local_plugs.logger')
+  logger:show()
+end, {})
 
 return Logger:new()

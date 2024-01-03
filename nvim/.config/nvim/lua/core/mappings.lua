@@ -96,10 +96,6 @@ M.general = {
   },
 
   n = {
-    -- newline with shift/ctrl enter
-    -- ['<S-CR>'] = { 'o<Esc>k', 'New line above', opts = { silent = true } },
-    -- ['<C-CR>'] = { 'O<Esc>j', 'New line above', opts = { silent = true } },
-
     -- probably the best keybind ever
     [';'] = { ':', 'enter command mode', opts = { nowait = true } },
     ['yil'] = { '^y$', 'yank in line', opts = { noremap = true } },
@@ -231,12 +227,12 @@ M.lspconfig = {
       'Goto Type Definition',
     },
 
-    ['K'] = {
-      function()
-        vim.lsp.buf.hover()
-      end,
-      'LSP Hover',
-    },
+    -- ['K'] = {
+    --   function()
+    --     vim.lsp.buf.hover()
+    --   end,
+    --   'LSP Hover',
+    -- },
 
     ['<C-S-K>'] = {
       function()
@@ -277,7 +273,7 @@ M.lspconfig = {
 
     ['<leader>rn'] = {
       function()
-        require('nvchad.renamer').open()
+        require('plugins.local_plugs.renamer').open()
       end,
       'LSP Rename',
     },
@@ -468,32 +464,11 @@ M.trouble = {
       'Trouble toggle workspace diagnostics',
     },
 
-    ['<leader>tD'] = {
-      function()
-        require('trouble').toggle('document_diagnostics')
-      end,
-      'Trouble toggle document diagnostics',
-    },
-
     ['<leader>tf'] = {
       function()
         require('trouble').toggle('quickfix')
       end,
       'Trouble toggle quickfix',
-    },
-
-    ['<leader>tl'] = {
-      function()
-        require('trouble').toggle('loclist')
-      end,
-      'Trouble toggle local-list',
-    },
-
-    ['gR'] = {
-      function()
-        require('trouble').toggle('lsp_references')
-      end,
-      'Goto Reference',
     },
   },
 }

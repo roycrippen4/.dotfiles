@@ -38,15 +38,6 @@ end
 local capabilities = vim.lsp.protocol.make_client_capabilities()
 capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
 
--- lspconfig['bashls'].setup({
---   filetypes = { 'bash', 'sh', 'zsh', 'zshrc' },
---   capabilities = capabilities,
---   on_attach = M.on_attach,
---   root_dir = function()
---     return vim.loop.cwd()
---   end,
--- })
-
 lspconfig['clangd'].setup({
   capabilities = capabilities,
   on_attach = M.on_attach,
@@ -170,10 +161,10 @@ lspconfig['svelte'].setup({
   end,
 })
 
-lspconfig['tailwindcss'].setup({
-  capabilities = capabilities,
-  on_attach = M.on_attach,
-})
+-- lspconfig['tailwindcss'].setup({
+--   capabilities = capabilities,
+--   on_attach = M.on_attach,
+-- })
 
 lspconfig['taplo'].setup({
   capabilities = capabilities,

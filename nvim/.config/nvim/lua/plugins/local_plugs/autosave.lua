@@ -1,5 +1,6 @@
 local create_cmd = vim.api.nvim_create_user_command
--- local utils = require('core.utils')
+
+vim.g.autosave = true
 
 local function clear_cmdarea()
   vim.defer_fn(function()
@@ -25,24 +26,17 @@ local function autosave()
   })
 end
 
-create_cmd('AsToggle', function()
+autosave()
+
+create_cmd('ToggleAutosave', function()
   vim.g.autosave = not vim.g.autosave
   if vim.g.autosave then
     autosave()
-  end
-  if vim.g.autosave then
     vim.api.nvim_echo({ { '󰆓 ', 'LazyProgressDone' }, { 'autosave enabled!' } }, false, {})
   else
     vim.api.nvim_echo({ { '󰚌 ', 'LazyNoCond' }, { 'autosave disabled' } }, false, {})
   end
-
   clear_cmdarea()
 end, {})
-vim.keymap.set('n', '<leader>a', function()
-  autosave()
-end, { desc = 'Toggle Autosave' })
 
-create_cmd('Log', function()
-  local logger = require('core.proto_plugs.logger')
-  logger:show()
-end, {})
+vim.keymap.set('n', '<leader>as', '<cmd> ToggleAutosave <CR>', { desc = 'Toggle Autosave' })
