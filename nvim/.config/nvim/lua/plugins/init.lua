@@ -147,12 +147,11 @@ local default_plugins = {
         'w',
         function()
           require('spider').motion('w', {
-            custompatterns = {
+            customPatterns = {
               patterns = {
-                '%(',
                 '%)',
               },
-              overridedefault = false,
+              overrideDefault = false,
             },
           })
         end,
@@ -162,12 +161,11 @@ local default_plugins = {
         'e',
         function()
           require('spider').motion('e', {
-            custompatterns = {
+            customPatterns = {
               patterns = {
                 '%(',
-                '%)',
               },
-              overridedefault = false,
+              overrideDefault = false,
             },
           })
         end,
@@ -177,12 +175,12 @@ local default_plugins = {
         'b',
         function()
           require('spider').motion('b', {
-            custompatterns = {
+            customPatterns = {
               patterns = {
                 '%(',
                 '%)',
               },
-              overridedefault = false,
+              overrideDefault = false,
             },
           })
         end,

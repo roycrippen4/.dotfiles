@@ -141,10 +141,10 @@ autocmd({ 'InsertEnter', 'WinLeave' }, {
 -- Also sets the title string for the kitty tabs
 autocmd('VimEnter', {
   callback = function()
-    if os.getenv('DEBUG') == '1' then
-      vim.cmd('Log')
-      log('Debug enabled')
-    end
+    -- if os.getenv('DEBUG') == '1' then
+    --   vim.cmd('Log')
+    --   log('Debug enabled')
+    -- end
 
     local cwd = vim.fn.getcwd()
     utils.set_titlestring(cwd)

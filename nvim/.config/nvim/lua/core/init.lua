@@ -6,7 +6,7 @@ require('core.diagnostic')
 require('plugins.local_plugs')
 
 -------------------------------------- globals -----------------------------------------
-g.autosave = true
+g.autosave = false
 g.nvchad_theme = config.ui.theme
 g.base46_cache = vim.fn.stdpath('data') .. '/nvchad/base46/'
 g.toggle_theme_icon = '   '

@@ -1,5 +1,3 @@
-local create_cmd = vim.api.nvim_create_user_command
-
 local function remove_duplicate_whitespace(str)
   return str:gsub('%s+', ' ')
 end
@@ -117,7 +115,23 @@ function Logger:show()
   end
 end
 
-create_cmd('Log', function()
+_G.log = function(msg)
+  if type(msg) ~= 'string' then
+    msg = vim.inspect(msg)
+  end
+  require('plugins.local_plugs.logger'):log(msg)
+end
+
+vim.api.nvim_create_autocmd('VimEnter', {
+  callback = function()
+    if os.getenv('DEBUG') == '1' then
+      vim.cmd('Log')
+      log('Debug enabled')
+    end
+  end,
+})
+
+vim.api.nvim_create_user_command('Log', function()
   local logger = require('plugins.local_plugs.logger')
   logger:show()
 end, {})
