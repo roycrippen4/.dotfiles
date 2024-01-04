@@ -227,13 +227,6 @@ M.lspconfig = {
       'Goto Type Definition',
     },
 
-    -- ['K'] = {
-    --   function()
-    --     vim.lsp.buf.hover()
-    --   end,
-    --   'LSP Hover',
-    -- },
-
     ['<C-S-K>'] = {
       function()
         vim.lsp.buf.signature_help()
@@ -271,7 +264,7 @@ M.lspconfig = {
       'Open floating diagnostic message',
     },
 
-    ['<leader>rn'] = {
+    ['<leader>r'] = {
       function()
         require('plugins.local_plugs.renamer').open()
       end,

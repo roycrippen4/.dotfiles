@@ -8,6 +8,10 @@ local blacklist = {
 }
 
 local function check_eof_scrolloff()
+  local win = vim.api.nvim_get_current_win()
+  if vim.api.nvim_win_get_config(win).relative ~= '' then
+    return
+  end
   for _, item in ipairs(blacklist) do
     if item == vim.bo.ft then
       return

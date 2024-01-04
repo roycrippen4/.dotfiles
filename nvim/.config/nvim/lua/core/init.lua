@@ -6,7 +6,7 @@ require('core.diagnostic')
 require('plugins.local_plugs')
 
 -------------------------------------- globals -----------------------------------------
-g.autosave = false
+g.autosave = true
 g.nvchad_theme = config.ui.theme
 g.base46_cache = vim.fn.stdpath('data') .. '/nvchad/base46/'
 g.toggle_theme_icon = '   '
@@ -20,9 +20,11 @@ g.markdown_fenced_languages = {
 vim.treesitter.language.register('markdown', 'mdx')
 
 -- Fold
--- vim.o.foldlevel = 99
--- vim.o.foldlevelstart = 99
--- vim.o.foldenable = true
+opt.foldenable = true
+opt.foldcolumn = 'auto'
+opt.foldnestmax = 0
+opt.foldlevel = 99
+opt.foldlevelstart = 99
 
 -------------------------------------- options ------------------------------------------
 -- opt.cmdheight = 0
@@ -53,6 +55,7 @@ opt.fillchars = {
   foldopen = '',
   foldclose = '',
   foldsep = ' ',
+  stl = ' ',
 }
 
 opt.ignorecase = true

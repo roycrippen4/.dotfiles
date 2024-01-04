@@ -6,9 +6,39 @@ if not ok then
 end
 
 statuscol.setup({
-  ft_ignore = { 'NvimTree', 'terminal' },
+  bt_ignore = {
+    'nofile',
+    'prompt',
+    'terminal',
+  },
+  ft_ignore = {
+    'NvimTree',
+    'terminal',
+    'NvimTree',
+    'dashboard',
+    'nvcheatsheet',
+    'dapui_watches',
+    'dap-repl',
+    'dapui_console',
+    'dapui_stacks',
+    'dapui_breakpoints',
+    'dapui_scopes',
+    'help',
+    'vim',
+    'alpha',
+    'dashboard',
+    'neo-tree',
+    'Trouble',
+    'noice',
+    'lazy',
+    'nvdash',
+    'toggleterm',
+  },
   relculright = true,
   segments = {
+    {
+      text = { ' ' },
+    },
     {
       sign = {
         name = { 'Diagnostic' },
@@ -36,7 +66,6 @@ statuscol.setup({
         ' ',
       },
     },
-
     {
       sign = {
         namespace = { 'gitsign' },
@@ -45,6 +74,11 @@ statuscol.setup({
         wrap = false,
         fillchar = ' ',
       },
+    },
+    {
+      text = { ' ' },
+      hl = 'Normal',
+      condition = { true, builtin.not_empty },
     },
   },
 })

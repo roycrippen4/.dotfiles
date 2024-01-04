@@ -139,7 +139,9 @@ local default_plugins = {
   },
 
   {
-    'chrisgrieser/nvim-spider',
+    name = 'nvim-spider',
+    dir = '~/dev/neodev/nvim-spider/',
+    -- 'chrisgrieser/nvim-spider',
     keys = {
       {
         'w',
@@ -299,7 +301,6 @@ local default_plugins = {
     event = 'VeryLazy',
     dependencies = {
       'folke/neodev.nvim',
-      -- 'nvimdev/lspsaga.nvim',
     },
     config = function()
       require('plugins.configs.lsp.servers')
@@ -325,8 +326,22 @@ local default_plugins = {
   {
     -- https://github.com/mrcjkb/rustaceanvim
     'mrcjkb/rustaceanvim',
-    version = '^3', -- Recommended
+    version = '3.11.0',
     ft = { 'rust' },
+    config = function()
+      vim.g.rustaceanvim = function()
+        local extension_path = vim.env.HOME .. '/.vscode/extensions/vadimcn.vscode-lldb-1.10.0/'
+        local codelldb_path = extension_path .. 'adapter/codelldb'
+        local liblldb_path = extension_path .. 'lldb/lib/liblldb'
+
+        local cfg = require('rustaceanvim.config')
+        return {
+          dap = {
+            adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
+          },
+        }
+      end
+    end,
   },
 
   {
@@ -538,7 +553,7 @@ local default_plugins = {
     -- https://github.com/luukvbaal/statuscol.nvim
     'luukvbaal/statuscol.nvim',
     branch = '0.10',
-    event = 'VeryLazy',
+    event = 'BufReadPost',
     init = function()
       require('core.utils').lazy_load('statuscol.nvim')
     end,

@@ -27,8 +27,3 @@ local autosave_ok, _ = pcall(require, 'plugins.local_plugs.autosave')
 if not autosave_ok then
   return
 end
-
--- local pretty_hover_ok, _ = pcall(require, 'plugins.local_plugs.pretty_hover')
--- if not pretty_hover_ok then
---   return
--- end

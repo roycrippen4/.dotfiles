@@ -236,14 +236,22 @@ M.git = function()
 end
 
 M.lsp_diagnostics = function()
-  ---@type integer|string
-  local errors = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.ERROR })
-  ---@type integer|string
-  local warnings = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.WARN })
-  ---@type integer|string
-  local hints = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.HINT })
-  ---@type integer|string
-  local info = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.INFO })
+  local count = vim.diagnostic.count(0)
+  local errors = count[1]
+  local warnings = count[2]
+  local hints = count[3]
+  local info = count[4]
+
+  -- The commented block below was used before `vim.diagnostic.count()` was implemented.
+  -- I've decided to keep it here for a while to ensure that the new function is here for good.
+  -- ---@type integer|string
+  -- local errors = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.ERROR })
+  -- ---@type integer|string
+  -- local warnings = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.WARN })
+  -- ---@type integer|string
+  -- local hints = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.HINT })
+  -- ---@type integer|string
+  -- local info = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.INFO })
 
   errors = (errors and errors > 0) and ('%#St_lspError# 󰅚 ' .. errors .. ' ') or ''
   warnings = (warnings and warnings > 0) and ('%#St_lspWarning# ' .. warnings .. ' ') or ''
