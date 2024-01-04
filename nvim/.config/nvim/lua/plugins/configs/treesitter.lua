@@ -1,5 +1,8 @@
 local options = {
   ensure_installed = { 'lua' },
+  indent = {
+    enable = true,
+  },
 
   highlight = {
     enable = true,

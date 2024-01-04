@@ -190,8 +190,14 @@ local default_plugins = {
   },
 
   {
+    'windwp/nvim-autopairs',
+    event = 'InsertEnter',
+    opts = {},
+  },
+
+  {
     'altermo/ultimate-autopair.nvim',
-    event = 'VeryLazy',
+    ft = { 'lua', 'typescript', 'javascript', 'rust' },
     branch = 'v0.6',
     config = function()
       require('ultimate-autopair').setup({
@@ -442,11 +448,7 @@ local default_plugins = {
       'mdx',
     },
     config = function()
-      require('nvim-ts-autotag').setup({
-        autotag = {
-          enable_close_on_slash = false,
-        },
-      })
+      require('nvim-ts-autotag').setup()
     end,
   },
 
