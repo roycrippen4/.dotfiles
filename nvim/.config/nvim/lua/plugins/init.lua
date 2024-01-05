@@ -139,9 +139,9 @@ local default_plugins = {
   },
 
   {
-    name = 'nvim-spider',
-    dir = '~/dev/neodev/nvim-spider/',
-    -- 'chrisgrieser/nvim-spider',
+    -- name = 'nvim-spider',
+    -- dir = '~/dev/neodev/nvim-spider/',
+    'chrisgrieser/nvim-spider',
     keys = {
       {
         'w',
@@ -150,6 +150,7 @@ local default_plugins = {
             customPatterns = {
               patterns = {
                 '%)',
+                '%>',
               },
               overrideDefault = false,
             },
@@ -163,7 +164,7 @@ local default_plugins = {
           require('spider').motion('e', {
             customPatterns = {
               patterns = {
-                '%(',
+                '%<',
               },
               overrideDefault = false,
             },
@@ -179,6 +180,8 @@ local default_plugins = {
               patterns = {
                 '%(',
                 '%)',
+                '%<',
+                '%>',
               },
               overrideDefault = false,
             },
