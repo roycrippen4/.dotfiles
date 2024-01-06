@@ -416,10 +416,13 @@ local default_plugins = {
   },
 
   {
+    -- name = 'harpoon',
+    dir = '~/.dotfiles/nvim/.config/nvim/dev/harpoon/',
+    lazy = false,
     -- https://github.com/theprimeagen/harpoon
-    'theprimeagen/harpoon',
-    lazy = true,
-    branch = 'harpoon2',
+    -- 'theprimeagen/harpoon',
+    -- lazy = true,
+    -- branch = 'harpoon2',
     init = function()
       require('core.utils').load_mappings('harpoon')
     end,
@@ -427,10 +430,32 @@ local default_plugins = {
       local harpoon = require('harpoon')
       harpoon:setup({
         settings = {
-          save_on_toggle = false,
-          sync_on_ui_close = false,
+          sync_on_ui_close = true,
+          save_on_toggle = true,
         },
-        default = {},
+        relative = {
+          VimLeavePre = function(_, list)
+            for bufnr = 1, vim.fn.bufnr('$') do
+              if vim.fn.buflisted(bufnr) == 1 then
+                local bufname = vim.api.nvim_buf_get_name(bufnr)
+                local item = nil
+                for _, it in ipairs(list.items) do
+                  local value = it.value
+                  if value == bufname then
+                    item = it
+                    break
+                  end
+                end
+                if item then
+                  vim.api.nvim_set_current_buf(bufnr)
+                  local pos = vim.api.nvim_win_get_cursor(0)
+                  item.context.row = pos[1]
+                  item.context.col = pos[2]
+                end
+              end
+            end
+          end,
+        },
       })
     end,
   },

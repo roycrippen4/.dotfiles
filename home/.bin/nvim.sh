@@ -10,18 +10,23 @@ usage() {
   echo "Usage: $0 [-d] [-r] [-v] [-h] [path]"
   echo "  -d            Run in debug mode"
   echo "  -r            Enable re-launching of nvim upon exit"
+  echo "  -u            Launch Neovim without loading config"
   echo "  -v            Display version information and exit"
   echo "  -h            Display this help and exit"
   echo "  path          Specify a path to a file or directory (optional)"
 }
 
 # Process options
-while getopts "dhrv" opt; do
+while getopts "dhurv" opt; do
   case $opt in
   d) DEBUG=1 ;;
   r) RELAUNCH=1 ;;
   v)
     nvim -v
+    exit 0
+    ;;
+  u)
+    nvim -u NONE -U NONE
     exit 0
     ;;
   h)

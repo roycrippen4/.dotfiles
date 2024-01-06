@@ -85,7 +85,7 @@ go_to_kitty_config() {
 }
 
 go_to_neodev_config() {
-  cd "$HOME/dev/neodev/"
+  cd "$HOME/.dotfiles/nvim/.config/nvim/dev"
 }
 
 alias nconf=go_to_nvim_config

@@ -121,7 +121,9 @@ M.override = {
   St_pos_sep    = { fg = '#d6a000', bg = darkest_black, bold = false },
 
   -- Misc
-  FloatBorder  = { fg = { 'red', -15 }, bg = 'black' },
+  FloatBorder  = { fg = darkest_black, bg = darkest_black },
+  Title   = { fg = 'blue', bg = darkest_black },
+
   CmpPmenu    = { bg = { 'black', -5 } },
   -- CmpDocBorder = { fg = { 'red', -30 }, bg = 'black' },
   Comment = { italic = true },
