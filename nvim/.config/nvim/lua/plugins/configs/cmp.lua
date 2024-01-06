@@ -1,6 +1,5 @@
 local cmp = require('cmp')
 local kind = cmp.lsp.CompletionItemKind
--- local copilot_cmp_comparators = require('copilot_cmp.comparators')
 
 dofile(vim.g.base46_cache .. 'cmp')
 

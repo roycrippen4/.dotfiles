@@ -1,5 +1,12 @@
 local M = {}
 
+M.lazygit = {
+  plugin = true,
+  n = {
+    ['<leader>gg'] = { '<cmd> LazyGit<CR>', opts = { noremap = true, silent = true, desc = 'Open Lazygit  ' } },
+  },
+}
+
 M.harpoon = {
   plugin = true,
   n = {
@@ -88,6 +95,13 @@ M.disabled = {
   },
 }
 
+M.zenmode = {
+  plugin = true,
+  n = {
+    ['<Leader>z'] = { ':ZenMode<CR>', 'Zen', opts = { nowait = true } },
+  },
+}
+
 M.general = {
   i = {
     -- go to  beginning and end
@@ -111,13 +125,10 @@ M.general = {
     ['<C-l>'] = { '<C-w>l', 'Window right' },
     ['<C-j>'] = { '<C-w>j', 'Window down' },
     ['<C-k>'] = { '<C-w>k', 'Window up' },
-    ['<Leader>v'] = { '<C-w>v', 'Vertical split', opts = { nowait = true } },
-    ['<Leader>h'] = { '<C-w>s', 'Horizontal split', opts = { nowait = true } },
-    ['<Leader><Leader><Leader>'] = { '<cmd> Log<CR>', 'Show Logger' },
-    ['<Leader><Leader>'] = { '<cmd> Lazy<CR>', 'Open Lazy' },
-
-    --zen-mode
-    ['<Leader>z'] = { ':ZenMode<CR>', 'Zen', opts = { nowait = true } },
+    ['<Leader>v'] = { '<C-w>v', 'Vertical split  ', opts = { nowait = true } },
+    ['<Leader>h'] = { '<C-w>s', 'Horizontal split  ', opts = { nowait = true } },
+    ['<Leader><Leader><Leader>'] = { '<cmd> Log<CR>', 'Show Logger 󰗽 ' },
+    ['<Leader><Leader>'] = { '<cmd> Lazy<CR>', 'Open Lazy  ' },
 
     -- save
     ['<C-s>'] = { '<cmd> w <CR>', 'Save file' },
@@ -137,7 +148,7 @@ M.general = {
         vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled(0))
         print('inlay hints: ' .. tostring(vim.lsp.inlay_hint.is_enabled()))
       end,
-      'Toggle lsp inlay hints',
+      'Toggle lsp inlay hints 󰊠 ',
     },
   },
 
@@ -185,7 +196,7 @@ M.tabufline = {
           require('nvchad.tabufline').close_buffer()
         end
       end,
-      'Close buffer',
+      'Close buffer  ',
     },
   },
 }
@@ -209,79 +220,58 @@ M.lspconfig = {
       function()
         require('telescope.builtin').lsp_references()
       end,
-      'Goto References',
+      'Goto References  ',
     },
 
     ['gi'] = {
       function()
         require('telescope.builtin').lsp_implementations()
       end,
-      'Goto Implementation',
+      'Goto Implementation 󰡱 ',
     },
 
     ['gd'] = {
       function()
         require('telescope.builtin').lsp_definitions()
       end,
-      'Goto Definition',
+      'Goto Definition 󰼭 ',
     },
 
     ['T'] = {
       function()
         require('telescope.builtin').lsp_type_definitions()
       end,
-      'Goto Type Definition',
+      'Goto Type Definition  ',
     },
 
     ['<C-S-K>'] = {
       function()
         vim.lsp.buf.signature_help()
       end,
-      'Signature Documentation',
+      'Signature Documentation 󰷼 ',
     },
 
-    ['[d'] = {
-      function()
-        vim.diagnostic.goto_prev()
-      end,
-      'Go to previous diagnostic message',
-    },
-
-    [']d'] = {
-      function()
-        vim.diagnostic.goto_next()
-      end,
-      'Go to next diagnostic message',
-    },
-
-    ['<leader>ld'] = {
-      function()
-        vim.diagnostic.setloclist()
-      end,
-      'Open diagnostic message',
-    },
-
-    ['<leader>lD'] = { toggle_diagnostics, 'Toggle Diagnostics' },
+    ['<leader>lD'] = { toggle_diagnostics, 'Toggle Diagnostics 󰨚 ' },
 
     ['<leader>lf'] = {
       function()
         vim.diagnostic.open_float()
       end,
-      'Open floating diagnostic message',
+      'Open floating diagnostic message 󰉪 ',
     },
 
     ['<leader>r'] = {
       function()
         require('plugins.local_plugs.renamer').open()
       end,
-      'LSP Rename',
+      'LSP Rename 󰑕 ',
     },
 
     ['<leader>la'] = {
       function()
         vim.lsp.buf.code_action()
       end,
-      'Code Action',
+      'Code Action  ',
     },
   },
 }
@@ -300,19 +290,19 @@ M.telescope = {
 
   n = {
     -- find
-    ['<leader>ff'] = { '<cmd> Telescope find_files <CR>', 'Find files' },
-    ['<leader>fa'] = { '<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>', 'Find all' },
-    ['<leader>fw'] = { '<cmd> Telescope live_grep <CR>', 'Find word (cwd)' },
-    ['<leader>fb'] = { '<cmd> Telescope buffers <CR>', 'Find buffers' },
-    ['<leader>fh'] = { '<cmd> Telescope help_tags <CR>', 'Find help' },
-    ['<leader>fo'] = { '<cmd> Telescope oldfiles <CR>', 'Find oldfiles' },
-    ['<leader>fz'] = { '<cmd> Telescope current_buffer_fuzzy_find <CR>', 'Find in current buffer' },
-    ['<leader>fc'] = { '<cmd> Telescope git_commits <CR>', 'Find commits' },
-    ['<leader>fg'] = { '<cmd> Telescope git_status <CR>', 'Find Git status' },
-    ['<leader>fs'] = { '<cmd> Telescope themes <CR>', 'Find scheme' },
-    ['<leader>fm'] = { '<cmd> Telescope marks <CR>', 'Find bookmarks' },
-    ['<leader>fl'] = { '<cmd> Telescope highlights <CR>', 'Find highlight groups' },
-    ['<leader>fk'] = { '<cmd> Telescope keymaps <CR>', 'Find keymaps' },
+    ['<leader>ff'] = { '<cmd> Telescope find_files <CR>', 'Find files  ' },
+    ['<leader>fa'] = { '<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>', 'Find all  ' },
+    ['<leader>fw'] = { '<cmd> Telescope live_grep <CR>', 'Find word (cwd)  ' },
+    ['<leader>fb'] = { '<cmd> Telescope buffers <CR>', 'Find buffers ﬘ ' },
+    ['<leader>fh'] = { '<cmd> Telescope help_tags <CR>', 'Find help 󰋖' },
+    ['<leader>fo'] = { '<cmd> Telescope oldfiles <CR>', 'Find oldfiles  ' },
+    ['<leader>fz'] = { '<cmd> Telescope current_buffer_fuzzy_find <CR>', 'Find in current buffer  ' },
+    ['<leader>fc'] = { '<cmd> Telescope git_commits <CR>', 'Find commits  ' },
+    ['<leader>fg'] = { '<cmd> Telescope git_status <CR>', 'Find Git status 󱖫 ' },
+    ['<leader>fs'] = { '<cmd> Telescope themes <CR>', 'Find scheme  ' },
+    ['<leader>fm'] = { '<cmd> Telescope marks <CR>', 'Find bookmarks  ' },
+    ['<leader>fl'] = { '<cmd> Telescope highlights <CR>', 'Find highlight groups 󰸱 ' },
+    ['<leader>fk'] = { '<cmd> Telescope keymaps <CR>', 'Find keymaps  ' },
   },
 }
 
@@ -326,148 +316,122 @@ M.whichkey = {
       function()
         vim.cmd('WhichKey')
       end,
-      'Which-key all keymaps',
+      'Which-key all keymaps  ',
     },
     ['<leader>wk'] = {
       function()
         local input = vim.fn.input('WhichKey: ')
         vim.cmd('WhichKey ' .. input)
       end,
-      'Which-key query lookup',
+      'Which-key query lookup  ',
     },
   },
 }
 
--- M.dap = {
---   plugin = true,
---   n = {
--- ['<Leader>c'] = { '<cmd>DapContinue<CR>', 'Continue' },
--- ['<Leader>o'] = { '<cmd>DapStepOver<CR>', 'Step Over' },
--- ['<Leader>O'] = { '<cmd>DapStepOut<CR>', 'Step out' },
--- ['<Leader>i'] = { '<cmd>DapStepInto<CR>', 'Step into' },
--- ['<leader>b'] = { '<CMD>DapToggleBreakpoint<CR>', ' Toggle breakpoint' },
--- ['<Leader>db'] = {
---   require('dap').toggle_breakpoint(),
---   'Toggle breakpoint',
--- },
--- ['<Leader>dc'] = {
---   function()
---     require('dap').continue()
---   end,
---   'Continue',
--- },
--- ['<Leader>dsv'] = {
---   function()
---     require('dap').step_over()
---   end,
---   'Step into',
--- },
--- ['<Leader>dsi'] = {
---   function()
---     require('dap').step_into()
---   end,
---   'Step into',
--- },
--- ['<Leader>dso'] = {
---   function()
---     require('dap').step_out()
---   end,
---   'Step out',
--- },
--- ['<Leader>db'] = {
---   function()
---     require('dap').toggle_breakpoint()
---   end,
---   'Toggle breakpoint',
--- },
--- ['<Leader>dB'] = {
---   function()
---     require('dap').set_breakpoint()
---   end,
---   'Set breakpoint',
--- },
--- ['<Leader>dp'] = {
---   function()
---     require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))
---   end,
--- },
---   ['<Leader>dr'] = {
---     function()
---       require('dap').repl.open()
---     end,
---     'Repl open',
---   },
---   ['<Leader>dl'] = {
---     function()
---       require('dap').run_last()
---     end,
---     'Run Last',
---   },
---   ['<Leader>df'] = {
---     function()
---       local widgets = require('dap.ui.widgets')
---       widgets.centered_float(widgets.frames)
---     end,
---     'Show frames',
---   },
---   ['<Leader>ds'] = {
---     function()
---       local widgets = require('dap.ui.widgets')
---       widgets.centered_float(widgets.scopes)
---     end,
---     'Show scopes',
---   },
--- },
--- v = {
---   ['<Leader>dh'] = {
---     function()
---       require('dap.ui.widgets').hover()
---     end,
---     'Hover',
---   },
---   ['<Leader>dv'] = {
---     function()
---       require('dap.ui.widgets').preview()
---     end,
---     'Preview',
---   },
---   },
--- }
-
--- M.dap_ui = {
---   plugin = true,
---   n = {
---     ['<Leader>dt'] = {
---       function()
---         require('dapui').toggle()
---       end,
---       'Toggle dap ui',
---     },
---   },
--- }
+M.dap = {
+  plugin = true,
+  n = {
+    ['<Leader>dc'] = { '<cmd>DapContinue<CR>', ' Continue' },
+    ['<Leader>do'] = { '<cmd>DapStepOver<CR>', ' Step Over' },
+    ['<Leader>dO'] = { '<cmd>DapStepOut<CR>', ' Step out' },
+    ['<Leader>di'] = { '<cmd>DapStepInto<CR>', ' Step into' },
+    ['<leader>db'] = { '<CMD>DapToggleBreakpoint<CR>', ' Toggle breakpoint' },
+    --   ['<Leader>db'] = {
+    --     require('dap').toggle_breakpoint(),
+    --     'Toggle breakpoint',
+    --   },
+    --   ['<Leader>dc'] = {
+    --     function()
+    --       require('dap').continue()
+    --     end,
+    --     'Continue',
+    --   },
+    --   ['<Leader>dsv'] = {
+    --     function()
+    --       require('dap').step_over()
+    --     end,
+    --     'Step into',
+    --   },
+    --   ['<Leader>dsi'] = {
+    --     function()
+    --       require('dap').step_into()
+    --     end,
+    --     'Step into',
+    --   },
+    --   ['<Leader>dso'] = {
+    --     function()
+    --       require('dap').step_out()
+    --     end,
+    --     'Step out',
+    --   },
+    --   ['<Leader>db'] = {
+    --     function()
+    --       require('dap').toggle_breakpoint()
+    --     end,
+    --     'Toggle breakpoint',
+    --   },
+    --   ['<Leader>dB'] = {
+    --     function()
+    --       require('dap').set_breakpoint()
+    --     end,
+    --     'Set breakpoint',
+    --   },
+    --   ['<Leader>dp'] = {
+    --     function()
+    --       require('dap').set_breakpoint(nil, nil, vim.fn.input('Log point message: '))
+    --     end,
+    --   },
+    --   ['<Leader>dr'] = {
+    --     function()
+    --       require('dap').repl.open()
+    --     end,
+    --     'Repl open',
+    --   },
+    --   ['<Leader>dl'] = {
+    --     function()
+    --       require('dap').run_last()
+    --     end,
+    --     'Run Last',
+    --   },
+    --   ['<Leader>df'] = {
+    --     function()
+    --       local widgets = require('dap.ui.widgets')
+    --       widgets.centered_float(widgets.frames)
+    --     end,
+    --     'Show frames',
+    --   },
+    --   ['<Leader>ds'] = {
+    --     function()
+    --       local widgets = require('dap.ui.widgets')
+    --       widgets.centered_float(widgets.scopes)
+    --     end,
+    --     'Show scopes',
+    --   },
+    -- },
+    -- v = {
+    --   ['<Leader>dh'] = {
+    --     function()
+    --       require('dap.ui.widgets').hover()
+    --     end,
+    --     'Hover',
+    --   },
+    --   ['<Leader>dv'] = {
+    --     function()
+    --       require('dap.ui.widgets').preview()
+    --     end,
+    --     'Preview',
+    --   },
+  },
+}
 
 M.trouble = {
   plugin = true,
   n = {
-    ['<leader>tt'] = {
-      function()
-        require('trouble').toggle()
-      end,
-      'Trouble toggle',
-    },
-
     ['<leader>td'] = {
       function()
         require('trouble').toggle('workspace_diagnostics')
       end,
-      'Trouble toggle workspace diagnostics',
-    },
-
-    ['<leader>tf'] = {
-      function()
-        require('trouble').toggle('quickfix')
-      end,
-      'Trouble toggle quickfix',
+      'Trouble toggle workspace diagnostics  ',
     },
   },
 }

@@ -9,19 +9,21 @@ local function redraw()
   vim.cmd('redrawstatus')
 end
 
-timer:start(1000, 1000, vim.schedule_wrap(redraw))
+if timer then
+  timer:start(1000, 1000, vim.schedule_wrap(redraw))
+end
 
 local function set_modules(modules)
   modules[1] = status_modules.fileformat()
   modules[2] = status_modules.mode()
   modules[3] = status_modules.file_info()
   modules[4] = status_modules.git()
-  modules[5] = '%='
-  modules[6] = status_modules.lsp_diagnostics()
-  modules[7] = status_modules.lsp_status()
-  modules[8] = status_modules.cursor_position()
-  modules[9] = status_modules.time()
-  modules[10] = status_modules.cwd()
+  modules[6] = '%='
+  modules[7] = status_modules.lsp_diagnostics()
+  modules[8] = status_modules.lsp_status()
+  modules[9] = status_modules.cursor_position()
+  modules[10] = status_modules.time()
+  modules[11] = status_modules.cwd()
   return modules
   -- end
 end

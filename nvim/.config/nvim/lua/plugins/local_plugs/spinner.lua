@@ -9,22 +9,22 @@ function M.spin(name)
   return spinner.frames[frame + 1]
 end
 
-M.spinner_colors = {
-  SpinnerRed = '%#SpinnerRed#',
-  SpinnerNeonCarrot = '%#SpinnerNeonCarrot#',
-  SpinnerOrange = '%#SpinnerOrange#',
-  SpinnerGold = '%#SpinnerGold#',
-  SpinnerYellow = '%#SpinnerYellow#',
-  SpinnerLimeGreen = '%#SpinnerLimeGreen#',
-  SpinnerBrightGreen = '%#SpinnerBrightGreen#',
-  SpinnerSpringGreen = '%#SpinnerSpringGreen#',
-  SpinnerCyan = '%#SpinnerCyan#',
-  SpinnerAzure = '%#SpinnerAzure#',
-  SpinnerBlue = '%#SpinnerBlue#',
-  SpinnerViolet = '%#SpinnerViolet#',
-  SpinnerVioleter = '%#SpinnerVioleter#',
-  SpinnerHotPink = '%#SpinnerHotPink#',
-}
+-- M.spinner_colors = {
+--   SpinnerRed = '%#SpinnerRed#',
+--   SpinnerNeonCarrot = '%#SpinnerNeonCarrot#',
+--   SpinnerOrange = '%#SpinnerOrange#',
+--   SpinnerGold = '%#SpinnerGold#',
+--   SpinnerYellow = '%#SpinnerYellow#',
+--   SpinnerLimeGreen = '%#SpinnerLimeGreen#',
+--   SpinnerBrightGreen = '%#SpinnerBrightGreen#',
+--   SpinnerSpringGreen = '%#SpinnerSpringGreen#',
+--   SpinnerCyan = '%#SpinnerCyan#',
+--   SpinnerAzure = '%#SpinnerAzure#',
+--   SpinnerBlue = '%#SpinnerBlue#',
+--   SpinnerViolet = '%#SpinnerViolet#',
+--   SpinnerVioleter = '%#SpinnerVioleter#',
+--   SpinnerHotPink = '%#SpinnerHotPink#',
+-- }
 
 ---@alias Spinner
 ---| "aesthetic"
@@ -112,6 +112,10 @@ M.spinner_colors = {
 ---| "toggle9"
 ---| "triangle"
 ---| "weather"
+---| "braille_8_circle_worm"
+---| "braille_6_circle_worm"
+---| "mutating_lines"
+---| "rainbow_wave"
 
 --- Spinners from https://github.com/sindresorhus/cli-spinners
 ---@enum
@@ -1033,272 +1037,272 @@ M.spinners = {
     },
     interval = 100,
   },
-  rainbow_wave = function()
-    local zero = M.spinner_colors.SpinnerRed .. '▁'
-    local one = M.spinner_colors.SpinnerNeonCarrot .. '▂'
-    local two = M.spinner_colors.SpinnerOrange .. '▃'
-    local three = M.spinner_colors.SpinnerGold .. '▄'
-    local four = M.spinner_colors.SpinnerYellow .. '▅'
-    local five = M.spinner_colors.SpinnerLimeGreen .. '▆'
-    local six = M.spinner_colors.SpinnerBrightGreen .. '▇'
-    local seven = M.spinner_colors.SpinnerSpringGreen .. '█'
-    local eight = M.spinner_colors.SpinnerCyan .. '▇'
-    local nine = M.spinner_colors.SpinnerAzure .. '▆'
-    local ten = M.spinner_colors.SpinnerBlue .. '▅'
-    local eleven = M.spinner_colors.SpinnerViolet .. '▄'
-    local twelve = M.spinner_colors.SpinnerVioleter .. '▃'
-    local thirteen = M.spinner_colors.SpinnerHotPink .. '▂'
+  -- rainbow_wave = function()
+  --   local zero = M.spinner_colors.SpinnerRed .. '▁'
+  --   local one = M.spinner_colors.SpinnerNeonCarrot .. '▂'
+  --   local two = M.spinner_colors.SpinnerOrange .. '▃'
+  --   local three = M.spinner_colors.SpinnerGold .. '▄'
+  --   local four = M.spinner_colors.SpinnerYellow .. '▅'
+  --   local five = M.spinner_colors.SpinnerLimeGreen .. '▆'
+  --   local six = M.spinner_colors.SpinnerBrightGreen .. '▇'
+  --   local seven = M.spinner_colors.SpinnerSpringGreen .. '█'
+  --   local eight = M.spinner_colors.SpinnerCyan .. '▇'
+  --   local nine = M.spinner_colors.SpinnerAzure .. '▆'
+  --   local ten = M.spinner_colors.SpinnerBlue .. '▅'
+  --   local eleven = M.spinner_colors.SpinnerViolet .. '▄'
+  --   local twelve = M.spinner_colors.SpinnerVioleter .. '▃'
+  --   local thirteen = M.spinner_colors.SpinnerHotPink .. '▂'
 
-    local chars = {
-      zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen,
-      one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero,
-      two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one,
-      three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two,
-      four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three,
-      five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four,
-      six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five,
-      seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six,
-      eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven,
-      nine
-        .. ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight,
-      ten
-        .. eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine,
-      eleven
-        .. twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten,
-      twelve
-        .. thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven,
-      thirteen
-        .. zero
-        .. one
-        .. two
-        .. three
-        .. four
-        .. five
-        .. six
-        .. seven
-        .. eight
-        .. nine
-        .. ten
-        .. eleven
-        .. twelve,
-    }
-    return chars, 100
-  end,
+  --   local chars = {
+  --     zero
+  --       .. one
+  --       .. two
+  --       .. three
+  --       .. four
+  --       .. five
+  --       .. six
+  --       .. seven
+  --       .. eight
+  --       .. nine
+  --       .. ten
+  --       .. eleven
+  --       .. twelve
+  --       .. thirteen,
+  --     one
+  --       .. two
+  --       .. three
+  --       .. four
+  --       .. five
+  --       .. six
+  --       .. seven
+  --       .. eight
+  --       .. nine
+  --       .. ten
+  --       .. eleven
+  --       .. twelve
+  --       .. thirteen
+  --       .. zero,
+  --     two
+  --       .. three
+  --       .. four
+  --       .. five
+  --       .. six
+  --       .. seven
+  --       .. eight
+  --       .. nine
+  --       .. ten
+  --       .. eleven
+  --       .. twelve
+  --       .. thirteen
+  --       .. zero
+  --       .. one,
+  --     three
+  --       .. four
+  --       .. five
+  --       .. six
+  --       .. seven
+  --       .. eight
+  --       .. nine
+  --       .. ten
+  --       .. eleven
+  --       .. twelve
+  --       .. thirteen
+  --       .. zero
+  --       .. one
+  --       .. two,
+  --     four
+  --       .. five
+  --       .. six
+  --       .. seven
+  --       .. eight
+  --       .. nine
+  --       .. ten
+  --       .. eleven
+  --       .. twelve
+  --       .. thirteen
+  --       .. zero
+  --       .. one
+  --       .. two
+  --       .. three,
+  --     five
+  --       .. six
+  --       .. seven
+  --       .. eight
+  --       .. nine
+  --       .. ten
+  --       .. eleven
+  --       .. twelve
+  --       .. thirteen
+  --       .. zero
+  --       .. one
+  --       .. two
+  --       .. three
+  --       .. four,
+  --     six
+  --       .. seven
+  --       .. eight
+  --       .. nine
+  --       .. ten
+  --       .. eleven
+  --       .. twelve
+  --       .. thirteen
+  --       .. zero
+  --       .. one
+  --       .. two
+  --       .. three
+  --       .. four
+  --       .. five,
+  --     seven
+  --       .. eight
+  --       .. nine
+  --       .. ten
+  --       .. eleven
+  --       .. twelve
+  --       .. thirteen
+  --       .. zero
+  --       .. one
+  --       .. two
+  --       .. three
+  --       .. four
+  --       .. five
+  --       .. six,
+  --     eight
+  --       .. nine
+  --       .. ten
+  --       .. eleven
+  --       .. twelve
+  --       .. thirteen
+  --       .. zero
+  --       .. one
+  --       .. two
+  --       .. three
+  --       .. four
+  --       .. five
+  --       .. six
+  --       .. seven,
+  --     nine
+  --       .. ten
+  --       .. eleven
+  --       .. twelve
+  --       .. thirteen
+  --       .. zero
+  --       .. one
+  --       .. two
+  --       .. three
+  --       .. four
+  --       .. five
+  --       .. six
+  --       .. seven
+  --       .. eight,
+  --     ten
+  --       .. eleven
+  --       .. twelve
+  --       .. thirteen
+  --       .. zero
+  --       .. one
+  --       .. two
+  --       .. three
+  --       .. four
+  --       .. five
+  --       .. six
+  --       .. seven
+  --       .. eight
+  --       .. nine,
+  --     eleven
+  --       .. twelve
+  --       .. thirteen
+  --       .. zero
+  --       .. one
+  --       .. two
+  --       .. three
+  --       .. four
+  --       .. five
+  --       .. six
+  --       .. seven
+  --       .. eight
+  --       .. nine
+  --       .. ten,
+  --     twelve
+  --       .. thirteen
+  --       .. zero
+  --       .. one
+  --       .. two
+  --       .. three
+  --       .. four
+  --       .. five
+  --       .. six
+  --       .. seven
+  --       .. eight
+  --       .. nine
+  --       .. ten
+  --       .. eleven,
+  --     thirteen
+  --       .. zero
+  --       .. one
+  --       .. two
+  --       .. three
+  --       .. four
+  --       .. five
+  --       .. six
+  --       .. seven
+  --       .. eight
+  --       .. nine
+  --       .. ten
+  --       .. eleven
+  --       .. twelve,
+  --   }
+  --   return chars, 100
+  -- end,
 
-  mutating_lines = function()
-    local chars = {
-      M.spinner_colors.SpinnerRed .. '︷',
-      M.spinner_colors.SpinnerRed .. '︵',
-      M.spinner_colors.SpinnerRed .. '︹',
-      M.spinner_colors.SpinnerRed .. '︺',
-      M.spinner_colors.SpinnerRed .. '︶',
-      M.spinner_colors.SpinnerRed .. '︸',
-      M.spinner_colors.SpinnerRed .. '︶',
-      M.spinner_colors.SpinnerRed .. '︺',
-      M.spinner_colors.SpinnerRed .. '︹',
-      M.spinner_colors.SpinnerRed .. '︵',
-    }
-    return chars, 200
-  end,
+  -- mutating_lines = function()
+  --   local chars = {
+  --     M.spinner_colors.SpinnerRed .. '︷',
+  --     M.spinner_colors.SpinnerRed .. '︵',
+  --     M.spinner_colors.SpinnerRed .. '︹',
+  --     M.spinner_colors.SpinnerRed .. '︺',
+  --     M.spinner_colors.SpinnerRed .. '︶',
+  --     M.spinner_colors.SpinnerRed .. '︸',
+  --     M.spinner_colors.SpinnerRed .. '︶',
+  --     M.spinner_colors.SpinnerRed .. '︺',
+  --     M.spinner_colors.SpinnerRed .. '︹',
+  --     M.spinner_colors.SpinnerRed .. '︵',
+  --   }
+  --   return chars, 200
+  -- end,
 
-  braille_6_circle_worm = function()
-    local chars = {
-      M.spinner_colors.SpinnerRed .. '⠋',
-      M.spinner_colors.SpinnerRed .. '⠙',
-      M.spinner_colors.SpinnerRed .. '⠹',
-      M.spinner_colors.SpinnerRed .. '⠸',
-      M.spinner_colors.SpinnerRed .. '⠼',
-      M.spinner_colors.SpinnerRed .. '⠴',
-      M.spinner_colors.SpinnerRed .. '⠦',
-      M.spinner_colors.SpinnerRed .. '⠧',
-      M.spinner_colors.SpinnerRed .. '⠇',
-      M.spinner_colors.SpinnerRed .. '⠏',
-    }
-    return chars, 200
-  end,
+  -- braille_6_circle_worm = function()
+  --   local chars = {
+  --     M.spinner_colors.SpinnerRed .. '⠋',
+  --     M.spinner_colors.SpinnerRed .. '⠙',
+  --     M.spinner_colors.SpinnerRed .. '⠹',
+  --     M.spinner_colors.SpinnerRed .. '⠸',
+  --     M.spinner_colors.SpinnerRed .. '⠼',
+  --     M.spinner_colors.SpinnerRed .. '⠴',
+  --     M.spinner_colors.SpinnerRed .. '⠦',
+  --     M.spinner_colors.SpinnerRed .. '⠧',
+  --     M.spinner_colors.SpinnerRed .. '⠇',
+  --     M.spinner_colors.SpinnerRed .. '⠏',
+  --   }
+  --   return chars, 200
+  -- end,
 
-  braille_8_circle_worm = function(color)
-    local chars = {
-      color .. '⠋',
-      color .. '⠙',
-      color .. '⠹',
-      color .. '⠸',
-      color .. '⢰',
-      color .. '⣰',
-      color .. '⣠',
-      color .. '⣄',
-      color .. '⣆',
-      color .. '⡆',
-      color .. '⠇',
-      color .. '⠏',
-    }
-    return chars, 60
-  end,
+  -- braille_8_circle_worm = function(color)
+  --   local chars = {
+  --     color .. '⠋',
+  --     color .. '⠙',
+  --     color .. '⠹',
+  --     color .. '⠸',
+  --     color .. '⢰',
+  --     color .. '⣰',
+  --     color .. '⣠',
+  --     color .. '⣄',
+  --     color .. '⣆',
+  --     color .. '⡆',
+  --     color .. '⠇',
+  --     color .. '⠏',
+  --   }
+  --   return chars, 60
+  -- end,
 }
 
 return M

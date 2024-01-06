@@ -7,10 +7,11 @@ local options = {
     -- web dev stuff
     'css-lsp',
     'html-lsp',
-    'typescript-language-server',
+    'js-debug-adapter',
     'json-language-server',
-    'rust-analyzer',
     'prettier',
+    'rust-analyzer',
+    'typescript-language-server',
 
     -- c/cpp stuff
     'clangd',

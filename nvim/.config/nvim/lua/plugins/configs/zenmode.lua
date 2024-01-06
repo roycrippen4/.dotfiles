@@ -8,13 +8,13 @@ return {
     options = {
       showcmd = true,
       enabled = true,
-      laststatus = 0,
+      laststatus = 3,
     },
     kitty = {
       enabled = true,
-      font = '0',
+      font = '+4',
     },
-    twilight = { enabled = false }, -- enable to start Twilight when zen mode opens
+    twilight = { enabled = true }, -- enable to start Twilight when zen mode opens
     gitsigns = { enabled = true }, -- disables git signs
   },
 }

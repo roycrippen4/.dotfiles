@@ -123,6 +123,7 @@ lspconfig['lua_ls'].setup({
       },
       hint = {
         enable = true,
+        arrayIndex = 'Disable',
       },
     },
     maxPreload = 100000,

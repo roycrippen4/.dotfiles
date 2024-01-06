@@ -22,6 +22,41 @@ autocmd('RecordingLeave', {
   end,
 })
 
+autocmd('FileType', {
+  group = vim.api.nvim_create_augroup('close_with_q', { clear = true }),
+  desc = 'Close with <q>',
+  pattern = {
+    'help',
+    'man',
+    'qf',
+    'query',
+    'scratch',
+    'spectre_panel',
+  },
+  callback = function(args)
+    vim.keymap.set('n', 'q', '<cmd>quit<cr>', { buffer = args.buf })
+  end,
+})
+
+autocmd('BufWritePost', {
+  pattern = '*',
+  callback = function()
+    if not vim.fn.isdirectory(vim.fn.expand('%:p')) then
+      vim.cmd('mkview')
+    end
+  end,
+})
+
+-- Autocommand to restore the cursor position when the buffer is read
+autocmd('BufReadPost', {
+  pattern = '*',
+  callback = function()
+    if vim.fn.line('\'"') > 0 and vim.fn.line('\'"') <= vim.fn.line('$') then
+      vim.cmd('normal! g`"')
+    end
+  end,
+})
+
 augroup('yankpost', { clear = true })
 autocmd({ 'VimEnter', 'CursorMoved' }, {
   group = 'yankpost',
@@ -50,14 +85,6 @@ autocmd('FileType', {
     vim.api.nvim_win_set_width(0, 100)
     vim.keymap.set('n', 'q', '<cmd>q<CR>', { buffer = event.buf, silent = true })
   end,
-})
-
--- Disable new line comments for all filetypes
-autocmd('BufEnter', {
-  callback = function()
-    vim.opt.formatoptions:remove({ 'c', 'r', 'o' })
-  end,
-  desc = 'Disable New Line Comment',
 })
 
 -- Disable diagnostics in node_modules (0 is current buffer only)
@@ -141,10 +168,10 @@ autocmd({ 'InsertEnter', 'WinLeave' }, {
 -- Also sets the title string for the kitty tabs
 autocmd('VimEnter', {
   callback = function()
-    -- if os.getenv('DEBUG') == '1' then
-    --   vim.cmd('Log')
-    --   log('Debug enabled')
-    -- end
+    if os.getenv('DEBUG') == '1' then
+      vim.cmd('Log')
+      log('Debug enabled')
+    end
 
     local cwd = vim.fn.getcwd()
     utils.set_titlestring(cwd)

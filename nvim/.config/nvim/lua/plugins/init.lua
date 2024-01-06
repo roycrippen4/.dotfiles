@@ -4,16 +4,96 @@ local default_plugins = {
   'nvim-lua/plenary.nvim',
 
   {
+    'stevearc/overseer.nvim',
+    keys = function()
+      return require('plugins.configs.overseer').keys
+    end,
+    opts = function()
+      return require('plugins.configs.overseer').opts
+    end,
+  },
+
+  {
+    'rcarriga/nvim-dap-ui',
+    event = 'VeryLazy',
+    dependencies = 'mfussenegger/nvim-dap',
+    config = function()
+      local dapui = require('dapui')
+      dapui.setup({
+        icons = {
+          collapsed = '',
+          current_frame = '',
+          expanded = '',
+        },
+        floating = {
+          border = 'rounded',
+        },
+        layouts = {
+          {
+            elements = {
+              { id = 'stacks', size = 0.30 },
+              { id = 'breakpoints', size = 0.30 },
+              { id = 'scopes', size = 0.30 },
+            },
+            position = 'left',
+            size = 40,
+          },
+        },
+      })
+    end,
+  },
+
+  {
+    'mfussenegger/nvim-dap',
+    dependencies = {
+      {
+        'theHamsta/nvim-dap-virtual-text',
+        opts = { virt_text_pos = 'eol' },
+      },
+      {
+        'mxsdev/nvim-dap-vscode-js',
+        opts = {
+          debugger_path = vim.fn.stdpath('data') .. '/lazy/vscode-js-debug',
+          adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
+        },
+      },
+      {
+        'microsoft/vscode-js-debug',
+        build = 'npm i && npm run compile vsDebugServerBundle && rm -rf out && mv -f dist out',
+      },
+      {
+        'jbyuki/one-small-step-for-vimkind',
+        keys = {
+          {
+            '<leader>dl',
+            function()
+              require('osv').launch({ port = 8086 })
+            end,
+            desc = 'Launch Lua adapter',
+          },
+        },
+      },
+    },
+    config = function()
+      require('plugins.configs.dap')
+      require('core.utils').load_mappings('dap')
+    end,
+  },
+
+  {
     -- https://github.com/kdheepak/lazygit.nvim
     'kdheepak/lazygit.nvim',
-    keys = { '<leader>gg' },
+    event = 'VeryLazy',
+    -- keys = { '<leader>gg' },
+    init = function()
+      require('core.utils').load_mappings('lazygit')
+    end,
     config = function()
       vim.g.lazygit_floating_window_winblend = 0
       vim.g.lazygit_floating_window_scaling_factor = 0.9
       vim.g.lazygit_floating_window_border_chars = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' }
       vim.g.lazygit_floating_window_use_plenary = 0
       vim.g.lazygit_use_custom_config_file_path = 0
-      vim.keymap.set('n', '<leader>gg', '<cmd> LazyGit<CR>', { noremap = true, silent = true, desc = 'Open Lazygit' })
     end,
   },
 
@@ -298,7 +378,10 @@ local default_plugins = {
   {
     -- https://github.com/folke/zen-mode.nvim
     'folke/zen-mode.nvim',
-    cmd = 'ZenMode',
+    event = 'VeryLazy',
+    init = function()
+      require('core.utils').load_mappings('zenmode')
+    end,
     opts = require('plugins.configs.zenmode'),
   },
 
@@ -417,12 +500,12 @@ local default_plugins = {
 
   {
     -- name = 'harpoon',
-    dir = '~/.dotfiles/nvim/.config/nvim/dev/harpoon/',
-    lazy = false,
+    -- dir = '~/.dotfiles/nvim/.config/nvim/dev/harpoon/',
+    -- lazy = false,
     -- https://github.com/theprimeagen/harpoon
-    -- 'theprimeagen/harpoon',
-    -- lazy = true,
-    -- branch = 'harpoon2',
+    'theprimeagen/harpoon',
+    lazy = true,
+    branch = 'harpoon2',
     init = function()
       require('core.utils').load_mappings('harpoon')
     end,
@@ -506,18 +589,14 @@ local default_plugins = {
     'iamcco/markdown-preview.nvim',
     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
     keys = {
-      { '<leader>mt', mode = { 'n' } },
       { '<leader>mp', mode = { 'n' } },
-      { '<leader>ms', mode = { 'n' } },
     },
     ft = { 'markdown' },
     build = function()
       vim.fn['mkdp#util#install']()
     end,
     config = function()
-      vim.keymap.set('n', '<leader>mt', '<cmd> MarkdownPreviewToggle <CR>', { desc = 'Toggle Markdown Preview' })
       vim.keymap.set('n', '<leader>mp', '<cmd> MarkdownPreview <CR>', { desc = 'Preview Markdown' })
-      vim.keymap.set('n', '<leader>ms', '<cmd> MarkdownPreviewStop <CR>', { desc = 'Stop Markdown Preview' })
     end,
   },
 
