@@ -38,12 +38,6 @@ local function my_on_attach(bufnr)
 
   vim.keymap.set(
     'n',
-    '<C-t>',
-    api.tree.change_root_to_parent,
-    { desc = 'Up', buffer = bufnr, noremap = true, silent = true, nowait = true }
-  )
-  vim.keymap.set(
-    'n',
     '.',
     api.tree.change_root_to_node,
     { desc = 'CD', buffer = bufnr, noremap = true, silent = true, nowait = true }

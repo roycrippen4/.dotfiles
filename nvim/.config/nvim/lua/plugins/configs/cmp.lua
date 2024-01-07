@@ -14,7 +14,7 @@ end)
 
 local options = {
   sources = {
-    { name = 'copilot' },
+    -- { name = 'copilot' },
     {
       name = 'nvim_lsp',
       trigger_characters = { '.', ':' },
@@ -29,15 +29,7 @@ local options = {
         return not context.in_treesitter_capture('string') and not context.in_treesitter_capture('comment')
       end,
     },
-    {
-      name = 'nvim_lua',
-      entry_filter = function()
-        local context = require('cmp.config.context')
-        return not context.in_treesitter_capture('string') and not context.in_syntax_group('String')
-      end,
-    },
     { name = 'path' },
-    { name = 'nvim_lsp_signature_help' },
   },
   experimental = {
     ghost_text = true,
@@ -70,20 +62,6 @@ local options = {
     disallow_partial_matching = false,
     disallow_prefix_unmatching = true,
   },
-  -- sorting = {
-  --   priority_weight = 2,
-  --   comparators = {
-  -- copilot_cmp_comparators.prioritize or function() end,
-  --     cmp.config.compare.exact,
-  --     cmp.config.compare.locality,
-  --     cmp.config.compare.recently_used,
-  --     cmp.config.compare.score,
-  --     cmp.config.compare.kind,
-  --     cmp.config.compare.length,
-  --     cmp.config.compare.order,
-  --     cmp.config.compare.sort_text,
-  --   },
-  -- },
   mapping = {
     ['<ESC>'] = cmp.mapping(function(fallback)
       if cmp.visible() then

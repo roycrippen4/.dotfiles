@@ -1,9 +1,14 @@
 local M = {}
 
-M.lazygit = {
+M.osv = {
   plugin = true,
   n = {
-    ['<leader>gg'] = { '<cmd> LazyGit<CR>', opts = { noremap = true, silent = true, desc = 'Open Lazygit  ' } },
+    ['<leader>dl'] = {
+      function()
+        require('osv').launch({ port = 8086 })
+      end,
+      opts = { desc = 'Launch Lua adapter' },
+    },
   },
 }
 
@@ -20,7 +25,7 @@ M.harpoon = {
       function()
         local path = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
         require('harpoon').ui:toggle_quick_menu(require('harpoon'):list('relative'), {
-          title = ' ⥓ Harpoon ⥓ ',
+          title = ' ⥚ Harpoon ⥟ ',
           title_pos = 'center',
           border = 'rounded',
           context = path,
@@ -281,7 +286,6 @@ M.nvimtree = {
 
   n = {
     ['<C-n>'] = { '<cmd> NvimTreeToggle <CR>', 'Toggle nvimtree' },
-    ['.'] = { '<C-]>', 'rebind tree cd', 'Set CWD' },
   },
 }
 

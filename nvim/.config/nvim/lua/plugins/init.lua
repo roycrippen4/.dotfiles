@@ -4,48 +4,21 @@ local default_plugins = {
   'nvim-lua/plenary.nvim',
 
   {
-    'stevearc/overseer.nvim',
-    keys = function()
-      return require('plugins.configs.overseer').keys
-    end,
-    opts = function()
-      return require('plugins.configs.overseer').opts
-    end,
-  },
-
-  {
-    'rcarriga/nvim-dap-ui',
+    'folke/noice.nvim',
     event = 'VeryLazy',
-    dependencies = 'mfussenegger/nvim-dap',
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'rcarriga/nvim-notify',
+    },
     config = function()
-      local dapui = require('dapui')
-      dapui.setup({
-        icons = {
-          collapsed = '',
-          current_frame = '',
-          expanded = '',
-        },
-        floating = {
-          border = 'rounded',
-        },
-        layouts = {
-          {
-            elements = {
-              { id = 'stacks', size = 0.30 },
-              { id = 'breakpoints', size = 0.30 },
-              { id = 'scopes', size = 0.30 },
-            },
-            position = 'left',
-            size = 40,
-          },
-        },
-      })
+      require('plugins.configs.noice')
     end,
   },
 
   {
     'mfussenegger/nvim-dap',
     dependencies = {
+      'rcarriga/nvim-dap-ui',
       {
         'theHamsta/nvim-dap-virtual-text',
         opts = { virt_text_pos = 'eol' },
@@ -83,11 +56,7 @@ local default_plugins = {
   {
     -- https://github.com/kdheepak/lazygit.nvim
     'kdheepak/lazygit.nvim',
-    event = 'VeryLazy',
-    -- keys = { '<leader>gg' },
-    init = function()
-      require('core.utils').load_mappings('lazygit')
-    end,
+    keys = { { '<leader>gg', '<cmd> LazyGit<CR>', mode = { 'n' } } },
     config = function()
       vim.g.lazygit_floating_window_winblend = 0
       vim.g.lazygit_floating_window_scaling_factor = 0.9
@@ -219,8 +188,6 @@ local default_plugins = {
   },
 
   {
-    -- name = 'nvim-spider',
-    -- dir = '~/dev/neodev/nvim-spider/',
     'chrisgrieser/nvim-spider',
     keys = {
       {
@@ -313,7 +280,7 @@ local default_plugins = {
         -- https://github.com/saadparwaiz1/cmp_luasnip
         'saadparwaiz1/cmp_luasnip',
         -- https://github.com/hrsh7th/cmp-nvim-lua
-        'hrsh7th/cmp-nvim-lua',
+        -- 'hrsh7th/cmp-nvim-lua',
         -- https://github.com/hrsh7th/cmp-nvim-lsp
         'hrsh7th/cmp-nvim-lsp',
         -- https://github.com/hrsh7th/cmp-buffer
@@ -322,8 +289,6 @@ local default_plugins = {
         'hrsh7th/cmp-path',
         -- https://github.com/hrsh7th/cmp-cmdline
         'hrsh7th/cmp-cmdline',
-        -- https://github.com/hrsh7th/cmp-nvim-lsp-signature-help
-        'hrsh7th/cmp-nvim-lsp-signature-help',
       },
     },
     opts = function()
@@ -510,35 +475,12 @@ local default_plugins = {
       require('core.utils').load_mappings('harpoon')
     end,
     config = function()
-      local harpoon = require('harpoon')
-      harpoon:setup({
+      require('harpoon'):setup({
         settings = {
           sync_on_ui_close = true,
           save_on_toggle = true,
         },
-        relative = {
-          VimLeavePre = function(_, list)
-            for bufnr = 1, vim.fn.bufnr('$') do
-              if vim.fn.buflisted(bufnr) == 1 then
-                local bufname = vim.api.nvim_buf_get_name(bufnr)
-                local item = nil
-                for _, it in ipairs(list.items) do
-                  local value = it.value
-                  if value == bufname then
-                    item = it
-                    break
-                  end
-                end
-                if item then
-                  vim.api.nvim_set_current_buf(bufnr)
-                  local pos = vim.api.nvim_win_get_cursor(0)
-                  item.context.row = pos[1]
-                  item.context.col = pos[2]
-                end
-              end
-            end
-          end,
-        },
+        relative = {},
       })
     end,
   },
