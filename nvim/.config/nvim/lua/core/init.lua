@@ -39,7 +39,7 @@ opt.cursorline = true
 -- Indenting
 opt.expandtab = true
 opt.shiftwidth = 2
-opt.smartindent = true
+opt.smartindent = false
 opt.tabstop = 2
 opt.softtabstop = 2
 

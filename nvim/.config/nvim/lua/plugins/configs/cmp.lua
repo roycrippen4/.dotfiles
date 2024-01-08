@@ -23,6 +23,12 @@ local options = {
       end,
     },
     {
+      name = 'nvim_lua',
+      entry_filter = function(entry)
+        return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
+      end,
+    },
+    {
       name = 'luasnip',
       entry_filter = function()
         local context = require('cmp.config.context')
@@ -55,13 +61,13 @@ local options = {
       require('luasnip').lsp_expand(args.body)
     end,
   },
-  matching = {
-    disallow_fuzzy_matching = true,
-    disallow_fullfuzzy_matching = true,
-    disallow_partial_fuzzy_matching = true,
-    disallow_partial_matching = false,
-    disallow_prefix_unmatching = true,
-  },
+  -- matching = {
+  --   disallow_fuzzy_matching = true,
+  --   disallow_fullfuzzy_matching = true,
+  --   disallow_partial_fuzzy_matching = true,
+  --   disallow_partial_matching = false,
+  --   disallow_prefix_unmatching = true,
+  -- },
   mapping = {
     ['<ESC>'] = cmp.mapping(function(fallback)
       if cmp.visible() then

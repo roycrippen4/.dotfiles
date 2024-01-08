@@ -5,7 +5,7 @@ local default_plugins = {
 
   {
     'folke/noice.nvim',
-    event = 'VeryLazy',
+    event = 'BufReadPre',
     dependencies = {
       'MunifTanjim/nui.nvim',
       'rcarriga/nvim-notify',
@@ -117,11 +117,15 @@ local default_plugins = {
   {
     -- https://github.com/williamboman/mason.nvim
     'williamboman/mason.nvim',
-    event = 'VeryLazy',
+    cmd = 'Mason',
     dependencies = {
       -- https://github.com/williamboman/mason-lspconfig.nvim
-      'williamboman/mason-lspconfig.nvim',
+      {
+        'williamboman/mason-lspconfig.nvim',
+        opts = require('plugins.configs.lsp.mason-lspconfig'),
+      },
     },
+    opts = require('plugins.configs.lsp.mason'),
   },
 
   {
@@ -140,7 +144,7 @@ local default_plugins = {
   {
     -- https://github.com/nvim-treesitter/nvim-treesitter
     'nvim-treesitter/nvim-treesitter',
-    lazy = false,
+    -- lazy = false,
     init = function()
       require('core.utils').lazy_load('nvim-treesitter')
     end,
@@ -247,14 +251,23 @@ local default_plugins = {
 
   {
     'altermo/ultimate-autopair.nvim',
-    ft = { 'lua', 'typescript', 'javascript', 'rust' },
+    event = 'InsertEnter',
     branch = 'v0.6',
     config = function()
       require('ultimate-autopair').setup({
-        space2 = {
-          enable = true,
+        pair_map = false,
+        cmap = true,
+        pair_cmap = true,
+        multiline = false,
+        cr = {
+          enable = false,
         },
-        { '<', '>', newline = true, space = true, ft = { 'lua' } },
+        fastwrap = {
+          enable = false,
+        },
+        close = {
+          enable = false,
+        },
       })
     end,
   },
@@ -280,7 +293,7 @@ local default_plugins = {
         -- https://github.com/saadparwaiz1/cmp_luasnip
         'saadparwaiz1/cmp_luasnip',
         -- https://github.com/hrsh7th/cmp-nvim-lua
-        -- 'hrsh7th/cmp-nvim-lua',
+        'hrsh7th/cmp-nvim-lua',
         -- https://github.com/hrsh7th/cmp-nvim-lsp
         'hrsh7th/cmp-nvim-lsp',
         -- https://github.com/hrsh7th/cmp-buffer
@@ -343,7 +356,8 @@ local default_plugins = {
   {
     -- https://github.com/folke/zen-mode.nvim
     'folke/zen-mode.nvim',
-    event = 'VeryLazy',
+    cmd = 'ZenMode',
+    -- event = 'VeryLazy',
     init = function()
       require('core.utils').load_mappings('zenmode')
     end,
@@ -402,7 +416,16 @@ local default_plugins = {
   {
     -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
     'JoosepAlviste/nvim-ts-context-commentstring',
-    event = 'VeryLazy',
+    keys = {
+      {
+        'gcc',
+        mode = { 'n' },
+      },
+      {
+        'gc',
+        mode = { 'v' },
+      },
+    },
   },
 
   {
@@ -469,7 +492,7 @@ local default_plugins = {
     -- lazy = false,
     -- https://github.com/theprimeagen/harpoon
     'theprimeagen/harpoon',
-    lazy = true,
+    event = 'VeryLazy',
     branch = 'harpoon2',
     init = function()
       require('core.utils').load_mappings('harpoon')

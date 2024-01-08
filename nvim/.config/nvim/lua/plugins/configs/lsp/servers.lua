@@ -1,30 +1,3 @@
-local mason_opts = require('plugins.configs.lsp.mason')
-
-require('mason').setup(mason_opts)
-require('mason-lspconfig').setup({
-  ensure_installed = {
-    'clangd',
-    'docker_compose_language_service',
-    'dockerls',
-    'emmet_language_server',
-    'eslint',
-    'gopls',
-    'hls',
-    'html',
-    'htmx',
-    'jsonls',
-    'lua_ls',
-    'marksman',
-    'mdx_analyzer',
-    'pyright',
-    'rust_analyzer',
-    'svelte',
-    'tailwindcss',
-    'taplo',
-    'yamlls',
-  },
-})
-
 local lspconfig = require('lspconfig')
 local M = require('plugins.configs.lsp.lspconfig')
 
