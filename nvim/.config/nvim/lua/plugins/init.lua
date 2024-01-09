@@ -253,22 +253,11 @@ local default_plugins = {
     'altermo/ultimate-autopair.nvim',
     event = 'InsertEnter',
     branch = 'v0.6',
-    config = function()
-      require('ultimate-autopair').setup({
-        pair_map = false,
-        cmap = true,
-        pair_cmap = true,
-        multiline = false,
-        cr = {
-          enable = false,
-        },
-        fastwrap = {
-          enable = false,
-        },
-        close = {
-          enable = false,
-        },
-      })
+    opts = function()
+      return require('plugins.configs.ult-autopair')
+    end,
+    config = function(_, opts)
+      require('ultimate-autopair').setup(opts)
     end,
   },
 
@@ -304,11 +293,8 @@ local default_plugins = {
         'hrsh7th/cmp-cmdline',
       },
     },
-    opts = function()
-      return require('plugins.configs.cmp')
-    end,
-    config = function(_, opts)
-      require('cmp').setup(opts)
+    config = function()
+      require('plugins.configs.cmp')
     end,
   },
 
@@ -610,7 +596,9 @@ local default_plugins = {
         'RainbowDelimiterCyan',
       }
       require('ibl').setup({
+        indent = { char = '▏', highlight = 'IblChar' },
         scope = {
+          char = '▏',
           highlight = highlight,
           include = {
             node_type = { lua = { 'return_statement', 'table_constructor' } },
@@ -652,7 +640,7 @@ local default_plugins = {
 local config = require('core.utils').load_config()
 
 if #config.plugins ~= 0 then
-  table.insert(default_plugins, { import = config.plugins })
+  table.insert(default_plugins({ import = config.plugins }))
 end
 
 require('lazy').setup(default_plugins, config.lazy_nvim)

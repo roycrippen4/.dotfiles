@@ -1,7 +1,35 @@
 local cmp = require('cmp')
-local kind = cmp.lsp.CompletionItemKind
 
 dofile(vim.g.base46_cache .. 'cmp')
+
+local kind = cmp.lsp.CompletionItemKind
+local cmp_ui = require('nvconfig').ui.cmp
+local cmp_style = cmp_ui.style
+
+local field_arrangement = {
+  atom = { 'kind', 'abbr', 'menu' },
+  atom_colored = { 'kind', 'abbr', 'menu' },
+}
+
+local formatting_style = {
+  fields = field_arrangement[cmp_style] or { 'abbr', 'kind', 'menu' },
+
+  format = function(_, item)
+    local icons = require('nvchad.icons.lspkind')
+    local icon = (cmp_ui.icons and icons[item.kind]) or ''
+
+    if cmp_style == 'atom' or cmp_style == 'atom_colored' then
+      icon = ' ' .. icon .. ' '
+      item.menu = cmp_ui.lspkind_text and '   (' .. item.kind .. ')' or ''
+      item.kind = icon
+    else
+      icon = cmp_ui.lspkind_text and (' ' .. icon .. ' ') or icon
+      item.kind = string.format('%s %s', icon, cmp_ui.lspkind_text and item.kind or '')
+    end
+
+    return item
+  end,
+}
 
 cmp.event:on('confirm_done', function(event)
   local completion_kind = event.entry:get_completion_item().kind
@@ -12,48 +40,25 @@ cmp.event:on('confirm_done', function(event)
   end
 end)
 
-local options = {
+cmp.setup({
   sources = {
-    -- { name = 'copilot' },
-    {
-      name = 'nvim_lsp',
-      trigger_characters = { '.', ':' },
-      entry_filter = function(entry)
-        return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
-      end,
-    },
-    {
-      name = 'nvim_lua',
-      entry_filter = function(entry)
-        return require('cmp.types').lsp.CompletionItemKind[entry:get_kind()] ~= 'Text'
-      end,
-    },
-    {
-      name = 'luasnip',
-      entry_filter = function()
-        local context = require('cmp.config.context')
-        return not context.in_treesitter_capture('string') and not context.in_treesitter_capture('comment')
-      end,
-    },
+    { name = 'nvim_lsp', trigger_characters = { '.', ':' } },
+    { name = 'luasnip' },
+    { name = 'nvim_lua' },
     { name = 'path' },
   },
   experimental = {
     ghost_text = true,
   },
+  formatting = formatting_style,
   completion = {
-    completeopt = 'menu,menuone,noselect',
+    completeopt = 'menu,menuone',
     autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged },
-  },
-  performance = {
-    max_view_entries = 20,
   },
   window = {
     completion = {
       winhighlight = 'Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel',
       scrollbar = false,
-    },
-    documentation = {
-      winhighlight = 'Normal:CmpDoc',
     },
   },
   snippet = {
@@ -61,13 +66,6 @@ local options = {
       require('luasnip').lsp_expand(args.body)
     end,
   },
-  -- matching = {
-  --   disallow_fuzzy_matching = true,
-  --   disallow_fullfuzzy_matching = true,
-  --   disallow_partial_fuzzy_matching = true,
-  --   disallow_partial_matching = false,
-  --   disallow_prefix_unmatching = true,
-  -- },
   mapping = {
     ['<ESC>'] = cmp.mapping(function(fallback)
       if cmp.visible() then
@@ -114,7 +112,7 @@ local options = {
       's',
     }),
   },
-}
+})
 
 cmp.setup.cmdline('/', {
   mapping = cmp.mapping.preset.cmdline(),
@@ -136,5 +134,3 @@ cmp.setup.cmdline(':', {
     },
   }),
 })
-
-return options

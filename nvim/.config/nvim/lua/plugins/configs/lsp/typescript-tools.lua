@@ -6,6 +6,7 @@ vim.keymap.set('n', 'fi', '<cmd> TSToolsOrganizeImports<CR>', { desc = 'Organize
 local options = {
 
   on_attach = M.on_attach,
+  capabilities = M.capabilities,
   settings = {
     tsserver_plugins = {
       '@styled/typescript-styled-plugin',
@@ -23,7 +24,7 @@ local options = {
     },
   },
   handlers = {
-    ['textDocument/publishDiagnostics'] = api.filter_diagnostics({ 80001 }),
+    ['textDocument/publishDiagnostics'] = api.filter_diagnostics({ 80001, 80004 }),
   },
 }
 

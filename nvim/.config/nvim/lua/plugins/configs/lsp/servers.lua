@@ -8,119 +8,88 @@ if cwd ~= nil then
   end
 end
 
-local capabilities = vim.lsp.protocol.make_client_capabilities()
-capabilities = require('cmp_nvim_lsp').default_capabilities(capabilities)
-
 lspconfig['clangd'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
 })
 
 lspconfig['cssls'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
 })
 
 lspconfig['docker_compose_language_service'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
 })
 
 lspconfig['dockerls'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
 })
 
 lspconfig['emmet_language_server'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
   filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less', 'svelte' },
 })
 
 lspconfig['eslint'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
   filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'mjs', 'vue', 'svelte' },
-  settings = {
-    workingDirectory = {
-      mode = 'auto',
-    },
-    rulesCustomizations = {
-      {
-        rule = 'no-unused-vars',
-        severity = 'off',
-      },
-      {
-        rule = '@typescript-eslint/no-unused-vars',
-        severity = 'off',
-      },
-    },
-  },
+  settings = require('plugins.configs.lsp.lang.eslint'),
 })
 
 lspconfig['gopls'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
 })
 
 lspconfig['hls'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
 })
 
 lspconfig['html'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
 })
 
 lspconfig['htmx'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
 })
 
 lspconfig['jsonls'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
+  settings = require('plugins.configs.lsp.lang.json'),
 })
 
 lspconfig['lua_ls'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
-  settings = {
-    Lua = {
-      diagnostics = {
-        globals = { 'vim' },
-      },
-      telemetry = {
-        enable = false,
-      },
-      hint = {
-        enable = true,
-        arrayIndex = 'Disable',
-      },
-    },
-    maxPreload = 100000,
-    preloadFileSize = 10000,
-  },
+  settings = require('plugins.configs.lsp.lang.lua'),
 })
 
 lspconfig['marksman'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
 })
 
 lspconfig['mdx_analyzer'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
 })
 
 lspconfig['pyright'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
 })
 
 lspconfig['svelte'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = function(client, bufnr)
     M.on_attach(client, bufnr)
 
@@ -136,16 +105,15 @@ lspconfig['svelte'].setup({
 })
 
 -- lspconfig['tailwindcss'].setup({
---   capabilities = capabilities,
+-- capabilities = M.capabilities,
 --   on_attach = M.on_attach,
 -- })
-
 lspconfig['taplo'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
 })
 
 lspconfig['yamlls'].setup({
-  capabilities = capabilities,
+  capabilities = M.capabilities,
   on_attach = M.on_attach,
 })

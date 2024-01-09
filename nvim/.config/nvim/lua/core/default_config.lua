@@ -66,7 +66,9 @@ M.ui = {
   cheatsheet = { theme = 'grid' }, -- simple/grid
 
   lsp = {
-    signature = true,
+    signature = {
+      disabled = false,
+    },
     semantic_tokens = false,
   },
   term = {

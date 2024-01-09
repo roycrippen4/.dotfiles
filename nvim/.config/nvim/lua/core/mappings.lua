@@ -1,5 +1,7 @@
 local M = {}
 
+local function smart_delete() end
+
 M.osv = {
   plugin = true,
   n = {
@@ -124,6 +126,24 @@ M.general = {
     -- probably the best keybind ever
     [';'] = { ':', 'enter command mode', opts = { nowait = true } },
     ['yil'] = { '^y$', 'yank in line', opts = { noremap = true } },
+
+    -- record into the `q` macro register by default
+    ['Q'] = { 'qq', 'instant record macro to q register', opts = { noremap = true } },
+
+    -- send whitespace to black hole register
+    ['dd'] = {
+      function()
+        local line_content = vim.fn.getline('.')
+
+        if type(line_content) == 'string' and string.match(line_content, '^%s*$') then
+          vim.cmd('normal! "_dd')
+        else
+          vim.cmd('normal! dd')
+        end
+      end,
+      'smart delete',
+      opts = { nowait = true, noremap = true },
+    },
 
     -- window binds
     ['<C-h>'] = { '<C-w>h', 'Window left' },

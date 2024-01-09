@@ -36,6 +36,7 @@ local options = {
       check_outdated_servers = 'C',
       uninstall_server = 'X',
       cancel_installation = '<C-c>',
+      toggle_help = '?',
     },
   },
 
