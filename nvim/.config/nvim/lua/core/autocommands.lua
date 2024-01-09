@@ -170,7 +170,6 @@ autocmd('VimEnter', {
   callback = function()
     if os.getenv('DEBUG') == '1' then
       vim.cmd('Log')
-      log('Debug enabled')
     end
 
     local cwd = vim.fn.getcwd()

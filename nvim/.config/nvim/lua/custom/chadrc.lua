@@ -2,6 +2,7 @@ local M = {}
 local tab_modules = require('plugins.configs.tabufline')
 local status_modules = require('plugins.configs.statusline')
 local highlights = require('custom.highlights')
+local theme = require('custom.themes.roydark')
 
 local timer = vim.loop.new_timer()
 
@@ -29,6 +30,7 @@ local function set_modules(modules)
 end
 
 M.ui = {
+  theme = 'roydark',
   hl_add = highlights.add,
   hl_override = highlights.override,
 

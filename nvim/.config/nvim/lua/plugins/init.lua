@@ -353,7 +353,7 @@ local default_plugins = {
   {
     -- https://github.com/neovim/nvim-lspconfig
     'neovim/nvim-lspconfig',
-    event = 'VeryLazy',
+    event = 'VimEnter',
     dependencies = {
       'folke/neodev.nvim',
     },
