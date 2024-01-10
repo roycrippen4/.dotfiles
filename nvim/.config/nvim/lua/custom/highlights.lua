@@ -27,7 +27,9 @@ M.add = {
   NvimTreeBookmark       = { fg = { "red",    -10 } },
   NvimTreeBookmarkHL     = { fg = { "red",    -10 } },
   NvimTreeOpenedFile     = { fg = { "yellow", -10 } },
-  NvimTreeTitle          = { fg = { "yellow", -10 }, bg = darkest_black},
+  NvimTreeTitle          = { fg = { "yellow", -10 }, bg = "darker_black", sp = sep_color,  },
+  NvimTreeTitleSepOff    = { fg = sep_color,         bg = "darker_black", sp = sep_color,   },
+  NvimTreeTitleSepOn     = { fg = sep_color,         bg = "black",        sp = sep_color,  },
   -- Rainbow Delim
   RainbowDelimiterBlue   = { fg = 'blue'   },
   RainbowDelimiterCyan   = { fg = 'cyan'   },
@@ -75,7 +77,7 @@ M.override = {
   CmpPmenu             = { bg = { 'black', -5 } },
   Comment = { italic = true },
   FloatBorder          = { fg = { 'red', -15 }, bg = 'black' },
-  NvimTreeWinSeparator = { fg = darkest_black,          bg = darkest_black },
+  NvimTreeWinSeparator = { fg = black,          bg = 'black' },
   -- Statusline
   St_CommandMode      = { fg = d_red,            bg = darkest_black },
   St_CommandModeSep   = { fg = d_red,            bg = darkest_black },
@@ -112,12 +114,12 @@ M.override = {
   TbLineBufOff         = { fg = 'grey', bg = 'darker_black', sp = sep_color,  },
   TbLineBufOffClose    = { bg = 'darker_black',              sp = sep_color,  },
   TbLineBufOffModified = { bg = 'darker_black',              sp = sep_color,  },
-  TbLineBufOn          = { fg = d_yellow, bg ='black' },
+  TbLineBufOn          = { fg = d_yellow },
   TblineFill           = { bg = 'darker_black',              sp = sep_color,  },
   -- Title                = { fg = '#1e222a', bg = d_red, bold = true, italic = true },
   FloatTitle           = { fg = '#1e222a', bg = d_red, bold = true, italic = true },
   RenamerTitle         = { fg = '#1e222a', bg = d_red, bold = true, italic = true },
-  WinSeparator         = { bg = 'darker_black' },
+  WinSeparator         = { fg = 'yellow',       bg = 'black' },
 }
 
 return M

@@ -41,9 +41,9 @@ M.gitsigns = {
     changedelete = { text = icon },
     untracked = { text = icon },
   },
-  on_attach = function(bufnr)
-    utils.load_mappings('gitsigns', { buffer = bufnr })
-  end,
+  -- on_attach = function(bufnr)
+  --   utils.load_mappings('gitsigns', { buffer = bufnr })
+  -- end,
 }
 
 return M

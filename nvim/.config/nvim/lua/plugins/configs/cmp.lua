@@ -52,7 +52,7 @@ cmp.setup({
   },
   formatting = formatting_style,
   completion = {
-    completeopt = 'menu,menuone',
+    completeopt = 'menu,menuone,noselect',
     autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged },
   },
   window = {

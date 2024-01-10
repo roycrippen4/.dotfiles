@@ -8,7 +8,7 @@ return {
   },
   bs = {
     enable = true,
-    map = { '<bs>', '<Del>' },
+    map = { '<BS>', '<Del>' },
     space = 'balance',
   },
   fastwrap = {

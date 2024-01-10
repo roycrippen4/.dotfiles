@@ -116,28 +116,12 @@ autocmd({ 'TermOpen', 'TermEnter', 'BufEnter' }, {
   end,
 })
 
+-- autoquit vim if only plugin windows are open
 autocmd('QuitPre', {
   callback = function()
-    local tree_wins = {}
-    local floating_wins = {}
-    local wins = vim.api.nvim_list_wins()
-    for _, w in ipairs(wins) do
-      local bufname = vim.api.nvim_buf_get_name(vim.api.nvim_win_get_buf(w))
-      if bufname:match('NvimTree_') ~= nil then
-        table.insert(tree_wins, w)
-      end
-      if bufname:match('logger') ~= nil then
-        table.insert(tree_wins, w)
-      end
-      if vim.api.nvim_win_get_config(w).relative ~= '' then
-        table.insert(floating_wins, w)
-      end
-    end
-    if 1 == #wins - #floating_wins - #tree_wins then
-      for _, w in ipairs(tree_wins) do
-        vim.api.nvim_win_close(w, true)
-      end
-    end
+    vim.defer_fn(function()
+      utils.QuitVim()
+    end, 20)
   end,
 })
 
@@ -176,5 +160,15 @@ autocmd('VimEnter', {
     utils.set_titlestring(cwd)
     utils.set_node_version(cwd)
     vim.env.PATH = '~/.nvm/versions/node/v20.10.0/bin:' .. vim.env.PATH
+  end,
+})
+
+autocmd('User', {
+  pattern = 'NvChadThemeReload',
+  callback = function()
+    local theme = require('nvconfig').ui.theme
+    vim.defer_fn(function()
+      utils.write_kitty_theme(theme)
+    end, 100)
   end,
 })
