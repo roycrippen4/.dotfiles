@@ -461,6 +461,24 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/j-hui/fidget.nvim
+    'j-hui/fidget.nvim',
+    event = 'VeryLazy',
+    config = function()
+      require('fidget').setup({
+        progress = {
+          display = {
+            overrides = {
+              rust_analyzer = { name = 'rust-analyzer' },
+              lua_ls = { name = 'lua-ls' },
+            },
+          },
+        },
+      })
+    end,
+  },
+
+  {
     -- https://github.com/mbbill/undotree
     'mbbill/undotree',
     cmd = 'UndotreeToggle',
@@ -476,24 +494,23 @@ local default_plugins = {
   },
 
   {
-    -- name = 'harpoon',
-    -- dir = '~/.dotfiles/nvim/.config/nvim/dev/harpoon/',
-    -- lazy = false,
-    -- https://github.com/theprimeagen/harpoon
-    'theprimeagen/harpoon',
+    'echasnovski/mini.visits',
+    config = true,
     event = 'VeryLazy',
-    branch = 'harpoon2',
+  },
+
+  {
+    name = 'harpoon',
+    dir = '~/.dotfiles/nvim/.config/nvim/dev/harpoon/',
+    -- https://github.com/theprimeagen/harpoon
+    -- 'theprimeagen/harpoon',
+    event = 'VeryLazy',
+    -- branch = 'harpoon2',
     init = function()
       require('core.utils').load_mappings('harpoon')
     end,
     config = function()
-      require('harpoon'):setup({
-        settings = {
-          sync_on_ui_close = true,
-          save_on_toggle = true,
-        },
-        relative = {},
-      })
+      require('plugins.configs.harpoon')
     end,
   },
 

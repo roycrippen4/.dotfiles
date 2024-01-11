@@ -116,15 +116,13 @@ autocmd('BufWritePost', {
     if realpath then
       return vim.fs.normalize(realpath)
     end
-  end, vim.fn.glob(vim.fn.stdpath('config') .. '/lua/**/**/*.lua', true, true, true)),
+  end, vim.fn.glob(vim.fn.stdpath('config') .. '/lua/custom/**/*.lua', true, true, true)),
   group = vim.api.nvim_create_augroup('ReloadNvChad', {}),
 
   callback = function(opts)
     local fp = vim.fn.fnamemodify(vim.fs.normalize(vim.api.nvim_buf_get_name(opts.buf)), ':r') --[[@as string]]
     local app_name = vim.env.NVIM_APPNAME and vim.env.NVIM_APPNAME or 'nvim'
     local module = string.gsub(fp, '^.*/' .. app_name .. '/lua/', ''):gsub('/', '.')
-
-    print('reloading config...')
 
     require('plenary.reload').reload_module('base46')
     require('plenary.reload').reload_module(module)

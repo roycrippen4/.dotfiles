@@ -31,6 +31,19 @@ local formatting_style = {
   end,
 }
 
+local function border(hl_name)
+  return {
+    { '╭', hl_name },
+    { '─', hl_name },
+    { '╮', hl_name },
+    { '│', hl_name },
+    { '╯', hl_name },
+    { '─', hl_name },
+    { '╰', hl_name },
+    { '│', hl_name },
+  }
+end
+
 cmp.event:on('confirm_done', function(event)
   local completion_kind = event.entry:get_completion_item().kind
 
@@ -59,6 +72,11 @@ cmp.setup({
     completion = {
       winhighlight = 'Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel',
       scrollbar = false,
+      border = border('CmpBorder'),
+    },
+    documentation = {
+      border = border('CmpDocBorder'),
+      winhighlight = 'Normal:CmpDoc',
     },
   },
   snippet = {

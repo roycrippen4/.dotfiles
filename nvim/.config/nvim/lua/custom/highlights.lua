@@ -21,7 +21,6 @@ M.add = {
   CmdlineSearch          = { fg = '#cc5e00',     bg = darkest_black },
   CmdlineSub             = { fg =  l_blue,       bg = darkest_black },
   CmdlineVisualSub       = { fg =  pink,         bg = darkest_black },
-  FloatTitle           = { fg = '#1e222a', bg = d_red, bold = true, italic = true },
   -- Noice
   NoiceVirtualTextOn     = { fg = '#53bf00',     bg = cursorline,    italic = true },
   -- NvimTree
@@ -75,9 +74,9 @@ M.add = {
 
 -- stylua: ignore
 M.override = {
-  CmpPmenu             = { bg = { 'black', -5 } },
+  CmpPmenu             = { bg = 'black' },
   Comment = { italic = true },
-  FloatBorder          = { fg = { 'red', -15 }, bg = 'black' },
+  FloatBorder          = { fg = l_blue, bg = 'black' },
   NvimTreeWinSeparator = { fg = black,          bg = 'black' },
   -- Statusline
   St_CommandMode      = { fg = d_red,            bg = darkest_black },
@@ -117,9 +116,10 @@ M.override = {
   TbLineBufOffModified = { bg = 'darker_black',              sp = sep_color,  },
   TbLineBufOn          = { fg = d_yellow },
   TblineFill           = { bg = 'darker_black',              sp = sep_color,  },
-  -- Title                = { fg = '#1e222a', bg = d_red, bold = true, italic = true },
-  FloatTitle           = { fg = '#1e222a', bg = d_red, bold = true, italic = true },
-  RenamerTitle         = { fg = '#1e222a', bg = d_red, bold = true, italic = true },
+  FloatTitle           = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
+  Title                = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
+  NormalFloat          = { bg = 'black' },
+  RenamerTitle         = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
   WinSeparator         = { fg = 'yellow',       bg = 'black' },
 }
 

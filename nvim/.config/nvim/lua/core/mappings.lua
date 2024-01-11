@@ -24,14 +24,14 @@ M.harpoon = {
   n = {
     ['<C-f>'] = {
       function()
-        require('harpoon'):list('relative'):append()
+        require('harpoon'):list('files'):append()
         vim.cmd('redrawtabline')
       end,
     },
     ['<C-e>'] = {
       function()
         local path = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
-        require('harpoon').ui:toggle_quick_menu(require('harpoon'):list('relative'), {
+        require('harpoon').ui:toggle_quick_menu(require('harpoon'):list('files'), {
           title = ' ⥚ Harpoon ⥟ ',
           title_pos = 'center',
           border = 'rounded',
@@ -42,52 +42,52 @@ M.harpoon = {
     },
     ['<C-1>'] = {
       function()
-        require('harpoon'):list('relative'):select(1)
+        require('harpoon'):list('files'):select(1)
       end,
     },
     ['<C-2>'] = {
       function()
-        require('harpoon'):list('relative'):select(2)
+        require('harpoon'):list('files'):select(2)
       end,
     },
     ['<C-3>'] = {
       function()
-        require('harpoon'):list('relative'):select(3)
+        require('harpoon'):list('files'):select(3)
       end,
     },
     ['<C-4>'] = {
       function()
-        require('harpoon'):list('relative'):select(4)
+        require('harpoon'):list('files'):select(4)
       end,
     },
     ['<C-5>'] = {
       function()
-        require('harpoon'):list('relative'):select(5)
+        require('harpoon'):list('files'):select(5)
       end,
     },
     ['<C-6>'] = {
       function()
-        require('harpoon'):list('relative'):select(6)
+        require('harpoon'):list('files'):select(6)
       end,
     },
     ['<C-7>'] = {
       function()
-        require('harpoon'):list('relative'):select(7)
+        require('harpoon'):list('files'):select(7)
       end,
     },
     ['<C-8>'] = {
       function()
-        require('harpoon'):list('relative'):select(8)
+        require('harpoon'):list('files'):select(8)
       end,
     },
     ['<C-9>'] = {
       function()
-        require('harpoon'):list('relative'):select(9)
+        require('harpoon'):list('files'):select(9)
       end,
     },
     ['<C-0>'] = {
       function()
-        require('harpoon'):list('relative'):select(0)
+        require('harpoon'):list('files'):select(0)
       end,
     },
   },
