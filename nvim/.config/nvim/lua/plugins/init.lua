@@ -205,7 +205,7 @@ local default_plugins = {
 
   {
     'altermo/ultimate-autopair.nvim',
-    event = 'InsertEnter',
+    event = 'VeryLazy',
     branch = 'v0.6',
     opts = function()
       return require('plugins.configs.ult-autopair')
@@ -432,17 +432,18 @@ local default_plugins = {
   },
 
   {
-    name = 'harpoon',
-    dir = '~/.dotfiles/nvim/.config/nvim/dev/harpoon/',
     -- https://github.com/theprimeagen/harpoon
-    -- 'theprimeagen/harpoon',
-    event = 'VeryLazy',
-    -- branch = 'harpoon2',
+    'theprimeagen/harpoon',
+    branch = 'harpoon2',
     init = function()
       require('core.utils').load_mappings('harpoon')
     end,
     config = function()
-      require('plugins.configs.harpoon')
+      require('harpoon'):setup({
+        settings = {
+          save_on_toggle = true,
+        },
+      })
     end,
   },
 

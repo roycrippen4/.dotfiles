@@ -42,7 +42,7 @@ end
 
 local function is_buf_marked(bufnr)
   local path = ''
-  local items = require('harpoon'):list('files').items
+  local items = require('harpoon'):list('relative').items
 
   if vim.api.nvim_buf_is_valid(bufnr) then
     local name = vim.api.nvim_buf_get_name(bufnr)
