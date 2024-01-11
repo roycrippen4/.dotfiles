@@ -54,7 +54,7 @@ local plug_types = {
   toggleterm = true,
 }
 
-function M.QuitVim()
+function M.quit_vim()
   local wins = vim.api.nvim_list_wins()
   local non_plugin_win_count = 0
 

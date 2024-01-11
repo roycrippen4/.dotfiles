@@ -120,8 +120,8 @@ autocmd({ 'TermOpen', 'TermEnter', 'BufEnter' }, {
 autocmd('QuitPre', {
   callback = function()
     vim.defer_fn(function()
-      utils.QuitVim()
-    end, 20)
+      utils.quit_vim()
+    end, 0)
   end,
 })
 

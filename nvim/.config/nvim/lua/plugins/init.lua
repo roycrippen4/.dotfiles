@@ -10,6 +10,9 @@ local default_plugins = {
       'MunifTanjim/nui.nvim',
       'rcarriga/nvim-notify',
     },
+    init = function()
+      require('core.utils').load_mappings('noice')
+    end,
     config = function()
       require('plugins.configs.noice')
     end,

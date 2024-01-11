@@ -189,6 +189,10 @@ M.file_info = function()
       icon = '  ',
       label = 'HARPOON',
     },
+    noice = {
+      icon = '   ',
+      label = 'NOICE',
+    },
     NvimTree = {
       icon = '%#St_nvimtree#  ',
       label = 'NVIMTREE',
