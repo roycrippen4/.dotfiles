@@ -39,20 +39,16 @@ local default_plugins = {
       },
       {
         'jbyuki/one-small-step-for-vimkind',
-        keys = {
-          {
-            '<leader>dl',
-            function()
-              require('osv').launch({ port = 8086 })
-            end,
-            desc = 'Launch Lua adapter',
-          },
-        },
+        init = function()
+          require('core.utils').load_mappings('osv')
+        end,
       },
     },
+    init = function()
+      require('core.utils').load_mappings('dap')
+    end,
     config = function()
       require('plugins.configs.dap')
-      require('core.utils').load_mappings('dap')
     end,
   },
 
@@ -147,7 +143,6 @@ local default_plugins = {
   {
     -- https://github.com/nvim-treesitter/nvim-treesitter
     'nvim-treesitter/nvim-treesitter',
-    -- lazy = false,
     init = function()
       require('core.utils').lazy_load('nvim-treesitter')
     end,
@@ -196,54 +191,10 @@ local default_plugins = {
 
   {
     'chrisgrieser/nvim-spider',
-    keys = {
-      {
-        'w',
-        function()
-          require('spider').motion('w', {
-            customPatterns = {
-              patterns = {
-                '%)',
-                '%>',
-              },
-              overrideDefault = false,
-            },
-          })
-        end,
-        mode = { 'n', 'x', 'o' },
-      },
-      {
-        'e',
-        function()
-          require('spider').motion('e', {
-            customPatterns = {
-              patterns = {
-                '%<',
-              },
-              overrideDefault = false,
-            },
-          })
-        end,
-        mode = { 'n', 'x', 'o' },
-      },
-      {
-        'b',
-        function()
-          require('spider').motion('b', {
-            customPatterns = {
-              patterns = {
-                '%(',
-                '%)',
-                '%<',
-                '%>',
-              },
-              overrideDefault = false,
-            },
-          })
-        end,
-        mode = { 'n', 'x', 'o' },
-      },
-    },
+    event = 'VeryLazy',
+    init = function()
+      require('core.utils').load_mappings('spider')
+    end,
   },
 
   {
@@ -374,7 +325,7 @@ local default_plugins = {
       'neovim/nvim-lspconfig',
     },
     opts = function()
-      return require('plugins.configs.lsp.typescript-tools')
+      return require('plugins.configs.lsp.lang.typescript')
     end,
     config = function(_, opts)
       require('typescript-tools').setup(opts)
@@ -385,36 +336,17 @@ local default_plugins = {
     -- https://github.com/mrcjkb/rustaceanvim
     'mrcjkb/rustaceanvim',
     version = '3.11.0',
+    event = 'VeryLazy',
     ft = { 'rust' },
     config = function()
-      vim.g.rustaceanvim = function()
-        local extension_path = vim.env.HOME .. '/.vscode/extensions/vadimcn.vscode-lldb-1.10.0/'
-        local codelldb_path = extension_path .. 'adapter/codelldb'
-        local liblldb_path = extension_path .. 'lldb/lib/liblldb'
-
-        local cfg = require('rustaceanvim.config')
-        return {
-          dap = {
-            adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
-          },
-        }
-      end
+      require('plugins.configs.lsp.lang.rust')
     end,
   },
 
   {
     -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
     'JoosepAlviste/nvim-ts-context-commentstring',
-    keys = {
-      {
-        'gcc',
-        mode = { 'n' },
-      },
-      {
-        'gc',
-        mode = { 'v' },
-      },
-    },
+    keys = { { 'gcc', mode = { 'n' } }, { 'gc', mode = { 'v' } } },
   },
 
   {
@@ -559,10 +491,7 @@ local default_plugins = {
     -- https://github.com/iamcco/markdown-preview.nvim
     'iamcco/markdown-preview.nvim',
     cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-    keys = {
-      { '<leader>mp', mode = { 'n' } },
-    },
-    ft = { 'markdown' },
+    keys = { { '<leader>mp', mode = { 'n' } } },
     build = function()
       vim.fn['mkdp#util#install']()
     end,

@@ -359,14 +359,151 @@ M.whichkey = {
   },
 }
 
+M.spider = {
+  plugin = true,
+  n = {
+    ['w'] = {
+      function()
+        require('spider').motion('w', {
+          customPatterns = {
+            patterns = { '%)', '%>' },
+            overrideDefault = false,
+          },
+        })
+      end,
+    },
+    ['e'] = {
+      function()
+        require('spider').motion('e', {
+          customPatterns = {
+            patterns = { '%<' },
+            overrideDefault = false,
+          },
+        })
+      end,
+    },
+    ['b'] = {
+      function()
+        require('spider').motion('b', {
+          customPatterns = {
+            patterns = { '%(', '%)', '%<', '%>' },
+            overrideDefault = false,
+          },
+        })
+      end,
+    },
+  },
+  x = {
+    ['w'] = {
+      function()
+        require('spider').motion('w', {
+          customPatterns = {
+            patterns = { '%)', '%>' },
+            overrideDefault = false,
+          },
+        })
+      end,
+    },
+    ['e'] = {
+      function()
+        require('spider').motion('e', {
+          customPatterns = {
+            patterns = { '%<' },
+            overrideDefault = false,
+          },
+        })
+      end,
+    },
+    ['b'] = {
+      function()
+        require('spider').motion('b', {
+          customPatterns = {
+            patterns = { '%(', '%)', '%<', '%>' },
+            overrideDefault = false,
+          },
+        })
+      end,
+    },
+  },
+  o = {
+    ['w'] = {
+      function()
+        require('spider').motion('w', {
+          customPatterns = {
+            patterns = { '%)', '%>' },
+            overrideDefault = false,
+          },
+        })
+      end,
+    },
+    ['e'] = {
+      function()
+        require('spider').motion('e', {
+          customPatterns = {
+            patterns = { '%<' },
+            overrideDefault = false,
+          },
+        })
+      end,
+    },
+    ['b'] = {
+      function()
+        require('spider').motion('b', {
+          customPatterns = {
+            patterns = { '%(', '%)', '%<', '%>' },
+            overrideDefault = false,
+          },
+        })
+      end,
+    },
+  },
+}
+
+M.osv = {
+  plugin = true,
+  n = {
+    ['<leader>dl'] = {
+      function()
+        require('osv').launch({ port = 8086 })
+      end,
+      ' Launch Lua adapter',
+    },
+  },
+}
+
 M.dap = {
   plugin = true,
   n = {
-    ['<Leader>dc'] = { '<cmd>DapContinue<CR>', ' Continue' },
-    ['<Leader>do'] = { '<cmd>DapStepOver<CR>', ' Step Over' },
-    ['<Leader>dO'] = { '<cmd>DapStepOut<CR>', ' Step out' },
-    ['<Leader>di'] = { '<cmd>DapStepInto<CR>', ' Step into' },
-    ['<leader>db'] = { '<CMD>DapToggleBreakpoint<CR>', ' Toggle breakpoint' },
+    ['<Leader>dc'] = {
+      function()
+        require('dap').continue()
+      end,
+      ' Continue',
+    },
+    ['<Leader>do'] = {
+      function()
+        require('dap').step_over()
+      end,
+      ' Step Over',
+    },
+    ['<Leader>dO'] = {
+      function()
+        require('dap').step_out()
+      end,
+      ' Step out',
+    },
+    ['<Leader>di'] = {
+      function()
+        require('dap').step_into()
+      end,
+      ' Step into',
+    },
+    ['<leader>db'] = {
+      function()
+        require('dap').toggle_breakpoint()
+      end,
+      ' Toggle breakpoint',
+    },
   },
 }
 
