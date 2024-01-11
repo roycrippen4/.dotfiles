@@ -11,6 +11,7 @@ local l_blue = '#00C5FF'
 local orange = { 'orange', -10 }
 local pink = { 'pink', -10 }
 
+
 -- stylua: ignore
 M.add = {
   -- Commandline

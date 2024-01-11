@@ -29,7 +29,7 @@ local function set_modules(modules)
 end
 
 M.ui = {
-  theme = 'ayu_dark',
+  theme = 'rxyhn',
   hl_add = highlights.add,
   hl_override = highlights.override,
 
@@ -37,7 +37,8 @@ M.ui = {
     overriden_modules = function(modules)
       modules[1] = vim.g.NvimTreeOverlayTitle
       modules[2] = tab_modules.bufferlist()
-      modules[4] = tab_modules.host()
+      -- modules[4] = tab_modules.host()
+      modules[4] = ''
     end,
     enabled = true,
     lazyload = false,
@@ -47,6 +48,19 @@ M.ui = {
     overriden_modules = function(modules)
       set_modules(modules)
     end,
+  },
+
+  custom_colors = {
+    cursorline = '#252931',
+    sep_color = '#454951',
+    black = 'black',
+    darkest_black = { 'black', -0.9 },
+    d_yellow = { 'yellow', -20 },
+    d_red = { 'red', -10 },
+    green = { 'green', -10 },
+    l_blue = '#00C5FF',
+    orange = { 'orange', -10 },
+    pink = { 'pink', -10 },
   },
 }
 

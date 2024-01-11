@@ -1,3 +1,19 @@
+---@class custom_colors
+---@field black string
+---@field cursorline string
+---@field d_red string
+---@field d_yellow string
+---@field darkest_black string
+---@field green string
+---@field l_blue string
+---@field orange string
+---@field pink string
+---@field sep_color string
+
+---@class ThemeTable
+---@field base_16 Base16Table
+---@field base_30 Base30Table
+
 ---@class Base16Table
 ---@field base00 string Neovim Default Background
 ---@field base01 string Lighter Background (Used for status bars, line number and folding marks)
@@ -47,3 +63,30 @@
 ---@field lightbg string Statusline Components
 ---@field pmenu_bg string Pop-up Menu Selection
 ---@field folder_bg string Nvimtree Items
+
+---@class KittyTable
+---@field color0 string
+---@field color1 string
+---@field color2 string
+---@field color3 string
+---@field color4 string
+---@field color5 string
+---@field color6 string
+---@field color7 string
+---@field color8 string
+---@field color9 string
+---@field color10 string
+---@field color11 string
+---@field color12 string
+---@field color13 string
+---@field color14 string
+---@field color15 string
+---@field foreground string
+---@field background string
+---@field selection_foreground string
+---@field selection_background string
+---@field active_tab_foreground string
+---@field tab_bar_background string
+---@field active_tab_background string
+---@field inactive_tab_foreground string
+---@field inactive_tab_background string

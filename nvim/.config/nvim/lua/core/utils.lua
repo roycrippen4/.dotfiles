@@ -1,79 +1,6 @@
 local M = {}
 local merge_tb = vim.tbl_deep_extend
 
--- color0 #51576D
--- color1 #E78284
--- color2  #A6D189
--- color3  #E5C890
--- color4  #8CAAEE
--- color5  #F4B8E4
--- color6  #81C8BE
--- color7  #B5BFE2
--- color8 #626880
--- color9 #E78284
--- color10 #A6D189
--- color11 #E5C890
--- color12 #8CAAEE
--- color13 #F4B8E4
--- color14 #81C8BE
--- color15 #A5ADCE
-
----@param theme string the name of the `theme.lua` file
-function M.write_kitty_theme(theme)
-  local Path = require('plenary.path')
-  local theme_file = 'base46.themes.' .. theme
-  ---@class ThemeTable
-  ---@field base_16 Base16Table base00-base0F colors
-  ---@field base_30 Base30Table extra colors to use
-  local colors = require(theme_file)
-  local base16 = colors.base_16
-  local base30 = colors.base_30
-
-  local kitty_theme_path = '~/.dotfiles/kitty/.config/kitty/current-theme.conf'
-  local kitty_path = Path:new(kitty_theme_path):write({}, 'w')
-  log(kitty_path)
-
-  -- local file = io.open(kitty_theme_path, 'w')
-  -- if not file then
-  --   error('Failed to open file: ' .. kitty_theme_path)
-  -- else
-  --   log('kitty theme file found')
-  -- end
-end
-
-local plug_types = {
-  NvimTree = true,
-  TelescopePrompt = true,
-  Trouble = true,
-  harpoon = true,
-  help = true,
-  logger = true,
-  noice = true,
-  prompt = true,
-  terminal = true,
-  toggleterm = true,
-}
-
-function M.quit_vim()
-  local wins = vim.api.nvim_list_wins()
-  local non_plugin_win_count = 0
-
-  for _, w in ipairs(wins) do
-    local buf = vim.api.nvim_win_get_buf(w)
-    local bt = vim.api.nvim_get_option_value('buftype', { buf = buf })
-    local ft = vim.api.nvim_get_option_value('filetype', { buf = buf })
-
-    -- Check if win is not a plug/special win
-    if bt == '' and not plug_types[ft] then
-      non_plugin_win_count = non_plugin_win_count + 1
-    end
-  end
-
-  if non_plugin_win_count == 0 then
-    vim.api.nvim_command('qa')
-  end
-end
-
 function M.debounce(ms, fn)
   local timer = vim.loop.new_timer()
   return function(...)
@@ -380,36 +307,6 @@ function M.get_marked_bufs()
     end
   end
   return marked_bufs
-end
-
-M.toggle = 0
-
-local function toggle_recording_hl()
-  if M.toggle == 0 then
-    vim.api.nvim_set_hl(0, 'ST_Macro', { link = 'ST_MacroA' })
-    vim.api.nvim_set_hl(0, 'ST_MacroSep', { link = 'ST_MacroSepA' })
-    M.toggle = 1
-  else
-    vim.api.nvim_set_hl(0, 'ST_Macro', { link = 'ST_MacroB' })
-    vim.api.nvim_set_hl(0, 'ST_MacroSep', { link = 'ST_MacroSepB' })
-    M.toggle = 0
-  end
-end
-
-M.hl_timer = vim.loop.new_timer()
-
-function M.start_record_highlight()
-  M.hl_timer:start(
-    0,
-    500,
-    vim.schedule_wrap(function()
-      toggle_recording_hl()
-    end)
-  )
-end
-
-function M.stop_timer()
-  M.hl_timer:stop()
 end
 
 return M

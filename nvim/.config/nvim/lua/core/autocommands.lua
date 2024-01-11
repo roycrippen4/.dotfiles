@@ -1,26 +1,6 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
-
----@type integer[]|nil
-local cursor_pos
-
 local utils = require('core.utils')
-
-local macrohl = augroup('MacroHL', { clear = true })
--- Toggles highlight group for the statusline macro segment
-autocmd('RecordingEnter', {
-  group = macrohl,
-  callback = function()
-    utils.start_record_highlight()
-  end,
-})
--- Stops toggling the highlight group for the statusline macro segment
-autocmd('RecordingLeave', {
-  group = macrohl,
-  callback = function()
-    utils.stop_timer()
-  end,
-})
 
 autocmd('FileType', {
   group = vim.api.nvim_create_augroup('close_with_q', { clear = true }),
@@ -53,24 +33,6 @@ autocmd('BufReadPost', {
   callback = function()
     if vim.fn.line('\'"') > 0 and vim.fn.line('\'"') <= vim.fn.line('$') then
       vim.cmd('normal! g`"')
-    end
-  end,
-})
-
-augroup('yankpost', { clear = true })
-autocmd({ 'VimEnter', 'CursorMoved' }, {
-  group = 'yankpost',
-  pattern = '*',
-  callback = function()
-    cursor_pos = vim.fn.getpos('.')
-  end,
-})
-autocmd('TextYankPost', {
-  group = 'yankpost',
-  pattern = '*',
-  callback = function()
-    if vim.v.event.operator == 'y' then
-      vim.fn.setpos('.', cursor_pos)
     end
   end,
 })
@@ -116,23 +78,6 @@ autocmd({ 'TermOpen', 'TermEnter', 'BufEnter' }, {
   end,
 })
 
--- autoquit vim if only plugin windows are open
-autocmd('QuitPre', {
-  callback = function()
-    vim.defer_fn(function()
-      utils.quit_vim()
-    end, 0)
-  end,
-})
-
--- highlights the yanked portion of the buffer on yank
-autocmd('TextYankPost', {
-  callback = function()
-    vim.highlight.on_yank()
-  end,
-  pattern = '*',
-})
-
 -- Turns off the cursorline
 autocmd({ 'InsertLeave', 'WinEnter', 'BufEnter' }, {
   callback = function()
@@ -160,15 +105,5 @@ autocmd('VimEnter', {
     utils.set_titlestring(cwd)
     utils.set_node_version(cwd)
     vim.env.PATH = '~/.nvm/versions/node/v20.10.0/bin:' .. vim.env.PATH
-  end,
-})
-
-autocmd('User', {
-  pattern = 'NvChadThemeReload',
-  callback = function()
-    local theme = require('nvconfig').ui.theme
-    vim.defer_fn(function()
-      utils.write_kitty_theme(theme)
-    end, 100)
   end,
 })
