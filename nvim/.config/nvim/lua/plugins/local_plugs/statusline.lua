@@ -1,5 +1,3 @@
-local utils = require('core.utils')
-
 local function stbufnr()
   return vim.api.nvim_win_get_buf(0)
 end
@@ -214,7 +212,7 @@ M.file_info = function()
   local ft = vim.bo.ft
 
   for k, v in pairs(filetypes) do
-    if utils.contains(ft, k) then
+    if string.find(ft, k) ~= nil then
       return v.icon .. v.label .. ' ' .. ''
     end
   end
@@ -327,5 +325,15 @@ end
 M.max_length = function()
   return #M.mode() + #M.file_info() + #M.git()
 end
+
+-- Dynamically changes the highlight group of the statusline mode segment based on the current mode
+vim.api.nvim_create_autocmd('ModeChanged', {
+  callback = function()
+    local m = vim.api.nvim_get_mode().mode
+    local hl = vim.api.nvim_get_hl(0, { name = M.modes[m][2] })
+    vim.api.nvim_set_hl(0, 'St_nvimtree', { fg = hl.fg, bg = hl.bg, italic = true })
+    vim.api.nvim_set_hl(0, 'St_harpoon', { fg = hl.fg, bg = hl.bg, italic = true })
+  end,
+})
 
 return M

@@ -1,6 +1,5 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
-local utils = require('core.utils')
 
 autocmd('FileType', {
   group = vim.api.nvim_create_augroup('close_with_q', { clear = true }),
@@ -11,19 +10,9 @@ autocmd('FileType', {
     'qf',
     'query',
     'scratch',
-    'spectre_panel',
   },
   callback = function(args)
     vim.keymap.set('n', 'q', '<cmd>quit<cr>', { buffer = args.buf })
-  end,
-})
-
-autocmd('BufWritePost', {
-  pattern = '*',
-  callback = function()
-    if not vim.fn.isdirectory(vim.fn.expand('%:p')) then
-      vim.cmd('mkview')
-    end
   end,
 })
 
@@ -55,29 +44,6 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
   command = 'lua vim.diagnostic.disable(0)',
 })
 
--- Dynamically changes the highlight group of the statusline mode segment based on the current mode
-autocmd('ModeChanged', {
-  callback = function()
-    local m = vim.api.nvim_get_mode().mode
-    local m_hl = require('plugins.configs.statusline').modes[m][2]
-    local hl = vim.api.nvim_get_hl(0, { name = m_hl })
-    vim.api.nvim_set_hl(0, 'St_nvimtree', { fg = hl.fg, bg = hl.bg, italic = true })
-    vim.api.nvim_set_hl(0, 'St_harpoon', { fg = hl.fg, bg = hl.bg, italic = true })
-  end,
-})
-
--- Remove columns from the terminal buffer
-autocmd({ 'TermOpen', 'TermEnter', 'BufEnter' }, {
-  pattern = { 'term://*' },
-  callback = function()
-    vim.wo.scrolloff = 0
-    vim.wo.relativenumber = false
-    vim.wo.number = false
-    vim.wo.signcolumn = 'no'
-    vim.wo.statuscolumn = ''
-  end,
-})
-
 -- Turns off the cursorline
 autocmd({ 'InsertLeave', 'WinEnter', 'BufEnter' }, {
   callback = function()
@@ -93,6 +59,25 @@ autocmd({ 'InsertEnter', 'WinLeave' }, {
   end,
 })
 
+---@param cwd string|nil
+local function set_titlestring(cwd)
+  local env = os.getenv('HOME')
+
+  if cwd == env then
+    vim.o.titlestring = '~/' .. '  '
+    return
+  end
+
+  if cwd and type(env) == 'string' then
+    local match = string.match(cwd, env)
+    if match then
+      vim.o.titlestring = cwd:gsub(match, '~') .. '  '
+      return
+    end
+    vim.o.titlestring = cwd
+  end
+end
+
 -- Checks to see if a .nvmrc exists and sets node version if one is found.
 -- Also sets the title string for the kitty tabs
 autocmd('VimEnter', {
@@ -102,8 +87,6 @@ autocmd('VimEnter', {
     end
 
     local cwd = vim.fn.getcwd()
-    utils.set_titlestring(cwd)
-    utils.set_node_version(cwd)
-    vim.env.PATH = '~/.nvm/versions/node/v20.10.0/bin:' .. vim.env.PATH
+    set_titlestring(cwd)
   end,
 })
