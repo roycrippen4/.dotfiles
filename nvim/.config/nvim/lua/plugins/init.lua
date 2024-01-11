@@ -604,28 +604,7 @@ local default_plugins = {
       require('core.utils').lazy_load('indent-blankline.nvim')
     end,
     config = function()
-      dofile(vim.g.base46_cache .. 'blankline')
-      local hooks = require('ibl.hooks')
-      local highlight = {
-        'RainbowDelimiterRed',
-        'RainbowDelimiterYellow',
-        'RainbowDelimiterBlue',
-        'RainbowDelimiterOrange',
-        'RainbowDelimiterGreen',
-        'RainbowDelimiterViolet',
-        'RainbowDelimiterCyan',
-      }
-      require('ibl').setup({
-        indent = { char = '▏', highlight = 'IblChar' },
-        scope = {
-          char = '▏',
-          highlight = highlight,
-          include = {
-            node_type = { lua = { 'return_statement', 'table_constructor' } },
-          },
-        },
-      })
-      hooks.register(hooks.type.SCOPE_HIGHLIGHT, hooks.builtin.scope_highlight_from_extmark)
+      require('plugins.configs.blankline')
     end,
   },
 

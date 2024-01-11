@@ -36,8 +36,8 @@ end
 -- autoquit vim if only plugin windows are open
 vim.api.nvim_create_autocmd('QuitPre', {
   callback = function()
-    vim.defer_fn(function()
+    vim.schedule(function()
       M.quit_vim()
-    end, 0)
+    end)
   end,
 })
