@@ -10,6 +10,7 @@ local options = {
     'jsdoc',
     'json',
     'lua',
+    'luadoc',
     'markdown',
     'markdown_inline',
     'python',

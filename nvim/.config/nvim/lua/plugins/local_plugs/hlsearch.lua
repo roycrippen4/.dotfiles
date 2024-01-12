@@ -26,14 +26,14 @@ end
 
 vim.on_key(function(char)
   if is_new_search(char) then
-    vim.defer_fn(function()
+    vim.schedule(function()
       local searchcount = vim.fn.searchcount()
       id = draw_virt(searchcount.current, searchcount.total)
-    end, 0)
+    end)
   end
 
   if vim.fn.mode() == 'n' then
-    vim.defer_fn(function()
+    vim.schedule(function()
       local new_hlsearch = vim.tbl_contains({ 'n', 'N', '*', '#', '?', '/' }, vim.fn.keytrans(char))
       local searchcount = vim.fn.searchcount()
 
@@ -47,6 +47,6 @@ vim.on_key(function(char)
           clear()
         end
       end
-    end, 0)
+    end)
   end
 end, vim.api.nvim_create_namespace('auto_hlsearch'))

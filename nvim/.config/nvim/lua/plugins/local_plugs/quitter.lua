@@ -27,9 +27,6 @@ local function quit_vim()
   end
 
   if file_win_count == 0 then
-    if require('nvim-tree.api').tree.is_visible() then
-      require('nvim-tree.api').tree.close()
-    end
     vim.cmd('qa!')
   end
 end

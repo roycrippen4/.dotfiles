@@ -98,7 +98,6 @@ local function add_file_info(name, bufnr)
     local l_pad = pad - r_pad
     local maxname_len = 16
 
-    -- 󰐾 󰐾 󰽢  󰽤    󰝦 󰄳 󰗡 󰗡        󰀚          ⭘ ⏼ 󰫈 󰋙 󰝥
     local idx = is_buf_marked(bufnr)
     local marked_on = '%#TbLineMarkedBufOn# ' .. '󰫈 '
     local marked_off = '%#TbLineMarkedBufOff# ' .. '󰋙 '
@@ -140,7 +139,6 @@ end
 local M = {}
 
 M.host = function()
-  --        
   return '%#St_HostSep#  %#St_Host#IV%#St_HostSep# '
 end
 

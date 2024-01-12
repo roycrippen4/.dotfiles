@@ -297,7 +297,6 @@ local default_plugins = {
     -- https://github.com/folke/zen-mode.nvim
     'folke/zen-mode.nvim',
     cmd = 'ZenMode',
-    -- event = 'VeryLazy',
     init = function()
       require('core.utils').load_mappings('zenmode')
     end,
