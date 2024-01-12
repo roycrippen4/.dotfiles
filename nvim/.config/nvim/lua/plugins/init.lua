@@ -327,9 +327,6 @@ local default_plugins = {
     opts = function()
       return require('plugins.configs.lsp.lang.typescript')
     end,
-    config = function(_, opts)
-      require('typescript-tools').setup(opts)
-    end,
   },
 
   {
