@@ -103,7 +103,7 @@ function Logger:show()
         vertical resize 80
         wincmd h
     ]])
-        require('harpoon'):list('files'):select(1)
+        require('harpoon'):list('relative'):select(1)
       end)
     end
 

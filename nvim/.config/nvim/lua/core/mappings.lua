@@ -333,8 +333,6 @@ M.telescope = {
   },
 }
 
-M.terminal = {}
-
 M.whichkey = {
   plugin = true,
   n = {

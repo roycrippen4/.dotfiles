@@ -58,10 +58,10 @@ POWERLEVEL10k_MODE="nerdfont-complete"
 DISABLE_AUTO_TITLE="true"
 ZLE_RPROMPT_INDENT=0
 DISABLE_UNTRACKED_FILES_DIRTY="true"
-ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+# ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 
 plugins=(
-  zsh-vi-mode
+  # zsh-vi-mode
   git
   zsh-autosuggestions
   fzf
