@@ -58,12 +58,10 @@ local function is_buf_marked(bufnr)
 end
 
 local function add_file_info(name, bufnr)
-  local x = nil
   if name ~= ' No Name ' then
     for _, value in ipairs(vim.t.bufs) do
       if is_buf_valid(value) then
         if name == api.nvim_buf_get_name(value):match('^.+/(.+)$') and value ~= bufnr then
-          x = true
           local other = {}
           for match in (vim.fs.normalize(api.nvim_buf_get_name(value)) .. '/'):gmatch('(.-)' .. '/') do
             table.insert(other, match)

@@ -108,10 +108,11 @@ function Logger:show()
     end
 
     self.winnr = vim.api.nvim_get_current_win()
-    self.bufnr = vim.api.nvim_create_buf(true, true)
+    self.bufnr = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_name(self.bufnr, 'logger')
     vim.api.nvim_buf_set_lines(self.bufnr, 0, -1, false, self.lines)
     vim.api.nvim_win_set_buf(self.winnr, self.bufnr)
+    vim.bo[self.bufnr].ft = 'logger'
   end
 end
 
@@ -127,6 +128,7 @@ vim.api.nvim_create_autocmd('VimEnter', {
     if os.getenv('DEBUG') == '1' then
       vim.cmd('Log')
       log('Debug enabled')
+      log('')
     end
   end,
 })

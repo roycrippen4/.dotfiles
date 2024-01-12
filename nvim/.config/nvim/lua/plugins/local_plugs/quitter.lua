@@ -1,6 +1,4 @@
-local M = {}
-
-M.plug_types = {
+local plug_types = {
   NvimTree = true,
   TelescopePrompt = true,
   Trouble = true,
@@ -11,33 +9,34 @@ M.plug_types = {
   prompt = true,
   terminal = true,
   toggleterm = true,
+  fidget = true,
 }
 
-function M.quit_vim()
+local function quit_vim()
   local wins = vim.api.nvim_list_wins()
-  local non_plugin_win_count = 0
+  local file_win_count = 0
 
   for _, w in ipairs(wins) do
     local buf = vim.api.nvim_win_get_buf(w)
-    local bt = vim.api.nvim_get_option_value('buftype', { buf = buf })
     local ft = vim.api.nvim_get_option_value('filetype', { buf = buf })
 
     -- Check if win is not a plug/special win
-    if bt == '' and not M.plug_types[ft] then
-      non_plugin_win_count = non_plugin_win_count + 1
+    if not plug_types[ft] then
+      file_win_count = file_win_count + 1
     end
   end
 
-  if non_plugin_win_count == 0 then
-    vim.api.nvim_command('qa')
+  if file_win_count == 0 then
+    if require('nvim-tree.api').tree.is_visible() then
+      require('nvim-tree.api').tree.close()
+    end
+    vim.cmd('qa!')
   end
 end
 
 -- autoquit vim if only plugin windows are open
 vim.api.nvim_create_autocmd('QuitPre', {
   callback = function()
-    vim.schedule(function()
-      M.quit_vim()
-    end)
+    vim.defer_fn(quit_vim, 20)
   end,
 })
