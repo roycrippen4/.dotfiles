@@ -29,13 +29,6 @@ vim.keymap.set('i', '<CR>', function()
   local prev_char = vim.fn.strcharpart(vim.fn.strpart(vim.fn.getline('.'), vim.fn.col('.') - 2), 0, 1)
   local node = vim.treesitter.get_node()
 
-  vim.defer_fn(function()
-    log('char: ' .. char_at_cursor)
-    log('prev: ' .. prev_char)
-    log('node: ' .. node:type())
-    log('')
-  end, 0)
-
   if not node then
     return '<CR>'
   end
