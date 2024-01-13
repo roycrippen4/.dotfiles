@@ -125,7 +125,7 @@ M.general = {
     ['<C-l>'] = { '<Right>', 'Move right' },
     ['<C-j>'] = { '<Down>', 'Move down' },
     ['<C-k>'] = { '<Up>', 'Move up' },
-    ['<'] = { '<><Left>', 'Autopair `<` and `>`' },
+    -- ['<'] = { '<><Left>', 'Autopair `<` and `>`' },
   },
 
   n = {
@@ -158,8 +158,8 @@ M.general = {
     ['<C-k>'] = { '<C-w>k', 'Window up' },
     ['<Leader>v'] = { '<C-w>v', 'Vertical split  ', opts = { nowait = true } },
     ['<Leader>h'] = { '<C-w>s', 'Horizontal split  ', opts = { nowait = true } },
-    ['<Leader><Leader><Leader>'] = { '<cmd> Log<CR>', 'Show Logger 󰗽 ' },
     ['<Leader><Leader>'] = { '<cmd> Lazy<CR>', 'Open Lazy  ' },
+    ['<Leader><Leader><Leader>'] = { '<cmd> Log<CR>', 'Show Logger 󰗽 ' },
 
     -- save
     ['<C-s>'] = { '<cmd> w <CR>', 'Save file' },
@@ -172,6 +172,8 @@ M.general = {
     ['k'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
     ['<Up>'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
     ['<Down>'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
+    ['<M-S-.>'] = { '<C-w>>', 'Increase window width', opts = { nowait = true } },
+    ['<M-S-,>'] = { '<C-w><', 'Decrease window width', opts = { nowait = true } },
 
     -- toggle lsp inlay hints
     ['<Leader>lh'] = {

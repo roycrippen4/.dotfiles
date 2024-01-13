@@ -35,6 +35,9 @@ autocmd('FileType', {
     vim.cmd('wincmd L')
     vim.api.nvim_win_set_width(0, 100)
     vim.keymap.set('n', 'q', '<cmd>q<CR>', { buffer = event.buf, silent = true })
+
+    ---@type string hello
+    local test = 'test'
   end,
 })
 

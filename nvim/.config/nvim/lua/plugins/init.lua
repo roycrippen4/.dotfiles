@@ -197,11 +197,11 @@ local default_plugins = {
     end,
   },
 
-  {
-    'windwp/nvim-autopairs',
-    event = 'InsertEnter',
-    opts = {},
-  },
+  -- {
+  --   'windwp/nvim-autopairs',
+  --   event = 'InsertEnter',
+  --   opts = {},
+  -- },
 
   {
     'altermo/ultimate-autopair.nvim',
