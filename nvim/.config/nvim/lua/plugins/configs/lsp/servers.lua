@@ -109,6 +109,19 @@ lspconfig['svelte'].setup({
 --   on_attach = M.on_attach,
 -- })
 lspconfig['taplo'].setup({
+  keys = {
+    {
+      'K',
+      function()
+        if vim.fn.expand('%:t') == 'Cargo.toml' and require('crates').popup_available() then
+          require('crates').show_popup()
+        else
+          vim.lsp.buf.hover()
+        end
+      end,
+      desc = 'Show Crate Documentation',
+    },
+  },
   capabilities = M.capabilities,
   on_attach = M.on_attach,
 })

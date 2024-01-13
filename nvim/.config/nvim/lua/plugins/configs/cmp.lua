@@ -55,10 +55,11 @@ end)
 
 cmp.setup({
   sources = {
-    { name = 'nvim_lsp', trigger_characters = { '.', ':' } },
     { name = 'luasnip' },
+    { name = 'nvim_lsp', trigger_characters = { '.', ':' } },
     { name = 'nvim_lua' },
     { name = 'path' },
+    { name = 'crates' },
   },
   experimental = {
     ghost_text = true,

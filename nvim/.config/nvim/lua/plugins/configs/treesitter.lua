@@ -16,6 +16,7 @@ local options = {
     'python',
     'query',
     'regex',
+    'ron',
     'rust',
     'svelte',
     'toml',

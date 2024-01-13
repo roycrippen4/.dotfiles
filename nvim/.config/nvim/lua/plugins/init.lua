@@ -197,11 +197,14 @@ local default_plugins = {
     end,
   },
 
-  -- {
-  --   'windwp/nvim-autopairs',
-  --   event = 'InsertEnter',
-  --   opts = {},
-  -- },
+  {
+    'saecki/crates.nvim',
+    event = { 'BufRead Cargo.toml' },
+    dependencies = { 'nvim-lua/plenary.nvim' },
+    config = function()
+      require('crates').setup()
+    end,
+  },
 
   {
     'altermo/ultimate-autopair.nvim',

@@ -107,6 +107,115 @@ M.disabled = {
   },
 }
 
+M.crates = {
+  n = {
+    ['<leader>ct'] = {
+      function()
+        require('crates').toggle()
+      end,
+      opts = { silent = true },
+    },
+    ['<leader>cr'] = {
+      function()
+        require('crates').reload()
+      end,
+      opts = { silent = true },
+    },
+    ['<leader>cv'] = {
+      function()
+        require('crates').show_versions_popup()
+      end,
+      opts = { silent = true },
+    },
+    ['<leader>cf'] = {
+      function()
+        require('crates').show_features_popup()
+      end,
+      opts = { silent = true },
+    },
+    ['<leader>cd'] = {
+      function()
+        require('crates').show_dependencies_popup()
+      end,
+      opts = { silent = true },
+    },
+    ['<leader>cu'] = {
+      function()
+        require('crates').update_crate()
+      end,
+      opts = { silent = true },
+    },
+    ['<leader>ca'] = {
+      function()
+        require('crates').update_all_crates()
+      end,
+      opts = { silent = true },
+    },
+    ['<leader>cU'] = {
+      function()
+        require('crates').upgrade_crate()
+      end,
+      opts = { silent = true },
+    },
+    ['<leader>cA'] = {
+      function()
+        require('crates').upgrade_all_crates()
+      end,
+      opts = { silent = true },
+    },
+    ['<leader>ce'] = {
+      function()
+        require('crates').expand_plain_crate_to_inline_table()
+      end,
+      opts = { silent = true },
+    },
+    ['<leader>cE'] = {
+      function()
+        require('crates').extract_crate_into_table()
+      end,
+      opts = { silent = true },
+    },
+    ['<leader>cH'] = {
+      function()
+        require('crates').open_homepage()
+      end,
+      opts = { silent = true },
+    },
+    ['<leader>cR'] = {
+      function()
+        require('crates').open_repository()
+      end,
+      opts = { silent = true },
+    },
+    ['<leader>cD'] = {
+      function()
+        require('crates').open_documentation()
+      end,
+      opts = { silent = true },
+    },
+    ['<leader>cC'] = {
+      function()
+        require('crates').open_crates_io()
+      end,
+      opts = { silent = true },
+    },
+  },
+  v = {
+    ['<leader>cu'] = {
+      function()
+        require('crates').update_crates()
+      end,
+      opts = { silent = true },
+    },
+    ['<leader>cU'] = {
+      function()
+        require('crates').upgrade_crates()
+      end,
+      opts = { silent = true },
+    },
+  },
+}
+
 M.zenmode = {
   plugin = true,
   n = {
