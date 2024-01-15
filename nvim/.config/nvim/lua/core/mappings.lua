@@ -1,12 +1,5 @@
 local M = {}
 
-M.noice = {
-  plugin = true,
-  n = {
-    ['<leader>nh'] = { '<cmd> NoiceHistory <CR>', 'View Message History' },
-  },
-}
-
 M.osv = {
   plugin = true,
   n = {

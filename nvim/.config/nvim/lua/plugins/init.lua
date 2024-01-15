@@ -3,20 +3,20 @@ local default_plugins = {
   -- https://github.com/nvim-lua/plenary.nvim
   'nvim-lua/plenary.nvim',
 
-  {
-    'folke/noice.nvim',
-    event = 'BufReadPre',
-    dependencies = {
-      'MunifTanjim/nui.nvim',
-      'rcarriga/nvim-notify',
-    },
-    init = function()
-      require('core.utils').load_mappings('noice')
-    end,
-    config = function()
-      require('plugins.configs.noice')
-    end,
-  },
+  -- {
+  --   'folke/noice.nvim',
+  --   event = 'BufReadPre',
+  --   dependencies = {
+  --     'MunifTanjim/nui.nvim',
+  --     'rcarriga/nvim-notify',
+  --   },
+  --   init = function()
+  --     require('core.utils').load_mappings('noice')
+  --   end,
+  --   config = function()
+  --     require('plugins.configs.noice')
+  --   end,
+  -- },
 
   {
     'mfussenegger/nvim-dap',
@@ -220,7 +220,26 @@ local default_plugins = {
         -- https://github.com/L3MON4D3/LuaSnip
         'L3MON4D3/LuaSnip',
         dependencies = 'rafamadriz/friendly-snippets',
-        opts = { history = true, updateevents = 'TextChanged,TextChangedI' },
+        opts = function()
+          local types = require('luasnip.util.types')
+          return {
+            ext_opts = {
+              [types.insertNode] = {
+                unvisited = {
+                  virt_text = { { '│', 'Conceal' } },
+                  virt_text_pos = 'inline',
+                },
+              },
+              [types.exitNode] = {
+                unvisited = {
+                  virt_text = { { '│', 'Conceal' } },
+                  virt_text_pos = 'inline',
+                },
+              },
+            },
+          }
+          -- { history = true, updateevents = 'TextChanged,TextChangedI' },
+        end,
         config = function(_, opts)
           require('plugins.configs.others').luasnip(opts)
           local luasnip = require('luasnip')
@@ -231,8 +250,8 @@ local default_plugins = {
       {
         -- https://github.com/saadparwaiz1/cmp_luasnip
         'saadparwaiz1/cmp_luasnip',
-        -- https://github.com/hrsh7th/cmp-nvim-lua
-        'hrsh7th/cmp-nvim-lua',
+        -- https://github.com/hsh7th/cmp-nvim-lua
+        -- 'hrsh7th/cmp-nvim-lua',
         -- https://github.com/hrsh7th/cmp-nvim-lsp
         'hrsh7th/cmp-nvim-lsp',
         -- https://github.com/hrsh7th/cmp-buffer
@@ -241,6 +260,8 @@ local default_plugins = {
         'hrsh7th/cmp-path',
         -- https://github.com/hrsh7th/cmp-cmdline
         'hrsh7th/cmp-cmdline',
+        -- https://github.com/hrsh7th/cmp-nvim-lsp-signature-help
+        'hrsh7th/cmp-nvim-lsp-signature-help',
       },
     },
     config = function()

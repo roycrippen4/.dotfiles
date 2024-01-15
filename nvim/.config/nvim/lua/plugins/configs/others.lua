@@ -1,5 +1,4 @@
 local M = {}
-local utils = require('core.utils')
 
 M.luasnip = function(opts)
   require('luasnip').config.set_config(opts)
@@ -41,9 +40,6 @@ M.gitsigns = {
     changedelete = { text = icon },
     untracked = { text = icon },
   },
-  -- on_attach = function(bufnr)
-  --   utils.load_mappings('gitsigns', { buffer = bufnr })
-  -- end,
 }
 
 return M
