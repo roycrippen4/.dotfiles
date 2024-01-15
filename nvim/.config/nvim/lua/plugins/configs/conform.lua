@@ -10,6 +10,7 @@ local options = {
     html = { 'prettier' },
     css = { 'prettier' },
     markdown = { 'prettier' },
+    rust = { 'rustfmt' },
     sh = { 'shfmt' },
     yaml = { 'prettier' },
   },

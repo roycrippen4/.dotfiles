@@ -47,7 +47,7 @@ end
 cmp.event:on('confirm_done', function(event)
   local completion_kind = event.entry:get_completion_item().kind
 
-  if vim.tbl_contains({ kind.Function, kind.Method }, completion_kind) then
+  if vim.tbl_contains({ kind.Function, kind.Method }, completion_kind) and vim.bo.ft ~= 'rust' then
     local left = vim.api.nvim_replace_termcodes('<Left>', true, true, true)
     vim.api.nvim_feedkeys('()' .. left, 'n', false)
   end
@@ -60,6 +60,24 @@ cmp.setup({
     { name = 'nvim_lua' },
     { name = 'path' },
     { name = 'crates' },
+  },
+  sorting = {
+    priority_weight = 2,
+    comparators = {
+      function(entry1, entry2)
+        if require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()] then
+          local kind1 = entry1:get_kind()
+          local kind2 = entry2:get_kind()
+
+          if kind1 == 'Variable' and kind2 ~= 'Variable' then
+            return true
+          elseif kind2 == 'Variable' and kind1 ~= 'Variable' then
+            return false
+          end
+        end
+        return nil
+      end,
+    },
   },
   experimental = {
     ghost_text = true,
@@ -107,9 +125,7 @@ cmp.setup({
       select = true,
     }),
     ['<Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_next_item()
-      elseif require('luasnip').expand_or_jumpable() then
+      if require('luasnip').expand_or_jumpable() then
         vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
       else
         fallback()
@@ -119,9 +135,7 @@ cmp.setup({
       's',
     }),
     ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if cmp.visible() then
-        cmp.select_prev_item()
-      elseif require('luasnip').jumpable(-1) then
+      if require('luasnip').jumpable(-1) then
         vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
       else
         fallback()

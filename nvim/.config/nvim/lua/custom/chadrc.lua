@@ -29,7 +29,7 @@ local function set_modules(modules)
 end
 
 M.ui = {
-  theme = 'catppuccin',
+  theme = 'chadracula',
   hl_add = highlights.add,
   hl_override = highlights.override,
 

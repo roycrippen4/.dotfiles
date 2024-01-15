@@ -40,21 +40,26 @@ local function get_btns_width() -- close, theme toggle btn etc
   return width
 end
 
+-- local function is_buf_marked(bufnr)
+--   local path = ''
+--   local items = require('harpoon'):list('relative').items
+
+--   if vim.api.nvim_buf_is_valid(bufnr) then
+--     local name = vim.api.nvim_buf_get_name(bufnr)
+--     path = require('plenary.path'):new(name):make_relative()
+--   end
+
+--   for idx, item in ipairs(items) do
+--     if item.value == path then
+--       return idx
+--     end
+--   end
+--   return nil
+-- end
+
+-- currently running original harpoon. use the above function when you switch back
 local function is_buf_marked(bufnr)
-  local path = ''
-  local items = require('harpoon'):list('relative').items
-
-  if vim.api.nvim_buf_is_valid(bufnr) then
-    local name = vim.api.nvim_buf_get_name(bufnr)
-    path = require('plenary.path'):new(name):make_relative()
-  end
-
-  for idx, item in ipairs(items) do
-    if item.value == path then
-      return idx
-    end
-  end
-  return nil
+  return tonumber(string.sub(require('harpoon.mark').status(bufnr), 2, 2))
 end
 
 local function add_file_info(name, bufnr)

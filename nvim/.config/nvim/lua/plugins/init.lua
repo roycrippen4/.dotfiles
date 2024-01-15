@@ -117,13 +117,6 @@ local default_plugins = {
     -- https://github.com/williamboman/mason.nvim
     'williamboman/mason.nvim',
     cmd = 'Mason',
-    dependencies = {
-      -- https://github.com/williamboman/mason-lspconfig.nvim
-      {
-        'williamboman/mason-lspconfig.nvim',
-        opts = require('plugins.configs.lsp.mason-lspconfig'),
-      },
-    },
     opts = require('plugins.configs.lsp.mason'),
   },
 
@@ -200,8 +193,8 @@ local default_plugins = {
   {
     'saecki/crates.nvim',
     event = { 'BufRead Cargo.toml' },
-    dependencies = { 'nvim-lua/plenary.nvim' },
     config = function()
+      require('plugins.configs.lsp.lang.cargo')
       require('crates').setup()
     end,
   },
@@ -334,12 +327,8 @@ local default_plugins = {
   {
     -- https://github.com/mrcjkb/rustaceanvim
     'mrcjkb/rustaceanvim',
-    version = '3.11.0',
-    event = 'VeryLazy',
+    version = '^3',
     ft = { 'rust' },
-    config = function()
-      require('plugins.configs.lsp.lang.rust')
-    end,
   },
 
   {
@@ -424,25 +413,32 @@ local default_plugins = {
     end,
   },
 
-  {
-    'echasnovski/mini.visits',
-    config = true,
-    event = 'VeryLazy',
-  },
+  -- {
+  --   -- https://github.com/theprimeagen/harpoon
+  --   'theprimeagen/harpoon',
+  --   branch = 'harpoon2',
+  --   init = function()
+  --     require('core.utils').load_mappings('harpoon')
+  --   end,
+  --   config = function()
+  --     require('harpoon'):setup({
+  --       settings = {
+  --         save_on_toggle = true,
+  --       },
+  --     })
+  --   end,
+  -- },
 
   {
     -- https://github.com/theprimeagen/harpoon
     'theprimeagen/harpoon',
-    branch = 'harpoon2',
+    lazy = false,
+    branch = 'master',
     init = function()
       require('core.utils').load_mappings('harpoon')
     end,
     config = function()
-      require('harpoon'):setup({
-        settings = {
-          save_on_toggle = true,
-        },
-      })
+      require('harpoon').setup()
     end,
   },
 

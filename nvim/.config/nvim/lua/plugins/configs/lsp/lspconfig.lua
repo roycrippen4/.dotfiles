@@ -3,14 +3,6 @@ local M = {}
 
 M.on_attach = function(client, bufnr)
   utils.load_mappings('lspconfig', { buffer = bufnr })
-  local conf = require('nvconfig').ui.lsp
-
-  if not conf.semantic_tokens and client.supports_method('textDocument/semantic_tokens') then
-    client.server_capabilities.semanticTokensProvider = nil
-  end
-
-  client.server_capabilities.documentFormattingProvider = false
-  client.server_capabilities.documentRangeFormattingProvider = false
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()

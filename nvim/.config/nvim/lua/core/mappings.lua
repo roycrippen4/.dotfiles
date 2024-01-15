@@ -19,75 +19,143 @@ M.osv = {
   },
 }
 
+-- M.harpoon = {
+--   plugin = true,
+--   n = {
+--     ['<C-f>'] = {
+--       function()
+--         require('harpoon'):list('relative'):append()
+--         vim.cmd('redrawtabline')
+--       end,
+--     },
+--     ['<C-e>'] = {
+--       function()
+--         local path = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+--         require('harpoon').ui:toggle_quick_menu(require('harpoon'):list('relative'), {
+--           title = ' ⥚ Harpoon ⥟ ',
+--           title_pos = 'center',
+--           border = 'rounded',
+--           context = path,
+--         })
+--         vim.wo.cursorline = true
+--       end,
+--     },
+--     ['<C-1>'] = {
+--       function()
+--         require('harpoon'):list('relative'):select(1)
+--       end,
+--     },
+--     ['<C-2>'] = {
+--       function()
+--         require('harpoon'):list('relative'):select(2)
+--       end,
+--     },
+--     ['<C-3>'] = {
+--       function()
+--         require('harpoon'):list('relative'):select(3)
+--       end,
+--     },
+--     ['<C-4>'] = {
+--       function()
+--         require('harpoon'):list('relative'):select(4)
+--       end,
+--     },
+--     ['<C-5>'] = {
+--       function()
+--         require('harpoon'):list('relative'):select(5)
+--       end,
+--     },
+--     ['<C-6>'] = {
+--       function()
+--         require('harpoon'):list('relative'):select(6)
+--       end,
+--     },
+--     ['<C-7>'] = {
+--       function()
+--         require('harpoon'):list('relative'):select(7)
+--       end,
+--     },
+--     ['<C-8>'] = {
+--       function()
+--         require('harpoon'):list('relative'):select(8)
+--       end,
+--     },
+--     ['<C-9>'] = {
+--       function()
+--         require('harpoon'):list('relative'):select(9)
+--       end,
+--     },
+--     ['<C-0>'] = {
+--       function()
+--         require('harpoon'):list('relative'):select(0)
+--       end,
+--     },
+--   },
+-- }
+
 M.harpoon = {
   plugin = true,
   n = {
     ['<C-f>'] = {
       function()
-        require('harpoon'):list('relative'):append()
-        vim.cmd('redrawtabline')
+        require('harpoon.mark').add_file()
+        -- vim.cmd('redrawtabline')
       end,
     },
     ['<C-e>'] = {
       function()
-        local path = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
-        require('harpoon').ui:toggle_quick_menu(require('harpoon'):list('relative'), {
-          title = ' ⥚ Harpoon ⥟ ',
-          title_pos = 'center',
-          border = 'rounded',
-          context = path,
-        })
+        require('harpoon.ui').toggle_quick_menu()
         vim.wo.cursorline = true
       end,
     },
     ['<C-1>'] = {
       function()
-        require('harpoon'):list('relative'):select(1)
+        require('harpoon.ui').nav_file(1)
       end,
     },
     ['<C-2>'] = {
       function()
-        require('harpoon'):list('relative'):select(2)
+        require('harpoon.ui').nav_file(2)
       end,
     },
     ['<C-3>'] = {
       function()
-        require('harpoon'):list('relative'):select(3)
+        require('harpoon.ui').nav_file(3)
       end,
     },
     ['<C-4>'] = {
       function()
-        require('harpoon'):list('relative'):select(4)
+        require('harpoon.ui').nav_file(4)
       end,
     },
     ['<C-5>'] = {
       function()
-        require('harpoon'):list('relative'):select(5)
+        require('harpoon.ui').nav_file(5)
       end,
     },
     ['<C-6>'] = {
       function()
-        require('harpoon'):list('relative'):select(6)
+        require('harpoon.ui').nav_file(6)
       end,
     },
     ['<C-7>'] = {
       function()
-        require('harpoon'):list('relative'):select(7)
+        require('harpoon.ui').nav_file(7)
       end,
     },
     ['<C-8>'] = {
       function()
-        require('harpoon'):list('relative'):select(8)
+        require('harpoon.ui').nav_file(8)
       end,
     },
     ['<C-9>'] = {
       function()
-        require('harpoon'):list('relative'):select(9)
+        require('harpoon.ui').nav_file(9)
       end,
     },
     ['<C-0>'] = {
       function()
-        require('harpoon'):list('relative'):select(0)
+        require('harpoon.ui').nav_file(0)
       end,
     },
   },
@@ -104,115 +172,6 @@ M.disabled = {
   },
   t = {
     ['<esc>'] = '',
-  },
-}
-
-M.crates = {
-  n = {
-    ['<leader>ct'] = {
-      function()
-        require('crates').toggle()
-      end,
-      opts = { silent = true },
-    },
-    ['<leader>cr'] = {
-      function()
-        require('crates').reload()
-      end,
-      opts = { silent = true },
-    },
-    ['<leader>cv'] = {
-      function()
-        require('crates').show_versions_popup()
-      end,
-      opts = { silent = true },
-    },
-    ['<leader>cf'] = {
-      function()
-        require('crates').show_features_popup()
-      end,
-      opts = { silent = true },
-    },
-    ['<leader>cd'] = {
-      function()
-        require('crates').show_dependencies_popup()
-      end,
-      opts = { silent = true },
-    },
-    ['<leader>cu'] = {
-      function()
-        require('crates').update_crate()
-      end,
-      opts = { silent = true },
-    },
-    ['<leader>ca'] = {
-      function()
-        require('crates').update_all_crates()
-      end,
-      opts = { silent = true },
-    },
-    ['<leader>cU'] = {
-      function()
-        require('crates').upgrade_crate()
-      end,
-      opts = { silent = true },
-    },
-    ['<leader>cA'] = {
-      function()
-        require('crates').upgrade_all_crates()
-      end,
-      opts = { silent = true },
-    },
-    ['<leader>ce'] = {
-      function()
-        require('crates').expand_plain_crate_to_inline_table()
-      end,
-      opts = { silent = true },
-    },
-    ['<leader>cE'] = {
-      function()
-        require('crates').extract_crate_into_table()
-      end,
-      opts = { silent = true },
-    },
-    ['<leader>cH'] = {
-      function()
-        require('crates').open_homepage()
-      end,
-      opts = { silent = true },
-    },
-    ['<leader>cR'] = {
-      function()
-        require('crates').open_repository()
-      end,
-      opts = { silent = true },
-    },
-    ['<leader>cD'] = {
-      function()
-        require('crates').open_documentation()
-      end,
-      opts = { silent = true },
-    },
-    ['<leader>cC'] = {
-      function()
-        require('crates').open_crates_io()
-      end,
-      opts = { silent = true },
-    },
-  },
-  v = {
-    ['<leader>cu'] = {
-      function()
-        require('crates').update_crates()
-      end,
-      opts = { silent = true },
-    },
-    ['<leader>cU'] = {
-      function()
-        require('crates').upgrade_crates()
-      end,
-      opts = { silent = true },
-    },
   },
 }
 
