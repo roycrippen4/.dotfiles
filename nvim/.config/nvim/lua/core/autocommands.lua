@@ -1,6 +1,15 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
+local ns_id = vim.api.nvim_create_namespace('HarpoonExtmarks')
+autocmd('FileType', {
+  pattern = 'harpoon',
+  callback = function()
+    local bufnr = vim.api.nvim_get_current_buf()
+    require('core.utils').highlight_marked_files(bufnr, ns_id)
+  end,
+})
+
 autocmd('FileType', {
   group = vim.api.nvim_create_augroup('close_with_q', { clear = true }),
   desc = 'Close with `q`',

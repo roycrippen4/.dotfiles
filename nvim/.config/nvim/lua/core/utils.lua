@@ -1,6 +1,82 @@
 local M = {}
 local merge_tb = vim.tbl_deep_extend
 
+local skip_ft = {
+  'NvimTree',
+  'Trouble',
+  'alpha',
+  'dap-repl',
+  'dapui_breakpoints',
+  'dapui_console',
+  'dapui_scopes',
+  'dapui_stacks',
+  'dapui_watches',
+  'dashboard',
+  'fidget',
+  'help',
+  'harpoon',
+  'lazy',
+  'logger',
+  'neo-tree',
+  'noice',
+  'nvcheatsheet',
+  'nvdash',
+  'terminal',
+  'toggleterm',
+  'vim',
+}
+
+--- Adds highlighting to any marked files that are currently visible behind the harpoon floating window
+---@param bufnr integer harpoon.ui buffer handle
+---@param ns_id integer namespace identifier
+M.highlight_marked_files = function(bufnr, ns_id)
+  local open_files = M.list_open_files()
+
+  if vim.bo[bufnr].ft ~= 'harpoon' then
+    log('bad bufnr')
+  end
+
+  for _, open_file in ipairs(open_files) do
+    for idx = 1, require('harpoon.mark').get_length() do
+      local marked_file = require('harpoon.mark').get_marked_file_name(idx)
+
+      if string.find(open_file, marked_file) then
+        log('setting highlight')
+        vim.api.nvim_buf_add_highlight(bufnr, ns_id, 'HarpoonOpenMark', idx - 1, 0, -1)
+      end
+    end
+  end
+end
+
+--- Takes a [bufnr]. Returns [true] if bufnr is visible, [false] if not
+---@param bufnr integer buffer handle/number
+M.is_buf_visible = function(bufnr)
+  local wins = vim.api.nvim_list_wins()
+  local should_skip = vim.tbl_contains(skip_ft, vim.bo[bufnr].ft) or vim.api.nvim_buf_get_name(bufnr) == ''
+
+  for _, win in ipairs(wins) do
+    if vim.api.nvim_win_get_buf(win) == bufnr and not should_skip then
+      return true
+    end
+  end
+  return false
+end
+
+--- Get's a list of absolute paths for all open files. Ignores plugin windows/buffers
+---@return string[] open_files list of open files
+M.list_open_files = function()
+  local bufs = vim.api.nvim_list_bufs()
+  local visible_bufs = {}
+
+  for _, bufnr in ipairs(bufs) do
+    if M.is_buf_visible(bufnr) then
+      local name = vim.api.nvim_buf_get_name(bufnr)
+      table.insert(visible_bufs, name)
+    end
+  end
+  return visible_bufs
+end
+
 M.load_config = function()
   local config = require('core.default_config')
   local chadrc_path = vim.api.nvim_get_runtime_file('lua/custom/chadrc.lua', false)[1]

@@ -438,7 +438,11 @@ local default_plugins = {
       require('core.utils').load_mappings('harpoon')
     end,
     config = function()
-      require('harpoon').setup()
+      require('harpoon').setup({
+        menu = {
+          width = 130,
+        },
+      })
     end,
   },
 

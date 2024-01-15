@@ -14,7 +14,6 @@ statuscol.setup({
   ft_ignore = {
     'NvimTree',
     'terminal',
-    'NvimTree',
     'dashboard',
     'nvcheatsheet',
     'dapui_watches',

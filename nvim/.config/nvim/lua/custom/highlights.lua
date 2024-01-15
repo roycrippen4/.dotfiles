@@ -21,6 +21,10 @@ M.add = {
   CmdlineSearch          = { fg = '#cc5e00',     bg = darkest_black },
   CmdlineSub             = { fg =  l_blue,       bg = darkest_black },
   CmdlineVisualSub       = { fg =  pink,         bg = darkest_black },
+  -- harpoon
+  HarpoonWindow = { bg = darkest_black, },
+  HarpoonBorder = { fg = d_red },
+  HarpoonOpenMark = { fg = 'pink' },
   -- Noice
   NoiceVirtualTextOn     = { fg = '#53bf00',     bg = cursorline,    italic = true },
   -- NvimTree
