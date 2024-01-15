@@ -3,21 +3,6 @@ local default_plugins = {
   -- https://github.com/nvim-lua/plenary.nvim
   'nvim-lua/plenary.nvim',
 
-  -- {
-  --   'folke/noice.nvim',
-  --   event = 'BufReadPre',
-  --   dependencies = {
-  --     'MunifTanjim/nui.nvim',
-  --     'rcarriga/nvim-notify',
-  --   },
-  --   init = function()
-  --     require('core.utils').load_mappings('noice')
-  --   end,
-  --   config = function()
-  --     require('plugins.configs.noice')
-  --   end,
-  -- },
-
   {
     'mfussenegger/nvim-dap',
     dependencies = {
@@ -408,7 +393,11 @@ local default_plugins = {
     config = function()
       require('fidget').setup({
         progress = {
+          suppress_on_insert = true,
+          ignore_done_already = true,
+          ignore_empty_message = true,
           display = {
+            done_icon = '',
             overrides = {
               rust_analyzer = { name = 'rust-analyzer' },
               lua_ls = { name = 'lua-ls' },
