@@ -14,11 +14,7 @@ return {
     -- function name
     i(1),
     t({ '\t', 'end, ' }),
-    i(2, '0'),
+    i(0, '0'),
     t(')'),
   }),
 }
-
--- vim.defer_fn(function()
---   |
--- end, |)
