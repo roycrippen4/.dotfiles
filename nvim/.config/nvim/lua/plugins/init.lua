@@ -387,24 +387,11 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/j-hui/fidget.nvim
-    'j-hui/fidget.nvim',
+    -- https://github.com/stevearc/dressing.nvim
+    'stevearc/dressing.nvim',
     event = 'VeryLazy',
     config = function()
-      require('fidget').setup({
-        progress = {
-          suppress_on_insert = true,
-          ignore_done_already = true,
-          ignore_empty_message = true,
-          display = {
-            done_icon = '',
-            overrides = {
-              rust_analyzer = { name = 'rust-analyzer' },
-              lua_ls = { name = 'lua-ls' },
-            },
-          },
-        },
-      })
+      require('plugins.configs.dressing')
     end,
   },
 

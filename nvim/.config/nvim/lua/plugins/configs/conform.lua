@@ -1,4 +1,5 @@
 local options = {
+  notify_on_error = false,
   quiet = true,
   formatters_by_ft = {
     lua = { 'stylua' },
