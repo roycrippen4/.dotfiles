@@ -92,7 +92,7 @@ M.harpoon = {
     ['<C-f>'] = {
       function()
         require('harpoon.mark').add_file()
-        -- vim.cmd('redrawtabline')
+        vim.cmd('redrawtabline')
       end,
     },
     ['<C-e>'] = {

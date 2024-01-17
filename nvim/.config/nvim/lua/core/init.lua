@@ -27,7 +27,7 @@ opt.foldlevel = 99
 opt.foldlevelstart = 99
 
 -------------------------------------- options ------------------------------------------
--- opt.cmdheight = 0
+opt.cmdheight = 1
 opt.formatoptions = ''
 opt.laststatus = 3 -- global statusline
 opt.showmode = false

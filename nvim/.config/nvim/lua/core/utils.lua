@@ -41,7 +41,6 @@ M.highlight_marked_files = function(bufnr, ns_id)
       local marked_file = require('harpoon.mark').get_marked_file_name(idx)
 
       if string.find(open_file, marked_file) then
-        log('setting highlight')
         vim.api.nvim_buf_add_highlight(bufnr, ns_id, 'HarpoonOpenMark', idx - 1, 0, -1)
       end
     end
@@ -185,22 +184,6 @@ M.lazy_load = function(plugin)
   })
 end
 
--- function M.map(modes, lhs, rhs, opts)
---   opts = opts or {}
---   opts.noremap = opts.noremap == nil and true or opts.noremap
---   if type(modes) == 'string' then
---     modes = { modes }
---   end
---   for _, mode in ipairs(modes) do
---     if type(rhs) == 'string' then
---       vim.api.nvim_set_keymap(mode, lhs, rhs, opts)
---     else
---       opts.callback = rhs
---       vim.api.nvim_set_keymap(mode, lhs, '', opts)
---     end
---   end
--- end
-
 -- Bust the cache of all required Lua files.
 -- After running this, each require() would re-run the file.
 local function unload_all_modules()
@@ -241,20 +224,31 @@ function M.restart()
   vim.cmd.doautocmd('VimEnter')
 end
 
---- Is the buffer named NvimTree_[0-9]+ a tree? filetype is "NvimTree" or not readable file.
---- This is cheap, as the readable test should only ever be needed when resuming a vim session.
--- function M.is_nvim_tree_buf(bufnr)
---   if bufnr == nil then
---     bufnr = 0
---   end
+-- local test = { 'a', 'b' }
+-- print(test)
 
---   if vim.api.nvim_buf_is_valid(bufnr) then
---     local bufname = vim.api.nvim_buf_get_name(bufnr)
---     if vim.fn.filereadable(bufname) == 0 then
---       return true
+-- local missing_comma_strings = {
+--   js = "',' expected.",
+--   jsx = "',' expected.",
+--   lua = { 'Missed symbol `,`.', 'Miss symbol `,` or `;` .' },
+--   rs = 'expected COMMA',
+--   ts = "',' expected.",
+--   tsx = "',' expected.",
+-- }
+
+-- function M.add_missing_commas()
+--   local diagnostics = vim.diagnostic.get(0)
+
+--   if vim.tbl_contains(vim.tbl_keys(missing_comma_strings), vim.bo.ft) then
+--     for _, diag in pairs(diagnostics) do
+--       log(vim.tbl_get(missing_comma_strings, 'lua'))
+--       log(diag.message)
+--       -- local line_start = diag.end_lnum
+--       -- local line_end = diag.lnum
+--       -- log('Start: ' .. line_start)
+--       -- log('End: ' .. line_end)
 --     end
 --   end
---   return false
 -- end
 
 return M

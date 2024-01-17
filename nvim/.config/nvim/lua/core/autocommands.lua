@@ -99,3 +99,9 @@ autocmd('VimEnter', {
     set_titlestring(cwd)
   end,
 })
+
+autocmd('BufWritePre', {
+  callback = function()
+    require('core.utils').add_missing_commas()
+  end,
+})
