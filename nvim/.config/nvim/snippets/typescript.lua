@@ -8,7 +8,7 @@ return {
   }),
 
   s({
-    trig = 'arr',
+    trig = 'afn',
     name = 'Anon func',
     dscr = {
       '(…) => { … }',
