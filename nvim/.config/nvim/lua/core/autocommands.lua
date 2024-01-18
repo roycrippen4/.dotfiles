@@ -19,6 +19,7 @@ autocmd('FileType', {
     'qf',
     'query',
     'scratch',
+    'undotree',
   },
   callback = function(args)
     vim.keymap.set('n', 'q', '<cmd>quit<cr>', { buffer = args.buf })

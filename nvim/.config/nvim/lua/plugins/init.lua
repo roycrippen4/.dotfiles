@@ -180,6 +180,7 @@ local default_plugins = {
     event = { 'BufRead Cargo.toml' },
     config = function()
       require('plugins.configs.lsp.lang.cargo')
+      ---@diagnostic disable-next-line
       require('crates').setup()
     end,
   },
@@ -398,7 +399,9 @@ local default_plugins = {
   {
     -- https://github.com/mbbill/undotree
     'mbbill/undotree',
-    cmd = 'UndotreeToggle',
+    keys = {
+      { '<Leader>ut', vim.cmd.UndotreeToggle, mode = { 'n' }, desc = 'Toggle UndoTree 󰕍 ' },
+    },
   },
 
   {
@@ -502,20 +505,9 @@ local default_plugins = {
     'folke/todo-comments.nvim',
     event = 'VeryLazy',
     dependencies = { 'nvim-lua/plenary.nvim' },
-    opts = {
-      keywords = {
-        TODO = { icon = '', color = 'info' },
-        DONE = {
-          icon = '',
-          color = 'done',
-        },
-      },
-      colors = {
-        done = {
-          '#53bf00',
-        },
-      },
-    },
+    opts = function()
+      return require('plugins.configs.todo')
+    end,
     config = function(_, opts)
       dofile(vim.g.base46_cache .. 'todo')
       require('todo-comments').setup(opts)

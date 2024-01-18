@@ -79,6 +79,7 @@ cmp.setup({
   experimental = {
     ghost_text = true,
   },
+  preselect = cmp.PreselectMode.None,
   formatting = format,
   completion = {
     completeopt = 'menu,menuone,noselect',
@@ -121,7 +122,7 @@ cmp.setup({
     ['<Esc>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Insert,
-      select = false,
+      select = true,
     }),
     ['<Tab>'] = cmp.mapping(function(fallback)
       if require('luasnip').expand_or_jumpable() then
