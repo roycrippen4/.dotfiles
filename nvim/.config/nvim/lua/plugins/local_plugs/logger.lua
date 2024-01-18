@@ -104,6 +104,7 @@ function Logger:show()
         wincmd h
     ]])
         -- require('harpoon'):list('relative'):select(1)
+        require('harpoon.ui').nav_file(1)
       end)
     end
 

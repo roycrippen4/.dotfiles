@@ -203,52 +203,23 @@ local function unload_all_modules()
 end
 
 function M.reload()
-  -- Stop LSP
   vim.cmd.LspStop()
-
-  -- Stop eslint_d
   vim.fn.execute('silent !pkill -9 eslint_d')
-
-  -- Unload all already loaded modules
   unload_all_modules()
-
-  -- Source init.lua
   vim.cmd.luafile('$MYVIMRC')
 end
 
--- Restart Vim without having to close and run again
-function M.restart()
-  -- Reload config
-  M.reload()
-  -- Manually run VimEnter autocmd to emulate a new run of Vim
-  vim.cmd.doautocmd('VimEnter')
+function M.add_missing_commas()
+  local diagnostics = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+  if #diagnostics == 0 then
+    return
+  end
+
+  for _, diag in pairs(diagnostics) do
+    if diag.message == 'Miss symbol `,` or `;` .' or diag.message == 'Missed symbol `,`.' then
+      vim.api.nvim_buf_set_text(0, diag.lnum, diag.col, diag.lnum, diag.col({ ',' }))
+    end
+  end
 end
-
--- local test = { 'a', 'b' }
--- print(test)
-
--- local missing_comma_strings = {
---   js = "',' expected.",
---   jsx = "',' expected.",
---   lua = { 'Missed symbol `,`.', 'Miss symbol `,` or `;` .' },
---   rs = 'expected COMMA',
---   ts = "',' expected.",
---   tsx = "',' expected.",
--- }
-
--- function M.add_missing_commas()
---   local diagnostics = vim.diagnostic.get(0)
-
---   if vim.tbl_contains(vim.tbl_keys(missing_comma_strings), vim.bo.ft) then
---     for _, diag in pairs(diagnostics) do
---       log(vim.tbl_get(missing_comma_strings, 'lua'))
---       log(diag.message)
---       -- local line_start = diag.end_lnum
---       -- local line_end = diag.lnum
---       -- log('Start: ' .. line_start)
---       -- log('End: ' .. line_end)
---     end
---   end
--- end
 
 return M

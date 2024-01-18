@@ -43,7 +43,7 @@ end)
 cmp.setup({
   sources = {
     { name = 'luasnip', keyword_length = 2 },
-    { name = 'nvim_lsp', trigger_characters = { '.', ':' } },
+    { name = 'nvim_lsp', trigger_characters = { '.', ':', '@' } },
     {
       name = 'buffer',
       keyword_length = 5,
@@ -79,7 +79,6 @@ cmp.setup({
   experimental = {
     ghost_text = true,
   },
-  preselect = cmp.PreselectMode.None,
   formatting = format,
   completion = {
     completeopt = 'menu,menuone,noselect',
@@ -121,8 +120,8 @@ cmp.setup({
     -- ['<C-t>'] = cmp.mapping.complete(),
     ['<Esc>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Replace,
-      select = true,
+      behavior = cmp.ConfirmBehavior.Insert,
+      select = false,
     }),
     ['<Tab>'] = cmp.mapping(function(fallback)
       if require('luasnip').expand_or_jumpable() then
