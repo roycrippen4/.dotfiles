@@ -100,8 +100,8 @@ autocmd('VimEnter', {
   end,
 })
 
-autocmd('BufWritePre', {
-  callback = function()
-    require('core.utils').add_missing_commas()
-  end,
-})
+-- autocmd('BufWritePre', {
+--   callback = function()
+--     require('core.utils').add_missing_commas()
+--   end,
+-- })
