@@ -479,10 +479,7 @@ local default_plugins = {
   {
     -- https://github.com/kylechui/nvim-surround
     'kylechui/nvim-surround',
-    keys = {
-      { 'S', mode = { 'v' }, { 'cs', { mode = 'n' } }, { 'ys', { mode = 'n' } } },
-      { 'ds', mode = { 'n' } },
-    },
+    event = 'InsertEnter',
     config = function()
       require('nvim-surround').setup()
     end,
