@@ -209,15 +209,11 @@ function M.reload()
   vim.cmd.luafile('$MYVIMRC')
 end
 
-function M.add_missing_commas()
-  local diagnostics = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
-  if #diagnostics == 0 then
-    return
-  end
-
+---@param diagnostics Diagnostic[]
+function M.add_missing_commas(diagnostics)
   for _, diag in pairs(diagnostics) do
     if diag.message == 'Miss symbol `,` or `;` .' or diag.message == 'Missed symbol `,`.' then
-      vim.api.nvim_buf_set_text(0, diag.lnum, diag.col, diag.lnum, diag.col({ ',' }))
+      vim.api.nvim_buf_set_text(0, diag.lnum, diag.col, diag.lnum, diag.col, { ',' })
     end
   end
 end

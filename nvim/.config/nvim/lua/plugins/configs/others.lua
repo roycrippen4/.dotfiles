@@ -17,6 +17,7 @@ M.luasnip = function(opts)
   require('luasnip.loaders.from_lua').lazy_load({ paths = './snippets' })
 
   vim.api.nvim_create_autocmd('InsertLeave', {
+    group = vim.api.nvim_create_augroup('LuaSnip', { clear = true }),
     callback = function()
       if
         require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()]

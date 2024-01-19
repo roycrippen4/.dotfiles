@@ -79,7 +79,9 @@ local function set_terminal_keymaps()
 end
 
 vim.api.nvim_create_autocmd('TermOpen', {
-  callback = set_terminal_keymaps,
+  callback = function()
+    set_terminal_keymaps()
+  end,
 })
 
 return M

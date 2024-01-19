@@ -187,9 +187,9 @@ M.file_info = function()
       icon = '  ',
       label = 'HARPOON',
     },
-    noice = {
-      icon = '   ',
-      label = 'NOICE',
+    undotree = {
+      icon = '  ',
+      label = 'UNDOTREE',
     },
     NvimTree = {
       icon = '%#St_nvimtree#  ',
@@ -326,8 +326,14 @@ M.max_length = function()
   return #M.mode() + #M.file_info() + #M.git()
 end
 
+M.spell = function()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local query = vim.treesitter.highlighter.active['@spell']
+end
+
 -- Dynamically changes the highlight group of the statusline mode segment based on the current mode
 vim.api.nvim_create_autocmd('ModeChanged', {
+  group = vim.api.nvim_create_augroup('StatusLineMode', { clear = true }),
   callback = function()
     local m = vim.api.nvim_get_mode().mode
     local hl = vim.api.nvim_get_hl(0, { name = M.modes[m][2] })

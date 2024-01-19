@@ -82,7 +82,7 @@ cmp.setup({
   preselect = cmp.PreselectMode.None,
   formatting = format,
   completion = {
-    completeopt = 'menu,menuone,noselect',
+    completeopt = 'menu,menuone',
     autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged },
   },
   window = {
@@ -116,8 +116,8 @@ cmp.setup({
     }),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-j>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-k>'] = cmp.mapping.scroll_docs(4),
+    ['<C-S-N>'] = cmp.mapping.scroll_docs(-4),
+    ['<C-S-P>'] = cmp.mapping.scroll_docs(4),
     -- ['<C-t>'] = cmp.mapping.complete(),
     ['<Esc>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm({

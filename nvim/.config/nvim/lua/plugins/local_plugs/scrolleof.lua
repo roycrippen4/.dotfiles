@@ -47,7 +47,9 @@ local function scroll()
   vim.api.nvim_create_autocmd({ 'CursorMoved', 'WinScrolled' }, {
     group = scrollEOF_group,
     pattern = '*',
-    callback = check_eof_scrolloff,
+    callback = function()
+      check_eof_scrolloff()
+    end,
   })
 end
 

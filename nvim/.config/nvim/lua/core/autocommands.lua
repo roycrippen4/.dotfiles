@@ -3,6 +3,7 @@ local augroup = vim.api.nvim_create_augroup
 
 local ns_id = vim.api.nvim_create_namespace('HarpoonExtmarks')
 autocmd('FileType', {
+  group = augroup('TablineHarpoonMarker', { clear = true }),
   pattern = 'harpoon',
   callback = function()
     local bufnr = vim.api.nvim_get_current_buf()
@@ -10,9 +11,9 @@ autocmd('FileType', {
   end,
 })
 
+local CloseWithQ = vim.api.nvim_create_augroup('CloseWithQ', { clear = true })
 autocmd('FileType', {
-  group = vim.api.nvim_create_augroup('close_with_q', { clear = true }),
-  desc = 'Close with `q`',
+  group = CloseWithQ,
   pattern = {
     'help',
     'man',
@@ -20,6 +21,7 @@ autocmd('FileType', {
     'query',
     'scratch',
     'undotree',
+    'logger',
   },
   callback = function(args)
     vim.keymap.set('n', 'q', '<cmd>quit<cr>', { buffer = args.buf })
@@ -29,6 +31,7 @@ autocmd('FileType', {
 -- Autocommand to restore the cursor position when the buffer is read
 autocmd('BufReadPost', {
   pattern = '*',
+  group = augroup('RestoreCursor', { clear = true }),
   callback = function()
     if vim.fn.line('\'"') > 0 and vim.fn.line('\'"') <= vim.fn.line('$') then
       vim.cmd('normal! g`"')
@@ -40,30 +43,35 @@ local vert_help = augroup('VertHelp', {})
 autocmd('FileType', {
   pattern = 'help',
   group = vert_help,
-  callback = function(event)
+  callback = function()
     vim.api.nvim_set_option_value('bufhidden', 'unload', { scope = 'local' })
     vim.cmd('wincmd L')
     vim.api.nvim_win_set_width(0, 100)
-    vim.keymap.set('n', 'q', '<cmd>q<CR>', { buffer = event.buf, silent = true })
   end,
 })
 
 -- Disable diagnostics in node_modules (0 is current buffer only)
 autocmd({ 'BufRead', 'BufNewFile' }, {
+  group = augroup('NodeModulesDiagnostics', { clear = true }),
   pattern = '*/node_modules/*',
-  command = 'lua vim.diagnostic.disable(0)',
+  callback = function(args)
+    vim.diagnostic.disable(args.buf)
+  end,
 })
 
--- Turns off the cursorline
-autocmd({ 'InsertLeave', 'WinEnter', 'BufEnter' }, {
+local CursorLineToggle = augroup('CursorLineToggle', { clear = true })
+-- Turns on the cursorline
+autocmd({ 'InsertLeave', 'WinEnter' }, {
+  group = CursorLineToggle,
   callback = function()
     vim.o.cursorline = true
     vim.api.nvim_set_hl(0, 'CursorLine', { link = 'NvimTreeCursorLine' })
   end,
 })
 
--- Turns on the cursorline
+-- Turns off the cursorline
 autocmd({ 'InsertEnter', 'WinLeave' }, {
+  group = CursorLineToggle,
   callback = function()
     vim.o.cursorline = false
   end,
@@ -92,17 +100,17 @@ end
 -- Also sets the title string for the kitty tabs
 autocmd('VimEnter', {
   callback = function()
-    if os.getenv('DEBUG') == '1' then
-      vim.cmd('Log')
-    end
-
-    local cwd = vim.fn.getcwd()
-    set_titlestring(cwd)
+    set_titlestring(vim.fn.getcwd())
   end,
 })
 
+local AddComma = augroup('AddComma', { clear = true })
 autocmd('BufWritePre', {
+  group = AddComma,
   callback = function()
-    require('core.utils').add_missing_commas()
+    local diagnostics = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
+    if #diagnostics > 0 then
+      require('core.utils').add_missing_commas(diagnostics)
+    end
   end,
 })

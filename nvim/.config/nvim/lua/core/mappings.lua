@@ -380,19 +380,20 @@ M.telescope = {
   plugin = true,
   n = {
     -- find
-    ['<leader>ff'] = { '<cmd> Telescope find_files <CR>', 'Find files  ' },
-    ['<leader>fa'] = { '<cmd> Telescope find_files follow=true no_ignore=true hidden=true <CR>', 'Find all  ' },
+    ['<leader>fc'] = { '<cmd> Telescope commands <CR>', 'Find commands 󰘳 ' },
+    ['<leader>ff'] = { '<cmd> Telescope find_files <CR>', 'Find files  ' },
+    ['<leader>fa'] = { '<cmd> Telescope autocommands <CR>', 'Find autocommands 󱚟 ' },
     ['<leader>fw'] = { '<cmd> Telescope live_grep <CR>', 'Find word (cwd)  ' },
     ['<leader>fb'] = { '<cmd> Telescope buffers <CR>', 'Find buffers ﬘ ' },
     ['<leader>fh'] = { '<cmd> Telescope help_tags <CR>', 'Find help 󰋖' },
     ['<leader>fo'] = { '<cmd> Telescope oldfiles <CR>', 'Find oldfiles  ' },
     ['<leader>fz'] = { '<cmd> Telescope current_buffer_fuzzy_find <CR>', 'Find in current buffer  ' },
-    ['<leader>fc'] = { '<cmd> Telescope git_commits <CR>', 'Find commits  ' },
-    ['<leader>fg'] = { '<cmd> Telescope git_status <CR>', 'Find Git status 󱖫 ' },
     ['<leader>fs'] = { '<cmd> Telescope themes <CR>', 'Find scheme  ' },
     ['<leader>fm'] = { '<cmd> Telescope marks <CR>', 'Find bookmarks  ' },
     ['<leader>fl'] = { '<cmd> Telescope highlights <CR>', 'Find highlight groups 󰸱 ' },
     ['<leader>fk'] = { '<cmd> Telescope keymaps <CR>', 'Find keymaps  ' },
+    ['<leader>fgc'] = { '<cmd> Telescope git_commits <CR>', 'Find commits  ' },
+    ['<leader>fgs'] = { '<cmd> Telescope git_status <CR>', 'Find Git status 󱖫 ' },
   },
 }
 

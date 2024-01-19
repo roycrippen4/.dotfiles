@@ -21,8 +21,6 @@ function M.convert_custom_colors_to_hex(colors)
     pink = lighten_darken(colors.base_30.pink, custom_colors.pink[2]),
     sep_color = '#454951',
   }
-
-  log(converted_colors)
   return converted_colors
 end
 

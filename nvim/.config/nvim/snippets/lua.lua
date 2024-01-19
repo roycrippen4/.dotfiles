@@ -17,4 +17,18 @@ return {
     i(0, '0'),
     t(')'),
   }),
+
+  s({
+    trig = 'schedule',
+    name = 'schedule_fn',
+    dscr = {
+      'schedule(…)',
+    },
+  }, {
+    t({ 'vim.schedule(function()', '\t' }),
+    -- function name
+    i(0),
+    t({ '\t', 'end' }),
+    t(')'),
+  }),
 }
