@@ -26,10 +26,6 @@ opt.foldnestmax = 0
 opt.foldlevel = 99
 opt.foldlevelstart = 99
 
--- Spell
-opt.spelllang = 'en_us'
-opt.spell = true
-
 -- General Options
 opt.cmdheight = 1
 opt.formatoptions = ''

@@ -11,6 +11,14 @@ autocmd('FileType', {
   end,
 })
 
+autocmd('LspAttach', {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    ---@diagnostic disable-next-line
+    client.server_capabilities.semanticTokensProvider = nil
+  end,
+})
+
 local CloseWithQ = vim.api.nvim_create_augroup('CloseWithQ', { clear = true })
 autocmd('FileType', {
   group = CloseWithQ,

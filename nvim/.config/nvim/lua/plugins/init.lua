@@ -169,7 +169,6 @@ local default_plugins = {
 
   {
     'chrisgrieser/nvim-spider',
-    event = 'VeryLazy',
     init = function()
       require('core.utils').load_mappings('spider')
     end,
@@ -187,7 +186,7 @@ local default_plugins = {
 
   {
     'altermo/ultimate-autopair.nvim',
-    event = 'VeryLazy',
+    event = 'InsertEnter',
     branch = 'v0.6',
     opts = function()
       return require('plugins.configs.ult-autopair')
@@ -224,7 +223,6 @@ local default_plugins = {
               },
             },
           }
-          -- { history = true, updateevents = 'TextChanged,TextChangedI' },
         end,
         config = function(_, opts)
           require('plugins.configs.others').luasnip(opts)
@@ -259,7 +257,6 @@ local default_plugins = {
     -- https://github.com/nvim-tree/nvim-tree.lua
     'nvim-tree/nvim-tree.lua',
     lazy = false,
-    cmd = { 'NvimTreeToggle', 'NvimTreeFocus' },
     init = function()
       require('core.utils').load_mappings('nvimtree')
     end,
@@ -309,10 +306,10 @@ local default_plugins = {
   {
     -- https://github.com/neovim/nvim-lspconfig
     'neovim/nvim-lspconfig',
-    event = 'VimEnter',
-    dependencies = {
-      'folke/neodev.nvim',
-    },
+    dependencies = { 'folke/neodev.nvim' },
+    init = function()
+      require('core.utils').lazy_load('nvim-lspconfig')
+    end,
     config = function()
       require('plugins.configs.lsp.servers')
     end,
@@ -390,7 +387,9 @@ local default_plugins = {
   {
     -- https://github.com/stevearc/dressing.nvim
     'stevearc/dressing.nvim',
-    event = 'VeryLazy',
+    init = function()
+      require('core.utils').lazy_load('dressing.nvim')
+    end,
     config = function()
       require('plugins.configs.dressing')
     end,
@@ -432,7 +431,6 @@ local default_plugins = {
   {
     -- https://github.com/theprimeagen/harpoon
     'theprimeagen/harpoon',
-    lazy = false,
     branch = 'master',
     init = function()
       require('core.utils').load_mappings('harpoon')
@@ -481,7 +479,10 @@ local default_plugins = {
   {
     -- https://github.com/kylechui/nvim-surround
     'kylechui/nvim-surround',
-    event = 'VeryLazy',
+    keys = {
+      { 'S', mode = { 'v' }, { 'cs', { mode = 'n' } }, { 'ys', { mode = 'n' } } },
+      { 'ds', mode = { 'n' } },
+    },
     config = function()
       require('nvim-surround').setup()
     end,
@@ -490,21 +491,19 @@ local default_plugins = {
   {
     -- https://github.com/iamcco/markdown-preview.nvim
     'iamcco/markdown-preview.nvim',
-    cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
-    keys = { { '<leader>mp', mode = { 'n' } } },
+    ft = { 'markdown' },
+    keys = { { '<leader>mp', '<cmd> MarkdownPreview<CR>', mode = { 'n' } } },
     build = function()
       vim.fn['mkdp#util#install']()
-    end,
-    config = function()
-      vim.keymap.set('n', '<leader>mp', '<cmd> MarkdownPreview <CR>', { desc = 'Preview Markdown' })
     end,
   },
 
   {
     -- https://github.com/folke/todo-comments.nvim
     'folke/todo-comments.nvim',
-    event = 'VeryLazy',
-    dependencies = { 'nvim-lua/plenary.nvim' },
+    init = function()
+      require('core.utils').lazy_load('todo-comments.nvim')
+    end,
     opts = function()
       return require('plugins.configs.todo')
     end,
@@ -517,7 +516,6 @@ local default_plugins = {
   {
     -- https://github.com/lukas-reineke/indent-blankline.nvim
     'lukas-reineke/indent-blankline.nvim',
-    event = 'VeryLazy',
     init = function()
       require('core.utils').lazy_load('indent-blankline.nvim')
     end,
