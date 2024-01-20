@@ -29,7 +29,7 @@ local function set_modules(modules)
 end
 
 M.ui = {
-  theme = 'ayu_dark',
+  theme = 'bearded-arc',
   hl_add = highlights.add,
   hl_override = highlights.override,
 
@@ -61,6 +61,37 @@ M.ui = {
     l_blue = '#00C5FF',
     orange = { 'orange', -10 },
     pink = { 'pink', -10 },
+  },
+
+  integrations = {
+    'alpha',
+    'blankline',
+    'bufferline',
+    'cmp',
+    'codeactionmenu',
+    'dap',
+    'defaults',
+    'devicons',
+    'git',
+    'hop',
+    'illuminate',
+    'lsp',
+    'lspsaga',
+    'mason',
+    'nvchad_updater',
+    'nvcheatsheet',
+    'nvdash',
+    'nvimtree',
+    'rainbowdelimiters',
+    'semantic_tokens',
+    'statusline',
+    'syntax',
+    'tbline',
+    'telescope',
+    'todo',
+    'treesitter',
+    'trouble',
+    'whichkey',
   },
 }
 

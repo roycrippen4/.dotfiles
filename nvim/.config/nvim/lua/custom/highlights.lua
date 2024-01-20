@@ -128,7 +128,7 @@ M.add = {
     ['@type']                  = { fg = { 'cyan', 10 } },
     ['@type.builtin']          = { fg = 'cyan', italic = true },
     ['@type.qualifier']        = { fg = pink },
-    ['@variable']              = { fg = 'red' },
+    ['@variable']              = { fg = 'red'},
     ['@variable.builtin']      = { fg = 'purple' },
 }
 

@@ -380,6 +380,7 @@ local default_plugins = {
       return require('plugins.configs.rainbow_delimiters')
     end,
     config = function(_, opts)
+      dofile(vim.g.base46_cache .. 'rainbowdelimiters')
       require('rainbow-delimiters.setup').setup(opts)
     end,
   },
@@ -505,8 +506,8 @@ local default_plugins = {
       return require('plugins.configs.todo')
     end,
     config = function(_, opts)
-      dofile(vim.g.base46_cache .. 'todo')
       require('todo-comments').setup(opts)
+      dofile(vim.g.base46_cache .. 'todo')
     end,
   },
 

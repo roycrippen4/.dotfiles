@@ -92,8 +92,7 @@ for _, provider in ipairs({ 'node', 'perl', 'python3', 'ruby' }) do
 end
 
 -- add binaries installed by mason.nvim to path
-local is_windows = vim.loop.os_uname().sysname == 'Windows_NT'
-vim.env.PATH = vim.fn.stdpath('data') .. '/mason/bin' .. (is_windows and ';' or ':') .. vim.env.PATH
+vim.env.PATH = vim.fn.stdpath('data') .. '/mason/bin:' .. vim.env.PATH
 
 -------------------------------------- autocmds ------------------------------------------
 local autocmd = vim.api.nvim_create_autocmd
@@ -121,14 +120,11 @@ autocmd('BufWritePost', {
     local app_name = vim.env.NVIM_APPNAME and vim.env.NVIM_APPNAME or 'nvim'
     local module = string.gsub(fp, '^.*/' .. app_name .. '/lua/', ''):gsub('/', '.')
 
+    require('plenary.reload').reload_module('nvconfig')
     require('plenary.reload').reload_module('base46')
     require('plenary.reload').reload_module(module)
-    require('plenary.reload').reload_module('custom.chadrc')
 
-    config = require('core.utils').load_config()
-
-    vim.g.nvchad_theme = config.ui.theme
-    vim.g.transparency = config.ui.transparency
+    local config = require('nvconfig')
 
     -- statusline
     if config.ui.statusline.theme ~= 'custom' then
