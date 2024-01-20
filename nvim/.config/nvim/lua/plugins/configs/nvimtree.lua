@@ -74,18 +74,8 @@ local function my_on_attach(bufnr)
   vim.keymap.del('n', '-', { buffer = bufnr })
   vim.keymap.del('n', 'g?', { buffer = bufnr })
 
-  vim.keymap.set(
-    'n',
-    '.',
-    api.tree.change_root_to_node,
-    { desc = 'CD', buffer = bufnr, noremap = true, silent = true, nowait = true }
-  )
-  vim.keymap.set(
-    'n',
-    '?',
-    api.tree.toggle_help,
-    { desc = 'Help', buffer = bufnr, noremap = true, silent = true, nowait = true }
-  )
+  vim.keymap.set('n', '.', api.tree.change_root_to_node, { desc = 'CD', buffer = bufnr, noremap = true, silent = true, nowait = true })
+  vim.keymap.set('n', '?', api.tree.toggle_help, { desc = 'Help', buffer = bufnr, noremap = true, silent = true, nowait = true })
 end
 
 local my_root_folder_label = function(path)

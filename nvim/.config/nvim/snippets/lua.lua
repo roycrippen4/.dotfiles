@@ -31,4 +31,9 @@ return {
     t({ '\t', 'end' }),
     t(')'),
   }),
+
+  s('timer', {
+    t({ 'local _start = vim.loop.gettimeofday()', '\t' }),
+    t('local _end = vim.loop.gettimeofday()'),
+  }),
 }

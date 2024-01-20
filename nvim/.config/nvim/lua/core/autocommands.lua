@@ -122,3 +122,13 @@ autocmd('BufWritePre', {
     end
   end,
 })
+
+-- Close Dressing inputs with q in normal mode
+vim.api.nvim_create_autocmd('FileType', {
+  pattern = 'DressingInput',
+  callback = function()
+    vim.keymap.set('n', 'q', function()
+      vim.api.nvim_win_close(0, true)
+    end, { buffer = 0 })
+  end,
+})

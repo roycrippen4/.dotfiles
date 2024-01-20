@@ -1,17 +1,5 @@
 local M = {}
 
-M.osv = {
-  plugin = true,
-  n = {
-    ['<leader>dl'] = {
-      function()
-        require('osv').launch({ port = 8086 })
-      end,
-      opts = { desc = 'Launch Lua adapter' },
-    },
-  },
-}
-
 -- M.harpoon = {
 --   plugin = true,
 --   n = {
@@ -186,7 +174,10 @@ M.general = {
     ['<C-l>'] = { '<Right>', 'Move right' },
     ['<C-j>'] = { '<Down>', 'Move down' },
     ['<C-k>'] = { '<Up>', 'Move up' },
-    -- ['<'] = { '<><Left>', 'Autopair `<` and `>`' },
+
+    -- Shift lines up and down
+    ['<M-j>'] = { '<ESC>:m .+1<CR>==gi', 'Shift line up', opts = { nowait = true, silent = true } },
+    ['<M-k>'] = { '<ESC>:m .-2<CR>==gi', 'Shift line up', opts = { nowait = true, silent = true } },
   },
 
   n = {
@@ -236,6 +227,10 @@ M.general = {
     ['<M-S-.>'] = { '<C-w>>', 'Increase window width', opts = { nowait = true } },
     ['<M-S-,>'] = { '<C-w><', 'Decrease window width', opts = { nowait = true } },
 
+    -- Shift current lines up/down
+    ['<M-j>'] = { ':m .+1<CR>==', 'Shift line up', opts = { nowait = true, silent = true } },
+    ['<M-k>'] = { ':m .-2<CR>==', 'Shift line up', opts = { nowait = true, silent = true } },
+
     -- toggle lsp inlay hints
     ['<Leader>lh'] = {
       function()
@@ -251,6 +246,10 @@ M.general = {
     ['<Down>'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
     ['<'] = { '<gv', 'Indent line' },
     ['>'] = { '>gv', 'Indent line' },
+
+    -- Shift selection of lines up and down
+    ['<M-j>'] = { ":m '>+1<CR>gv=gv", 'Shift selection up', opts = { nowait = true, silent = true } },
+    ['<M-k>'] = { ":m '<-2<CR>gv=gv", 'Shift selection down', opts = { nowait = true, silent = true } },
   },
 
   x = {
@@ -344,7 +343,7 @@ M.lspconfig = {
       'Signature Documentation 󰷼 ',
     },
 
-    ['<leader>lD'] = { toggle_diagnostics, 'Toggle Diagnostics 󰨚 ' },
+    ['<leader>ld'] = { toggle_diagnostics, 'Toggle Diagnostics 󰨚 ' },
 
     ['<leader>lf'] = {
       function()

@@ -183,6 +183,10 @@ M.file_info = function()
       icon = '%#St_toggleterm#  ',
       label = 'TOGGLETERM',
     },
+    DressingInput = {
+      icon = '  ',
+      label = 'INPUT BOX',
+    },
     harpoon = {
       icon = '  ',
       label = 'HARPOON',
@@ -228,10 +232,8 @@ M.git = function()
   local git_status = vim.b[stbufnr()].gitsigns_status_dict
 
   local added = (git_status.added and git_status.added ~= 0) and ('%#St_gitAdd#  ' .. git_status.added) or ''
-  local changed = (git_status.changed and git_status.changed ~= 0) and ('%#St_gitChange#  ' .. git_status.changed)
-    or ''
-  local removed = (git_status.removed and git_status.removed ~= 0) and ('%#St_gitRemove#  ' .. git_status.removed)
-    or ''
+  local changed = (git_status.changed and git_status.changed ~= 0) and ('%#St_gitChange#  ' .. git_status.changed) or ''
+  local removed = (git_status.removed and git_status.removed ~= 0) and ('%#St_gitRemove#  ' .. git_status.removed) or ''
   local branch_name = '  ' .. git_status.head
 
   return '%#St_gitIcons#' .. branch_name .. added .. changed .. removed
@@ -282,13 +284,7 @@ M.cursor_position = function()
   local cur_line, cur_col = vim.fn.line('.'), vim.fn.col('.')
 
   if mode == '' then
-    return '%#St_VisualMode#'
-      .. ''
-      .. ' Ln '
-      .. math.abs(v_line - cur_line) + 1
-      .. ', Col '
-      .. math.abs(v_col - cur_col) + 1
-      .. ' '
+    return '%#St_VisualMode#' .. '' .. ' Ln ' .. math.abs(v_line - cur_line) + 1 .. ', Col ' .. math.abs(v_col - cur_col) + 1 .. ' '
   end
 
   local total_lines = math.abs(v_line - cur_line) + 1
@@ -324,11 +320,6 @@ end
 
 M.max_length = function()
   return #M.mode() + #M.file_info() + #M.git()
-end
-
-M.spell = function()
-  local bufnr = vim.api.nvim_get_current_buf()
-  local query = vim.treesitter.highlighter.active['@spell']
 end
 
 -- Dynamically changes the highlight group of the statusline mode segment based on the current mode

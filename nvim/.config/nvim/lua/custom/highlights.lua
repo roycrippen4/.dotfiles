@@ -73,6 +73,11 @@ M.add = {
   WinBar                 = { fg = "red", bg = black },
   WinBarNC               = { fg = black, bg = black },
 
+  FloatTitle           = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
+  Title                = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
+  NormalFloat          = { bg = 'black' },
+  RenamerTitle         = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
+
   -- Treesitter
     ['@annotation']            = { fg = 'yellow' },
     ['@attribute']             = { fg = 'cyan' },
@@ -175,10 +180,6 @@ M.override = {
   TbLineBufOffModified = { bg = 'darker_black',              sp = sep_color,  },
   TbLineBufOn          = { fg = d_yellow },
   TblineFill           = { bg = 'darker_black',              sp = sep_color,  },
-  FloatTitle           = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
-  Title                = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
-  NormalFloat          = { bg = 'black' },
-  RenamerTitle         = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
   WinSeparator         = { fg = 'yellow',       bg = 'black' },
 }
 

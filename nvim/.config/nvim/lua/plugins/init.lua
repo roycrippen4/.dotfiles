@@ -24,6 +24,7 @@ local default_plugins = {
       },
       {
         'jbyuki/one-small-step-for-vimkind',
+        ft = { 'lua' },
         init = function()
           require('core.utils').load_mappings('osv')
         end,

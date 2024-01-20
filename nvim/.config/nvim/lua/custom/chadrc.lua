@@ -29,7 +29,7 @@ local function set_modules(modules)
 end
 
 M.ui = {
-  theme = 'palenight',
+  theme = 'onedark',
   hl_add = highlights.add,
   hl_override = highlights.override,
 
