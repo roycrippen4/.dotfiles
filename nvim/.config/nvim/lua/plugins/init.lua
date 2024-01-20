@@ -480,7 +480,7 @@ local default_plugins = {
   {
     -- https://github.com/kylechui/nvim-surround
     'kylechui/nvim-surround',
-    event = 'InsertEnter',
+    event = 'VeryLazy',
     config = function()
       require('nvim-surround').setup()
     end,
