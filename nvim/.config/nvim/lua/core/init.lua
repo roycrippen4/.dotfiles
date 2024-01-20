@@ -55,6 +55,7 @@ opt.fillchars = {
   stl = ' ',
 }
 
+opt.completeopt = { 'menu', 'menuone', 'noselect' }
 opt.ignorecase = true
 opt.smartcase = true
 opt.mouse = 'a'

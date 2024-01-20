@@ -118,81 +118,11 @@ cmp.setup({
     ['<C-n>'] = cmp.mapping.select_next_item(),
     ['<C-S-N>'] = cmp.mapping.scroll_docs(-4),
     ['<C-S-P>'] = cmp.mapping.scroll_docs(4),
-    -- ['<C-t>'] = cmp.mapping.complete(),
     ['<Esc>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Insert,
       select = true,
     }),
-    ['<Tab>'] = cmp.mapping(function(fallback)
-      if require('luasnip').expand_or_jumpable() then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-expand-or-jump', true, true, true), '')
-      else
-        fallback()
-      end
-    end, {
-      'i',
-      's',
-    }),
-    ['<S-Tab>'] = cmp.mapping(function(fallback)
-      if require('luasnip').jumpable(-1) then
-        vim.fn.feedkeys(vim.api.nvim_replace_termcodes('<Plug>luasnip-jump-prev', true, true, true), '')
-      else
-        fallback()
-      end
-    end, {
-      'i',
-      's',
-    }),
-    ['<BS>'] = cmp.mapping(function(fallback)
-      local row, col = unpack(vim.api.nvim_win_get_cursor(0))
-
-      if row == 1 and col == 0 then
-        return
-      end
-
-      cmp.close()
-
-      local line = vim.api.nvim_buf_get_lines(0, row - 1, row, true)[1]
-
-      local ts = require('nvim-treesitter.indent')
-      local indent = ts.get_indent(row) or 0
-
-      if vim.fn.strcharpart(line, indent - 1, col - indent + 1):gsub('%s+', '') == '' then
-        if indent > 0 and col > indent then
-          local new_line = vim.fn.strcharpart(line, 0, indent) .. vim.fn.strcharpart(line, col)
-          vim.api.nvim_buf_set_lines(0, row - 1, row, true, {
-            new_line,
-          })
-          vim.api.nvim_win_set_cursor(0, { row, math.min(indent, vim.fn.strcharlen(new_line)) })
-        elseif row > 1 and (indent > 0 and col + 1 > indent) then
-          local prev_line = vim.api.nvim_buf_get_lines(0, row - 2, row - 1, true)[1]
-          if vim.trim(prev_line) == '' then
-            local prev_indent = ts.get_indent(row - 1) or 0
-            local new_line = vim.fn.strcharpart(line, 0, prev_indent) .. vim.fn.strcharpart(line, col)
-            vim.api.nvim_buf_set_lines(0, row - 2, row, true, {
-              new_line,
-            })
-
-            vim.api.nvim_win_set_cursor(0, {
-              row - 1,
-              math.max(0, math.min(prev_indent, vim.fn.strcharlen(new_line))),
-            })
-          else
-            local len = vim.fn.strcharlen(prev_line)
-            local new_line = prev_line .. vim.fn.strcharpart(line, col)
-            vim.api.nvim_buf_set_lines(0, row - 2, row, true, {
-              new_line,
-            })
-            vim.api.nvim_win_set_cursor(0, { row - 1, math.max(0, len) })
-          end
-        else
-          fallback()
-        end
-      else
-        fallback()
-      end
-    end, { 'i' }),
   },
 })
 
