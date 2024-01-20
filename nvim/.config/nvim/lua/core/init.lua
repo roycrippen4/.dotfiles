@@ -1,16 +1,13 @@
 local opt = vim.opt
 local g = vim.g
-local config = require('core.utils').load_config()
 require('core.autocommands')
 require('core.diagnostic')
 require('plugins.local_plugs')
 
 -------------------------------------- globals -----------------------------------------
 g.autosave = false
-g.nvchad_theme = config.ui.theme
 g.base46_cache = vim.fn.stdpath('data') .. '/nvchad/base46/'
 g.toggle_theme_icon = '   '
-g.transparency = config.ui.transparency
 g.NvimTreeOverlayTitle = ''
 g.skip_ts_context_commentstring_module = true
 g.markdown_fenced_languages = {
@@ -149,10 +146,3 @@ autocmd('BufWritePost', {
     -- vim.cmd("redraw!")
   end,
 })
-
--------------------------------------- commands ------------------------------------------
-local new_cmd = vim.api.nvim_create_user_command
-
-new_cmd('NvChadUpdate', function()
-  require('nvchad.updater')()
-end, {})

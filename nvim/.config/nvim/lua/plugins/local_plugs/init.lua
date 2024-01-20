@@ -38,11 +38,6 @@ if not spinner_ok then
   return
 end
 
-local theme_sync_ok, _ = pcall(require, 'plugins.local_plugs.theme_sync')
-if not theme_sync_ok then
-  return
-end
-
 local yoink_ok, _ = pcall(require, 'plugins.local_plugs.yoink')
 if not yoink_ok then
   return
