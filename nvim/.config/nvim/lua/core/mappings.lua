@@ -74,6 +74,17 @@ local M = {}
 --   },
 -- }
 
+M.cmd_window = {
+  plugin = true,
+  n = {
+    ['q:'] = {
+      function()
+        require('cmd-window').open()
+      end,
+    },
+  },
+}
+
 M.harpoon = {
   plugin = true,
   n = {

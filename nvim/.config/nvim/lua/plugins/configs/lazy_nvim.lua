@@ -1,6 +1,9 @@
 return {
   defaults = { lazy = true },
   install = { colorscheme = { 'nvchad' } },
+  dev = {
+    path = '~/.dotfiles/nvim/.config/nvim/dev/',
+  },
   change_detection = {
     notify = false,
   },
