@@ -37,15 +37,15 @@ autocmd('FileType', {
 })
 
 -- Autocommand to restore the cursor position when the buffer is read
-autocmd('BufReadPost', {
-  pattern = '*',
-  group = augroup('RestoreCursor', { clear = true }),
-  callback = function()
-    if vim.fn.line('\'"') > 0 and vim.fn.line('\'"') <= vim.fn.line('$') then
-      vim.cmd('normal! g`"')
-    end
-  end,
-})
+-- autocmd('BufReadPost', {
+--   pattern = '*',
+--   group = augroup('RestoreCursor', { clear = true }),
+--   callback = function()
+--     if vim.fn.line('\'"') > 0 and vim.fn.line('\'"') <= vim.fn.line('$') then
+--       vim.cmd('normal! g`"')
+--     end
+--   end,
+-- })
 
 local vert_help = augroup('VertHelp', {})
 autocmd('FileType', {
