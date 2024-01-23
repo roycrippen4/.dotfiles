@@ -36,4 +36,16 @@ return {
     t({ 'local _start = vim.loop.gettimeofday()', '\t' }),
     t('local _end = vim.loop.gettimeofday()'),
   }),
+
+  s({
+    trig = 'callback',
+    name = 'callback',
+    dscr = {
+      'callback = function() … end',
+    },
+  }, {
+    t({ 'callback = function()', '\t' }),
+    i(0),
+    t({ '\t', 'end,' }),
+  }),
 }

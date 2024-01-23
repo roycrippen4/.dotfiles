@@ -77,8 +77,9 @@ M.add = {
   Title                = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
   NormalFloat          = { bg = 'black' },
   RenamerTitle         = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
+  LineNumber           = { fg = 'white' },
 
-  -- Treesitter
+  -- Treesitter,,
     ['@annotation']            = { fg = 'yellow' },
     ['@attribute']             = { fg = 'cyan' },
     ['@boolean']               = { fg = 'purple' },

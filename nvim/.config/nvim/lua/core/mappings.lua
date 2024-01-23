@@ -77,9 +77,34 @@ local M = {}
 M.cmd_window = {
   plugin = true,
   n = {
+    [';'] = {
+      function()
+        require('cmd-window').open_window('normal_cmd')
+      end,
+    },
+    [':'] = {
+      function()
+        require('cmd-window').open_window('normal_cmd')
+      end,
+    },
+    ['/'] = {
+      function()
+        require('cmd-window').open_window('normal_search')
+      end,
+    },
     ['q:'] = {
       function()
-        require('cmd-window').open()
+        require('cmd-window').open_window('command')
+      end,
+    },
+    ['q/'] = {
+      function()
+        require('cmd-window').open_window('search')
+      end,
+    },
+    ['q?'] = {
+      function()
+        require('cmd-window').open_window('search')
       end,
     },
   },

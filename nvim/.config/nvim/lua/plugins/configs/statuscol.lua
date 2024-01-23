@@ -36,9 +36,6 @@ statuscol.setup({
   relculright = true,
   segments = {
     {
-      text = { ' ' },
-    },
-    {
       sign = {
         name = { 'Diagnostic' },
         maxwidth = 1,
@@ -61,7 +58,10 @@ statuscol.setup({
     },
     {
       text = {
-        builtin.lnumfunc,
+        function(args)
+          local lnumfunc = builtin.lnumfunc(args)
+          return ((args.lnum == vim.fn.line('.')) and '%#LineNumber#' or '') .. lnumfunc
+        end,
         ' ',
       },
     },
