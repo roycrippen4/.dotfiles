@@ -217,6 +217,14 @@ M.general = {
   },
 
   n = {
+    ['<C-D-X>'] = {
+      function()
+        vim.cmd(':q')
+      end,
+      'quit vim',
+      opts = { noremap = true },
+    },
+
     -- probably the best keybind ever
     [';'] = { ':', 'enter command mode', opts = { nowait = true } },
     ['yil'] = { '^y$', 'yank in line', opts = { noremap = true } },

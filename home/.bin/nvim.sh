@@ -4,11 +4,14 @@
 DEBUG=0
 RELAUNCH=0       # By default, relaunch is turned off
 DIRECTORY=$(pwd) # Set default directory to current working directory
+VIM_CMD=""       # Empty by default
 
 # Function to display help message
 usage() {
-  echo "Usage: $0 [-d] [-r] [-v] [-h] [path]"
+  echo "Usage: $0 [-c] [-d] [-D] [-r] [-v] [-h] [path]"
+  echo "  -c cmd        Launch Neovim and execute a vimscript command"
   echo "  -d            Run in debug mode"
+  echo "  -D            Run in diff mode"
   echo "  -r            Enable re-launching of nvim upon exit"
   echo "  -u            Launch Neovim without loading config"
   echo "  -v            Display version information and exit"
@@ -17,8 +20,9 @@ usage() {
 }
 
 # Process options
-while getopts "dhurv" opt; do
+while getopts "dDhurvc" opt; do
   case $opt in
+  D) nvim -d ;;
   d) DEBUG=1 ;;
   r) RELAUNCH=1 ;;
   v)
@@ -50,9 +54,17 @@ fi
 
 export DEBUG
 
+nvim_cmd() {
+  if [ -n "$VIM_CMD" ]; then
+    nvim "$DIRECTORY" -c "$VIM_CMD"
+  else
+    nvim "$DIRECTORY"
+  fi
+}
+
 if [ $RELAUNCH -eq 1 ]; then
   while true; do
-    nvim "$DIRECTORY" # Quoted to handle paths with spaces
+    nvim_cmd
 
     if [ $? -ne 0 ]; then
       break
@@ -61,5 +73,5 @@ if [ $RELAUNCH -eq 1 ]; then
     echo 'restarting'
   done
 else
-  nvim "$DIRECTORY" # Quoted to handle paths with spaces
+  nvim_cmd
 fi
