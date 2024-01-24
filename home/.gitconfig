@@ -1,8 +1,6 @@
 [user]
 	name = roy.crippen4
 	email = roy.crippen4@archarithms.com
-[pull]
-	ff = only
 [merge]
   tool = "nvim"
 [mergetool]
