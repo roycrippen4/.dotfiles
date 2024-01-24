@@ -91,11 +91,9 @@ end
 function Logger:show()
   if not self.bufnr or not vim.api.nvim_buf_is_loaded(self.bufnr) then
     if os.getenv('DEBUG') == '1' then
-      vim.schedule(function()
+      vim.defer_fn(function()
         vim.cmd([[
-          vsplit
-        ]])
-        vim.cmd([[
+        vsplit
         NvimTreeToggle
         NvimTreeToggle
         wincmd l
@@ -105,7 +103,7 @@ function Logger:show()
     ]])
         -- require('harpoon'):list('relative'):select(1)
         require('harpoon.ui').nav_file(1)
-      end)
+      end, 0)
     end
 
     self.winnr = vim.api.nvim_get_current_win()
@@ -118,9 +116,6 @@ function Logger:show()
 end
 
 _G.log = function(msg)
-  if type(msg) ~= 'string' then
-    msg = vim.inspect(msg)
-  end
   require('plugins.local_plugs.logger'):log(msg)
 end
 

@@ -12,6 +12,10 @@ local orange = { 'orange', -10 }
 
 -- stylua: ignore
 M.add = {
+  Added                  = { fg = 'green' },
+  Changed                = { fg = l_blue },
+  Removed                = { fg = 'red' },
+
   -- Commandline
   CmdlineEx              = { fg =  {'red', -15}, bg = darkest_black },
   CmdlineHelp            = { fg = '#53bf00',     bg = darkest_black },

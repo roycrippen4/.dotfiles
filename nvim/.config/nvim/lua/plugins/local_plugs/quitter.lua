@@ -27,7 +27,7 @@ local function quit_vim()
   end
 
   if file_win_count == 0 then
-    vim.cmd('qa!')
+    vim.cmd('qa')
   end
 end
 

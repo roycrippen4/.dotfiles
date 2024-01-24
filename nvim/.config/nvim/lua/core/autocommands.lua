@@ -36,16 +36,38 @@ autocmd('FileType', {
   end,
 })
 
+local fake_session = augroup('FakeSession', { clear = true })
+autocmd('VimEnter', {
+  group = fake_session,
+  pattern = 'NvimTree_1',
+  callback = function()
+    vim.schedule(function()
+      local ui = require('harpoon.ui')
+      local mark = require('harpoon.mark')
+      local length = mark.get_length()
+
+      if length == 0 then
+        return
+      end
+
+      for i = 1, mark.get_length() do
+        ui.nav_file(i)
+      end
+      ui.nav_file(1)
+    end)
+  end,
+})
+
 -- Autocommand to restore the cursor position when the buffer is read
--- autocmd('BufReadPost', {
---   pattern = '*',
---   group = augroup('RestoreCursor', { clear = true }),
---   callback = function()
---     if vim.fn.line('\'"') > 0 and vim.fn.line('\'"') <= vim.fn.line('$') then
---       vim.cmd('normal! g`"')
---     end
---   end,
--- })
+autocmd('BufReadPost', {
+  pattern = '*',
+  group = augroup('RestoreCursor', { clear = true }),
+  callback = function()
+    if vim.fn.line('\'"') > 0 and vim.fn.line('\'"') <= vim.fn.line('$') then
+      vim.cmd('normal! g`"')
+    end
+  end,
+})
 
 local vert_help = augroup('VertHelp', {})
 autocmd('FileType', {
