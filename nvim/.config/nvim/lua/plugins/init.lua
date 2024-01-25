@@ -3,21 +3,17 @@ local default_plugins = {
   -- https://github.com/nvim-lua/plenary.nvim
   'nvim-lua/plenary.nvim',
 
-  {
-    'dev/cmd-window.nvim',
-    dev = true,
-    event = 'UIEnter',
-    init = function()
-      require('core.utils').load_mappings('cmd_window')
-    end,
-    config = function()
-      require('cmd-window').setup({
-        opts = {
-          debug = false,
-        },
-      })
-    end,
-  },
+  -- {
+  --   'dev/cmd-window.nvim',
+  --   dev = true,
+  --   event = 'UIEnter',
+  --   init = function()
+  --     require('core.utils').load_mappings('cmd_window')
+  --   end,
+  --   config = function()
+  --     require('cmd-window').setup()
+  --   end,
+  -- },
 
   {
     'mfussenegger/nvim-dap',

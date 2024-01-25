@@ -135,6 +135,7 @@ vim.lsp.handlers[methods.textDocument_hover] = enhanced_float_handler(vim.lsp.ha
 vim.lsp.handlers[methods.textDocument_signatureHelp] = enhanced_float_handler(vim.lsp.handlers.signature_help, false)
 
 --- HACK: Override `vim.lsp.util.stylize_markdown` to use Treesitter.
+---
 ---@param bufnr integer
 ---@param contents string[]
 ---@param opts table

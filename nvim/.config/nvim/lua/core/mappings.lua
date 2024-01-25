@@ -5,32 +5,32 @@ M.cmd_window = {
   n = {
     [';'] = {
       function()
-        require('cmd-window').open_window('normal_cmd')
+        require('cmd-window').cmdline()
       end,
     },
     [':'] = {
       function()
-        require('cmd-window').open_window('normal_cmd')
+        require('cmd-window').cmdline()
       end,
     },
     ['/'] = {
       function()
-        require('cmd-window').open_window('normal_search')
+        require('cmd-window').search()
       end,
     },
     ['q:'] = {
       function()
-        require('cmd-window').open_window('command')
+        require('cmd-window').cmdline_window()
       end,
     },
     ['q/'] = {
       function()
-        require('cmd-window').open_window('search')
+        require('cmd-window').search_window()
       end,
     },
     ['q?'] = {
       function()
-        require('cmd-window').open_window('search')
+        require('cmd-window').search_window()
       end,
     },
   },
