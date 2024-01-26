@@ -116,8 +116,8 @@ cmp.setup({
     }),
     ['<C-p>'] = cmp.mapping.select_prev_item(),
     ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-S-N>'] = cmp.mapping.scroll_docs(-4),
-    ['<C-S-P>'] = cmp.mapping.scroll_docs(4),
+    ['<C-S-N>'] = cmp.mapping.scroll_docs(4),
+    ['<C-S-P>'] = cmp.mapping.scroll_docs(-4),
     ['<Esc>'] = cmp.mapping.close(),
     ['<CR>'] = cmp.mapping.confirm({
       behavior = cmp.ConfirmBehavior.Insert,
