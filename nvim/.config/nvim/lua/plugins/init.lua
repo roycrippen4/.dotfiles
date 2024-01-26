@@ -6,7 +6,7 @@ local default_plugins = {
   -- {
   --   'dev/cmd-window.nvim',
   --   dev = true,
-  --   event = 'UIEnter',
+  --   event = 'VimEnter',
   --   init = function()
   --     require('core.utils').load_mappings('cmd_window')
   --   end,
