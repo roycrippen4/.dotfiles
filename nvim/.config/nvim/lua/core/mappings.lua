@@ -155,7 +155,10 @@ M.general = {
     [';'] = { ':', 'enter command mode', opts = { nowait = true } },
     ['yil'] = { '^y$', 'yank in line', opts = { noremap = true } },
 
-    -- record into the `q` macro register by default
+    -- shortcut to run :Inspect
+    ['<M-i>'] = { ':Inspect<CR>', 'Inspect word under cursor', opts = { nowait = true, silent = true } },
+
+    -- record into the `q` macro register by default,
     ['Q'] = { 'qq', 'instant record macro to q register', opts = { noremap = true } },
 
     -- send whitespace to black hole register

@@ -96,7 +96,7 @@ M.base46 = {
     'nvcheatsheet',
     'nvdash',
     'nvimtree',
-    'rainbowdelimiters',
+    -- 'rainbowdelimiters',
     'semantic_tokens',
     'statusline',
     'syntax',

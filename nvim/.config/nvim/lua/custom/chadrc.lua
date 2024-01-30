@@ -29,7 +29,7 @@ local function set_modules(modules)
 end
 
 M.ui = {
-  theme = 'onedark',
+  theme = 'rxyhn',
   hl_add = highlights.add,
   hl_override = highlights.override,
 
@@ -82,7 +82,7 @@ M.ui = {
     'nvcheatsheet',
     'nvdash',
     'nvimtree',
-    'rainbowdelimiters',
+    -- 'rainbowdelimiters',
     'semantic_tokens',
     'statusline',
     'syntax',
