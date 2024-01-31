@@ -90,22 +90,6 @@ end
 
 function Logger:show()
   if not self.bufnr or not vim.api.nvim_buf_is_loaded(self.bufnr) then
-    if os.getenv('DEBUG') == '1' then
-      vim.defer_fn(function()
-        vim.cmd([[
-        vsplit
-        NvimTreeToggle
-        NvimTreeToggle
-        wincmd l
-        vsplit
-        vertical resize 80
-        wincmd h
-    ]])
-        -- require('harpoon'):list('relative'):select(1)
-        require('harpoon.ui').nav_file(1)
-      end, 0)
-    end
-
     self.winnr = vim.api.nvim_get_current_win()
     self.bufnr = vim.api.nvim_create_buf(false, true)
     vim.api.nvim_buf_set_name(self.bufnr, 'logger')
@@ -115,23 +99,8 @@ function Logger:show()
   end
 end
 
-_G.log = function(msg)
-  require('plugins.local_plugs.logger'):log(msg)
+_G.log = function(...)
+  require('plugins.local_plugs.logger'):log(...)
 end
-
-vim.api.nvim_create_autocmd('VimEnter', {
-  callback = function()
-    if os.getenv('DEBUG') == '1' then
-      vim.cmd('Log')
-      log('Debug enabled')
-      log('')
-    end
-  end,
-})
-
-vim.api.nvim_create_user_command('Log', function()
-  local logger = require('plugins.local_plugs.logger')
-  logger:show()
-end, {})
 
 return Logger:new()

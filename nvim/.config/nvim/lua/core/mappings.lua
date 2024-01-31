@@ -388,6 +388,8 @@ M.whichkey = {
   },
 }
 
+local patterns = { '%<', '%>', "%'", '%"', '%(', '%)', '%{', '%}' }
+
 M.spider = {
   plugin = true,
   n = {
@@ -395,7 +397,7 @@ M.spider = {
       function()
         require('spider').motion('w', {
           customPatterns = {
-            patterns = { '%)', '%>' },
+            patterns = patterns,
             overrideDefault = false,
           },
         })
@@ -405,7 +407,7 @@ M.spider = {
       function()
         require('spider').motion('e', {
           customPatterns = {
-            patterns = { '%<' },
+            patterns = patterns,
             overrideDefault = false,
           },
         })
@@ -415,7 +417,7 @@ M.spider = {
       function()
         require('spider').motion('b', {
           customPatterns = {
-            patterns = { '%(', '%)', '%<', '%>' },
+            patterns = patterns,
             overrideDefault = false,
           },
         })
@@ -427,7 +429,7 @@ M.spider = {
       function()
         require('spider').motion('w', {
           customPatterns = {
-            patterns = { '%)', '%>' },
+            patterns = patterns,
             overrideDefault = false,
           },
         })
@@ -437,7 +439,7 @@ M.spider = {
       function()
         require('spider').motion('e', {
           customPatterns = {
-            patterns = { '%<' },
+            patterns = patterns,
             overrideDefault = false,
           },
         })
@@ -447,7 +449,7 @@ M.spider = {
       function()
         require('spider').motion('b', {
           customPatterns = {
-            patterns = { '%(', '%)', '%<', '%>' },
+            patterns = patterns,
             overrideDefault = false,
           },
         })
@@ -459,7 +461,7 @@ M.spider = {
       function()
         require('spider').motion('w', {
           customPatterns = {
-            patterns = { '%)', '%>' },
+            patterns = patterns,
             overrideDefault = false,
           },
         })
@@ -469,7 +471,7 @@ M.spider = {
       function()
         require('spider').motion('e', {
           customPatterns = {
-            patterns = { '%<' },
+            patterns = patterns,
             overrideDefault = false,
           },
         })
@@ -479,7 +481,7 @@ M.spider = {
       function()
         require('spider').motion('b', {
           customPatterns = {
-            patterns = { '%(', '%)', '%<', '%>' },
+            patterns = patterns,
             overrideDefault = false,
           },
         })

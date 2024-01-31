@@ -79,13 +79,15 @@ M.add = {
   WinBar                 = { fg = "red", bg = black },
   WinBarNC               = { fg = black, bg = black },
 
-  FloatTitle           = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
+  -- FloatTitle           = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
   Title                = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
   NormalFloat          = { bg = 'black' },
   RenamerTitle         = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
   LineNumber           = { fg = 'white' },
 
     ['@type.argument'] = { italic = true },
+    ['@keyword.operator'] = { fg = 'pink', italic = true },
+    ['@operator'] = { fg = 'pink' },
 }
 
 -- stylua: ignore

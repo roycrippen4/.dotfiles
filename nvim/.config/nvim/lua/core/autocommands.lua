@@ -53,7 +53,21 @@ autocmd('VimEnter', {
       for i = 1, mark.get_length() do
         ui.nav_file(i)
       end
-      ui.nav_file(1)
+
+      if os.getenv('DEBUG') == '1' then
+        require('plugins.local_plugs.logger'):show()
+        vim.defer_fn(function()
+          vim.cmd([[
+          vsplit 
+          vertical resize 80
+          wincmd h
+        ]])
+          ui.nav_file(1)
+        end, 0)
+        log('Debug enabled')
+      else
+        ui.nav_file(1)
+      end
     end)
   end,
 })
