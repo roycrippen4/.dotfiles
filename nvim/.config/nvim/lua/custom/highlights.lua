@@ -85,9 +85,13 @@ M.add = {
   RenamerTitle         = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
   LineNumber           = { fg = 'white' },
 
-    ['@type.argument'] = { italic = true },
-    ['@keyword.operator'] = { fg = 'pink', italic = true },
-    ['@operator'] = { fg = 'pink' },
+  ['@constant'] = { fg = { 'red', 5 } },
+  ['@keyword.operator'] = { fg = 'pink', italic = true },
+  ['@operator'] = { fg = 'pink' },
+  ['@type'] = { fg = 'cyan' },
+  ['@type.argument'] = { italic = true },
+  ['@variable'] = { fg = 'white' },
+  ['@variable.member'] = { fg = { 'red', 5 } },
 }
 
 -- stylua: ignore
