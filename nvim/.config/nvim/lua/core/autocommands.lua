@@ -160,11 +160,25 @@ autocmd('BufWritePre', {
 })
 
 -- Close Dressing inputs with q in normal mode
-vim.api.nvim_create_autocmd('FileType', {
+autocmd('FileType', {
   pattern = 'DressingInput',
   callback = function()
     vim.keymap.set('n', 'q', function()
       vim.api.nvim_win_close(0, true)
     end, { buffer = 0 })
+  end,
+})
+
+autocmd('FileType', {
+  group = augroup('DumbFormatter', { clear = true }),
+  pattern = 'lua',
+  callback = function()
+    vim.keymap.set('i', '<CR>', function()
+      if require('core.utils').should_format_lua_func() then
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR><Esc>O', true, true, true), 'n', true)
+      else
+        vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<CR>', true, true, true), 'n', true)
+      end
+    end, { expr = true, buffer = true })
   end,
 })

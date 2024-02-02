@@ -1,5 +1,3 @@
-log('utils.general required')
-
 local function generate_range(start, ending, step)
   local result = {}
   for i = start, ending, step do

@@ -84,6 +84,7 @@ M.add = {
   LineNumber           = { fg = 'white' },
 
   ['@constant'] = { fg = { 'red', 5 } },
+  ['@string.special.url.comment'] = { fg = 'white', underline = true },
   ['@keyword.operator'] = { fg = 'pink', italic = true },
   ['@operator'] = { fg = 'pink' },
   ['@type'] = { fg = 'cyan' },

@@ -59,6 +59,9 @@ function Logger:log(...)
     if type(item) == 'table' then
       item = vim.inspect(item)
     end
+    if type(item) == 'boolean' then
+      item = tostring(item)
+    end
     table.insert(processed, item)
   end
 
