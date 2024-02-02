@@ -1,7 +1,5 @@
 local M = {}
 
-local purple = true
-
 local cursorline = '#252931'
 local sep_color = '#454951'
 local black = { 'black', 0 }
@@ -81,7 +79,7 @@ M.add = {
 
   -- FloatTitle           = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
   Title                = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
-  NormalFloat          = { bg = 'black' },
+  NormalFloat          = { bg = { 'black', -2 } },
   RenamerTitle         = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
   LineNumber           = { fg = 'white' },
 
