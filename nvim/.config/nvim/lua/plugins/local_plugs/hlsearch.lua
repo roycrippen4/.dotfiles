@@ -25,6 +25,12 @@ local function draw_virt(cur, total)
 end
 
 vim.on_key(function(char)
+  if vim.fn.mode() == 'i' and vim.bo.ft == 'lua' then
+    if require('core.utils').should_format_lua_func() and '<CR>' == vim.fn.keytrans(char) then
+      vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>O', true, true, true), 'n', true)
+    end
+  end
+
   if is_new_search(char) then
     vim.schedule(function()
       local searchcount = vim.fn.searchcount()
