@@ -1,13 +1,12 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
-local ns_id = vim.api.nvim_create_namespace('HarpoonExtmarks')
 autocmd('FileType', {
   group = augroup('TablineHarpoonMarker', { clear = true }),
   pattern = 'harpoon',
   callback = function()
     local bufnr = vim.api.nvim_get_current_buf()
-    require('core.utils').highlight_marked_files(bufnr, ns_id)
+    require('core.utils').highlight_marked_files(bufnr, vim.api.nvim_create_namespace('HarpoonExtmarks'))
   end,
 })
 
@@ -19,9 +18,8 @@ autocmd('LspAttach', {
   end,
 })
 
-local CloseWithQ = vim.api.nvim_create_augroup('CloseWithQ', { clear = true })
 autocmd('FileType', {
-  group = CloseWithQ,
+  group = vim.api.nvim_create_augroup('CloseWithQ', { clear = true }),
   pattern = {
     'help',
     'man',
@@ -36,9 +34,9 @@ autocmd('FileType', {
   end,
 })
 
-local fake_session = augroup('FakeSession', { clear = true })
+-- Opens up all marked files. Also opens the logger buffer if -d gets passed in
 autocmd('VimEnter', {
-  group = fake_session,
+  group = augroup('FakeSession', { clear = true }),
   pattern = 'NvimTree_1',
   callback = function()
     vim.schedule(function()
@@ -64,7 +62,6 @@ autocmd('VimEnter', {
         ]])
           ui.nav_file(1)
         end, 0)
-        log('Debug enabled')
       else
         ui.nav_file(1)
       end
@@ -83,6 +80,7 @@ autocmd('BufReadPost', {
   end,
 })
 
+-- Forces help pages to be in a vertical split
 local vert_help = augroup('VertHelp', {})
 autocmd('FileType', {
   pattern = 'help',
@@ -121,33 +119,14 @@ autocmd({ 'InsertEnter', 'WinLeave' }, {
   end,
 })
 
----@param cwd string|nil
-local function set_titlestring(cwd)
-  local env = os.getenv('HOME')
-
-  if cwd == env then
-    vim.o.titlestring = '~/' .. '  '
-    return
-  end
-
-  if cwd and type(env) == 'string' then
-    local match = string.match(cwd, env)
-    if match then
-      vim.o.titlestring = cwd:gsub(match, '~') .. '  '
-      return
-    end
-    vim.o.titlestring = cwd
-  end
-end
-
--- Checks to see if a .nvmrc exists and sets node version if one is found.
 -- Also sets the title string for the kitty tabs
 autocmd('VimEnter', {
   callback = function()
-    set_titlestring(vim.fn.getcwd())
+    require('core.utils').set_titlestring(vim.fn.getcwd())
   end,
 })
 
+-- Adds missing commas to lua files
 local AddComma = augroup('AddComma', { clear = true })
 autocmd('BufWritePre', {
   group = AddComma,
@@ -169,6 +148,7 @@ autocmd('FileType', {
   end,
 })
 
+-- Highlights a url if cursor is on it
 autocmd('CursorMoved', {
   callback = function()
     require('core.utils').highlight_url()

@@ -77,12 +77,33 @@ local function add_inline_highlights(buf)
   end
 end
 
+--- Function to scroll documentation up and down without having to enter the window
+---@param bufnr integer
+---@param winnr integer
+---@param delta integer
+---@param content_height integer
+local function scroll_doc(bufnr, winnr, delta, content_height)
+  local info = vim.fn.getwininfo(winnr)[1]
+  local top = info.topline or 1
+  top = top + delta
+  top = math.max(top, 1)
+  top = math.min(top, content_height - info.height + 1)
+
+  vim.defer_fn(function()
+    vim.api.nvim_buf_call(bufnr, function()
+      vim.api.nvim_command('normal! ' .. top .. 'zt')
+      log('called')
+    end)
+  end, 0)
+end
+
 --- LSP handler that adds extra inline highlights, keymaps, and window options.
 --- Code inspired from `noice`.
 ---@param handler fun(err: any, result: any, ctx: any, config: any): integer?, integer?
 ---@param focusable boolean
 ---@return fun(err: any, result: any, ctx: any, config: any)
 local function enhanced_float_handler(handler, focusable)
+  local limit = vim.o.lines * 0.5
   return function(err, result, ctx, config)
     local bufnr, winnr = handler(
       err,
@@ -91,7 +112,7 @@ local function enhanced_float_handler(handler, focusable)
       vim.tbl_deep_extend('force', config or {}, {
         -- border = 'rounded',
         focusable = focusable,
-        max_height = math.floor(vim.o.lines * 0.5),
+        max_height = math.floor(limit),
         max_width = math.floor(vim.o.columns * 0.4),
       })
     )
@@ -105,6 +126,24 @@ local function enhanced_float_handler(handler, focusable)
 
     -- Extra highlights.
     add_inline_highlights(bufnr)
+
+    -- local content_height = #vim.api.nvim_buf_get_lines(bufnr, 0, -1, true)
+    -- if content_height > limit then
+    --   local main_win_config = vim.api.nvim_win_get_config(winnr)
+    --   local height = main_win_config.height
+    --   local width = main_win_config.width
+    --   local row = main_win_config.row[vim.val_idx]
+    --   local col = main_win_config.col[vim.val_idx] + width
+    --   log('height: ', height, ', row: ', row, ', col: ', col)
+    --   vim.api.nvim_open_win(0, false, {
+    --     relative = 'win',
+    --     focusable = false,
+    --     row = row,
+    --     col = col,
+    --     height = height,
+    --     width = 1,
+    --   })
+    -- end
 
     -- Add keymaps for opening links.
     if focusable and not vim.b[bufnr].markdown_keys then

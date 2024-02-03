@@ -29,6 +29,25 @@ local skip_ft = {
   'vim',
 }
 
+---@param cwd string|nil
+function M.set_titlestring(cwd)
+  local env = os.getenv('HOME')
+
+  if cwd == env then
+    vim.o.titlestring = '~/' .. '  '
+    return
+  end
+
+  if cwd and type(env) == 'string' then
+    local match = string.match(cwd, env)
+    if match then
+      vim.o.titlestring = cwd:gsub(match, '~') .. '  '
+      return
+    end
+    vim.o.titlestring = cwd
+  end
+end
+
 function M.highlight_url()
   if require('nvim-treesitter.parsers').has_parser() then
     local node = vim.treesitter.get_node({ lang = 'comment' })
