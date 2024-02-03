@@ -1,6 +1,9 @@
 local M = {}
 local merge_tb = vim.tbl_deep_extend
 
+vim.api.nvim_set_hl(0, 'UrlHighlight', { fg = 'gray' })
+local url_ns = vim.api.nvim_create_namespace('UrlHighlight')
+
 local skip_ft = {
   'NvimTree',
   'Trouble',
@@ -25,6 +28,22 @@ local skip_ft = {
   'toggleterm',
   'vim',
 }
+
+function M.highlight_url()
+  if require('nvim-treesitter.parsers').has_parser() then
+    local node = vim.treesitter.get_node({ lang = 'comment' })
+
+    if not node then
+      return
+    end
+
+    vim.api.nvim_buf_clear_namespace(0, url_ns, 0, -1)
+    if node:type() == 'uri' then
+      local line, col_start, _, col_end = node:range()
+      vim.api.nvim_buf_add_highlight(0, url_ns, 'UrlHighlight', line, col_start, col_end)
+    end
+  end
+end
 
 ---@return boolean
 function M.should_format_lua_func()

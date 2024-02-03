@@ -78,19 +78,19 @@ M.add = {
   WinBarNC               = { fg = black, bg = black },
 
   -- FloatTitle           = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
-  Title                = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
+  -- Title                = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
   NormalFloat          = { bg = { 'black', -2 } },
   RenamerTitle         = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
   LineNumber           = { fg = 'white' },
 
   ['@constant'] = { fg = { 'red', 5 } },
-  ['@string.special.url.comment'] = { fg = 'white', underline = true },
   ['@keyword.operator'] = { fg = 'pink', italic = true },
   ['@operator'] = { fg = 'pink' },
   ['@type'] = { fg = 'cyan' },
   ['@type.argument'] = { italic = true },
   ['@variable'] = { fg = 'white' },
   ['@variable.member'] = { fg = { 'red', 5 } },
+  ['@string.special.url.comment'] = { --[[ fg = 'white', ]] underline = true },
 }
 
 -- stylua: ignore

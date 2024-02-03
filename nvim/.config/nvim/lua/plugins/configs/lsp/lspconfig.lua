@@ -35,6 +35,7 @@ end
 
 -- Override the virtual text diagnostic handler so that the most severe diagnostic is shown first.
 local show_handler = vim.diagnostic.handlers.virtual_text.show
+assert(show_handler)
 local hide_handler = vim.diagnostic.handlers.virtual_text.hide
 vim.diagnostic.handlers.virtual_text = {
   show = function(ns, bufnr, diagnostics, opts)
@@ -88,7 +89,7 @@ local function enhanced_float_handler(handler, focusable)
       result,
       ctx,
       vim.tbl_deep_extend('force', config or {}, {
-        border = 'rounded',
+        -- border = 'rounded',
         focusable = focusable,
         max_height = math.floor(vim.o.lines * 0.5),
         max_width = math.floor(vim.o.columns * 0.4),

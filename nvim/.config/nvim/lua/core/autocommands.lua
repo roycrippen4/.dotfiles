@@ -11,13 +11,13 @@ autocmd('FileType', {
   end,
 })
 
--- autocmd('LspAttach', {
---   callback = function(args)
---     local client = vim.lsp.get_client_by_id(args.data.client_id)
---     ---@diagnostic disable-next-line
---     client.server_capabilities.semanticTokensProvider = nil
---   end,
--- })
+autocmd('LspAttach', {
+  callback = function(args)
+    local client = vim.lsp.get_client_by_id(args.data.client_id)
+    ---@diagnostic disable-next-line
+    client.server_capabilities.semanticTokensProvider = nil
+  end,
+})
 
 local CloseWithQ = vim.api.nvim_create_augroup('CloseWithQ', { clear = true })
 autocmd('FileType', {
@@ -166,5 +166,11 @@ autocmd('FileType', {
     vim.keymap.set('n', 'q', function()
       vim.api.nvim_win_close(0, true)
     end, { buffer = 0 })
+  end,
+})
+
+autocmd('CursorMoved', {
+  callback = function()
+    require('core.utils').highlight_url()
   end,
 })
