@@ -89,10 +89,10 @@ cmp.setup({
     completion = {
       winhighlight = 'Normal:CmpPmenu,CursorLine:CmpSel,Search:PmenuSel',
       scrollbar = true,
-      border = 'rounded',
+      -- border = 'rounded',
     },
     documentation = {
-      border = 'rounded',
+      -- border = 'rounded',
       winhighlight = 'Normal:CmpDoc',
       max_height = math.floor(vim.o.lines * 0.5),
       max_width = math.floor(vim.o.columns * 0.4),

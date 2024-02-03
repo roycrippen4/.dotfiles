@@ -1,7 +1,7 @@
 return {
   Lua = {
     format = { enable = false },
-    semantic = { enable = false },
+    semantic = { enable = true },
     diagnostics = {
       globals = { 'vim' },
     },
