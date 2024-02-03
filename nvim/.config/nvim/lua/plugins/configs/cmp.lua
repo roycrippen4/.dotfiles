@@ -44,19 +44,6 @@ cmp.setup({
   sources = {
     { name = 'luasnip', keyword_length = 2 },
     { name = 'nvim_lsp', trigger_characters = { '.', ':', '@' } },
-    -- {
-    --   -- name = 'buffer',
-    --   keyword_length = 5,
-    --   option = {
-    --     get_bufnrs = function()
-    --       local bufs = {}
-    --       for _, win in ipairs(vim.api.nvim_list_wins()) do
-    --         bufs[vim.api.nvim_win_get_buf(win)] = true
-    --       end
-    --       return vim.tbl_keys(bufs)
-    --     end,
-    --   },
-    -- },
     -- { name = 'nvim_lsp_signature_help' },
     { name = 'path' },
     { name = 'crates' },
@@ -76,13 +63,10 @@ cmp.setup({
       cmp.config.compare.order,
     },
   },
-  experimental = {
-    ghost_text = true,
-  },
   preselect = cmp.PreselectMode.None,
   formatting = format,
   completion = {
-    completeopt = 'menu,menuone',
+    completeopt = 'menu,menuone,noselect',
     autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged },
   },
   window = {
@@ -146,24 +130,3 @@ cmp.setup.cmdline(':', {
     },
   }),
 })
-
--- Override the documentation handler to remove the redundant detail section.
----@diagnostic disable-next-line: duplicate-set-field
-require('cmp.entry').get_documentation = function(self)
-  local item = self:get_completion_item()
-
-  if item.documentation then
-    return vim.lsp.util.convert_input_to_markdown_lines(item.documentation)
-  end
-
-  if item.detail then
-    local ft = self.context.filetype
-    local dot_idx = string.find(ft, '%.')
-    if dot_idx ~= nil then
-      ft = string.sub(ft, 0, dot_idx - 1)
-    end
-    return (vim.split(('```%s\n%s```'):format(ft, vim.trim(item.detail)), '\n'))
-  end
-
-  return {}
-end
