@@ -77,8 +77,6 @@ M.add = {
   WinBar                 = { fg = "red", bg = black },
   WinBarNC               = { fg = black, bg = black },
 
-  -- FloatTitle           = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
-  -- Title                = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
   NormalFloat          = { bg = { 'black', -2 } },
   RenamerTitle         = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
   LineNumber           = { fg = 'white' },

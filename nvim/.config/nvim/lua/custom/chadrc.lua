@@ -1,6 +1,3 @@
-package.path = package.path .. ';' .. vim.fn.expand('$HOME') .. '/.luarocks/share/lua/5.1/?/init.lua;'
-package.path = package.path .. ';' .. vim.fn.expand('$HOME') .. '/.luarocks/share/lua/5.1/?.lua;'
-
 local M = {}
 local tab_modules = require('plugins.local_plugs.tabufline')
 local status_modules = require('plugins.local_plugs.statusline')
@@ -85,7 +82,7 @@ M.ui = {
     'nvcheatsheet',
     'nvdash',
     'nvimtree',
-    -- 'rainbowdelimiters',
+    'rainbowdelimiters',
     -- 'semantic_tokens',
     'statusline',
     'syntax',

@@ -16,24 +16,6 @@ local default_plugins = {
   -- },
 
   {
-    -- https://github.com/3rd/image.nvim
-    '3rd/image.nvim',
-    ft = { 'markdown', 'vimwiki' },
-    opts = {
-      backend = 'kitty',
-      integrations = {
-        markdown = {
-          enabled = true,
-          clear_in_insert_mode = false,
-          download_remote_images = true,
-          only_render_image_at_cursor = true,
-          filetypes = { 'markdown', 'vimwiki' },
-        },
-      },
-    },
-  },
-
-  {
     'mfussenegger/nvim-dap',
     dependencies = {
       'rcarriga/nvim-dap-ui',

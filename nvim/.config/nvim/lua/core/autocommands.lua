@@ -56,7 +56,7 @@ autocmd('VimEnter', {
         require('plugins.local_plugs.logger'):show()
         vim.defer_fn(function()
           vim.cmd([[
-          vsplit 
+          vsplit
           vertical resize 80
           wincmd h
         ]])
@@ -145,12 +145,5 @@ autocmd('FileType', {
     vim.keymap.set('n', 'q', function()
       vim.api.nvim_win_close(0, true)
     end, { buffer = 0 })
-  end,
-})
-
--- Highlights a url if cursor is on it
-autocmd('CursorMoved', {
-  callback = function()
-    require('core.utils').highlight_url()
   end,
 })
