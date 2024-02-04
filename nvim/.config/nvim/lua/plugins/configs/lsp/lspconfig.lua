@@ -2,17 +2,8 @@ local utils = require('core.utils')
 local methods = vim.lsp.protocol.Methods
 local M = {}
 
-M.on_attach = function(client, bufnr)
+M.on_attach = function(_, bufnr)
   utils.load_mappings('lspconfig', { buffer = bufnr })
-  if client.supports_method('textDocument/signatureHelp') then
-    vim.api.nvim_create_autocmd('CursorHoldI', {
-      pattern = '*',
-      group = vim.api.nvim_create_augroup('LspSignature', { clear = true }),
-      callback = function()
-        vim.lsp.buf.signature_help()
-      end,
-    })
-  end
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()

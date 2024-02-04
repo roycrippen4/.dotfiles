@@ -44,7 +44,7 @@ cmp.setup({
   sources = {
     { name = 'luasnip', keyword_length = 2 },
     { name = 'nvim_lsp', trigger_characters = { '.', ':', '@' } },
-    -- { name = 'nvim_lsp_signature_help' },
+    { name = 'nvim_lsp_signature_help' },
     { name = 'path' },
     { name = 'crates' },
   },
@@ -63,7 +63,7 @@ cmp.setup({
       cmp.config.compare.order,
     },
   },
-  preselect = cmp.PreselectMode.None,
+  preselect = cmp.PreselectMode.Insert,
   formatting = format,
   completion = {
     completeopt = 'menu,menuone,noselect',
