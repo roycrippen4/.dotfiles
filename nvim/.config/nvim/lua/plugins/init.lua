@@ -197,15 +197,24 @@ local default_plugins = {
     end,
   },
 
+  -- {
+  --   'altermo/ultimate-autopair.nvim',
+  --   event = 'InsertEnter',
+  --   branch = 'v0.6',
+  --   opts = function()
+  --     return require('plugins.configs.ult-autopair')
+  --   end,
+  --   config = function(_, opts)
+  --     require('ultimate-autopair').setup(opts)
+  --   end,
+  -- },
+
   {
-    'altermo/ultimate-autopair.nvim',
+    -- https://github.com/windwp/nvim-autopairs
+    'windwp/nvim-autopairs',
     event = 'InsertEnter',
-    branch = 'v0.6',
-    opts = function()
-      return require('plugins.configs.ult-autopair')
-    end,
-    config = function(_, opts)
-      require('ultimate-autopair').setup(opts)
+    config = function()
+      require('plugins.configs.autopairs')
     end,
   },
 

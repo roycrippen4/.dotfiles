@@ -31,15 +31,6 @@ local format = {
   end,
 }
 
-cmp.event:on('confirm_done', function(event)
-  local completion_kind = event.entry:get_completion_item().kind
-
-  if vim.tbl_contains({ kind.Function, kind.Method }, completion_kind) and vim.bo.ft ~= 'rust' then
-    local left = vim.api.nvim_replace_termcodes('<Left>', true, true, true)
-    vim.api.nvim_feedkeys('()' .. left, 'n', false)
-  end
-end)
-
 cmp.setup({
   sources = {
     { name = 'luasnip', keyword_length = 2 },
