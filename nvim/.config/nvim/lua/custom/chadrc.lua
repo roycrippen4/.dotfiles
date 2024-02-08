@@ -41,26 +41,13 @@ M.ui = {
       modules[4] = ''
     end,
     enabled = true,
-    lazyload = false,
+    lazyload = true,
   },
 
   statusline = {
     overriden_modules = function(modules)
       set_modules(modules)
     end,
-  },
-
-  custom_colors = {
-    cursorline = '#252931',
-    sep_color = '#454951',
-    black = 'black',
-    darkest_black = { 'black', -0.9 },
-    d_yellow = { 'yellow', -20 },
-    d_red = { 'red', -10 },
-    green = { 'green', -10 },
-    l_blue = '#00C5FF',
-    orange = { 'orange', -10 },
-    pink = { 'pink', -10 },
   },
 
   integrations = {

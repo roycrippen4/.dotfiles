@@ -1,34 +1,42 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
+local namespace = vim.api.nvim_create_namespace
+local general = augroup('General', { clear = true })
+local pattern = { 'DressingInput', 'help', 'logger', 'man', 'qf', 'query', 'scratch', 'undotree' }
+
+autocmd('TextYankPost', {
+  group = general,
+  callback = function()
+    vim.highlight.on_yank()
+  end,
+  pattern = '*',
+})
 
 autocmd('FileType', {
-  group = augroup('TablineHarpoonMarker', { clear = true }),
+  group = general,
   pattern = 'harpoon',
   callback = function()
     local bufnr = vim.api.nvim_get_current_buf()
-    require('core.utils').highlight_marked_files(bufnr, vim.api.nvim_create_namespace('HarpoonExtmarks'))
+    require('core.utils').highlight_marked_files(bufnr, namespace('HarpoonExtmarks'))
+    vim.keymap.set('n', 'K', '', { silent = true, buffer = bufnr })
   end,
 })
 
-autocmd('LspAttach', {
-  callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-    ---@diagnostic disable-next-line
-    client.server_capabilities.semanticTokensProvider = nil
-  end,
-})
-
+-- Forces help pages to be in a vertical split
 autocmd('FileType', {
-  group = vim.api.nvim_create_augroup('CloseWithQ', { clear = true }),
-  pattern = {
-    'help',
-    'man',
-    'qf',
-    'query',
-    'scratch',
-    'undotree',
-    'logger',
-  },
+  pattern = 'help',
+  group = general,
+  callback = function()
+    vim.api.nvim_set_option_value('bufhidden', 'unload', { scope = 'local' })
+    vim.cmd('wincmd L')
+    vim.api.nvim_win_set_width(0, 100)
+  end,
+})
+
+-- Sets many plugin windows to close on `q`
+autocmd('FileType', {
+  group = general,
+  pattern = pattern,
   callback = function(args)
     vim.keymap.set('n', 'q', '<cmd>quit<cr>', { buffer = args.buf })
   end,
@@ -36,9 +44,12 @@ autocmd('FileType', {
 
 -- Opens up all marked files. Also opens the logger buffer if -d gets passed in
 autocmd('VimEnter', {
-  group = augroup('FakeSession', { clear = true }),
+  group = general,
   pattern = 'NvimTree_1',
+  once = true,
   callback = function()
+    require('core.utils').set_titlestring(vim.fn.getcwd())
+
     vim.schedule(function()
       local ui = require('harpoon.ui')
       local mark = require('harpoon.mark')
@@ -72,7 +83,7 @@ autocmd('VimEnter', {
 -- Autocommand to restore the cursor position when the buffer is read
 autocmd('BufReadPost', {
   pattern = '*',
-  group = augroup('RestoreCursor', { clear = true }),
+  group = general,
   callback = function()
     if vim.fn.line('\'"') > 0 and vim.fn.line('\'"') <= vim.fn.line('$') then
       vim.cmd('normal! g`"')
@@ -80,31 +91,18 @@ autocmd('BufReadPost', {
   end,
 })
 
--- Forces help pages to be in a vertical split
-local vert_help = augroup('VertHelp', {})
-autocmd('FileType', {
-  pattern = 'help',
-  group = vert_help,
-  callback = function()
-    vim.api.nvim_set_option_value('bufhidden', 'unload', { scope = 'local' })
-    vim.cmd('wincmd L')
-    vim.api.nvim_win_set_width(0, 100)
-  end,
-})
-
 -- Disable diagnostics in node_modules (0 is current buffer only)
 autocmd({ 'BufRead', 'BufNewFile' }, {
-  group = augroup('NodeModulesDiagnostics', { clear = true }),
+  group = general,
   pattern = '*/node_modules/*',
   callback = function(args)
     vim.diagnostic.disable(args.buf)
   end,
 })
 
-local CursorLineToggle = augroup('CursorLineToggle', { clear = true })
 -- Turns on the cursorline
 autocmd({ 'InsertLeave', 'WinEnter' }, {
-  group = CursorLineToggle,
+  group = general,
   callback = function()
     vim.o.cursorline = true
     vim.api.nvim_set_hl(0, 'CursorLine', { link = 'NvimTreeCursorLine' })
@@ -113,37 +111,20 @@ autocmd({ 'InsertLeave', 'WinEnter' }, {
 
 -- Turns off the cursorline
 autocmd({ 'InsertEnter', 'WinLeave' }, {
-  group = CursorLineToggle,
+  group = general,
   callback = function()
     vim.o.cursorline = false
   end,
 })
 
--- Also sets the title string for the kitty tabs
-autocmd('VimEnter', {
-  callback = function()
-    require('core.utils').set_titlestring(vim.fn.getcwd())
-  end,
-})
-
 -- Adds missing commas to lua files
-local AddComma = augroup('AddComma', { clear = true })
 autocmd('BufWritePre', {
-  group = AddComma,
+  group = general,
+  pattern = 'lua',
   callback = function()
     local diagnostics = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
     if #diagnostics > 0 then
       require('core.utils').add_missing_commas(diagnostics)
     end
-  end,
-})
-
--- Close Dressing inputs with q in normal mode
-autocmd('FileType', {
-  pattern = 'DressingInput',
-  callback = function()
-    vim.keymap.set('n', 'q', function()
-      vim.api.nvim_win_close(0, true)
-    end, { buffer = 0 })
   end,
 })

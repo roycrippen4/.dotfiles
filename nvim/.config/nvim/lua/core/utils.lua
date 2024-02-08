@@ -64,22 +64,7 @@ function M.highlight_url()
   end
 end
 
----@return boolean
-function M.should_format_lua_func()
-  local line = vim.api.nvim_get_current_line()
-  local col = vim.fn.getpos('.')[3]
-  local pattern = '%)%s*end$'
-  local start_pos, end_pos = line:find(pattern)
-
-  if start_pos then
-    local res = col > start_pos and col <= end_pos
-    return res
-  end
-
-  return false
-end
-
---- Adds highlighting to any marked files that are currently visible behind the harpoon floating window
+--- Adds highlighting to any marked files that are currently visible
 ---@param bufnr integer harpoon.ui buffer handle
 ---@param ns_id integer namespace identifier
 M.highlight_marked_files = function(bufnr, ns_id)

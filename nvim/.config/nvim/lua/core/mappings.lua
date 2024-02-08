@@ -1,40 +1,90 @@
 local M = {}
 
-M.cmd_window = {
-  plugin = true,
+M.terminal = {
   n = {
-    [';'] = {
+    -- toggle terms
+    ['<A-v>'] = {
       function()
-        require('cmd-window').cmdline()
+        require('plugins.local_plugs.term').toggle({ pos = 'vsp', id = 'vertical', size = 0.3, auto_insert = true })
       end,
+      'New vertical term',
     },
-    [':'] = {
+
+    ['<A-h>'] = {
       function()
-        require('cmd-window').cmdline()
+        require('plugins.local_plugs.term').toggle({ pos = 'sp', id = 'horizontal', size = 0.2, auto_insert = true })
       end,
+      'New horizontal term',
     },
-    ['/'] = {
+
+    ['<A-f>'] = {
       function()
-        require('cmd-window').search()
+        require('plugins.local_plugs.term').toggle({ pos = 'float', id = 'float' })
       end,
+      'Toggleable Floating term',
     },
-    ['q:'] = {
+  },
+
+  -- toggle terms in terminal mode
+  t = {
+    ['<A-v>'] = {
       function()
-        require('cmd-window').cmdline_window()
+        require('plugins.local_plugs.term').toggle({ pos = 'vsp', id = 'vertical' })
       end,
+      'New vertical term',
     },
-    ['q/'] = {
+
+    ['<A-h>'] = {
       function()
-        require('cmd-window').search_window()
+        require('plugins.local_plugs.term').toggle({ pos = 'sp', id = 'horizontal' })
       end,
+      'New vertical term',
     },
-    ['q?'] = {
+
+    ['<A-f>'] = {
       function()
-        require('cmd-window').search_window()
+        require('plugins.local_plugs.term').toggle({ pos = 'float', id = 'float' })
       end,
+      'Toggleable Floating term',
     },
   },
 }
+
+-- M.cmd_window = {
+--   plugin = true,
+--   n = {
+--     [';'] = {
+--       function()
+--         require('cmd-window').cmdline()
+--       end,
+--     },
+--     [':'] = {
+--       function()
+--         require('cmd-window').cmdline()
+--       end,
+--     },
+--     ['/'] = {
+--       function()
+--         require('cmd-window').search()
+--       end,
+--     },
+--     ['q:'] = {
+--       function()
+--         require('cmd-window').cmdline_window()
+--       end,
+--     },
+--     ['q/'] = {
+--       function()
+--         require('cmd-window').search_window()
+--       end,
+--     },
+--     ['q?'] = {
+--       function()
+--         require('cmd-window').search_window()
+--       end,
+--     },
+--   },
+-- }
 
 M.harpoon = {
   plugin = true,
@@ -157,9 +207,6 @@ M.general = {
 
     -- shortcut to run :Inspect
     ['<M-i>'] = { ':Inspect<CR>', 'Inspect word under cursor', opts = { nowait = true, silent = true } },
-
-    -- record into the `q` macro register by default,
-    ['Q'] = { 'qq', 'instant record macro to q register', opts = { noremap = true } },
 
     -- send whitespace to black hole register
     ['dd'] = {

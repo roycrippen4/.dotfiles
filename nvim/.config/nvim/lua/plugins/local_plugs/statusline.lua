@@ -179,7 +179,7 @@ M.file_info = function()
   end
 
   local filetypes = {
-    toggleterm = {
+    terminal = {
       icon = '%#St_toggleterm#  ',
       label = 'TOGGLETERM',
     },

@@ -33,9 +33,7 @@ M.add = {
   NvimTreeBookmark       = { fg = { "red",    -10 } },
   NvimTreeBookmarkHL     = { fg = { "red",    -10 } },
   NvimTreeOpenedFile     = { fg = { "yellow", -10 } },
-  NvimTreeTitle          = { fg = { "yellow", -10 }, bg = "darker_black", sp = sep_color,  },
-  NvimTreeTitleSepOff    = { fg = sep_color,         bg = "darker_black", sp = sep_color,   },
-  NvimTreeTitleSepOn     = { fg = sep_color,         bg = "black",        sp = sep_color,  },
+  NvimTreeTitle          = { fg = { "yellow", -10 }, bg = darkest_black, sp = sep_color,  },
   -- Rainbow Delim
   RainbowDelimiterBlue   = { fg = 'blue'   },
   RainbowDelimiterCyan   = { fg = 'cyan'   },
@@ -88,15 +86,19 @@ M.add = {
   ['@type.argument'] = { italic = true },
   ['@variable'] = { fg = 'white' },
   ['@variable.member'] = { fg = { 'red', 5 } },
-  ['@string.special.url.comment'] = { --[[ fg = 'white', ]] underline = true },
+  ['@string.special.url.comment'] = { fg = 'light_gray', underline = true },
 }
 
 -- stylua: ignore
 M.override = {
+  TelescopeNormal       = { bg = { 'black', -3 }  },
+  TelescopeBorder       = { fg = { 'black', -3 },  bg = { 'black', -3 }  },
+  TelescopeResultsTitle = { link = 'TelescopeBorder' },
+
   CmpPmenu             = { bg = 'black' },
-  Comment = { italic = true },
+  Comment              = { italic = true },
   FloatBorder          = { fg = l_blue, bg = 'black' },
-  NvimTreeWinSeparator = { fg = black,          bg = 'black' },
+
   -- Statusline
   St_CommandMode      = { fg = d_red,            bg = darkest_black },
   St_CommandModeSep   = { fg = d_red,            bg = darkest_black },
@@ -115,27 +117,27 @@ M.override = {
   St_NormalModeSep    = { fg = l_blue,           bg = darkest_black },
   St_ReplaceMode      = { fg = orange,           bg = darkest_black },
   St_ReplaceModeSep   = { fg = orange,           bg = darkest_black },
-  St_SelectMode       = { fg = 'pink',             bg = darkest_black },
-  St_SelectModeSep    = { fg = 'pink',             bg = darkest_black },
+  St_SelectMode       = { fg = 'pink',           bg = darkest_black },
+  St_SelectModeSep    = { fg = 'pink',           bg = darkest_black },
   St_TerminalMode     = { fg = green,            bg = darkest_black },
   St_TerminalModeSep  = { fg = green,            bg = darkest_black },
-  St_VisualMode       = { fg = 'pink',             bg = darkest_black },
-  St_VisualModeSep    = { fg = 'pink',             bg = darkest_black },
+  St_VisualMode       = { fg = 'pink',           bg = darkest_black },
+  St_VisualModeSep    = { fg = 'pink',           bg = darkest_black },
   St_cwd_sep          = { fg = { 'red',   -15 }, bg = darkest_black },
   St_file_info        = { fg = { 'white', -10 }, bg = darkest_black },
   St_file_sep         = { fg = { 'grey',   10 }, bg = darkest_black, bold = true },
   St_gitIcons         = { fg = { 'white', -10 }, bg = darkest_black, italic = true, bold = false },
-  St_lspError         = { bg = darkest_black },
-  St_lspWarning       = { bg = darkest_black },
   St_pos_sep          = { fg = '#d6a000',        bg = darkest_black, bold = false },
   St_pos_text         = { fg = '#d6a000',        bg = darkest_black, bold = false },
+  St_lspError         = { bg = darkest_black },
+  St_lspWarning       = { bg = darkest_black },
+
   -- Tabline
-  TbLineBufOff         = { fg = 'grey', bg = 'darker_black', sp = sep_color,  },
-  TbLineBufOffClose    = { bg = 'darker_black',              sp = sep_color,  },
-  TbLineBufOffModified = { bg = 'darker_black',              sp = sep_color,  },
+  TblineFill           = { bg = 'darker_black',                sp = sep_color,  },
+  TbLineBufOffClose    = { bg = 'darker_black',                sp = sep_color,  },
+  TbLineBufOffModified = { bg = 'darker_black',                sp = sep_color,  },
+  TbLineBufOff         = { fg = 'grey',   bg = 'darker_black', sp = sep_color,  },
   TbLineBufOn          = { fg = d_yellow },
-  TblineFill           = { bg = 'darker_black',              sp = sep_color,  },
-  WinSeparator         = { fg = 'yellow',       bg = 'black' },
 }
 
 return M
