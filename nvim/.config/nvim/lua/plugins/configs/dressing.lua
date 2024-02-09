@@ -12,9 +12,9 @@ dressing.setup({
         return {
           min_width = (function()
             local path_length = #opts.default
-            return path_length + 5
+            return path_length + 8
           end)(),
-          title_pos = 'left',
+          title_pos = 'center',
         }
       end
 
@@ -44,13 +44,20 @@ dressing.setup({
 
       if opts.prompt == 'Rename to ' then
         local name = tree.get_node_under_cursor().name
-        opts.prompt = 'Rename ' .. name .. '?'
-        return nil
+        opts.prompt = ' Rename ' .. name .. '? '
+        return {
+          width = nil,
+          min_width = (function()
+            local length = #opts.prompt + 4
+            return length
+          end)(),
+          title_pos = 'center',
+        }
       end
       return nil
     end,
     win_options = {
-      winhighlight = 'FloatBorder:CmpBorder',
+      winhighlight = 'Normal:DressingNormal,FloatBorder:DressingBorder,Title:DressingTitle',
     },
   },
 })

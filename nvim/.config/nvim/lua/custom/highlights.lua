@@ -23,9 +23,14 @@ M.add = {
   CmdlineSearch          = { fg = '#cc5e00',     bg = darkest_black },
   CmdlineSub             = { fg =  l_blue,       bg = darkest_black },
   CmdlineVisualSub       = { fg =  'pink',         bg = darkest_black },
+  -- dressing
+  DressingBorder = { fg = 'red', bg = nil },
+  DressingNormal = { bg = 'black' },
+  DressingTitle  = { fg = 'red', bg = 'black' },
+
   -- harpoon
-  HarpoonWindow   = { bg = darkest_black, },
-  HarpoonBorder   = { fg = l_blue, bg = 'black' },
+  HarpoonWindow   = { bg = 'black', },
+  HarpoonBorder   = { fg = 'blue', bg = 'black' },
   HarpoonOpenMark = { fg = 'pink' },
   -- Noice
   NoiceVirtualTextOn     = { fg = '#53bf00',     bg = cursorline,    italic = true },
@@ -97,7 +102,7 @@ M.override = {
 
   CmpPmenu             = { bg = 'black' },
   Comment              = { italic = true },
-  FloatBorder          = { fg = l_blue, bg = 'black' },
+  FloatBorder          = { fg = l_blue, bg = darkest_black },
 
   -- Statusline
   St_CommandMode      = { fg = d_red,            bg = darkest_black },

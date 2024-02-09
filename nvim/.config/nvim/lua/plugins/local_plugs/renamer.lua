@@ -4,7 +4,7 @@ M.open = function()
   local currName = vim.fn.expand('<cword>')
 
   vim.ui.input({
-    prompt = 'Rename',
+    prompt = ' Refactor: ' .. currName .. ' ',
     default = currName,
   }, function(newName)
     require('plugins.local_plugs.renamer').rename(newName, currName)
