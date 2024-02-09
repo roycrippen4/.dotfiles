@@ -94,18 +94,21 @@
 ---@alias Relative "editor"|"win"|"cursor"|"mouse"
 ---@alias Border "none"|"single"|"ouble"|"rounded"|"solid"|"shadow"
 ---@alias Sizes { sp: number, vsp: number }
----@alias FloatConfig { relative?: Relative , row?: number, col?: number, width?: number, height?: number, border?: Border }
----@alias Behavior { auto_insert?: boolean }
 
----@class TermConfig
----@field sizes? Sizes
----@field float? FloatConfig
----@field behavior? Behavior
-
----@class TermOpts
----@field auto_insert boolean
----@field bufnr integer
----@field win integer
----@field id 'float'|'horizontal'|'vertical'
----@field pos 'sp'|'vsp'|'float'
+---@class SplitOpts
+---@field resize "height"|"width"
 ---@field size number
+
+---@class FloatOpts
+---@field relative Relative
+---@field row number
+---@field col number
+---@field height number
+---@field width number
+---@field border Border
+
+---@class Terminal
+---@field bufnr integer|nil
+---@field winnr integer|nil
+---@field visible boolean
+---@field config FloatOpts|SplitOpts

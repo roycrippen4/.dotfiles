@@ -5,21 +5,21 @@ M.terminal = {
     -- toggle terms
     ['<A-v>'] = {
       function()
-        require('plugins.local_plugs.term').toggle({ pos = 'vsp', id = 'vertical', size = 0.3, auto_insert = true })
+        require('plugins.local_plugs.term').toggle('V')
       end,
       'New vertical term',
     },
 
     ['<A-h>'] = {
       function()
-        require('plugins.local_plugs.term').toggle({ pos = 'sp', id = 'horizontal', size = 0.2, auto_insert = true })
+        require('plugins.local_plugs.term').toggle('H')
       end,
       'New horizontal term',
     },
 
     ['<A-f>'] = {
       function()
-        require('plugins.local_plugs.term').toggle({ pos = 'float', id = 'float' })
+        require('plugins.local_plugs.term').toggle('F')
       end,
       'Toggleable Floating term',
     },
@@ -29,21 +29,21 @@ M.terminal = {
   t = {
     ['<A-v>'] = {
       function()
-        require('plugins.local_plugs.term').toggle({ pos = 'vsp', id = 'vertical' })
+        require('plugins.local_plugs.term').toggle('V')
       end,
       'New vertical term',
     },
 
     ['<A-h>'] = {
       function()
-        require('plugins.local_plugs.term').toggle({ pos = 'sp', id = 'horizontal' })
+        require('plugins.local_plugs.term').toggle('H')
       end,
       'New vertical term',
     },
 
     ['<A-f>'] = {
       function()
-        require('plugins.local_plugs.term').toggle({ pos = 'float', id = 'float' })
+        require('plugins.local_plugs.term').toggle('F')
       end,
       'Toggleable Floating term',
     },

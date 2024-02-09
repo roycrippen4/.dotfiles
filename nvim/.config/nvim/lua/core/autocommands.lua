@@ -104,8 +104,10 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
 autocmd({ 'InsertLeave', 'WinEnter' }, {
   group = general,
   callback = function()
-    vim.o.cursorline = true
-    vim.api.nvim_set_hl(0, 'CursorLine', { link = 'NvimTreeCursorLine' })
+    if vim.bo.ft ~= 'terminal' then
+      vim.o.cursorline = true
+      vim.api.nvim_set_hl(0, 'CursorLine', { link = 'NvimTreeCursorLine' })
+    end
   end,
 })
 
@@ -120,10 +122,11 @@ autocmd({ 'InsertEnter', 'WinLeave' }, {
 -- Adds missing commas to lua files
 autocmd('BufWritePre', {
   group = general,
-  pattern = 'lua',
+  pattern = '*',
   callback = function()
     local diagnostics = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
     if #diagnostics > 0 then
+      log('comma')
       require('core.utils').add_missing_commas(diagnostics)
     end
   end,
