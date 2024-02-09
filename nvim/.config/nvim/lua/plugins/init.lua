@@ -50,31 +50,6 @@ local default_plugins = {
     end,
   },
 
-  -- {
-  --   'nvim-zh/colorful-winsep.nvim',
-  --   event = { 'WinNew' },
-  --   config = function()
-  --     local colorful_winsep = require('colorful-winsep')
-  --     colorful_winsep.setup({
-  --       symbols = { '', '', '', '', '', '' },
-  --       interval = 30,
-  --       no_exec_files = { 'TelescopePrompt', 'NvimTree', 'logger' },
-
-  --       create_event = function()
-  --         local win_n = require('colorful-winsep.utils').calculate_number_windows()
-  --         if win_n == 2 then
-  --           local win_id = vim.fn.win_getid(vim.fn.winnr('h'))
-  --           ---@diagnostic disable-next-line
-  --           local filetype = vim.api.nvim_buf_get_option(vim.api.nvim_win_get_buf(win_id), 'filetype')
-  --           if filetype == 'NvimTree' then
-  --             colorful_winsep.NvimSeparatorDel()
-  --           end
-  --         end
-  --       end,
-  --     })
-  --   end,
-  -- },
-
   {
     -- https://github.com/kdheepak/lazygit.nvim
     'kdheepak/lazygit.nvim',
@@ -87,19 +62,6 @@ local default_plugins = {
       vim.g.lazygit_use_custom_config_file_path = 0
     end,
   },
-
-  -- {
-  --   -- https://github.com/akinsho/toggleterm.nvim
-  --   'akinsho/toggleterm.nvim',
-  --   keys = { '<M-h>', '<M-v>', '<M-f>' },
-  --   init = function()
-  --     require('core.utils').lazy_load('toggleterm.nvim')
-  --   end,
-  --   config = function()
-  --     require('plugins.configs.toggleterm').config()
-  --     require('toggleterm').setup()
-  --   end,
-  -- },
 
   {
     -- https://github.com/NvChad/base46
