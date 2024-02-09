@@ -4,7 +4,9 @@ local M = {}
 
 M.on_attach = function(client, bufnr)
   utils.load_mappings('lspconfig', { buffer = bufnr })
-  client.server_capabilities.semanticTokensProvider = nil
+  if client.server_capabilities.semanticTokensProvider then
+    client.server_capabilities.semanticTokensProvider = nil
+  end
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()

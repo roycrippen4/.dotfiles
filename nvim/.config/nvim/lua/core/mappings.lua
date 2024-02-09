@@ -598,6 +598,14 @@ M.trouble = {
   },
 }
 
+-- #AD622D
+M.colors = {
+  plugin = true,
+  n = {
+    ['<leader>cp'] = { '<cmd> Coolers picker <CR>', 'Pick a color  ' },
+  },
+}
+
 -- M.harpoon = {
 --   plugin = true,
 --   n = {
