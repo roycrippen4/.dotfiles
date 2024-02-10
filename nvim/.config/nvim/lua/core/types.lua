@@ -98,6 +98,7 @@
 ---@class SplitOpts
 ---@field resize "height"|"width"
 ---@field size number
+---@field area "lines"|"columns"
 
 ---@class FloatOpts
 ---@field relative Relative
