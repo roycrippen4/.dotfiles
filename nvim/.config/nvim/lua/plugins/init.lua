@@ -578,12 +578,13 @@ local default_plugins = {
     -- 'dev/colors.nvim',
     -- dev = true,
     event = 'VeryLazy',
-    opts = {},
     init = function()
       require('core.utils').load_mappings('colors')
     end,
     config = function()
-      require('colors').setup()
+      require('colors').setup({
+        debug = false,
+      })
     end,
   },
 }
