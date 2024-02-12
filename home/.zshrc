@@ -102,6 +102,7 @@ alias lp='echo "${PATH//:/\n}"'
 alias dot='cd && cd .dotfiles'
 alias so="$HOME/.dotfiles/home/.bin/source.zsh"
 alias sync="$HOME/.dotfiles/home/.bin/sync.sh"
+alias hacker="cmatrix -c"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh

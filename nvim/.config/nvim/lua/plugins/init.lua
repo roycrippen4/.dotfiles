@@ -88,8 +88,18 @@ local default_plugins = {
     init = function()
       require('core.utils').lazy_load('nvim-colorizer.lua')
     end,
-    config = function(_, opts)
-      require('colorizer').setup(opts)
+    config = function()
+      require('colorizer').setup({
+        filetypes = {
+          'lua',
+          'css',
+          'html',
+          'javascript',
+          'javascriptreact',
+          'typescript',
+          'typescriptreact',
+        },
+      })
 
       -- execute colorizer as soon as possible
       vim.defer_fn(function()
@@ -574,16 +584,16 @@ local default_plugins = {
   },
 
   {
-    'roycrippen4/colors.nvim',
-    -- 'dev/colors.nvim',
-    -- dev = true,
+    -- 'roycrippen4/colors.nvim',
+    'dev/colors.nvim',
+    dev = true,
     event = 'VeryLazy',
     init = function()
       require('core.utils').load_mappings('colors')
     end,
     config = function()
       require('colors').setup({
-        debug = false,
+        debug = true,
       })
     end,
   },
