@@ -1,8 +1,8 @@
-local logger_ok, _ = pcall(require, 'plugins.local_plugs.logger')
-if not logger_ok then
-  print('logger not ok')
-  return
-end
+-- local logger_ok, _ = pcall(require, 'plugins.local_plugs.logger')
+-- if not logger_ok then
+--   print('logger not ok')
+--   return
+-- end
 
 local macro_flash_ok, _ = pcall(require, 'plugins.local_plugs.macro_flash')
 if not macro_flash_ok then

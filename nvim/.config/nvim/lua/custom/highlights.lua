@@ -23,6 +23,12 @@ M.add = {
   CmdlineSearch          = { fg = '#cc5e00',     bg = darkest_black },
   CmdlineSub             = { fg =  l_blue,       bg = darkest_black },
   CmdlineVisualSub       = { fg =  'pink',         bg = darkest_black },
+
+  -- Diagnostics
+  DiagnosticUnderlineHint  = { undercurl = true },
+  DiagnosticUnderlineWarn  = { undercurl = true },
+  DiagnosticUnderlineError = { undercurl = true },
+
   -- dressing
   DressingBorder = { fg = 'red', bg = nil },
   DressingNormal = { bg = 'black' },
@@ -84,13 +90,13 @@ M.add = {
   RenamerTitle         = { fg = '#1e222a', bg = l_blue, bold = true, italic = true },
   LineNumber           = { fg = 'white' },
 
-  ['@constant'] = { fg = { 'red', 5 } },
+  ['@constant'] = { fg = { 'red', -2 } },
   ['@keyword.operator'] = { fg = 'pink', italic = true },
   ['@operator'] = { fg = 'pink' },
   ['@type'] = { fg = 'cyan' },
   ['@type.argument'] = { italic = true },
   ['@variable'] = { fg = 'white' },
-  ['@variable.member'] = { fg = { 'red', 5 } },
+  ['@variable.member'] = { fg = { 'red', -2 } },
   ['@string.special.url.comment'] = { fg = 'light_gray', underline = true },
 }
 

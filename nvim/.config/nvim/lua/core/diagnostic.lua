@@ -34,9 +34,9 @@ local config = {
   },
 }
 
-vim.cmd([[
-  hi DiagnosticUnderlineError guisp='Red' gui=undercurl
-  hi DiagnosticUnderlineWarn guisp='Orange' gui=undercurl
-]])
+-- vim.cmd([[
+--   hi DiagnosticUnderlineError guisp='Red' gui=undercurl
+--   hi DiagnosticUnderlineWarn guisp='Orange' gui=undercurl
+-- ]])
 
 vim.diagnostic.config(config)

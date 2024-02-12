@@ -63,19 +63,19 @@ autocmd('VimEnter', {
         ui.nav_file(i)
       end
 
-      if os.getenv('DEBUG') == '1' then
-        require('plugins.local_plugs.logger'):show()
-        vim.defer_fn(function()
-          vim.cmd([[
-          vsplit
-          vertical resize 80
-          wincmd h
-        ]])
-          ui.nav_file(1)
-        end, 0)
-      else
-        ui.nav_file(1)
-      end
+      -- if os.getenv('DEBUG') == '1' then
+      --   require('plugins.local_plugs.logger'):show()
+      --   vim.defer_fn(function()
+      --     vim.cmd([[
+      --     vsplit
+      --     vertical resize 80
+      --     wincmd h
+      --   ]])
+      --     ui.nav_file(1)
+      --   end, 0)
+      -- else
+      ui.nav_file(1)
+      -- end
     end)
   end,
 })
@@ -126,7 +126,7 @@ autocmd('BufWritePre', {
   callback = function()
     local diagnostics = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
     if #diagnostics > 0 then
-      log('comma')
+      -- log('comma')
       require('core.utils').add_missing_commas(diagnostics)
     end
   end,

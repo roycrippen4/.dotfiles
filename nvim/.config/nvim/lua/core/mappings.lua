@@ -602,7 +602,19 @@ M.trouble = {
 M.colors = {
   plugin = true,
   n = {
-    ['<leader>cp'] = { '<cmd> Coolers picker <CR>', 'Pick a color  ' },
+    ['<leader>cp'] = { '<cmd> Colors picker <CR>', 'Pick a color  ' },
+    ['<leader>cd'] = { '<cmd> Colors darken <CR>', 'Darken a color  ' },
+    ['<leader>cl'] = { '<cmd> Colors lighten <CR>', 'Lighten a color  ' },
+  },
+}
+
+-- #AD622D
+M.colors2 = {
+  plugin = true,
+  n = {
+    ['<leader>cp'] = { '<cmd> Colortils picker <CR>', 'Pick a color  ' },
+    ['<leader>cd'] = { '<cmd> Colortils darken <CR>', 'Darken a color  ' },
+    ['<leader>cl'] = { '<cmd> Colortils lighten <CR>', 'Lighten a color  ' },
   },
 }
 

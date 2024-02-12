@@ -68,7 +68,7 @@ opt.ruler = false
 
 -- FoOCItTsl
 -- disable nvim intro
-opt.shortmess:append('WcsI')
+opt.shortmess:append('qWcsI')
 
 opt.signcolumn = 'yes'
 opt.splitbelow = true

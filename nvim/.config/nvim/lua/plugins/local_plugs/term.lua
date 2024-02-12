@@ -21,7 +21,7 @@ local terms = {
     winnr = nil,
     visible = false,
     config = {
-      size = 0.3,
+      size = 0.4,
       resize = 'width',
       area = 'columns',
     },

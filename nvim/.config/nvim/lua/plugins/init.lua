@@ -572,6 +572,20 @@ local default_plugins = {
       require('plugins.configs.whichkey')
     end,
   },
+
+  {
+    'roycrippen4/colors.nvim',
+    -- 'dev/colors.nvim',
+    -- dev = true,
+    event = 'VeryLazy',
+    opts = {},
+    init = function()
+      require('core.utils').load_mappings('colors')
+    end,
+    config = function()
+      require('colors').setup()
+    end,
+  },
 }
 
 local config = require('core.utils').load_config()
