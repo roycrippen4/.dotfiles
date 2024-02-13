@@ -593,7 +593,7 @@ local default_plugins = {
     end,
     config = function()
       require('colors').setup({
-        debug = true,
+        debug = false,
       })
     end,
   },
