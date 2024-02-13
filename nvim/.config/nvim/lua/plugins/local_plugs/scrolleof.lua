@@ -42,12 +42,40 @@ local function check_eof_scrolloff()
   end
 end
 
+local skip_ft = {
+  'NvimTree',
+  'Trouble',
+  'alpha',
+  'dap-repl',
+  'dapui_breakpoints',
+  'dapui_console',
+  'dapui_scopes',
+  'dapui_stacks',
+  'dapui_watches',
+  'dashboard',
+  'fidget',
+  'help',
+  'harpoon',
+  'lazy',
+  'logger',
+  'neo-tree',
+  'noice',
+  'nvcheatsheet',
+  'nvdash',
+  'terminal',
+  'toggleterm',
+  'vim',
+}
+
 local function scroll()
   local scrollEOF_group = vim.api.nvim_create_augroup('ScrollEOF', { clear = true })
   vim.api.nvim_create_autocmd({ 'CursorMoved', 'WinScrolled' }, {
     group = scrollEOF_group,
     pattern = '*',
     callback = function()
+      if vim.tbl_contains(skip_ft, vim.bo.ft) then
+        return
+      end
       check_eof_scrolloff()
     end,
   })

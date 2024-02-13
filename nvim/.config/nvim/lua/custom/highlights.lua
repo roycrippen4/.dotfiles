@@ -62,6 +62,13 @@ M.add = {
   St_MacroSep            = { fg = d_red,          bg = darkest_black },
   St_MacroSepA           = { fg = d_red,          bg = darkest_black },
   St_MacroSepB           = { fg = 'yellow',       bg = darkest_black },
+  St_colors1             = { fg = '#993399',        bg = darkest_black },
+  St_colors2             = { fg = '#AA4499',        bg = darkest_black },
+  St_colors3             = { fg = '#BB5599',        bg = darkest_black },
+  St_colors4             = { fg = '#CC6699',        bg = darkest_black },
+  St_colors5             = { fg = '#DD7799',        bg = darkest_black },
+  St_colors6             = { fg = '#EE8899',        bg = darkest_black },
+  St_colors7             = { fg = '#FF9999',        bg = darkest_black },
   St_Time                = { fg = '#cc5e00',      bg = darkest_black },
   St_gitAdd              = { fg = 'green',        bg = darkest_black },
   St_gitChange           = { fg = 'yellow',       bg = darkest_black },
@@ -109,7 +116,6 @@ M.override = {
   CmpPmenu             = { bg = 'black' },
   Comment              = { italic = true },
   FloatBorder          = { fg = l_blue, bg = darkest_black },
-
   -- Statusline
   St_CommandMode      = { fg = d_red,            bg = darkest_black },
   St_CommandModeSep   = { fg = d_red,            bg = darkest_black },

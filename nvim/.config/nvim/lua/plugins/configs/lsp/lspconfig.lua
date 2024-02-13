@@ -93,7 +93,7 @@ local function enhanced_float_handler(handler, focusable)
       result,
       ctx,
       vim.tbl_deep_extend('force', config or {}, {
-        -- border = 'rounded',
+        border = 'rounded',
         focusable = focusable,
         max_height = math.floor(limit),
         max_width = math.floor(vim.o.columns * 0.4),

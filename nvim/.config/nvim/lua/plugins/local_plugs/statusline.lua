@@ -183,6 +183,10 @@ M.file_info = function()
       icon = '%#St_toggleterm#  ',
       label = 'TOGGLETERM',
     },
+    Colors = {
+      icon = '%#St_colors1#  ',
+      label = '%#St_colors2#C' .. '%#St_colors3#O' .. '%#St_colors4#L' .. '%#St_colors5#O' .. '%#St_colors6#R' .. '%#St_colors7#S',
+    },
     DressingInput = {
       icon = '  ',
       label = 'INPUT BOX',
