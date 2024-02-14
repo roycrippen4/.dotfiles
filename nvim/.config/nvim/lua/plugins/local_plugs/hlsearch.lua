@@ -2,7 +2,7 @@
 local function should_format_lua_func()
   local line = vim.api.nvim_get_current_line()
   local col = vim.fn.getpos('.')[3]
-  local pattern = '%)%s*end,?%s*$'
+  local pattern = '%)%s*end'
   local start_pos, end_pos = line:find(pattern)
 
   if start_pos then
