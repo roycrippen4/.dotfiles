@@ -620,11 +620,6 @@ M.trouble = {
 M.colors = {
   plugin = true,
   n = {
-    ['<leader>cc'] = {
-      function()
-        require('colors').testing()
-      end,
-    },
     ['<leader>cp'] = {
       function()
         require('colors').picker()
@@ -642,6 +637,41 @@ M.colors = {
         require('colors').lighten()
       end,
       'Lighten a color  ',
+    },
+    ['<leader>cg'] = {
+      function()
+        require('colors').grayscale()
+      end,
+      'Lighten a color  ',
+    },
+    ['<leader>cS'] = { '<cmd> Telescope colors select_list <CR>', 'Choose css list to search from  ' },
+    ['<leader>cs'] = { '<cmd> Telescope colors default_list <CR>', 'Find color in default list   ' },
+  },
+}
+
+M.cells = {
+  plugin = true,
+  n = {
+    ['<leader>fml'] = {
+      function()
+        local choice = math.random(1, 3)
+
+        if choice == 1 then
+          print('scramble')
+          require('cellular-automaton').start_animation('scramble')
+        end
+
+        if choice == 2 then
+          print('game_of_life')
+          require('cellular-automaton').start_animation('game_of_life')
+        end
+
+        if choice == 3 then
+          print('make_it_rain')
+          require('cellular-automaton').start_animation('make_it_rain')
+        end
+      end,
+      'Fuck shit up!',
     },
   },
 }

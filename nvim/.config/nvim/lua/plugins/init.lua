@@ -480,6 +480,15 @@ local default_plugins = {
   },
 
   {
+    -- https://github.com/tzachar/highlight-undo.nvim
+    'tzachar/highlight-undo.nvim',
+    keys = { { 'u', mode = 'n' }, { '<C-r>', mode = 'n' } },
+    opts = {
+      duration = 400,
+    },
+  },
+
+  {
     -- https://github.com/windwp/nvim-ts-autotag
     'windwp/nvim-ts-autotag',
     ft = {
@@ -584,14 +593,22 @@ local default_plugins = {
   },
 
   {
-    'roycrippen4/colors.nvim',
-    -- 'dev/colors.nvim',
-    -- dev = true,
+    -- https://github.com/Eandrju/cellular-automaton.nvim
+    'Eandrju/cellular-automaton.nvim',
+    init = function()
+      require('core.utils').load_mappings('cells')
+    end,
+  },
+
+  {
+    -- 'roycrippen4/colors.nvim',
+    'dev/colors.nvim',
+    dev = true,
     init = function()
       require('core.utils').load_mappings('colors')
     end,
     config = function()
-      require('colors').setup({ debug = false })
+      require('colors').setup({ debug = true })
     end,
   },
 }
