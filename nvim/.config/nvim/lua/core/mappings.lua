@@ -175,8 +175,28 @@ M.zenmode = {
   },
 }
 
+---@return boolean
+local function is_lua_comment_or_string()
+  if vim.bo.ft ~= 'lua' then
+    return false
+  end
+
+  local node = vim.treesitter.get_node():type()
+  return node == 'comment' or node == 'comment_content' or node == 'chunk' or node == 'string' or node == 'string_content'
+end
+
 M.general = {
   i = {
+    ['<'] = {
+      function()
+        if is_lua_comment_or_string() then
+          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<><Left>', true, true, true), 'n', true)
+          return
+        end
+        return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<', true, true, true), 'n', true)
+      end,
+    },
+
     -- go to  beginning and end
     ['<C-b>'] = { '<ESC>^i', 'Beginning of line' },
     ['<C-e>'] = { '<End>', 'End of line' },
@@ -200,6 +220,8 @@ M.general = {
       'quit vim',
       opts = { noremap = true },
     },
+
+    ['<leader>lr'] = { '<cmd>luafile%<CR>', 'Run lua file  ' },
 
     -- probably the best keybind ever
     [';'] = { ':', 'enter command mode', opts = { nowait = true } },
@@ -600,9 +622,59 @@ M.trouble = {
 M.colors = {
   plugin = true,
   n = {
-    ['<leader>cp'] = { '<cmd> Colors picker <CR>', 'Pick a color  ' },
-    ['<leader>cd'] = { '<cmd> Colors darken <CR>', 'Darken a color  ' },
-    ['<leader>cl'] = { '<cmd> Colors lighten <CR>', 'Lighten a color  ' },
+    ['<leader>cp'] = {
+      function()
+        require('colors').picker()
+      end,
+      'Pick a color  ',
+    },
+    ['<leader>cd'] = {
+      function()
+        require('colors').darken()
+      end,
+      'Darken a color  ',
+    },
+    ['<leader>cl'] = {
+      function()
+        require('colors').lighten()
+      end,
+      'Lighten a color  ',
+    },
+    ['<leader>cg'] = {
+      function()
+        require('colors').grayscale()
+      end,
+      'Lighten a color  ',
+    },
+    ['<leader>cS'] = { '<cmd> Telescope colors select_list <CR>', 'Choose css list to search from  ' },
+    ['<leader>cs'] = { '<cmd> Telescope colors default_list <CR>', 'Find color in default list   ' },
+  },
+}
+
+M.cells = {
+  plugin = true,
+  n = {
+    ['<leader>fml'] = {
+      function()
+        local choice = math.random(1, 3)
+
+        if choice == 1 then
+          print('scramble')
+          require('cellular-automaton').start_animation('scramble')
+        end
+
+        if choice == 2 then
+          print('game_of_life')
+          require('cellular-automaton').start_animation('game_of_life')
+        end
+
+        if choice == 3 then
+          print('make_it_rain')
+          require('cellular-automaton').start_animation('make_it_rain')
+        end
+      end,
+      'Fuck shit up!',
+    },
   },
 }
 

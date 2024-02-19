@@ -85,8 +85,9 @@ local options = {
     },
   },
 
-  extensions_list = { 'themes', 'terms', 'fzf' },
+  extensions_list = { 'colors', 'themes', 'terms', 'fzf' },
   extensions = {
+    colors = {},
     fzf = {
       fuzzy = true,
       override_generic_sorter = true,
