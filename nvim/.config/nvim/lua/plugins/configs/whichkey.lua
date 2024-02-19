@@ -11,8 +11,8 @@ whichkey.setup({
     group = '', -- symbol pre-pended to a group
   },
   disable = {
-    buftypes = {
-      '[Command Line]',
+    filetypes = {
+      'vim',
     },
   },
 })

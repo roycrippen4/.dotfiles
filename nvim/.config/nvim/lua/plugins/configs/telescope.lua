@@ -1,3 +1,7 @@
+local set = function(value)
+  vim.fn.setreg('+', value)
+end
+
 local options = {
   defaults = {
     vimgrep_arguments = {
@@ -51,6 +55,27 @@ local options = {
         ['<C-Q>'] = false,
         ['<M-q>'] = false,
         ['<M-t>'] = require('telescope.actions').send_to_qflist + require('telescope.actions').open_qflist,
+        ['yy'] = function()
+          local buf = vim.api.nvim_get_current_buf()
+          local state = require('telescope.actions.state')
+          local title = state.get_current_picker(buf).prompt_title
+          local selected = state.get_selected_entry()
+
+          if title == 'Find Files' then
+            set(selected[1])
+            vim.notify('Yanked ' .. selected[1] .. ' into register.')
+          end
+
+          if title == 'Live Grep' then
+            set(selected.filename)
+            vim.notify('Yanked ' .. selected.filename .. ' into register.')
+          end
+
+          if title == 'Highlights' then
+            set(selected.ordinal)
+            vim.notify('Yanked ' .. selected.ordinal .. ' into register.')
+          end
+        end,
       },
       i = {
         ['<M-t>'] = require('telescope.actions').send_to_qflist + require('telescope.actions').open_qflist,
