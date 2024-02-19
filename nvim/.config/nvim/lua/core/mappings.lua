@@ -178,12 +178,10 @@ M.zenmode = {
 ---@return boolean
 local function is_lua_comment_or_string()
   if vim.bo.ft ~= 'lua' then
-    require('colors.logger'):log('not a lua file')
     return false
   end
 
   local node = vim.treesitter.get_node():type()
-  require('colors.logger'):log(node)
   return node == 'comment' or node == 'comment_content' or node == 'chunk' or node == 'string' or node == 'string_content'
 end
 
@@ -193,7 +191,9 @@ M.general = {
       function()
         if is_lua_comment_or_string() then
           vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<><Left>', true, true, true), 'n', true)
+          return
         end
+        return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<', true, true, true), 'n', true)
       end,
     },
 
@@ -220,6 +220,8 @@ M.general = {
       'quit vim',
       opts = { noremap = true },
     },
+
+    ['<leader>lr'] = { '<cmd>luafile%<CR>', 'Run lua file  ' },
 
     -- probably the best keybind ever
     [';'] = { ':', 'enter command mode', opts = { nowait = true } },
