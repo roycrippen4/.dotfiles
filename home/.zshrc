@@ -1,11 +1,7 @@
-# shellcheck disable=SC2034
-# shellcheck disable=SC1090
-# shellcheck disable=SC1094
-#
-# Lines configured by zsh-newuser-install
 HISTFILE=~/.histfile
+SAVEHIST=999
 HISTSIZE=1000
-SAVEHIST=1000
+setopt HIST_EXPIRE_DUPS_FIRST
 
 # setopt autocd
 bindkey -v

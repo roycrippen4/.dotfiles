@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=bash -c 'sxhkd &'
+Exec=bash -c 'sxhkd & disown'
 Hidden=false
 Autostart-enabled=true
 Name=keybind

@@ -600,17 +600,17 @@ local default_plugins = {
     end,
   },
 
-  {
-    -- 'roycrippen4/colors.nvim',
-    'dev/colors.nvim',
-    dev = true,
-    init = function()
-      require('core.utils').load_mappings('colors')
-    end,
-    config = function()
-      require('colors').setup({ debug = true })
-    end,
-  },
+  -- {
+  --   'roycrippen4/colors.nvim',
+  --   -- 'dev/colors.nvim',
+  --   -- dev = true,
+  --   init = function()
+  --     require('core.utils').load_mappings('colors')
+  --   end,
+  --   config = function()
+  --     require('colors').setup({ debug = false })
+  --   end,
+  -- },
 }
 
 local config = require('core.utils').load_config()

@@ -1,4 +1,5 @@
 local lspconfig = require('lspconfig')
+local utils = require('core.utils')
 local M = require('plugins.configs.lsp.lspconfig')
 
 local cwd = vim.fn.getcwd(-1, -1)
@@ -90,24 +91,27 @@ lspconfig['pyright'].setup({
 
 lspconfig['svelte'].setup({
   capabilities = M.capabilities,
+  group = vim.api.nvim_create_augroup('svelte_ondidchangetsorjsfile', { clear = true }),
   on_attach = function(client, bufnr)
-    M.on_attach(client, bufnr)
+    utils.load_mappings('lspconfig', { buffer = bufnr })
+    -- if client.server_capabilities.semanticTokensProvider then
+    --   client.server_capabilities.semanticTokensProvider = nil
+    -- end
 
     vim.api.nvim_create_autocmd('BufWritePost', {
       pattern = { '*.js', '*.ts' },
       callback = function(ctx)
-        if client.name == 'svelte' then
-          client.notify('$/onDidChangeTsOrJsFile', { uri = ctx.file })
-        end
+        -- Here use ctx.match instead of ctx.file
+        client.notify('$/onDidChangeTsOrJsFile', { uri = ctx.match })
       end,
     })
   end,
 })
 
--- lspconfig['tailwindcss'].setup({
--- capabilities = M.capabilities,
---   on_attach = M.on_attach,
--- })
+lspconfig['tailwindcss'].setup({
+  capabilities = M.capabilities,
+  on_attach = M.on_attach,
+})
 lspconfig['taplo'].setup({
   capabilities = M.capabilities,
   on_attach = M.on_attach,

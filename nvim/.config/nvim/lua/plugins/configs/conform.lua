@@ -13,7 +13,7 @@ local options = {
     markdown = { 'prettier' },
     rust = { 'rustfmt' },
     sh = { 'shfmt' },
-    yaml = { 'prettier' },
+    -- yaml = { 'prettier' },
   },
   format_on_save = {
     timeout_ms = 500,
