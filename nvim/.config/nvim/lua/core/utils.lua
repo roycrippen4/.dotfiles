@@ -1,6 +1,5 @@
 local M = {}
 local merge_tb = vim.tbl_deep_extend
-local logger_showing = false
 
 vim.api.nvim_set_hl(0, 'UrlHighlight', { fg = 'gray' })
 local url_ns = vim.api.nvim_create_namespace('UrlHighlight')
@@ -76,6 +75,38 @@ function M.get_marked_files()
   return marked
 end
 
+--- Sets the currently opened file to the first entry in the marks list
+function M.set_cur_file_first_mark()
+  local mark = require('harpoon.mark')
+  local bufname = vim.api.nvim_buf_get_name(0)
+  local path = require('plenary.path'):new(bufname):make_relative(vim.loop.cwd())
+  local marks = require('core.utils').get_marked_files()
+  ---@type integer|nil
+  local file_idx
+
+  if vim.tbl_contains(marks, path) then
+    file_idx = mark.get_current_index()
+  else
+    mark.add_file()
+    file_idx = mark.get_length()
+    marks = require('core.utils').get_marked_files()
+  end
+
+  ---@type string[]
+  local new_marks = {}
+  table.insert(new_marks, mark.get_marked_file_name(file_idx))
+  for _, filepath in pairs(marks) do
+    if vim.tbl_contains(new_marks, filepath) then
+      goto continue
+    end
+
+    table.insert(new_marks, filepath)
+
+    ::continue::
+  end
+  mark.set_mark_list(new_marks)
+end
+
 --- Adds highlighting to any marked files that are currently visible
 ---@param bufnr integer harpoon.ui buffer handle
 ---@param ns_id integer namespace identifier
@@ -123,19 +154,14 @@ M.list_open_files = function()
   return visible_bufs
 end
 
+--- Returns true if the currently opened file is marked
 ---@return boolean|integer
 function M.is_current_file_marked()
-  local logger = require('colors.logger')
-  if not logger_showing then
-    logger:show()
-    logger_showing = true
-  end
-
   local current_file = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
   local marked_files = M.get_marked_files()
-  for idx, file in ipairs(marked_files) do
+  for _, file in ipairs(marked_files) do
     if string.find(current_file, file) then
-      return idx
+      return true
     end
   end
   return false

@@ -1,4 +1,5 @@
 local M = {}
+local logger_showing = false
 
 M.terminal = {
   n = {
@@ -89,11 +90,11 @@ M.terminal = {
 M.harpoon = {
   plugin = true,
   n = {
-    -- ['F'] = {
-    --   function()
-    --     local file_idx = require('core.utils').is_current_file_marked()
-    --   end,
-    -- },
+    ['F'] = {
+      function()
+        require('core.utils').set_cur_file_first_mark()
+      end,
+    },
     ['<C-f>'] = {
       function()
         require('harpoon.mark').add_file()
