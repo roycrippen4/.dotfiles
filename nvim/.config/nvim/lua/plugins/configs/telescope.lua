@@ -54,6 +54,18 @@ local options = {
         ['q'] = require('telescope.actions').close,
         ['<C-Q>'] = false,
         ['<M-q>'] = false,
+        ['<C-n>'] = function(prompt_bufnr)
+          require('telescope.actions').preview_scrolling_down(prompt_bufnr)
+        end,
+        ['<C-p>'] = function(prompt_bufnr)
+          require('telescope.actions').preview_scrolling_up(prompt_bufnr)
+        end,
+        ['<C-d>'] = function(prompt_bufnr)
+          require('telescope.actions').results_scrolling_down(prompt_bufnr)
+        end,
+        ['<C-u>'] = function(prompt_bufnr)
+          require('telescope.actions').results_scrolling_up(prompt_bufnr)
+        end,
         ['<M-t>'] = require('telescope.actions').send_to_qflist + require('telescope.actions').open_qflist,
         ['yy'] = function()
           local buf = vim.api.nvim_get_current_buf()
@@ -78,6 +90,18 @@ local options = {
         end,
       },
       i = {
+        ['<C-n>'] = function(prompt_bufnr)
+          require('telescope.actions').preview_scrolling_down(prompt_bufnr)
+        end,
+        ['<C-p>'] = function(prompt_bufnr)
+          require('telescope.actions').preview_scrolling_up(prompt_bufnr)
+        end,
+        ['<C-d>'] = function(prompt_bufnr)
+          require('telescope.actions').results_scrolling_down(prompt_bufnr)
+        end,
+        ['<C-u>'] = function(prompt_bufnr)
+          require('telescope.actions').results_scrolling_up(prompt_bufnr)
+        end,
         ['<M-t>'] = require('telescope.actions').send_to_qflist + require('telescope.actions').open_qflist,
         ['<M-q>'] = false,
         ['<C-Q>'] = false,

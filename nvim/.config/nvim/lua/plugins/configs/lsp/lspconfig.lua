@@ -2,11 +2,8 @@ local utils = require('core.utils')
 local methods = vim.lsp.protocol.Methods
 local M = {}
 
-M.on_attach = function(client, bufnr)
+M.on_attach = function(_, bufnr)
   utils.load_mappings('lspconfig', { buffer = bufnr })
-  if client.server_capabilities.semanticTokensProvider then
-    client.server_capabilities.semanticTokensProvider = nil
-  end
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()

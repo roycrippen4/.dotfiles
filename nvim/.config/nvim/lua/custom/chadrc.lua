@@ -70,7 +70,7 @@ M.ui = {
     'nvdash',
     'nvimtree',
     'rainbowdelimiters',
-    -- 'semantic_tokens',
+    'semantic_tokens',
     'statusline',
     'syntax',
     'tbline',

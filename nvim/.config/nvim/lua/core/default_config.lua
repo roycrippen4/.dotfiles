@@ -12,7 +12,7 @@ M.ui = {
   theme_toggle = { 'onedark', 'one_light' },
   theme = 'onedark', -- default theme
   transparency = false,
-  lsp_semantic_tokens = false, -- needs nvim v0.9, just adds highlight groups for lsp semantic tokens
+  lsp_semantic_tokens = true, -- needs nvim v0.9, just adds highlight groups for lsp semantic tokens
 
   cmp = {
     icons = true,
@@ -68,7 +68,7 @@ M.ui = {
     signature = {
       disabled = false,
     },
-    semantic_tokens = false,
+    semantic_tokens = true,
   },
   term = {
     enabled = false,
@@ -95,7 +95,7 @@ M.base46 = {
     'nvcheatsheet',
     'nvdash',
     'nvimtree',
-    -- 'rainbowdelimiters',
+    'rainbowdelimiters',
     'semantic_tokens',
     'statusline',
     'syntax',

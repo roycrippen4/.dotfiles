@@ -58,12 +58,12 @@ statuscol.setup({
     },
     {
       text = {
-        function(args)
-          local lnumfunc = builtin.lnumfunc(args)
-          return ((args.lnum == vim.fn.line('.')) and '%#LineNumber#' or '') .. lnumfunc
-        end,
-        ' ',
+        builtin.lnumfunc,
+        auto = false,
       },
+    },
+    {
+      text = { ' ' },
     },
     {
       sign = {

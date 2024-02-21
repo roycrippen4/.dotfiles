@@ -1,5 +1,6 @@
 local M = {}
 local merge_tb = vim.tbl_deep_extend
+local logger_showing = false
 
 vim.api.nvim_set_hl(0, 'UrlHighlight', { fg = 'gray' })
 local url_ns = vim.api.nvim_create_namespace('UrlHighlight')
@@ -64,19 +65,27 @@ function M.highlight_url()
   end
 end
 
+--- Returns a list of all files marked by harpoon
+---@return string[]
+function M.get_marked_files()
+  ---@type string[]
+  local marked = {}
+  for idx = 1, require('harpoon.mark').get_length() do
+    table.insert(marked, require('harpoon.mark').get_marked_file_name(idx))
+  end
+  return marked
+end
+
 --- Adds highlighting to any marked files that are currently visible
 ---@param bufnr integer harpoon.ui buffer handle
 ---@param ns_id integer namespace identifier
 M.highlight_marked_files = function(bufnr, ns_id)
   local open_files = M.list_open_files()
-
-  if vim.bo[bufnr].ft ~= 'harpoon' then
-    log('bad bufnr')
-  end
+  local marked = M.get_marked_files()
 
   for _, open_file in ipairs(open_files) do
-    for idx = 1, require('harpoon.mark').get_length() do
-      local marked_file = require('harpoon.mark').get_marked_file_name(idx)
+    for idx = 1, #marked do
+      local marked_file = marked[idx]
 
       if string.find(open_file, marked_file) then
         vim.api.nvim_buf_add_highlight(bufnr, ns_id, 'HarpoonOpenMark', idx - 1, 0, -1)
@@ -85,7 +94,7 @@ M.highlight_marked_files = function(bufnr, ns_id)
   end
 end
 
---- Takes a [bufnr]. Returns [true] if bufnr is visible, [false] if not
+--- Takes a bufnr. Returns true if bufnr is visible, [false] if not
 ---@param bufnr integer buffer handle/number
 M.is_buf_visible = function(bufnr)
   local wins = vim.api.nvim_list_wins()
@@ -112,6 +121,24 @@ M.list_open_files = function()
     end
   end
   return visible_bufs
+end
+
+---@return boolean|integer
+function M.is_current_file_marked()
+  local logger = require('colors.logger')
+  if not logger_showing then
+    logger:show()
+    logger_showing = true
+  end
+
+  local current_file = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+  local marked_files = M.get_marked_files()
+  for idx, file in ipairs(marked_files) do
+    if string.find(current_file, file) then
+      return idx
+    end
+  end
+  return false
 end
 
 M.load_config = function()

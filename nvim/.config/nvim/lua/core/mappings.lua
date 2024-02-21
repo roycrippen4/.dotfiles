@@ -89,6 +89,11 @@ M.terminal = {
 M.harpoon = {
   plugin = true,
   n = {
+    -- ['F'] = {
+    --   function()
+    --     local file_idx = require('core.utils').is_current_file_marked()
+    --   end,
+    -- },
     ['<C-f>'] = {
       function()
         require('harpoon.mark').add_file()

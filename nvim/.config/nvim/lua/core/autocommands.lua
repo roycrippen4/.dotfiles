@@ -75,6 +75,7 @@ autocmd('VimEnter', {
       --   end, 0)
       -- else
       ui.nav_file(1)
+      vim.cmd("echo ' '")
       -- end
     end)
   end,
