@@ -4,6 +4,13 @@ local namespace = vim.api.nvim_create_namespace
 local general = augroup('General', { clear = true })
 local pattern = { 'DressingInput', 'help', 'logger', 'man', 'qf', 'query', 'scratch', 'undotree' }
 
+autocmd('ExitPre', {
+  group = augroup('StopDaemons', { clear = true }),
+  callback = function()
+    vim.fn.jobstart(vim.fn.expand('$HOME') .. '/.bin/stop-nvim-daemons.sh', { detach = true })
+  end,
+})
+
 autocmd('TextYankPost', {
   group = general,
   callback = function()
