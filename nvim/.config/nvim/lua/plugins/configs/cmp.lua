@@ -2,7 +2,7 @@ local cmp = require('cmp')
 
 dofile(vim.g.base46_cache .. 'cmp')
 
-local kind = cmp.lsp.CompletionItemKind
+-- local kind = cmp.lsp.CompletionItemKind
 local cmp_ui = require('nvconfig').ui.cmp
 local cmp_style = cmp_ui.style
 
@@ -89,34 +89,26 @@ cmp.setup({
       'i',
       's',
     }),
-    ['<C-p>'] = cmp.mapping.select_prev_item(),
-    ['<C-n>'] = cmp.mapping.select_next_item(),
-    ['<C-S-N>'] = cmp.mapping.scroll_docs(4),
-    ['<C-S-P>'] = cmp.mapping.scroll_docs(-4),
-    ['<Esc>'] = cmp.mapping.close(),
-    ['<CR>'] = cmp.mapping.confirm({
-      behavior = cmp.ConfirmBehavior.Insert,
-      select = true,
-    }),
+    ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
+    ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
+    ['<C-S-N>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
+    ['<C-S-P>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
+    ['<Esc>'] = cmp.mapping(cmp.mapping.close(), { 'i', 'c' }),
+    ['<CR>'] = cmp.mapping(
+      cmp.mapping.confirm({
+        behavior = cmp.ConfirmBehavior.Insert,
+        select = true,
+      }),
+      { 'i', 'c' }
+    ),
   },
 })
 
-cmp.setup.cmdline(':', {
-  mapping = cmp.mapping.preset.cmdline(),
-  sources = cmp.config.sources(
-    { 
-      { 
-        name = 'path' 
-      }, 
-    },
-    { 
-      { 
-      name = 'cmdline',
-      option = {
-        ignore_cmds = { 'Man', '!' },
-      },
-    },
-    { { name = 'nvim_lsp' }, },
-    { { name = 'nvim_lsp_signature_help' } },
-  }),
-})
+-- cmp.setup.cmdline(':', {
+--   mapping = cmp.mapping.preset.cmdline(),
+--   completeopt = 'menu,menuone,noselect',
+--   sources = cmp.config.sources({
+--     { name = 'path' },
+--     { name = 'cmdline', option = { ignore_cmds = { 'w', 'wq', 'c', 'cq' } } },
+--   }),
+-- })
