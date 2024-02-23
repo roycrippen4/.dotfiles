@@ -268,18 +268,16 @@ local default_plugins = {
       {
         -- https://github.com/saadparwaiz1/cmp_luasnip
         'saadparwaiz1/cmp_luasnip',
-        -- https://github.com/hsh7th/cmp-nvim-lua
-        -- 'hrsh7th/cmp-nvim-lua',
         -- https://github.com/hrsh7th/cmp-nvim-lsp
         'hrsh7th/cmp-nvim-lsp',
-        -- https://github.com/hrsh7th/cmp-buffer
-        'hrsh7th/cmp-buffer',
         -- https://github.com/hrsh7th/cmp-path
         'hrsh7th/cmp-path',
         -- https://github.com/hrsh7th/cmp-cmdline
         'hrsh7th/cmp-cmdline',
         -- https://github.com/hrsh7th/cmp-nvim-lsp-signature-help
         'hrsh7th/cmp-nvim-lsp-signature-help',
+        -- https://github.com/f3fora/cmp-spell
+        'f3fora/cmp-spell',
       },
     },
     config = function()

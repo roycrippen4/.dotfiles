@@ -20,7 +20,7 @@
 ---@field base02 string Selection Background (Visual Mode)
 ---@field base03 string Comments, Invisibles, Line Highlighting, Special Keys, Sings, Fold bg
 ---@field base04 string Dark Foreground, Dnf Underline (Used for status bars)
----@field base05 string Default Foreground (for text), Var, Refrences Caret, Delimiters, Operators
+---@field base05 string Default Foreground (for text), Var, References Caret, Delimiters, Operators
 ---@field base06 string Light Foreground (Not often used)
 ---@field base07 string Light Foreground, Cmp Icons (Not often used)
 ---@field base08 string Variables, Identifiers, Filed, Name Space, Error, Spell XML Tags, Markup Link Text, Markup Lists, Diff Deleted
@@ -92,7 +92,7 @@
 ---@field inactive_tab_background string
 
 ---@alias Relative "editor"|"win"|"cursor"|"mouse"
----@alias Border "none"|"single"|"ouble"|"rounded"|"solid"|"shadow"
+---@alias Border "none"|"single"|"double"|"rounded"|"solid"|"shadow"
 ---@alias Sizes { sp: number, vsp: number }
 
 ---@class SplitOpts

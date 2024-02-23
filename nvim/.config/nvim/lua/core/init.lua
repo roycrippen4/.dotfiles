@@ -60,6 +60,10 @@ opt.ignorecase = true
 opt.smartcase = true
 opt.mouse = 'a'
 
+-- Spell
+opt.spell = true
+opt.spelllang = { 'en_us' }
+
 -- Numbers
 opt.number = true
 opt.relativenumber = true

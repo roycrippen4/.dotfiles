@@ -1,5 +1,5 @@
 local M = {}
-local logger_showing = false
+-- local logger_showing = false
 
 M.terminal = {
   n = {
