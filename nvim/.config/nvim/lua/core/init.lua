@@ -63,6 +63,7 @@ opt.mouse = 'a'
 -- Spell
 opt.spell = true
 opt.spelllang = { 'en_us' }
+opt.spellcapcheck = ''
 
 -- Numbers
 opt.number = true
@@ -102,7 +103,7 @@ vim.env.PATH = vim.fn.stdpath('data') .. '/mason/bin:' .. vim.env.PATH
 -------------------------------------- autocmds ------------------------------------------
 local autocmd = vim.api.nvim_create_autocmd
 
--- dont list quickfix buffers
+-- don't list quickfix buffers
 autocmd('FileType', {
   pattern = 'qf',
   callback = function()

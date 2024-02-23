@@ -4,6 +4,13 @@ local namespace = vim.api.nvim_create_namespace
 local general = augroup('General', { clear = true })
 local pattern = { 'DressingInput', 'help', 'logger', 'man', 'qf', 'query', 'scratch', 'undotree' }
 
+autocmd('TermOpen', {
+  group = augroup('TerminalOpen', { clear = true }),
+  callback = function()
+    vim.cmd([[ setlocal nospell ]])
+  end,
+})
+
 autocmd('ExitPre', {
   group = augroup('StopDaemons', { clear = true }),
   callback = function()
