@@ -10,6 +10,7 @@ local options = {
     'js-debug-adapter',
     'json-language-server',
     'prettier',
+    'prettierd',
     'rust-analyzer',
     'typescript-language-server',
 
