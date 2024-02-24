@@ -15,6 +15,7 @@ g.markdown_fenced_languages = {
 }
 
 vim.treesitter.language.register('markdown', 'mdx')
+vim.treesitter.language.register('postcss', 'css')
 
 -- Fold
 opt.foldenable = true
