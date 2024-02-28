@@ -276,8 +276,6 @@ local default_plugins = {
         'hrsh7th/cmp-cmdline',
         -- https://github.com/hrsh7th/cmp-nvim-lsp-signature-help
         'hrsh7th/cmp-nvim-lsp-signature-help',
-        -- https://github.com/f3fora/cmp-spell
-        'f3fora/cmp-spell',
       },
     },
     config = function()
