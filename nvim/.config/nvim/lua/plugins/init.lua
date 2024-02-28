@@ -302,17 +302,6 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/stevearc/stickybuf.nvim
-    'stevearc/stickybuf.nvim',
-    init = function()
-      require('core.utils').lazy_load('stickybuf.nvim')
-    end,
-    config = function()
-      require('stickybuf').setup()
-    end,
-  },
-
-  {
     -- https://github.com/nvim-telescope/telescope.nvim
     'nvim-telescope/telescope.nvim',
     dependencies = {

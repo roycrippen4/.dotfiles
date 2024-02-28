@@ -1,5 +1,5 @@
 -- Custom filetype detection logic with the new Lua filetype plugin
-vim.filetype.add {
+vim.filetype.add({
   extension = {
     cts = 'typescript',
     es6 = 'javascript',
@@ -9,6 +9,7 @@ vim.filetype.add {
     mdx = 'mdx',
     mts = 'typescript',
     png = 'image',
+    postcss = 'css',
     sh = 'sh',
     zsh = 'sh',
   },
@@ -24,4 +25,4 @@ vim.filetype.add {
     ['.*config/git/config'] = 'gitconfig',
     ['.env.*'] = 'sh',
   },
-}
+})

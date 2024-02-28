@@ -94,14 +94,9 @@ lspconfig['svelte'].setup({
   group = vim.api.nvim_create_augroup('svelte_ondidchangetsorjsfile', { clear = true }),
   on_attach = function(client, bufnr)
     utils.load_mappings('lspconfig', { buffer = bufnr })
-    -- if client.server_capabilities.semanticTokensProvider then
-    --   client.server_capabilities.semanticTokensProvider = nil
-    -- end
-
     vim.api.nvim_create_autocmd('BufWritePost', {
       pattern = { '*.js', '*.ts' },
       callback = function(ctx)
-        -- Here use ctx.match instead of ctx.file
         client.notify('$/onDidChangeTsOrJsFile', { uri = ctx.match })
       end,
     })
@@ -112,6 +107,7 @@ lspconfig['tailwindcss'].setup({
   capabilities = M.capabilities,
   on_attach = M.on_attach,
 })
+
 lspconfig['taplo'].setup({
   capabilities = M.capabilities,
   on_attach = M.on_attach,
