@@ -4,19 +4,21 @@ local fn = vim.fn
 local is_buf_valid = function(bufnr)
   return vim.api.nvim_buf_is_valid(bufnr) and vim.bo[bufnr].buflisted
 end
+
+dofile(vim.g.base46_cache .. 'tbline')
 ---------------------------------------------------------- btn onclick functions ----------------------------------------------
 
 vim.cmd("function! TbGoToBuf(bufnr,b,c,d) \n execute 'b'..a:bufnr \n endfunction")
 
 vim.cmd([[
    function! TbKillBuf(bufnr,b,c,d) 
-        call luaeval('require("nvchad.tabufline").close_buffer(_A)', a:bufnr)
+        call luaeval('require("plugins.local.tabufline").close_buffer(_A)', a:bufnr)
   endfunction]])
 
 vim.cmd('function! TbNewTab(a,b,c,d) \n tabnew \n endfunction')
 vim.cmd("function! TbGotoTab(tabnr,b,c,d) \n execute a:tabnr ..'tabnext' \n endfunction")
-vim.cmd("function! TbTabClose(a,b,c,d) \n lua require('nvchad.tabufline').closeAllBufs('closeTab') \n endfunction")
-vim.cmd("function! TbCloseAllBufs(a,b,c,d) \n lua require('nvchad.tabufline').closeAllBufs() \n endfunction")
+vim.cmd("function! TbTabClose(a,b,c,d) \n lua require('tabufline.local.tabufline').closeAllBufs('closeTab') \n endfunction")
+vim.cmd("function! TbCloseAllBufs(a,b,c,d) \n lua require('tabufline.local.tabufline').closeAllBufs() \n endfunction")
 vim.cmd("function! TbToggle_theme(a,b,c,d) \n lua require('base46').toggle_theme() \n endfunction")
 vim.cmd('function! TbToggleTabs(a,b,c,d) \n let g:TbTabsToggled = !g:TbTabsToggled | redrawtabline \n endfunction')
 
@@ -111,8 +113,7 @@ local function add_file_info(name, bufnr)
     name = (api.nvim_get_current_buf() == bufnr and '%#TbLineBufOn# ' .. name) or ('%#TbLineBufOff# ' .. name)
 
     if idx ~= nil then
-      local harpoon_icon = (api.nvim_get_current_buf() == bufnr and '%#TbLineMarkedBufOn#' .. idx .. marked_on)
-        or idx .. marked_off
+      local harpoon_icon = (api.nvim_get_current_buf() == bufnr and '%#TbLineMarkedBufOn#' .. idx .. marked_on) or idx .. marked_off
       return string.rep(' ', l_pad) .. (harpoon_icon .. name) .. string.rep(' ', r_pad)
     end
 
@@ -128,12 +129,10 @@ local function style_buffer_tab(nr)
 
   -- color close btn for focused / hidden  buffers
   if nr == api.nvim_get_current_buf() then
-    close_btn = (vim.bo[0].modified and '%' .. nr .. '@TbKillBuf@%#TbLineBufOnModified#  ')
-      or ('%#TbLineBufOnClose#' .. close_btn)
+    close_btn = (vim.bo[0].modified and '%' .. nr .. '@TbKillBuf@%#TbLineBufOnModified#  ') or ('%#TbLineBufOnClose#' .. close_btn)
     name = '%#TbLineBufOn#' .. name .. close_btn
   else
-    close_btn = (vim.bo[nr].modified and '%' .. nr .. '@TbKillBuf@%#TbLineBufOffModified#  ')
-      or ('%#TbLineBufOffClose#' .. close_btn)
+    close_btn = (vim.bo[nr].modified and '%' .. nr .. '@TbKillBuf@%#TbLineBufOffModified#  ') or ('%#TbLineBufOffClose#' .. close_btn)
     name = '%#TbLineBufOff#' .. name .. close_btn
   end
 
@@ -157,7 +156,7 @@ M.bufferlist = function()
   local current_buf = api.nvim_get_current_buf()
   local has_current = false -- have we seen current buffer yet?
 
-  for _, bufnr in ipairs(vim.t.bufs) do
+  for _, bufnr in pairs(vim.t.bufs) do
     if is_buf_valid(bufnr) then
       if ((#buffers + 1) * 21) > available_space then
         if has_current then
@@ -173,6 +172,15 @@ M.bufferlist = function()
   end
 
   return table.concat(buffers) .. '%#TblineFill#' .. '%=' -- buffers + empty space
+end
+
+M.run = function()
+  local modules = {
+    M.nvimtree_overlay(),
+    M.bufferlist(),
+  }
+
+  return table.concat(modules)
 end
 
 return M

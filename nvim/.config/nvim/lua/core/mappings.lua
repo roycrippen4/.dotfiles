@@ -6,21 +6,21 @@ M.terminal = {
     -- toggle terms
     ['<A-v>'] = {
       function()
-        require('plugins.local_plugs.term').toggle('V')
+        require('plugins.local.term').toggle('V')
       end,
       'New vertical term',
     },
 
     ['<A-h>'] = {
       function()
-        require('plugins.local_plugs.term').toggle('H')
+        require('plugins.local.term').toggle('H')
       end,
       'New horizontal term',
     },
 
     ['<A-f>'] = {
       function()
-        require('plugins.local_plugs.term').toggle('F')
+        require('plugins.local.term').toggle('F')
       end,
       'Toggleable Floating term',
     },
@@ -30,21 +30,21 @@ M.terminal = {
   t = {
     ['<A-v>'] = {
       function()
-        require('plugins.local_plugs.term').toggle('V')
+        require('plugins.local.term').toggle('V')
       end,
       'New vertical term',
     },
 
     ['<A-h>'] = {
       function()
-        require('plugins.local_plugs.term').toggle('H')
+        require('plugins.local.term').toggle('H')
       end,
       'New vertical term',
     },
 
     ['<A-f>'] = {
       function()
-        require('plugins.local_plugs.term').toggle('F')
+        require('plugins.local.term').toggle('F')
       end,
       'Toggleable Floating term',
     },
@@ -315,14 +315,14 @@ M.tabufline = {
     -- cycle through buffers
     ['L'] = {
       function()
-        require('nvchad.tabufline').tabuflineNext()
+        require('plugins.local.tabufline').tabuflineNext()
       end,
       'Goto next buffer',
     },
 
     ['H'] = {
       function()
-        require('nvchad.tabufline').tabuflinePrev()
+        require('plugins.local.tabufline').tabuflinePrev()
       end,
       'Goto prev buffer',
     },
@@ -333,7 +333,7 @@ M.tabufline = {
         if #vim.api.nvim_list_wins() == 1 and string.sub(vim.api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
           vim.cmd([[ q ]])
         else
-          require('nvchad.tabufline').close_buffer()
+          require('plugins.local.tabufline').close_buffer()
         end
       end,
       'Close buffer  ',
@@ -402,7 +402,7 @@ M.lspconfig = {
 
     ['<leader>r'] = {
       function()
-        require('plugins.local_plugs.renamer').open()
+        require('plugins.local.renamer').open()
       end,
       'LSP Rename 󰑕 ',
     },

@@ -1,6 +1,5 @@
 local M = {}
-local tab_modules = require('plugins.local_plugs.tabufline')
-local status_modules = require('plugins.local_plugs.statusline')
+local status_modules = require('plugins.local.statusline')
 local highlights = require('custom.highlights')
 
 local timer = vim.loop.new_timer()
@@ -28,21 +27,11 @@ local function set_modules(modules)
   -- end
 end
 
+-- tabufline.run()
 M.ui = {
   theme = 'onedark',
   hl_add = highlights.add,
   hl_override = highlights.override,
-
-  tabufline = {
-    overriden_modules = function(modules)
-      modules[1] = vim.g.NvimTreeOverlayTitle
-      modules[2] = tab_modules.bufferlist()
-      -- modules[4] = tab_modules.host()
-      modules[4] = ''
-    end,
-    enabled = true,
-    lazyload = true,
-  },
 
   statusline = {
     overriden_modules = function(modules)

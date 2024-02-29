@@ -53,7 +53,7 @@ register({
   },
   ['<leader>r'] = {
     function()
-      require('plugins.local_plugs.renamer').open()
+      require('plugins.local.renamer').open()
     end,
     'LSP Rename 󰑕 ',
   },

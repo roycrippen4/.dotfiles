@@ -16,6 +16,15 @@ local default_plugins = {
   -- },
 
   {
+    'tabufline',
+    dir = 'lua/plugins/local/tabufline',
+    init = function()
+      require('plugins.local.tabufline.lazyload')
+      require('core.utils').load_mappings('tabufline')
+    end,
+  },
+
+  {
     'mfussenegger/nvim-dap',
     dependencies = {
       'rcarriga/nvim-dap-ui',
@@ -149,27 +158,8 @@ local default_plugins = {
     -- https://github.com/lewis6991/gitsigns.nvim
     'lewis6991/gitsigns.nvim',
     ft = { 'gitcommit', 'diff' },
-    init = function()
-      vim.api.nvim_create_autocmd({ 'BufRead' }, {
-        group = vim.api.nvim_create_augroup('GitSignsLazyLoad', { clear = true }),
-        callback = function()
-          vim.fn.jobstart({ 'git', '-C', vim.loop.cwd(), 'rev-parse' }, {
-            on_exit = function(_, return_code)
-              if return_code == 0 then
-                vim.api.nvim_del_augroup_by_name('GitSignsLazyLoad')
-                vim.schedule(function()
-                  require('lazy').load({ plugins = {
-                    'gitsigns.nvim',
-                  } })
-                end)
-              end
-            end,
-          })
-        end,
-      })
-    end,
     opts = function()
-      return require('plugins.configs.others').gitsigns
+      return require('plugins.configs.gitsigns')
     end,
     config = function(_, opts)
       dofile(vim.g.base46_cache .. 'git')
@@ -212,32 +202,10 @@ local default_plugins = {
         -- https://github.com/L3MON4D3/LuaSnip
         'L3MON4D3/LuaSnip',
         dependencies = 'rafamadriz/friendly-snippets',
-        opts = function()
-          local types = require('luasnip.util.types')
-          return {
-            ext_opts = {
-              [types.insertNode] = {
-                unvisited = {
-                  virt_text = { { '│', 'Conceal' } },
-                  virt_text_pos = 'inline',
-                },
-              },
-              [types.exitNode] = {
-                unvisited = {
-                  virt_text = { { '│', 'Conceal' } },
-                  virt_text_pos = 'inline',
-                },
-              },
-            },
-            history = true,
-            delete_check_events = 'TextChanged',
-          }
-        end,
+        opts = { history = true, updateevents = 'TextChanged,TextChangedI' },
         config = function(_, opts)
-          require('plugins.configs.others').luasnip(opts)
-          local luasnip = require('luasnip')
-          luasnip.filetype_extend('javascriptreact', { 'html' })
-          luasnip.filetype_extend('typescriptreact', { 'html' })
+          require('luasnip').config.set_config(opts)
+          require('plugins.configs.luasnip')
         end,
         keys = {
           {
@@ -266,6 +234,8 @@ local default_plugins = {
         },
       },
       {
+        -- https://github.com/hrsh7th/cmp-nvim-lua
+        'hrsh7th/cmp-nvim-lua',
         -- https://github.com/saadparwaiz1/cmp_luasnip
         'saadparwaiz1/cmp_luasnip',
         -- https://github.com/hrsh7th/cmp-nvim-lsp
@@ -339,6 +309,7 @@ local default_plugins = {
     dependencies = { 'folke/neodev.nvim' },
     init = function()
       require('core.utils').lazy_load('nvim-lspconfig')
+      dofile(vim.g.base46_cache .. 'lsp')
     end,
     config = function()
       require('plugins.configs.lsp.servers')

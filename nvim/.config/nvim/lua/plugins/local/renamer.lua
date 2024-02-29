@@ -7,7 +7,7 @@ M.open = function()
     prompt = ' Refactor: ' .. currName .. ' ',
     default = currName,
   }, function(newName)
-    require('plugins.local_plugs.renamer').rename(newName, currName)
+    require('plugins.local.renamer').rename(newName, currName)
   end)
 end
 

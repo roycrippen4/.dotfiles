@@ -30,11 +30,7 @@ M.ui = {
     overriden_modules = nil,
   },
 
-  tabufline = {
-    overriden_modules = nil,
-    enabled = true,
-    lazyload = true,
-  },
+  tabufline = { enabled = false },
 
   -- nvdash (dashboard)
   nvdash = {

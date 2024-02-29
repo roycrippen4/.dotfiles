@@ -2,7 +2,7 @@ local opt = vim.opt
 local g = vim.g
 require('core.autocommands')
 require('core.diagnostic')
-require('plugins.local_plugs')
+require('plugins.local')
 
 -------------------------------------- globals -----------------------------------------
 g.autosave = false
@@ -134,10 +134,8 @@ autocmd('BufWritePost', {
     end
 
     -- tabufline
-    if config.ui.tabufline.enabled then
-      require('plenary.reload').reload_module('nvchad.tabufline.modules')
-      vim.opt.tabline = "%!v:lua.require('nvchad.tabufline.modules').run()"
-    end
+    require('plenary.reload').reload_module('plugins.local.tabufline.modules')
+    vim.opt.tabline = "%!v:lua.require('plugins.local.tabufline.modules').run()"
 
     require('base46').load_all_highlights()
     -- vim.cmd("redraw!")
