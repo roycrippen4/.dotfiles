@@ -104,6 +104,7 @@ end
 local function show_float(term, create)
   if create then
     term.bufnr = create_buf(false, true)
+    ---@diagnostic disable-next-line
     term.winnr = open_win(term.bufnr, true, term.config)
     term_open(term)
     term.visible = true
@@ -111,6 +112,7 @@ local function show_float(term, create)
     return
   end
 
+  ---@diagnostic disable-next-line
   term.winnr = open_win(term.bufnr, true, term.config)
   term.visible = true
   prettify(term.winnr, term.bufnr)

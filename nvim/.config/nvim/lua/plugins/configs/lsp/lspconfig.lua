@@ -2,8 +2,37 @@ local utils = require('core.utils')
 local methods = vim.lsp.protocol.Methods
 local M = {}
 
-M.on_attach = function(_, bufnr)
+---@param chars string[]
+local function check_trigger_chars(chars)
+  local cur_line = vim.api.nvim_get_current_line()
+  local pos = vim.api.nvim_win_get_cursor(0)[2]
+
+  cur_line = cur_line:gsub('%s+', '') -- rm trailing spaces
+
+  for _, char in ipairs(chars) do
+    if cur_line:sub(pos, pos) == char then
+      return true
+    end
+  end
+end
+
+M.on_attach = function(client, bufnr)
   utils.load_mappings('lspconfig', { buffer = bufnr })
+
+  if client.server_capabilities.signatureHelpProvider then
+    local group = vim.api.nvim_create_augroup('LspSignature', { clear = false })
+    vim.api.nvim_clear_autocmds({ group = group, buffer = bufnr })
+
+    vim.api.nvim_create_autocmd('TextChangedI', {
+      group = group,
+      buffer = bufnr,
+      callback = function()
+        if check_trigger_chars(client.server_capabilities.signatureHelpProvider.triggerCharacters) then
+          vim.lsp.buf.signature_help()
+        end
+      end,
+    })
+  end
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()

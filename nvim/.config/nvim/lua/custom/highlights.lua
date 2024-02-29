@@ -109,6 +109,8 @@ M.add = {
 
 -- stylua: ignore
 M.override = {
+  LspSignatureActiveParameter = { fg = "blue", bg = { 'black', -2 }, italic = true },
+
   TelescopeNormal       = { bg = { 'black', -3 }  },
   TelescopeBorder       = { fg = { 'black', -3 },  bg = { 'black', -3 }  },
   TelescopeResultsTitle = { link = 'TelescopeBorder' },

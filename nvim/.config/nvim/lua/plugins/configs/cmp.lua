@@ -35,7 +35,7 @@ cmp.setup({
   sources = {
     { name = 'nvim_lsp', trigger_characters = { '.', ':', '@' } },
     { name = 'luasnip', keyword_length = 2 },
-    { name = 'nvim_lsp_signature_help' },
+    -- { name = 'nvim_lsp_signature_help' },
     { name = 'path' },
     { name = 'nvim_lua' },
     { name = 'crates' },

@@ -9,16 +9,14 @@ M.ui = {
   hl_add = {},
   hl_override = {},
   changed_themes = {},
-  theme_toggle = { 'onedark', 'one_light' },
+  -- theme_toggle = { 'onedark', 'one_light' },
   theme = 'onedark', -- default theme
   transparency = false,
-  lsp_semantic_tokens = true, -- needs nvim v0.9, just adds highlight groups for lsp semantic tokens
 
   cmp = {
     icons = true,
+    lspkind_text = true,
     style = 'default', -- default/flat_light/flat_dark/atom/atom_colored
-    border_color = 'blue', -- only applicable for "default" style, use color names from base30 variables
-    selected_item_bg = 'colored', -- colored / simple
   },
 
   telescope = { style = 'borderless' }, -- borderless / bordered
@@ -31,43 +29,13 @@ M.ui = {
   },
 
   tabufline = { enabled = false },
-
-  -- nvdash (dashboard)
-  nvdash = {
-    load_on_startup = false,
-
-    header = {
-      '           ▄ ▄                   ',
-      '       ▄   ▄▄▄     ▄ ▄▄▄ ▄ ▄     ',
-      '       █ ▄ █▄█ ▄▄▄ █ █▄█ █ █     ',
-      '    ▄▄ █▄█▄▄▄█ █▄█▄█▄▄█▄▄█ █     ',
-      '  ▄ █▄▄█ ▄ ▄▄ ▄█ ▄▄▄▄▄▄▄▄▄▄▄▄▄▄  ',
-      '  █▄▄▄▄ ▄▄▄ █ ▄ ▄▄▄ ▄ ▄▄▄ ▄ ▄ █ ▄',
-      '▄ █ █▄█ █▄█ █ █ █▄█ █ █▄█ ▄▄▄ █ █',
-      '█▄█ ▄ █▄▄█▄▄█ █ ▄▄█ █ ▄ █ █▄█▄█ █',
-      '    █▄▄▄▄▄▄▄▄▄▄▄▄▄▄▄█ █▄█▄▄▄█    ',
-    },
-
-    buttons = {
-      { '  Find File', 'Spc f f', 'Telescope find_files' },
-      { '󰈚  Recent Files', 'Spc f o', 'Telescope oldfiles' },
-      { '󰈭  Find Word', 'Spc f w', 'Telescope live_grep' },
-      { '  Bookmarks', 'Spc m a', 'Telescope marks' },
-      { '  Themes', 'Spc t h', 'Telescope themes' },
-      { '  Mappings', 'Spc c h', 'NvCheatsheet' },
-    },
-  },
-
-  cheatsheet = { theme = 'grid' }, -- simple/grid
+  nvdash = { enabled = false },
+  cheatsheet = { enabled = false },
+  term = { enabled = false },
 
   lsp = {
-    signature = {
-      disabled = false,
-    },
+    signature = false,
     semantic_tokens = true,
-  },
-  term = {
-    enabled = false,
   },
 }
 
@@ -83,13 +51,9 @@ M.base46 = {
     'devicons',
     'git',
     'hop',
-    'illuminate',
     'lsp',
     'lspsaga',
     'mason',
-    'nvchad_updater',
-    'nvcheatsheet',
-    'nvdash',
     'nvimtree',
     'rainbowdelimiters',
     'semantic_tokens',

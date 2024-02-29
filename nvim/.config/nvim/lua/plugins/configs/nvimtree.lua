@@ -64,7 +64,7 @@ api.events.subscribe(Event.TreeClose, function()
   end
 end)
 
-local function my_on_attach(bufnr)
+local function on_attach(bufnr)
   api.config.mappings.default_on_attach(bufnr)
 
   vim.keymap.del('n', '<C-]>', { buffer = bufnr })
@@ -83,7 +83,7 @@ local my_root_folder_label = function(path)
 end
 
 local options = {
-  on_attach = my_on_attach,
+  on_attach = on_attach,
   filters = {
     dotfiles = false,
     exclude = { vim.fn.stdpath('config') .. '/lua/custom' },

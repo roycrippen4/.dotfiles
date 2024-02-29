@@ -244,8 +244,8 @@ local default_plugins = {
         'hrsh7th/cmp-path',
         -- https://github.com/hrsh7th/cmp-cmdline
         'hrsh7th/cmp-cmdline',
-        -- https://github.com/hrsh7th/cmp-nvim-lsp-signature-help
-        'hrsh7th/cmp-nvim-lsp-signature-help',
+        -- -- https://github.com/hrsh7th/cmp-nvim-lsp-signature-help
+        -- 'hrsh7th/cmp-nvim-lsp-signature-help',
       },
     },
     config = function()
