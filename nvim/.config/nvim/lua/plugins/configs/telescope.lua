@@ -54,12 +54,6 @@ local options = {
         ['q'] = require('telescope.actions').close,
         ['<C-Q>'] = false,
         ['<M-q>'] = false,
-        ['<C-n>'] = function(prompt_bufnr)
-          require('telescope.actions').preview_scrolling_down(prompt_bufnr)
-        end,
-        ['<C-p>'] = function(prompt_bufnr)
-          require('telescope.actions').preview_scrolling_up(prompt_bufnr)
-        end,
         ['<C-d>'] = function(prompt_bufnr)
           require('telescope.actions').results_scrolling_down(prompt_bufnr)
         end,
