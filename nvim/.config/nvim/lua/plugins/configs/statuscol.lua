@@ -67,7 +67,7 @@ statuscol.setup({
     },
     {
       sign = {
-        namespace = { 'gitsign' },
+        namespace = { 'gitsigns' },
         maxwidth = 1,
         auto = false,
         wrap = false,

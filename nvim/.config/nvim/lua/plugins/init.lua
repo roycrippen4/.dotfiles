@@ -157,7 +157,7 @@ local default_plugins = {
   {
     -- https://github.com/lewis6991/gitsigns.nvim
     'lewis6991/gitsigns.nvim',
-    ft = { 'gitcommit', 'diff' },
+    event = 'VeryLazy',
     opts = function()
       return require('plugins.configs.gitsigns')
     end,
