@@ -89,6 +89,11 @@ go_to_neodev_config() {
 	cd "$HOME/.dotfiles/nvim/.config/nvim/dev"
 }
 
+go_to_wt_config() {
+	cd "$HOME/../../mnt/c/Users/Roy/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/"
+}
+
+alias wconf=go_to_wt_config
 alias nconf=go_to_nvim_config
 alias hconf=go_to_home_config
 alias kconf=go_to_kitty_config

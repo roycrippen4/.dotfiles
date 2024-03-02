@@ -4,6 +4,17 @@ local namespace = vim.api.nvim_create_namespace
 local general = augroup('General', { clear = true })
 local pattern = { 'DressingInput', 'help', 'logger', 'man', 'qf', 'query', 'scratch', 'undotree' }
 
+if vim.fn.has('wsl') == 1 then
+  autocmd('TextYankPost', {
+    group = augroup('WSLYank', { clear = true }),
+    callback = function()
+      vim.schedule(function()
+        vim.fn.system('clip.exe', vim.fn.getreg('0'))
+      end)
+    end,
+  })
+end
+
 autocmd('ExitPre', {
   group = augroup('StopDaemons', { clear = true }),
   callback = function()
