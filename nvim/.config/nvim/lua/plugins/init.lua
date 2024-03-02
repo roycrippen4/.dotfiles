@@ -306,8 +306,7 @@ local default_plugins = {
       'WhoIsSethDaniel/mason-tool-installer.nvim',
 
       -- https://github.com/williamboman/mason.nvim
-      { 'williamboman/mason.nvim', cmd = 'Mason' }
-
+      { 'williamboman/mason.nvim', cmd = 'Mason' },
     },
     init = function()
       require('core.utils').lazy_load('nvim-lspconfig')
@@ -570,9 +569,9 @@ local default_plugins = {
   },
 
   {
-    'roycrippen4/colors.nvim',
-    -- 'dev/colors.nvim',
-    -- dev = true,
+    -- 'roycrippen4/colors.nvim',
+    'dev/colors.nvim',
+    dev = true,
     init = function()
       require('core.utils').load_mappings('colors')
     end,
