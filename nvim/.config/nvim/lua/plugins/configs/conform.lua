@@ -35,7 +35,7 @@ return {
     svelte = { { 'prettierd', 'prettier' } },
     typescript = { { 'prettierd', 'prettier' } },
     typescriptreact = { { 'prettierd', 'prettier' } },
-    yaml = { { 'prettierd', 'prettier' } },
+    yaml = { { 'yamlfmt' } },
   },
 
   -- stupid

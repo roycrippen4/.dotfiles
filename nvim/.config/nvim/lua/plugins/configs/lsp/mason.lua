@@ -1,13 +1,12 @@
-local options = {
+return {
   ensure_installed = {
     -- lua stuff
-    'lua-language-server',
+      'lua-language-server',
     'stylua',
 
     -- web dev stuff
     'css-lsp',
     'html-lsp',
-    'js-debug-adapter',
     'json-language-server',
     'prettier',
     'prettierd',
@@ -43,5 +42,3 @@ local options = {
 
   max_concurrent_installers = 10,
 }
-
-return options

@@ -10,7 +10,7 @@ autoload -Uz compinit
 compinit
 
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-$USER.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-$USER.zsh"
+	source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-$USER.zsh"
 fi
 
 # Editor settings
@@ -27,6 +27,11 @@ export ZSH="$HOME/.dotfiles/home/.oh-my-zsh"
 # bob exec/bob zsh completions
 export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
 fpath+=$HOME/.dotfiles/home/.zfunc/
+
+# go
+export GOROOT=/usr/local/go
+export GOPATH=$HOME/go
+export PATH=$PATH:/usr/local/go/bin
 
 # NVM stuff
 export NVM_DIR="$HOME/.nvm"
@@ -57,11 +62,11 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 
 plugins=(
-  # zsh-vi-mode
-  git
-  zsh-autosuggestions
-  fzf
-  zsh-syntax-highlighting
+	# zsh-vi-mode
+	git
+	zsh-autosuggestions
+	fzf
+	zsh-syntax-highlighting
 )
 
 source "$ZSH"/oh-my-zsh.sh
@@ -69,19 +74,19 @@ alias nvim="$HOME/.dotfiles/home/.bin/nvim.sh"
 alias vim="$HOME/.dotfiles/home/.bin/nvim.sh"
 
 go_to_nvim_config() {
-  cd "$HOME/.dotfiles/nvim/.config/nvim/"
+	cd "$HOME/.dotfiles/nvim/.config/nvim/"
 }
 
 go_to_home_config() {
-  cd "$HOME/.dotfiles/home"
+	cd "$HOME/.dotfiles/home"
 }
 
 go_to_kitty_config() {
-  cd "$HOME/.dotfiles/kitty/.config/kitty"
+	cd "$HOME/.dotfiles/kitty/.config/kitty"
 }
 
 go_to_neodev_config() {
-  cd "$HOME/.dotfiles/nvim/.config/nvim/dev"
+	cd "$HOME/.dotfiles/nvim/.config/nvim/dev"
 }
 
 alias nconf=go_to_nvim_config

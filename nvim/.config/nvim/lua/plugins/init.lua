@@ -118,13 +118,6 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/williamboman/mason.nvim
-    'williamboman/mason.nvim',
-    cmd = 'Mason',
-    opts = require('plugins.configs.lsp.mason'),
-  },
-
-  {
     -- https://github.com/nvim-tree/nvim-web-devicons
     'nvim-tree/nvim-web-devicons',
     opts = function()
@@ -306,7 +299,16 @@ local default_plugins = {
   {
     -- https://github.com/neovim/nvim-lspconfig
     'neovim/nvim-lspconfig',
-    dependencies = { 'folke/neodev.nvim' },
+    dependencies = {
+      'folke/neodev.nvim',
+
+      -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
+      'WhoIsSethDaniel/mason-tool-installer.nvim',
+
+      -- https://github.com/williamboman/mason.nvim
+      { 'williamboman/mason.nvim', cmd = 'Mason' }
+
+    },
     init = function()
       require('core.utils').lazy_load('nvim-lspconfig')
       dofile(vim.g.base46_cache .. 'lsp')
