@@ -7,7 +7,6 @@ return {
     'emmet-language-server',
     'eslint-lsp',
     -- 'gopls',
-    'haskell-language-server',
     'html-lsp',
     'htmx-lsp',
     'json-lsp',

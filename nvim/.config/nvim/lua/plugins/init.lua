@@ -84,7 +84,7 @@ local default_plugins = {
   {
     -- https://github.com/NvChad/ui
     'NvChad/ui',
-    branch = 'v3.0',
+    commit = 'de6bf300a2b8e5ac0e9968dda9f31a50cf9fe8a5',
     lazy = false,
     config = function()
       require('nvchad')

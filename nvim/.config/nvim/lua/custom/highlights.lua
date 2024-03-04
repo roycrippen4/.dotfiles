@@ -86,10 +86,23 @@ M.add = {
   St_trouble_icon        = { fg = d_red,          bg = darkest_black },
   St_trouble_sep         = { fg = d_red,          bg = darkest_black },
   St_unix                = { fg = '#00EE6e',      bg = darkest_black },
-  TbLineMarkedBufOff     = { fg = { 'grey',     0 }, bg = 'darker_black', sp = sep_color },
+
+  TblineFill           = { bg = 'darker_black'  },
+  TbLineBufOnModified  = { fg = 'green', bg = 'black'  },
+  TbLineBufOffModified = { fg = 'red', bg = 'darker_black'  },
+
+  TbLineBufOn          = { fg = d_yellow },
+  TbLineBufOff         = { fg = 'grey', bg = 'darker_black' },
+
+  TbLineBufOnClose     = { fg = 'red' },
+  TbLineBufOffClose    = { fg = 'grey', bg = 'darker_black'  },
+
   TbLineMarkedBufOn      = { fg = { 'blue',   -20 }, bg = 'black' },
-  TbLineUnmarkedBufOff   = { fg = { 'grey',     0 }, bg = 'darker_black', sp = sep_color},
+  TbLineMarkedBufOff     = { fg = { 'grey',     0 }, bg = 'darker_black' },
+
   TbLineUnmarkedBufOn    = { fg = { 'blue',   -20 }, bg = 'black' },
+  TbLineUnmarkedBufOff   = { fg = { 'grey',     0 }, bg = 'darker_black' },
+
   WinBar                 = { fg = "red", bg = black },
   WinBarNC               = { fg = black, bg = black },
 
@@ -151,12 +164,6 @@ M.override = {
   St_lspError         = { bg = darkest_black },
   St_lspWarning       = { bg = darkest_black },
 
-  -- Tabline
-  TblineFill           = { bg = 'darker_black',                sp = sep_color,  },
-  TbLineBufOffClose    = { bg = 'darker_black',                sp = sep_color,  },
-  TbLineBufOffModified = { bg = 'darker_black',                sp = sep_color,  },
-  TbLineBufOff         = { fg = 'grey',   bg = 'darker_black', sp = sep_color,  },
-  TbLineBufOn          = { fg = d_yellow },
 }
 
 return M

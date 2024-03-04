@@ -8,7 +8,6 @@ local options = {
     'css',
     'dockerfile',
     'go',
-    'haskell',
     'html',
     'java',
     'javascript',
