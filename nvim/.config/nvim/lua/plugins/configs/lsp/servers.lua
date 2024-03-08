@@ -94,16 +94,7 @@ lspconfig['pyright'].setup({
 
 lspconfig['svelte'].setup({
   capabilities = M.capabilities,
-  group = vim.api.nvim_create_augroup('svelte_ondidchangetsorjsfile', { clear = true }),
-  on_attach = function(client, bufnr)
-    utils.load_mappings('lspconfig', { buffer = bufnr })
-    vim.api.nvim_create_autocmd('BufWritePost', {
-      pattern = { '*.js', '*.ts' },
-      callback = function(ctx)
-        client.notify('$/onDidChangeTsOrJsFile', { uri = ctx.match })
-      end,
-    })
-  end,
+  on_attach = M.on_attach,
 })
 
 lspconfig['tailwindcss'].setup({

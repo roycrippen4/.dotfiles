@@ -320,7 +320,7 @@ local default_plugins = {
   {
     -- https://github.com/pmizio/typescript-tools.nvim
     'pmizio/typescript-tools.nvim',
-    ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' },
+    ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'svelte' },
     dependencies = {
       'nvim-lua/plenary.nvim',
       'neovim/nvim-lspconfig',
@@ -459,18 +459,8 @@ local default_plugins = {
   {
     -- https://github.com/windwp/nvim-ts-autotag
     'windwp/nvim-ts-autotag',
-    ft = {
-      'typescript',
-      'javascript',
-      'typescriptreact',
-      'javascriptreact',
-      'html',
-      'svelte',
-      'jsx',
-      'tsx',
-      'markdown',
-      'mdx',
-    },
+    dependencies = 'nvim-treesitter/nvim-treesitter',
+    ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'html', 'svelte', 'jsx', 'tsx', 'markdown', 'mdx' },
     config = function()
       require('nvim-ts-autotag').setup()
     end,

@@ -17,6 +17,16 @@ local function check_trigger_chars(chars)
 end
 
 M.on_attach = function(client, bufnr)
+  if client.name == 'svelte' then
+    vim.api.nvim_create_autocmd('BufWritePost', {
+      group = vim.api.nvim_create_augroup('svelte_ondidchangetsorjsfile', { clear = true }),
+      pattern = { '*.js', '*.ts' },
+      callback = function(ctx)
+        client.notify('$/onDidChangeTsOrJsFile', { uri = ctx.match })
+      end,
+    })
+  end
+
   utils.load_mappings('lspconfig', { buffer = bufnr })
 
   if client.server_capabilities.signatureHelpProvider then
