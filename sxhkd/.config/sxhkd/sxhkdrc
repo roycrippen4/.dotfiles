@@ -1,6 +1,3 @@
-# control + space
-#   tdrop -t -P 'wmctrl $wid -b add,sticky' -am kitty --start-as fullscreen
-  
 control + space
   tdrop -t -P 'wmctrl $wid -b add,sticky' -am kitty --start-as fullscreen
   
