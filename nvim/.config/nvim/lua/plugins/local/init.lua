@@ -1,10 +1,21 @@
--- local logger_ok, _ = pcall(require, 'plugins.local.logger')
--- if not logger_ok then
---   print('logger not ok')
---   return
--- end
+local logger_ok, _ = pcall(require, 'plugins.local.logger')
+if not logger_ok then
+  print('logger not ok')
+  return
+end
 
 local tabufline_ok, _ = pcall(require, 'plugins.local.tabufline')
+if not tabufline_ok then
+  log('tabufline not ok')
+end
+
+local term_ok, _ = pcall(require, 'plugins.local.term')
+if not term_ok then
+  print('term not ok')
+  log('term not ok')
+else
+  print('term ok')
+end
 
 local macro_flash_ok, _ = pcall(require, 'plugins.local.macro_flash')
 if not macro_flash_ok then

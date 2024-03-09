@@ -1,4 +1,4 @@
-require('base46.term')
+-- require('base46.term')
 local api = vim.api
 local augroup = api.nvim_create_augroup
 local autocmd = api.nvim_create_autocmd
@@ -7,10 +7,11 @@ local close_win = api.nvim_win_close
 local create_buf = api.nvim_create_buf
 local delete_buf = api.nvim_buf_delete
 local get_win = api.nvim_get_current_win
-local set_win = api.nvim_set_current_win
-local win_set_buf = api.nvim_win_set_buf
+local map = vim.keymap.set
 local open_win = api.nvim_open_win
+local set_win = api.nvim_set_current_win
 local valid_buf = api.nvim_buf_is_valid
+local win_set_buf = api.nvim_win_set_buf
 
 local M = {}
 
@@ -50,12 +51,6 @@ local terms = {
     },
   },
 }
-
--- ---@param resize 'height' | 'width'
--- ---@param area 'lines' | 'columns'
--- local resize = function(resize, area, size)
---   api['nvim_win_set_' .. resize](0, math.floor(vim.o[area] * size))
--- end
 
 ---@param winnr integer
 ---@param bufnr integer

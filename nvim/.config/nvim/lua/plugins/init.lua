@@ -290,9 +290,7 @@ local default_plugins = {
     -- https://github.com/folke/zen-mode.nvim
     'folke/zen-mode.nvim',
     cmd = 'ZenMode',
-    init = function()
-      require('core.utils').load_mappings('zenmode')
-    end,
+    keys = { { '<Leader>z', ':ZenMode<CR>' } },
     opts = require('plugins.configs.zenmode'),
   },
 
@@ -435,9 +433,6 @@ local default_plugins = {
     -- https://github.com/theprimeagen/harpoon
     'theprimeagen/harpoon',
     branch = 'master',
-    init = function()
-      require('core.utils').load_mappings('harpoon')
-    end,
     config = function()
       require('harpoon').setup({
         menu = {

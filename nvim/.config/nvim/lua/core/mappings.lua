@@ -1,178 +1,86 @@
+local map = vim.keymap.set
 local M = {}
--- local logger_showing = false
 
-M.terminal = {
-  n = {
-    -- toggle terms
-    ['<A-v>'] = {
-      function()
-        require('plugins.local.term').toggle('V')
-      end,
-      'New vertical term',
-    },
+-- Terminal
+map('n', '<A-v>', function()
+  require('plugins.local.term').toggle('V')
+end, { desc = 'New vertical term' })
 
-    ['<A-h>'] = {
-      function()
-        require('plugins.local.term').toggle('H')
-      end,
-      'New horizontal term',
-    },
+map('n', '<A-h>', function()
+  require('plugins.local.term').toggle('H')
+end, { desc = 'New horizontal term' })
 
-    ['<A-f>'] = {
-      function()
-        require('plugins.local.term').toggle('F')
-      end,
-      'Toggleable Floating term',
-    },
-  },
+map('n', '<A-f>', function()
+  require('plugins.local.term').toggle('F')
+end, { desc = 'Toggleable Floating term' })
 
-  -- toggle terms in terminal mode
-  t = {
-    ['<A-v>'] = {
-      function()
-        require('plugins.local.term').toggle('V')
-      end,
-      'New vertical term',
-    },
+map('t', '<A-v>', function()
+  require('plugins.local.term').toggle('V')
+end, { desc = 'New vertical term' })
 
-    ['<A-h>'] = {
-      function()
-        require('plugins.local.term').toggle('H')
-      end,
-      'New vertical term',
-    },
+map('t', '<A-h>', function()
+  require('plugins.local.term').toggle('H')
+end, { desc = 'New vertical term' })
 
-    ['<A-f>'] = {
-      function()
-        require('plugins.local.term').toggle('F')
-      end,
-      'Toggleable Floating term',
-    },
-  },
-}
+map('t', '<A-f>', function()
+  require('plugins.local.term').toggle('F')
+end, { desc = 'Toggleable Floating term' })
 
--- M.cmd_window = {
---   plugin = true,
---   n = {
---     [';'] = {
---       function()
---         require('cmd-window').cmdline()
---       end,
---     },
---     [':'] = {
---       function()
---         require('cmd-window').cmdline()
---       end,
---     },
---     ['/'] = {
---       function()
---         require('cmd-window').search()
---       end,
---     },
---     ['q:'] = {
---       function()
---         require('cmd-window').cmdline_window()
---       end,
---     },
---     ['q/'] = {
---       function()
---         require('cmd-window').search_window()
---       end,
---     },
---     ['q?'] = {
---       function()
---         require('cmd-window').search_window()
---       end,
---     },
---   },
--- }
+-- Harpoon
+map('n', 'F', function()
+  require('core.utils').set_cur_file_first_mark()
+  vim.cmd('redrawtabline')
+end)
 
-M.harpoon = {
-  plugin = true,
-  n = {
-    ['F'] = {
-      function()
-        require('core.utils').set_cur_file_first_mark()
-      end,
-    },
-    ['<C-f>'] = {
-      function()
-        require('harpoon.mark').add_file()
-        vim.cmd('redrawtabline')
-      end,
-    },
-    ['<C-e>'] = {
-      function()
-        require('harpoon.ui').toggle_quick_menu()
-        vim.wo.cursorline = true
-      end,
-    },
-    ['<C-1>'] = {
-      function()
-        require('harpoon.ui').nav_file(1)
-      end,
-    },
-    ['<C-2>'] = {
-      function()
-        require('harpoon.ui').nav_file(2)
-      end,
-    },
-    ['<C-3>'] = {
-      function()
-        require('harpoon.ui').nav_file(3)
-      end,
-    },
-    ['<C-4>'] = {
-      function()
-        require('harpoon.ui').nav_file(4)
-      end,
-    },
-    ['<C-5>'] = {
-      function()
-        require('harpoon.ui').nav_file(5)
-      end,
-    },
-    ['<C-6>'] = {
-      function()
-        require('harpoon.ui').nav_file(6)
-      end,
-    },
-    ['<C-7>'] = {
-      function()
-        require('harpoon.ui').nav_file(7)
-      end,
-    },
-    ['<C-8>'] = {
-      function()
-        require('harpoon.ui').nav_file(8)
-      end,
-    },
-    ['<C-9>'] = {
-      function()
-        require('harpoon.ui').nav_file(9)
-      end,
-    },
-    ['<C-0>'] = {
-      function()
-        require('harpoon.ui').nav_file(0)
-      end,
-    },
-  },
-}
+map('n', '<C-f>', function()
+  require('harpoon.mark').add_file()
+  vim.cmd('redrawtabline')
+end, { desc = 'Mark file' })
 
-M.disabled = {
-  n = {
-    ['<leader>/'] = '',
-    ['<leader>D'] = '',
-    ['<leader>h'] = '',
-    ['<leader>n'] = '',
-    ['<leader>q'] = '',
-    ['<leader>v'] = '',
-  },
-  t = {
-    ['<esc>'] = '',
-  },
-}
+map('n', '<C-e>', function()
+  require('harpoon.ui').toggle_quick_menu()
+  vim.wo.cursorline = true
+end)
+
+map('n', '<C-1>', function()
+  require('harpoon.ui').nav_file(1)
+end, { desc = 'Mark file' })
+
+map('n', '<C-2>', function()
+  require('harpoon.ui').nav_file(2)
+end, { desc = 'Mark file' })
+
+map('n', '<C-3>', function()
+  require('harpoon.ui').nav_file(3)
+end, { desc = 'Mark file' })
+
+map('n', '<C-4>', function()
+  require('harpoon.ui').nav_file(4)
+end, { desc = 'Mark file' })
+
+map('n', '<C-5>', function()
+  require('harpoon.ui').nav_file(5)
+end, { desc = 'Mark file' })
+
+map('n', '<C-6>', function()
+  require('harpoon.ui').nav_file(6)
+end, { desc = 'Mark file' })
+
+map('n', '<C-7>', function()
+  require('harpoon.ui').nav_file(7)
+end, { desc = 'Mark file' })
+
+map('n', '<C-8>', function()
+  require('harpoon.ui').nav_file(8)
+end, { desc = 'Mark file' })
+
+map('n', '<C-9>', function()
+  require('harpoon.ui').nav_file(9)
+end, { desc = 'Mark file' })
+
+map('n', '<C-0>', function()
+  require('harpoon.ui').nav_file(0)
+end, { desc = 'Mark file' })
 
 M.zenmode = {
   plugin = true,
