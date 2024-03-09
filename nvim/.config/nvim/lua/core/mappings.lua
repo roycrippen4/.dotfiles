@@ -1,6 +1,38 @@
 local map = vim.keymap.set
 local M = {}
 
+---@return boolean
+local function is_lua_comment_or_string()
+  if vim.bo.ft ~= 'lua' then
+    return false
+  end
+
+  local node = vim.treesitter.get_node():type()
+  return node == 'comment' or node == 'comment_content' or node == 'chunk' or node == 'string' or node == 'string_content'
+end
+
+local function black_hole()
+  local line_content = vim.fn.line('.')
+  if type(line_content) == 'string' and string.match(line_content, '^%s*$') then
+    vim.cmd('normal! "_dd')
+  else
+    vim.cmd('normal! dd')
+  end
+end
+
+local function handle_angle()
+  if is_lua_comment_or_string() then
+    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<><Left>', true, true, true), 'n', true)
+    return
+  end
+  return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<', true, true, true), 'n', true)
+end
+
+local function toggle_hints()
+  vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled(0))
+  print('inlay hints: ' .. tostring(vim.lsp.inlay_hint.is_enabled()))
+end
+
 -- Terminal
 map('n', '<A-v>', function()
   require('plugins.local.term').toggle('V')
@@ -82,140 +114,44 @@ map('n', '<C-0>', function()
   require('harpoon.ui').nav_file(0)
 end, { desc = 'Mark file' })
 
-M.zenmode = {
-  plugin = true,
-  n = {
-    ['<Leader>z'] = { ':ZenMode<CR>', 'Zen', opts = { nowait = true } },
-  },
-}
+map('i', '<', handle_angle, { desc = 'Angle brackets... sometimes...' })
+map('i', '<C-h>', '<Left>', { desc = 'Move left' })
+map('i', '<C-l>', '<Right>', { desc = 'Move right' })
+map('i', '<C-j>', '<Down>', { desc = 'Move down' })
+map('i', '<C-k>', '<Up>', { desc = 'Move up' })
+map('i', '<M-j>', '<ESC>:m .+1<CR>==gi', { desc = 'Shift line up', nowait = true, silent = true })
+map('i', '<M-k>', '<ESC>:m .-2<CR>==gi', { desc = 'Shift line up', nowait = true, silent = true })
 
----@return boolean
-local function is_lua_comment_or_string()
-  if vim.bo.ft ~= 'lua' then
-    return false
-  end
+map('n', '<leader>lr', '<cmd>luafile%<CR>', { desc = 'Run lua file  ' })
+map('n', ';', ':', { desc = 'enter commandline', nowait = true })
+map('n', 'yil', '^y$', { desc = 'yank in line', noremap = true })
+map('n', '<M-i>', ':Inspect<CR>', { desc = 'Inspect word under cursor', nowait = true, silent = true })
+map('n', 'dd', black_hole, { desc = 'smart delete', nowait = true, noremap = true })
+map('n', '<C-h>', '<C-w>h', { desc = 'Window left' })
+map('n', '<C-l>', '<C-w>l', { desc = 'Window right' })
+map('n', '<C-j>', '<C-w>j', { desc = 'Window down' })
+map('n', '<C-k>', '<C-w>k', { desc = 'Window up' })
+map('n', '<Leader>v', '<C-w>v', { desc = 'Vertical Split  ', nowait = true })
+map('n', '<Leader>h', '<C-w>h', { desc = 'Horizontal Split  ', nowait = true })
+map('n', '<Leader><Leader>', '<cmd> Lazy<CR>', { desc = 'Open Lazy  ' })
+map('n', '<C-s>', '<cmd> w<CR>', { desc = 'Save file' })
+map('n', '<C-c>', '<cmd> %y+<CR>', { desc = 'Copy whole file' })
+map('n', 'j', 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { desc = 'Move down', expr = true })
+map('n', 'k', 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = 'Move up', expr = true })
+map('n', '<M-S-.>', '<C-w>>', { desc = 'Increase window width', nowait = true })
+map('n', '<M-S-,>', '<C-w><', { desc = 'Decrease window width', nowait = true })
+map('n', '<M-j>', ':m .+1<CR>==', { desc = 'Shift line down', nowait = true, silent = true })
+map('n', '<M-k>', ':m .-2<CR>==', { desc = 'Shift line up', nowait = true, silent = true })
+map('n', '<Leader>h', toggle_hints, { desc = 'Toggle lsp inlay hints 󰊠 ' })
 
-  local node = vim.treesitter.get_node():type()
-  return node == 'comment' or node == 'comment_content' or node == 'chunk' or node == 'string' or node == 'string_content'
-end
+map('v', '<', '<gv', { desc = 'Un-Indent line' })
+map('v', '>', '>gv', { desc = 'Indent line' })
+map('v', '<M-j>', ":m '>+1<CR>gv=gv", { desc = 'Shift selection up', nowait = true, silent = true })
+map('v', '<M-k>', ":m '<-2<CR>gv=gv", { desc = 'Shift selection down', nowait = true, silent = true })
 
-M.general = {
-  i = {
-    ['<'] = {
-      function()
-        if is_lua_comment_or_string() then
-          vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<><Left>', true, true, true), 'n', true)
-          return
-        end
-        return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<', true, true, true), 'n', true)
-      end,
-    },
-
-    -- go to  beginning and end
-    ['<C-b>'] = { '<ESC>^i', 'Beginning of line' },
-    ['<C-e>'] = { '<End>', 'End of line' },
-
-    -- navigate within insert mode
-    ['<C-h>'] = { '<Left>', 'Move left' },
-    ['<C-l>'] = { '<Right>', 'Move right' },
-    ['<C-j>'] = { '<Down>', 'Move down' },
-    ['<C-k>'] = { '<Up>', 'Move up' },
-
-    -- Shift lines up and down
-    ['<M-j>'] = { '<ESC>:m .+1<CR>==gi', 'Shift line up', opts = { nowait = true, silent = true } },
-    ['<M-k>'] = { '<ESC>:m .-2<CR>==gi', 'Shift line up', opts = { nowait = true, silent = true } },
-  },
-
-  n = {
-    ['<C-D-X>'] = {
-      function()
-        vim.cmd(':q')
-      end,
-      'quit vim',
-      opts = { noremap = true },
-    },
-
-    ['<leader>lr'] = { '<cmd>luafile%<CR>', 'Run lua file  ' },
-
-    -- probably the best keybind ever
-    [';'] = { ':', 'enter command mode', opts = { nowait = true } },
-    ['yil'] = { '^y$', 'yank in line', opts = { noremap = true } },
-
-    -- shortcut to run :Inspect
-    ['<M-i>'] = { ':Inspect<CR>', 'Inspect word under cursor', opts = { nowait = true, silent = true } },
-
-    -- send whitespace to black hole register
-    ['dd'] = {
-      function()
-        local line_content = vim.fn.getline('.')
-
-        if type(line_content) == 'string' and string.match(line_content, '^%s*$') then
-          vim.cmd('normal! "_dd')
-        else
-          vim.cmd('normal! dd')
-        end
-      end,
-      'smart delete',
-      opts = { nowait = true, noremap = true },
-    },
-
-    -- window binds
-    ['<C-h>'] = { '<C-w>h', 'Window left' },
-    ['<C-l>'] = { '<C-w>l', 'Window right' },
-    ['<C-j>'] = { '<C-w>j', 'Window down' },
-    ['<C-k>'] = { '<C-w>k', 'Window up' },
-    ['<Leader>v'] = { '<C-w>v', 'Vertical split  ', opts = { nowait = true } },
-    ['<Leader>h'] = { '<C-w>s', 'Horizontal split  ', opts = { nowait = true } },
-    ['<Leader><Leader>'] = { '<cmd> Lazy<CR>', 'Open Lazy  ' },
-    ['<Leader><Leader><Leader>'] = { '<cmd> Log<CR>', 'Show Logger 󰗽 ' },
-
-    -- save
-    ['<C-s>'] = { '<cmd> w <CR>', 'Save file' },
-
-    -- Copy all
-    ['<C-c>'] = { '<cmd> %y+ <CR>', 'Copy whole file' },
-
-    -- movement
-    ['j'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
-    ['k'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
-    ['<Up>'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
-    ['<Down>'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
-    ['<M-S-.>'] = { '<C-w>>', 'Increase window width', opts = { nowait = true } },
-    ['<M-S-,>'] = { '<C-w><', 'Decrease window width', opts = { nowait = true } },
-
-    -- Shift current lines up/down
-    ['<M-j>'] = { ':m .+1<CR>==', 'Shift line up', opts = { nowait = true, silent = true } },
-    ['<M-k>'] = { ':m .-2<CR>==', 'Shift line up', opts = { nowait = true, silent = true } },
-
-    -- toggle lsp inlay hints
-    ['<Leader>lh'] = {
-      function()
-        vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled(0))
-        print('inlay hints: ' .. tostring(vim.lsp.inlay_hint.is_enabled()))
-      end,
-      'Toggle lsp inlay hints 󰊠 ',
-    },
-  },
-
-  v = {
-    ['<Up>'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
-    ['<Down>'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
-    ['<'] = { '<gv', 'Indent line' },
-    ['>'] = { '>gv', 'Indent line' },
-
-    -- Shift selection of lines up and down
-    ['<M-j>'] = { ":m '>+1<CR>gv=gv", 'Shift selection up', opts = { nowait = true, silent = true } },
-    ['<M-k>'] = { ":m '<-2<CR>gv=gv", 'Shift selection down', opts = { nowait = true, silent = true } },
-  },
-
-  x = {
-    ['j'] = { 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', 'Move down', opts = { expr = true } },
-    ['k'] = { 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', 'Move up', opts = { expr = true } },
-    -- Don't copy the replaced text after pasting in visual mode
-    -- https://vim.fandom.com/wiki/Replace_a_word_with_yanked_text#Alternative_mapping_for_paste
-    ['p'] = { 'p:let @+=@0<CR>:let @"=@0<CR>', 'Dont copy replaced text', opts = { silent = true } },
-  },
-}
+map('x', 'j', 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { desc = 'Move down', expr = true })
+map('x', 'k', 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = 'Move up', expr = true })
+map('x', 'p', 'p:let @+=@0<CR>:let @"=@0<CR>', { desc = 'Dont copy replaced text', silent = true })
 
 M.tabufline = {
   plugin = true,
@@ -591,79 +527,5 @@ M.cells = {
     },
   },
 }
-
--- M.harpoon = {
---   plugin = true,
---   n = {
---     ['<C-f>'] = {
---       function()
---         require('harpoon'):list('relative'):append()
---         vim.cmd('redrawtabline')
---       end,
---     },
---     ['<C-e>'] = {
---       function()
---         local path = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
---         require('harpoon').ui:toggle_quick_menu(require('harpoon'):list('relative'), {
---           title = ' ⥚ Harpoon ⥟ ',
---           title_pos = 'center',
---           border = 'rounded',
---           context = path,
---         })
---         vim.wo.cursorline = true
---       end,
---     },
---     ['<C-1>'] = {
---       function()
---         require('harpoon'):list('relative'):select(1)
---       end,
---     },
---     ['<C-2>'] = {
---       function()
---         require('harpoon'):list('relative'):select(2)
---       end,
---     },
---     ['<C-3>'] = {
---       function()
---         require('harpoon'):list('relative'):select(3)
---       end,
---     },
---     ['<C-4>'] = {
---       function()
---         require('harpoon'):list('relative'):select(4)
---       end,
---     },
---     ['<C-5>'] = {
---       function()
---         require('harpoon'):list('relative'):select(5)
---       end,
---     },
---     ['<C-6>'] = {
---       function()
---         require('harpoon'):list('relative'):select(6)
---       end,
---     },
---     ['<C-7>'] = {
---       function()
---         require('harpoon'):list('relative'):select(7)
---       end,
---     },
---     ['<C-8>'] = {
---       function()
---         require('harpoon'):list('relative'):select(8)
---       end,
---     },
---     ['<C-9>'] = {
---       function()
---         require('harpoon'):list('relative'):select(9)
---       end,
---     },
---     ['<C-0>'] = {
---       function()
---         require('harpoon'):list('relative'):select(0)
---       end,
---     },
---   },
--- }
 
 return M

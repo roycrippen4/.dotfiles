@@ -2,7 +2,7 @@ local opt = vim.opt
 local g = vim.g
 require('core.autocommands')
 require('core.diagnostic')
--- require('plugins.local')
+require('plugins.local')
 
 -------------------------------------- globals -----------------------------------------
 g.autosave = false
