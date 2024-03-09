@@ -150,3 +150,13 @@ autocmd('BufWritePre', {
     end
   end,
 })
+
+autocmd('CmdWinEnter', {
+  group = augroup('_fix_ts_cmdwin', { clear = false }),
+  callback = function()
+    vim.cmd('setfiletype python')
+    vim.schedule(function()
+      vim.cmd('setfiletype vim')
+    end)
+  end,
+})
