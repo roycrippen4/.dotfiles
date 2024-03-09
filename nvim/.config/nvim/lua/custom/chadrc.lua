@@ -13,7 +13,8 @@ if timer then
 end
 
 local function set_modules(modules)
-  modules[1] = status_modules.fileformat()
+  -- modules[1] = status_modules.fileformat()
+  modules[1] = ''
   modules[2] = status_modules.mode()
   modules[3] = status_modules.file_info()
   modules[4] = status_modules.git()

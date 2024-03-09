@@ -2,7 +2,6 @@ local cmp = require('cmp')
 
 dofile(vim.g.base46_cache .. 'cmp')
 
--- local kind = cmp.lsp.CompletionItemKind
 local cmp_ui = require('nvconfig').ui.cmp
 local cmp_style = cmp_ui.style
 
@@ -35,25 +34,9 @@ cmp.setup({
   sources = {
     { name = 'nvim_lsp', trigger_characters = { '.', ':', '@' } },
     { name = 'luasnip', keyword_length = 2 },
-    -- { name = 'nvim_lsp_signature_help' },
     { name = 'path' },
     { name = 'nvim_lua' },
     { name = 'crates' },
-  },
-  sorting = {
-    priority_weight = 10,
-    comparators = {
-      cmp.config.compare.offset,
-      cmp.config.compare.exact,
-      cmp.config.compare.score,
-      cmp.config.compare.recently_used,
-      cmp.config.compare.sort_text,
-      cmp.config.compare.length,
-      cmp.config.compare.scopes,
-      cmp.config.compare.kind,
-      cmp.config.compare.locality,
-      cmp.config.compare.order,
-    },
   },
   preselect = cmp.PreselectMode.Insert,
   formatting = format,
@@ -100,16 +83,15 @@ cmp.setup({
         behavior = cmp.ConfirmBehavior.Insert,
         select = true,
       }),
-      { 'i', 'c' }
+      { 'i' }
     ),
   },
 })
 
--- cmp.setup.cmdline(':', {
---   mapping = cmp.mapping.preset.cmdline(),
---   completeopt = 'menu,menuone,noselect',
---   sources = cmp.config.sources({
---     { name = 'path' },
---     { name = 'cmdline', option = { ignore_cmds = { 'w', 'wq', 'c', 'cq' } } },
---   }),
--- })
+cmp.setup.cmdline(':', {
+  mapping = cmp.mapping.preset.cmdline(),
+  sources = cmp.config.sources({
+    { name = 'path' },
+    { name = 'cmdline', option = { ignore_cmds = { 'w', 'wq', 'c', 'cq' } } },
+  }),
+})

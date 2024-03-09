@@ -4,7 +4,6 @@ local default_plugins = {
 
   -- https://github.com/nvim-lua/plenary.nvim
   'nvim-lua/plenary.nvim',
-
   {
     'mfussenegger/nvim-dap',
     dependencies = {
@@ -143,6 +142,22 @@ local default_plugins = {
     end,
   },
 
+  -- https://github.com/zbirenbaum/copilot.lua
+  {
+    'zbirenbaum/copilot.lua',
+    lazy = false,
+    opts = {
+      panel = { enabled = false },
+      suggestion = {
+        enabled = true,
+        auto_trigger = true,
+        keymap = {
+          accept = '<M-CR>',
+        },
+      },
+    },
+  },
+
   {
     -- https://github.com/hrsh7th/nvim-cmp
     'hrsh7th/nvim-cmp',
@@ -152,36 +167,10 @@ local default_plugins = {
         -- https://github.com/L3MON4D3/LuaSnip
         'L3MON4D3/LuaSnip',
         dependencies = 'rafamadriz/friendly-snippets',
-        opts = { history = true, updateevents = 'TextChanged,TextChangedI' },
-        config = function(_, opts)
-          require('luasnip').config.set_config(opts)
+        config = function()
+          require('luasnip').config.set_config({ history = true, updateevents = 'TextChanged,TextChangedI' })
           require('plugins.configs.luasnip')
         end,
-        keys = {
-          {
-            '<Tab>',
-            function()
-              return require('luasnip').jumpable(1) and '<Plug>luasnip-jump-next' or '<tab>'
-            end,
-            expr = true,
-            silent = true,
-            mode = 'i',
-          },
-          {
-            '<Tab>',
-            function()
-              require('luasnip').jump(1)
-            end,
-            mode = 's',
-          },
-          {
-            '<S-Tab>',
-            function()
-              require('luasnip').jump(-1)
-            end,
-            mode = { 'i', 's' },
-          },
-        },
       },
       {
         -- https://github.com/hrsh7th/cmp-nvim-lua
@@ -194,8 +183,6 @@ local default_plugins = {
         'hrsh7th/cmp-path',
         -- https://github.com/hrsh7th/cmp-cmdline
         'hrsh7th/cmp-cmdline',
-        -- -- https://github.com/hrsh7th/cmp-nvim-lsp-signature-help
-        -- 'hrsh7th/cmp-nvim-lsp-signature-help',
       },
     },
     config = function()

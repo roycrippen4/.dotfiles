@@ -143,16 +143,16 @@ local function truncate_filename(filename, max_length)
   return base_name:sub(1, partial_len) .. '…' .. base_name:sub(-partial_len) .. '.' .. extension
 end
 
-M.fileformat = function()
-  local symbols = {
-    unix = '%#St_unix#  ', -- e712
-    dos = '%#St_windows#  ', -- e70f
-    mac = '%#St_mac#  ', -- e711
-  }
+-- M.fileformat = function()
+--   local symbols = {
+--     unix = '%#St_unix#  ', -- e712
+--     dos = '%#St_windows#  ', -- e70f
+--     mac = '%#St_mac#  ', -- e711
+--   }
 
-  local format = symbols[vim.bo.fileformat]
-  return format or ''
-end
+--   local format = symbols[vim.bo.fileformat]
+--   return format or ''
+-- end
 
 M.file_info = function()
   local icon = ' 󰈚 '

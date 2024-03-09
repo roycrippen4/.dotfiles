@@ -9,6 +9,13 @@ local spider_opts = {
 local map = vim.keymap.set
 local M = {}
 
+local auto_trigger = true
+local function toggle_auto_trigger()
+  require('copilot.suggestion').toggle_auto_trigger()
+  auto_trigger = not auto_trigger
+  print('Copilot autotrigger: ' .. tostring(auto_trigger))
+end
+
 local function fml()
   local choice = math.random(1, 3)
 
@@ -160,7 +167,11 @@ map('i', '<M-k>', '<ESC>:m .-2<CR>==gi', { desc = 'Shift line up', nowait = true
 map('n', '<leader>lr', '<cmd>luafile%<CR>', { desc = 'Run lua file  ' })
 map('n', ';', ':', { desc = 'enter commandline', nowait = true })
 map('n', 'yil', '^y$', { desc = 'yank in line', noremap = true })
-map('n', '<M-i>', ':Inspect<CR>', { desc = 'Inspect word under cursor', nowait = true, silent = true })
+-- treesitter shit
+map('n', '<Leader>i', ':Inspect<CR>', { desc = 'Inspect word under cursor', nowait = true, silent = true })
+map('n', '<Leader>t', ':InspectTree<CR>', { desc = 'Inspect word under cursor', nowait = true, silent = true })
+map('n', '<Leader>q', ':EditQuery<CR>', { desc = 'Inspect word under cursor', nowait = true, silent = true })
+
 map('n', 'dd', black_hole, { desc = 'smart delete', nowait = true, noremap = true })
 map('n', '<C-h>', '<C-w>h', { desc = 'Window left' })
 map('n', '<C-l>', '<C-w>l', { desc = 'Window right' })
@@ -262,5 +273,8 @@ end, { desc = 'Trouble toggle workspace diagnostics  ' })
 
 -- automata
 map('n', '<Leader>fml', fml, { desc = 'Fuck shit up!' })
+
+-- copiolot
+map({ 'n', 'i' }, '<M-I>', toggle_auto_trigger)
 
 return M
