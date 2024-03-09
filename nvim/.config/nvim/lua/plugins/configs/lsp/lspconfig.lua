@@ -1,6 +1,19 @@
+local map = vim.keymap.set
 local utils = require('core.utils')
 local methods = vim.lsp.protocol.Methods
 local M = {}
+
+local diagnostic_status = true
+local toggle_diagnostics = function()
+  diagnostic_status = not diagnostic_status
+  if diagnostic_status then
+    vim.api.nvim_echo({ { 'Show diagnostics' } }, false, {})
+    vim.diagnostic.enable()
+  else
+    vim.api.nvim_echo({ { 'Hide diagnostics' } }, false, {})
+    vim.diagnostic.disable()
+  end
+end
 
 ---@param chars string[]
 local function check_trigger_chars(chars)
@@ -17,6 +30,14 @@ local function check_trigger_chars(chars)
 end
 
 M.on_attach = function(client, bufnr)
+  map('n', 'gr', require('telescope.builtin').lsp_references, { desc = 'Goto References  ' })
+  map('n', 'gi', require('telescope.builtin').lsp_implementations, { desc = 'Goto Implementation 󰡱 ' })
+  map('n', 'gd', require('telescope.builtin').lsp_definitions, { desc = 'Goto Definition 󰼭 ' })
+  map('n', '<leader>ld', toggle_diagnostics, { desc = 'Toggle Diagnostics 󰨚 ' })
+  map('n', '<leader>lf', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message 󰉪 ' })
+  map('n', '<leader>r', require('plugins.local.renamer').open, { desc = 'LSP Rename 󰑕 ' })
+  map('n', '<leader>la', vim.lsp.buf.code_action, { desc = 'Code Action  ' })
+
   if client.name == 'svelte' then
     vim.api.nvim_create_autocmd('BufWritePost', {
       group = vim.api.nvim_create_augroup('svelte_ondidchangetsorjsfile', { clear = true }),
@@ -26,8 +47,6 @@ M.on_attach = function(client, bufnr)
       end,
     })
   end
-
-  utils.load_mappings('lspconfig', { buffer = bufnr })
 
   if client.server_capabilities.signatureHelpProvider then
     local group = vim.api.nvim_create_augroup('LspSignature', { clear = false })

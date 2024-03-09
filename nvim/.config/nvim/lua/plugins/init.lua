@@ -1,60 +1,24 @@
+local map = vim.keymap.set
+
 local default_plugins = {
 
   -- https://github.com/nvim-lua/plenary.nvim
   'nvim-lua/plenary.nvim',
 
-  -- {
-  --   'dev/cmd-window.nvim',
-  --   dev = true,
-  --   event = 'VimEnter',
-  --   init = function()
-  --     require('core.utils').load_mappings('cmd_window')
-  --   end,
-  --   config = function()
-  --     require('cmd-window').setup()
-  --   end,
-  -- },
-
-  {
-    'tabufline',
-    dir = 'lua/plugins/local/tabufline',
-    init = function()
-      require('plugins.local.tabufline.lazyload')
-      require('core.utils').load_mappings('tabufline')
-    end,
-  },
-
   {
     'mfussenegger/nvim-dap',
     dependencies = {
       'rcarriga/nvim-dap-ui',
-      {
-        'theHamsta/nvim-dap-virtual-text',
-        opts = { virt_text_pos = 'eol' },
-      },
-      {
-        'mxsdev/nvim-dap-vscode-js',
-        opts = {
-          debugger_path = vim.fn.stdpath('data') .. '/lazy/vscode-js-debug',
-          adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
-        },
-      },
-      {
-        'microsoft/vscode-js-debug',
-        build = 'npm i && npm run compile vsDebugServerBundle && rm -rf out && mv -f dist out',
-      },
-      {
-        'jbyuki/one-small-step-for-vimkind',
-        ft = { 'lua' },
-        init = function()
-          require('core.utils').load_mappings('osv')
-        end,
-      },
+      { 'theHamsta/nvim-dap-virtual-text', opts = { virt_text_pos = 'eol' } },
+      { 'jbyuki/one-small-step-for-vimkind', ft = { 'lua' } },
     },
-    init = function()
-      require('core.utils').load_mappings('dap')
-    end,
     config = function()
+      local dap = require('dap')
+      map('n', '<Leader>dc', dap.continue, { desc = ' Continue' })
+      map('n', '<Leader>do', dap.step_into, { desc = ' Step Over' })
+      map('n', '<Leader>dO', dap.step_out, { desc = ' Step out' })
+      map('n', '<Leader>di', dap.step_into, { desc = ' Step into' })
+      map('n', '<Leader>db', dap.toggle_breakpoint, { desc = ' Toggle breakpoint' })
       require('plugins.configs.dap')
     end,
   },
@@ -162,9 +126,7 @@ local default_plugins = {
 
   {
     'chrisgrieser/nvim-spider',
-    init = function()
-      require('core.utils').load_mappings('spider')
-    end,
+    keys = { 'w', 'e', 'b' },
   },
 
   {
@@ -250,9 +212,6 @@ local default_plugins = {
     -- https://github.com/nvim-tree/nvim-tree.lua
     'nvim-tree/nvim-tree.lua',
     lazy = false,
-    init = function()
-      require('core.utils').load_mappings('nvimtree')
-    end,
     opts = function()
       return require('plugins.configs.nvimtree')
     end,
@@ -270,9 +229,6 @@ local default_plugins = {
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     },
     cmd = 'Telescope',
-    init = function()
-      require('core.utils').load_mappings('telescope')
-    end,
     opts = function()
       return require('plugins.configs.telescope')
     end,
@@ -359,13 +315,7 @@ local default_plugins = {
   {
     -- https://github.com/folke/trouble.nvim
     'folke/trouble.nvim',
-    keys = {
-      { '<leader>tf', mode = { 'n' } },
-      { '<leader>tt', mode = { 'n' } },
-    },
-    init = function()
-      require('core.utils').load_mappings('trouble')
-    end,
+    keys = { { '<leader>tf', mode = { 'n' } }, { '<leader>tt', mode = { 'n' } } },
     opts = {},
   },
 
@@ -535,9 +485,6 @@ local default_plugins = {
     -- https://github.com/folke/which-key.nvim
     'folke/which-key.nvim',
     keys = { '<leader>', '<c-r>', '<c-w>', '"', "'", '`', 'c', 'v', 'g' },
-    init = function()
-      require('core.utils').load_mappings('whichkey')
-    end,
     cmd = 'WhichKey',
     config = function()
       dofile(vim.g.base46_cache .. 'whichkey')
@@ -548,21 +495,7 @@ local default_plugins = {
   {
     -- https://github.com/Eandrju/cellular-automaton.nvim
     'Eandrju/cellular-automaton.nvim',
-    init = function()
-      require('core.utils').load_mappings('cells')
-    end,
-  },
-
-  {
-    -- 'roycrippen4/colors.nvim',
-    'dev/colors.nvim',
-    dev = true,
-    init = function()
-      require('core.utils').load_mappings('colors')
-    end,
-    config = function()
-      require('colors').setup({ debug = false })
-    end,
+    event = 'VeryLazy',
   },
 }
 

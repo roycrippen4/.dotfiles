@@ -1,5 +1,32 @@
+local patterns = { '%<', '%>', "%'", '%"', '%(', '%)', '%{', '%}' }
+local spider_opts = {
+  customPatterns = {
+    patterns = patterns,
+    overrideDefault = false,
+  },
+}
+
 local map = vim.keymap.set
 local M = {}
+
+local function fml()
+  local choice = math.random(1, 3)
+
+  if choice == 1 then
+    print('scramble')
+    require('cellular-automaton').start_animation('scramble')
+  end
+
+  if choice == 2 then
+    print('game_of_life')
+    require('cellular-automaton').start_animation('game_of_life')
+  end
+
+  if choice == 3 then
+    print('make_it_rain')
+    require('cellular-automaton').start_animation('make_it_rain')
+  end
+end
 
 ---@return boolean
 local function is_lua_comment_or_string()
@@ -31,6 +58,14 @@ end
 local function toggle_hints()
   vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled(0))
   print('inlay hints: ' .. tostring(vim.lsp.inlay_hint.is_enabled()))
+end
+
+local function close_buf()
+  if #vim.api.nvim_list_wins() == 1 and string.sub(vim.api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
+    vim.cmd([[ q ]])
+  else
+    require('plugins.local.tabufline').close_buffer()
+  end
 end
 
 -- Terminal
@@ -153,379 +188,79 @@ map('x', 'j', 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { desc = 'Move dow
 map('x', 'k', 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = 'Move up', expr = true })
 map('x', 'p', 'p:let @+=@0<CR>:let @"=@0<CR>', { desc = 'Dont copy replaced text', silent = true })
 
-M.tabufline = {
-  plugin = true,
-  n = {
-    -- cycle through buffers
-    ['L'] = {
-      function()
-        require('plugins.local.tabufline').tabuflineNext()
-      end,
-      'Goto next buffer',
-    },
+-- tabufline
+map('n', 'L', require('plugins.local.tabufline').tabuflineNext)
+map('n', 'H', require('plugins.local.tabufline').tabuflinePrev)
+map('n', '<leader>x', close_buf)
 
-    ['H'] = {
-      function()
-        require('plugins.local.tabufline').tabuflinePrev()
-      end,
-      'Goto prev buffer',
-    },
+-- Nvimtree
+map('n', '<C-n>', '<cmd> NvimTreeToggle<CR>')
 
-    -- close buffer + hide terminal buffer
-    ['<leader>x'] = {
-      function()
-        if #vim.api.nvim_list_wins() == 1 and string.sub(vim.api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
-          vim.cmd([[ q ]])
-        else
-          require('plugins.local.tabufline').close_buffer()
-        end
-      end,
-      'Close buffer  ',
-    },
-  },
-}
+-- Telescope
+map('n', '<leader>fa', '<cmd> Telescope autocommands <CR>', { desc = 'Find autocommands 󱚟 ' })
+map('n', '<leader>fb', '<cmd> Telescope buffers <CR>', { desc = 'Find buffers ﬘ ' })
+map('n', '<leader>fc', '<cmd> Telescope commands <CR>', { desc = 'Find commands 󰘳 ' })
+map('n', '<leader>ff', '<cmd> Telescope find_files <CR>', { desc = 'Find files  ' })
+map('n', '<leader>fgc', '<cmd> Telescope git_commits <CR>', { desc = 'Find commits  ' })
+map('n', '<leader>fgs', '<cmd> Telescope git_status <CR>', { desc = 'Find Git status 󱖫 ' })
+map('n', '<leader>fh', '<cmd> Telescope help_tags <CR>', { desc = 'Find help 󰋖' })
+map('n', '<leader>fk', '<cmd> Telescope keymaps <CR>', { desc = 'Find keymaps  ' })
+map('n', '<leader>fl', '<cmd> Telescope highlights <CR>', { desc = 'Find highlight groups 󰸱 ' })
+map('n', '<leader>fm', '<cmd> Telescope marks <CR>', { desc = 'Find bookmarks  ' })
+map('n', '<leader>fo', '<cmd> Telescope oldfiles <CR>', { desc = 'Find oldfiles  ' })
+map('n', '<leader>fr', '<cmd> Telescope resume <CR>', { desc = 'Find oldfiles  ' })
+map('n', '<leader>fs', '<cmd> Telescope themes <CR>', { desc = 'Find scheme  ' })
+map('n', '<leader>fw', '<cmd> Telescope live_grep <CR>', { desc = 'Find word (cwd)  ' })
+map('n', '<leader>fz', '<cmd> Telescope current_buffer_fuzzy_find <CR>', { desc = 'Find in current buffer  ' })
 
-local diagnostic_status = true
-local toggle_diagnostics = function()
-  diagnostic_status = not diagnostic_status
-  if diagnostic_status then
-    vim.api.nvim_echo({ { 'Show diagnostics' } }, false, {})
-    vim.diagnostic.enable()
-  else
-    vim.api.nvim_echo({ { 'Hide diagnostics' } }, false, {})
-    vim.diagnostic.disable()
-  end
-end
+-- spider
+map('n', 'w', function()
+  require('spider').motion('w', spider_opts)
+end)
 
-M.lspconfig = {
-  plugin = true,
-  n = {
-    ['gr'] = {
-      function()
-        require('telescope.builtin').lsp_references()
-      end,
-      'Goto References  ',
-    },
+map('n', 'e', function()
+  require('spider').motion('w', spider_opts)
+end)
 
-    ['gi'] = {
-      function()
-        require('telescope.builtin').lsp_implementations()
-      end,
-      'Goto Implementation 󰡱 ',
-    },
+map('n', 'b', function()
+  require('spider').motion('w', spider_opts)
+end)
 
-    ['gd'] = {
-      function()
-        require('telescope.builtin').lsp_definitions()
-      end,
-      'Goto Definition 󰼭 ',
-    },
+map('x', 'w', function()
+  require('spider').motion('w', spider_opts)
+end)
 
-    ['T'] = {
-      function()
-        require('telescope.builtin').lsp_type_definitions()
-      end,
-      'Goto Type Definition  ',
-    },
+map('x', 'e', function()
+  require('spider').motion('w', spider_opts)
+end)
 
-    ['<C-S-K>'] = {
-      function()
-        vim.lsp.buf.signature_help()
-      end,
-      'Signature Documentation 󰷼 ',
-    },
+map('x', 'b', function()
+  require('spider').motion('w', spider_opts)
+end)
 
-    ['<leader>ld'] = { toggle_diagnostics, 'Toggle Diagnostics 󰨚 ' },
+map('o', 'w', function()
+  require('spider').motion('w', spider_opts)
+end)
 
-    ['<leader>lf'] = {
-      function()
-        vim.diagnostic.open_float()
-      end,
-      'Open floating diagnostic message 󰉪 ',
-    },
+map('o', 'e', function()
+  require('spider').motion('w', spider_opts)
+end)
 
-    ['<leader>r'] = {
-      function()
-        require('plugins.local.renamer').open()
-      end,
-      'LSP Rename 󰑕 ',
-    },
+map('o', 'b', function()
+  require('spider').motion('w', spider_opts)
+end)
 
-    ['<leader>la'] = {
-      function()
-        vim.lsp.buf.code_action()
-      end,
-      'Code Action  ',
-    },
-  },
-}
+-- one small step
+map('n', '<Leader>dl', function()
+  require('osv').launch({ port = 8086 })
+end, { desc = ' Launch Lua adapter' })
 
-M.nvimtree = {
-  plugin = true,
-  n = {
-    ['<C-n>'] = { '<cmd> NvimTreeToggle <CR>', 'Toggle nvimtree' },
-  },
-}
+-- trouble
+map('n', '<Leader>td', function()
+  require('trouble').toggle('workspace_diagnostics')
+end, { desc = 'Trouble toggle workspace diagnostics  ' })
 
-M.telescope = {
-  plugin = true,
-  n = {
-    -- find
-    ['<leader>fa'] = { '<cmd> Telescope autocommands <CR>', 'Find autocommands 󱚟 ' },
-    ['<leader>fb'] = { '<cmd> Telescope buffers <CR>', 'Find buffers ﬘ ' },
-    ['<leader>fc'] = { '<cmd> Telescope commands <CR>', 'Find commands 󰘳 ' },
-    ['<leader>ff'] = { '<cmd> Telescope find_files <CR>', 'Find files  ' },
-    ['<leader>fgc'] = { '<cmd> Telescope git_commits <CR>', 'Find commits  ' },
-    ['<leader>fgs'] = { '<cmd> Telescope git_status <CR>', 'Find Git status 󱖫 ' },
-    ['<leader>fh'] = { '<cmd> Telescope help_tags <CR>', 'Find help 󰋖' },
-    ['<leader>fk'] = { '<cmd> Telescope keymaps <CR>', 'Find keymaps  ' },
-    ['<leader>fl'] = { '<cmd> Telescope highlights <CR>', 'Find highlight groups 󰸱 ' },
-    ['<leader>fm'] = { '<cmd> Telescope marks <CR>', 'Find bookmarks  ' },
-    ['<leader>fo'] = { '<cmd> Telescope oldfiles <CR>', 'Find oldfiles  ' },
-    ['<leader>fr'] = { '<cmd> Telescope resume <CR>', 'Find oldfiles  ' },
-    ['<leader>fs'] = { '<cmd> Telescope themes <CR>', 'Find scheme  ' },
-    ['<leader>fw'] = { '<cmd> Telescope live_grep <CR>', 'Find word (cwd)  ' },
-    ['<leader>fz'] = { '<cmd> Telescope current_buffer_fuzzy_find <CR>', 'Find in current buffer  ' },
-  },
-}
-
-M.whichkey = {
-  plugin = true,
-  n = {
-    ['<leader>wK'] = {
-      function()
-        vim.cmd('WhichKey')
-      end,
-      'Which-key all keymaps  ',
-    },
-    ['<leader>wk'] = {
-      function()
-        local input = vim.fn.input('WhichKey: ')
-        vim.cmd('WhichKey ' .. input)
-      end,
-      'Which-key query lookup  ',
-    },
-  },
-}
-
-local patterns = { '%<', '%>', "%'", '%"', '%(', '%)', '%{', '%}' }
-
-M.spider = {
-  plugin = true,
-  n = {
-    ['w'] = {
-      function()
-        require('spider').motion('w', {
-          customPatterns = {
-            patterns = patterns,
-            overrideDefault = false,
-          },
-        })
-      end,
-    },
-    ['e'] = {
-      function()
-        require('spider').motion('e', {
-          customPatterns = {
-            patterns = patterns,
-            overrideDefault = false,
-          },
-        })
-      end,
-    },
-    ['b'] = {
-      function()
-        require('spider').motion('b', {
-          customPatterns = {
-            patterns = patterns,
-            overrideDefault = false,
-          },
-        })
-      end,
-    },
-  },
-  x = {
-    ['w'] = {
-      function()
-        require('spider').motion('w', {
-          customPatterns = {
-            patterns = patterns,
-            overrideDefault = false,
-          },
-        })
-      end,
-    },
-    ['e'] = {
-      function()
-        require('spider').motion('e', {
-          customPatterns = {
-            patterns = patterns,
-            overrideDefault = false,
-          },
-        })
-      end,
-    },
-    ['b'] = {
-      function()
-        require('spider').motion('b', {
-          customPatterns = {
-            patterns = patterns,
-            overrideDefault = false,
-          },
-        })
-      end,
-    },
-  },
-  o = {
-    ['w'] = {
-      function()
-        require('spider').motion('w', {
-          customPatterns = {
-            patterns = patterns,
-            overrideDefault = false,
-          },
-        })
-      end,
-    },
-    ['e'] = {
-      function()
-        require('spider').motion('e', {
-          customPatterns = {
-            patterns = patterns,
-            overrideDefault = false,
-          },
-        })
-      end,
-    },
-    ['b'] = {
-      function()
-        require('spider').motion('b', {
-          customPatterns = {
-            patterns = patterns,
-            overrideDefault = false,
-          },
-        })
-      end,
-    },
-  },
-}
-
-M.osv = {
-  plugin = true,
-  n = {
-    ['<leader>dl'] = {
-      function()
-        require('osv').launch({ port = 8086 })
-      end,
-      ' Launch Lua adapter',
-    },
-  },
-}
-
-M.dap = {
-  plugin = true,
-  n = {
-    ['<Leader>dc'] = {
-      function()
-        require('dap').continue()
-      end,
-      ' Continue',
-    },
-    ['<Leader>do'] = {
-      function()
-        require('dap').step_over()
-      end,
-      ' Step Over',
-    },
-    ['<Leader>dO'] = {
-      function()
-        require('dap').step_out()
-      end,
-      ' Step out',
-    },
-    ['<Leader>di'] = {
-      function()
-        require('dap').step_into()
-      end,
-      ' Step into',
-    },
-    ['<leader>db'] = {
-      function()
-        require('dap').toggle_breakpoint()
-      end,
-      ' Toggle breakpoint',
-    },
-  },
-}
-
-M.trouble = {
-  plugin = true,
-  n = {
-    ['<leader>td'] = {
-      function()
-        require('trouble').toggle('workspace_diagnostics')
-      end,
-      'Trouble toggle workspace diagnostics  ',
-    },
-  },
-}
-M.colors = {
-  plugin = true,
-  n = {
-    ['<leader>cp'] = {
-      function()
-        require('colors').picker()
-      end,
-      'Pick a color  ',
-    },
-    ['<leader>cd'] = {
-      function()
-        require('colors').darken()
-      end,
-      'Darken a color  ',
-    },
-    ['<leader>cl'] = {
-      function()
-        require('colors').lighten()
-      end,
-      'Lighten a color  ',
-    },
-    ['<leader>cg'] = {
-      function()
-        require('colors').grayscale()
-      end,
-      'Lighten a color  ',
-    },
-    ['<leader>cS'] = { '<cmd> Telescope colors select_list <CR>', 'Choose css list to search from  ' },
-    ['<leader>cs'] = { '<cmd> Telescope colors default_list <CR>', 'Find color in default list   ' },
-  },
-}
-
-M.cells = {
-  plugin = true,
-  n = {
-    ['<leader>fml'] = {
-      function()
-        local choice = math.random(1, 3)
-
-        if choice == 1 then
-          print('scramble')
-          require('cellular-automaton').start_animation('scramble')
-        end
-
-        if choice == 2 then
-          print('game_of_life')
-          require('cellular-automaton').start_animation('game_of_life')
-        end
-
-        if choice == 3 then
-          print('make_it_rain')
-          require('cellular-automaton').start_animation('make_it_rain')
-        end
-      end,
-      'Fuck shit up!',
-    },
-  },
-}
+-- automata
+map('n', '<Leader>fml', fml, { desc = 'Fuck shit up!' })
 
 return M

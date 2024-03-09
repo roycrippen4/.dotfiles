@@ -1,12 +1,9 @@
+require('plugins.local.tabufline.lazyload')
+
 local logger_ok, _ = pcall(require, 'plugins.local.logger')
 if not logger_ok then
   print('logger not ok')
   return
-end
-
-local tabufline_ok, _ = pcall(require, 'plugins.local.tabufline')
-if not tabufline_ok then
-  log('tabufline not ok')
 end
 
 local term_ok, _ = pcall(require, 'plugins.local.term')
