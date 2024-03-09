@@ -118,6 +118,8 @@ M.add = {
   ['@variable'] = { fg = 'white' },
   ['@variable.member'] = { fg = { 'red', -2 } },
   ['@string.special.url.comment'] = { fg = 'light_gray', underline = true },
+  St_file_info        = { fg = { 'white', -10 }, bg = darkest_black },
+  St_LspStatus        = { fg = '#53bf00',        bg = darkest_black },
 }
 
 -- stylua: ignore
@@ -142,7 +144,6 @@ M.override = {
   St_InsertModeSep    = { fg = d_yellow,         bg = darkest_black },
   St_LspHints         = { bg = darkest_black },
   St_LspInfo          = { bg = darkest_black },
-  St_LspStatus        = { fg = '#53bf00',        bg = darkest_black },
   St_NTerminalMode    = { fg = green,            bg = darkest_black },
   St_NTerminalModeSep = { fg = green,            bg = darkest_black },
   St_NormalMode       = { fg = l_blue,           bg = darkest_black },
@@ -156,7 +157,6 @@ M.override = {
   St_VisualMode       = { fg = 'pink',           bg = darkest_black },
   St_VisualModeSep    = { fg = 'pink',           bg = darkest_black },
   St_cwd_sep          = { fg = { 'red',   -15 }, bg = darkest_black },
-  St_file_info        = { fg = { 'white', -10 }, bg = darkest_black },
   St_file_sep         = { fg = { 'grey',   10 }, bg = darkest_black, bold = true },
   St_gitIcons         = { fg = { 'white', -10 }, bg = darkest_black, italic = true, bold = false },
   St_pos_sep          = { fg = '#d6a000',        bg = darkest_black, bold = false },
