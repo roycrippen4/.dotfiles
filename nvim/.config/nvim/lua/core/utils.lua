@@ -215,55 +215,6 @@ M.remove_disabled_keys = function(chadrc_mappings, default_mappings)
   return default_mappings
 end
 
-M.lazy_load = function(plugin)
-  vim.api.nvim_create_autocmd({ 'BufRead', 'BufWinEnter', 'BufNewFile' }, {
-    group = vim.api.nvim_create_augroup('BeLazyOnFileOpen' .. plugin, {}),
-    callback = function()
-      local file = vim.fn.expand('%')
-      local condition = file ~= '[lazy]' and file ~= ''
-
-      if condition then
-        vim.api.nvim_del_augroup_by_name('BeLazyOnFileOpen' .. plugin)
-        if plugin ~= 'nvim-treesitter' then
-          vim.defer_fn(function()
-            require('lazy').load({ plugins = plugin })
-            if plugin == 'nvim-lspconfig' then
-              vim.cmd('silent! do FileType')
-            end
-          end, 0)
-        else
-          require('lazy').load({ plugins = plugin })
-        end
-      end
-    end,
-  })
-end
-
--- Bust the cache of all required Lua files.
--- After running this, each require() would re-run the file.
-local function unload_all_modules()
-  -- Lua patterns for the modules to unload
-  local unload_modules = {
-    '^j.',
-  }
-
-  for k, _ in pairs(package.loaded) do
-    for _, v in ipairs(unload_modules) do
-      if k:match(v) then
-        package.loaded[k] = nil
-        break
-      end
-    end
-  end
-end
-
-function M.reload()
-  vim.cmd.LspStop()
-  vim.fn.execute('silent !pkill -9 eslint_d')
-  unload_all_modules()
-  vim.cmd.luafile('$MYVIMRC')
-end
-
 ---@param diagnostics Diagnostic[]
 function M.add_missing_commas(diagnostics)
   for _, diag in pairs(diagnostics) do

@@ -58,9 +58,7 @@ local default_plugins = {
   {
     -- https://github.com/NvChad/nvim-colorizer.lua
     'NvChad/nvim-colorizer.lua',
-    init = function()
-      require('core.utils').lazy_load('nvim-colorizer.lua')
-    end,
+    lazy = false,
     config = function()
       require('colorizer').setup({
         filetypes = {
@@ -97,9 +95,6 @@ local default_plugins = {
   {
     -- https://github.com/nvim-treesitter/nvim-treesitter
     'nvim-treesitter/nvim-treesitter',
-    init = function()
-      require('core.utils').lazy_load('nvim-treesitter')
-    end,
     cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' },
     build = ':TSUpdate',
     opts = function()
@@ -253,6 +248,7 @@ local default_plugins = {
   {
     -- https://github.com/neovim/nvim-lspconfig
     'neovim/nvim-lspconfig',
+    lazy = false,
     dependencies = {
       'folke/neodev.nvim',
 
@@ -262,10 +258,6 @@ local default_plugins = {
       -- https://github.com/williamboman/mason.nvim
       { 'williamboman/mason.nvim', cmd = 'Mason' },
     },
-    init = function()
-      require('core.utils').lazy_load('nvim-lspconfig')
-      dofile(vim.g.base46_cache .. 'lsp')
-    end,
     config = function()
       require('plugins.configs.lsp.servers')
     end,
@@ -323,9 +315,6 @@ local default_plugins = {
     -- https://github.com/hiphish/rainbow-delimiters.nvim
     'hiphish/rainbow-delimiters.nvim',
     event = 'VeryLazy',
-    init = function()
-      require('core.utils').lazy_load('rainbow-delimiters.nvim')
-    end,
     opts = function()
       return require('plugins.configs.rainbow_delimiters')
     end,
@@ -338,9 +327,7 @@ local default_plugins = {
   {
     -- https://github.com/stevearc/dressing.nvim
     'stevearc/dressing.nvim',
-    init = function()
-      require('core.utils').lazy_load('dressing.nvim')
-    end,
+    lazy = false,
     config = function()
       require('plugins.configs.dressing')
     end,
@@ -445,9 +432,7 @@ local default_plugins = {
   {
     -- https://github.com/folke/todo-comments.nvim
     'folke/todo-comments.nvim',
-    init = function()
-      require('core.utils').lazy_load('todo-comments.nvim')
-    end,
+    event = 'VeryLazy',
     opts = function()
       return require('plugins.configs.todo')
     end,
@@ -460,9 +445,7 @@ local default_plugins = {
   {
     -- https://github.com/lukas-reineke/indent-blankline.nvim
     'lukas-reineke/indent-blankline.nvim',
-    init = function()
-      require('core.utils').lazy_load('indent-blankline.nvim')
-    end,
+    event = 'VeryLazy',
     config = function()
       require('plugins.configs.blankline')
     end,
@@ -473,9 +456,6 @@ local default_plugins = {
     'luukvbaal/statuscol.nvim',
     branch = '0.10',
     event = 'BufReadPost',
-    init = function()
-      require('core.utils').lazy_load('statuscol.nvim')
-    end,
     config = function()
       require('plugins.configs.statuscol')
     end,

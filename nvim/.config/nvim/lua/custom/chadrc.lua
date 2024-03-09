@@ -29,7 +29,7 @@ end
 
 -- tabufline.run()
 M.ui = {
-  theme = 'catppuccin',
+  theme = 'onedark',
   hl_add = highlights.add,
   hl_override = highlights.override,
 

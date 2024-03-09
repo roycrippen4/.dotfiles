@@ -1,5 +1,4 @@
 local map = vim.keymap.set
-local utils = require('core.utils')
 local methods = vim.lsp.protocol.Methods
 local M = {}
 
