@@ -39,7 +39,7 @@ local default_plugins = {
   {
     -- https://github.com/NvChad/base46
     'NvChad/base46',
-    branch = 'v3.0',
+    commit = '15ed57cdeb7048fe3e6466d3f7573e81fd1f3e9d',
     build = function()
       require('base46').load_all_highlights()
     end,
