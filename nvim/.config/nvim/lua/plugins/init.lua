@@ -350,22 +350,6 @@ local default_plugins = {
     end,
   },
 
-  -- {
-  --   -- https://github.com/theprimeagen/harpoon
-  --   'theprimeagen/harpoon',
-  --   branch = 'harpoon2',
-  --   init = function()
-  --     require('core.utils').load_mappings('harpoon')
-  --   end,
-  --   config = function()
-  --     require('harpoon'):setup({
-  --       settings = {
-  --         save_on_toggle = true,
-  --       },
-  --     })
-  --   end,
-  -- },
-
   {
     -- https://github.com/theprimeagen/harpoon
     'theprimeagen/harpoon',
