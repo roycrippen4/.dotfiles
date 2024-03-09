@@ -219,11 +219,11 @@ map('n', 'w', function()
 end)
 
 map('n', 'e', function()
-  require('spider').motion('w', spider_opts)
+  require('spider').motion('e', spider_opts)
 end)
 
 map('n', 'b', function()
-  require('spider').motion('w', spider_opts)
+  require('spider').motion('b', spider_opts)
 end)
 
 map('x', 'w', function()
@@ -231,11 +231,11 @@ map('x', 'w', function()
 end)
 
 map('x', 'e', function()
-  require('spider').motion('w', spider_opts)
+  require('spider').motion('e', spider_opts)
 end)
 
 map('x', 'b', function()
-  require('spider').motion('w', spider_opts)
+  require('spider').motion('b', spider_opts)
 end)
 
 map('o', 'w', function()
@@ -243,11 +243,11 @@ map('o', 'w', function()
 end)
 
 map('o', 'e', function()
-  require('spider').motion('w', spider_opts)
+  require('spider').motion('e', spider_opts)
 end)
 
 map('o', 'b', function()
-  require('spider').motion('w', spider_opts)
+  require('spider').motion('b', spider_opts)
 end)
 
 -- one small step

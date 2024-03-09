@@ -18,6 +18,7 @@ vim.filetype.add({
     ['.eslintrc'] = 'json',
     ['.prettierrc'] = 'json',
     ['.stylelintrc'] = 'json',
+    ['sxhkdrc'] = 'sxhkdrc',
     ['.zshrc'] = 'sh',
     ['.zshenv'] = 'sh',
   },
