@@ -15,6 +15,14 @@ if vim.fn.has('wsl') == 1 then
   })
 end
 
+autocmd('FileType', {
+  group = general,
+  pattern = 'hypr',
+  callback = function(event)
+    vim.bo[event.buf].commentstring = '# %s'
+  end,
+})
+
 autocmd('ExitPre', {
   group = augroup('StopDaemons', { clear = true }),
   callback = function()

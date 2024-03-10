@@ -10,6 +10,7 @@ vim.filetype.add({
     mts = 'typescript',
     png = 'image',
     postcss = 'css',
+    rasi = 'rasi',
     sh = 'sh',
     zsh = 'sh',
   },
@@ -25,5 +26,6 @@ vim.filetype.add({
   pattern = {
     ['.*config/git/config'] = 'gitconfig',
     ['.env.*'] = 'sh',
+    ['.*/hypr/.*%.conf'] = 'hyprlang',
   },
 })
