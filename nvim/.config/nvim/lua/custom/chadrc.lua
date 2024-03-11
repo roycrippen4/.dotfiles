@@ -2,7 +2,7 @@ local M = {}
 local status_modules = require('plugins.local.statusline')
 local highlights = require('custom.highlights')
 
-local timer = vim.loop.new_timer()
+local timer = vim.uv.new_timer()
 
 local function redraw()
   vim.cmd('redrawstatus')
@@ -13,7 +13,6 @@ if timer then
 end
 
 local function set_modules(modules)
-  -- modules[1] = status_modules.fileformat()
   modules[1] = ''
   modules[2] = status_modules.mode()
   modules[3] = status_modules.file_info()

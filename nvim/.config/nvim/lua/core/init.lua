@@ -109,7 +109,7 @@ autocmd('FileType', {
 -- reload some chadrc options on-save
 autocmd('BufWritePost', {
   pattern = vim.tbl_map(function(path)
-    local realpath = vim.loop.fs_realpath(path)
+    local realpath = vim.uv.fs_realpath(path)
     if realpath then
       return vim.fs.normalize(realpath)
     end

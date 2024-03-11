@@ -216,6 +216,13 @@ map('n', '<leader>fs', '<cmd> Telescope themes <CR>', { desc = 'Find scheme  
 map('n', '<leader>fw', '<cmd> Telescope live_grep <CR>', { desc = 'Find word (cwd)  ' })
 map('n', '<leader>fz', '<cmd> Telescope current_buffer_fuzzy_find <CR>', { desc = 'Find in current buffer  ' })
 
+-- Terminal
+map('t', '<Esc>', [[<C-\><C-n>]], { desc = 'NTerminal mode' })
+map('t', '<C-h>', [[<cmd> wincmd h<CR>]], { desc = 'Move focus left' })
+map('t', '<C-j>', [[<cmd> wincmd j<CR>]], { desc = 'Move focus down' })
+map('t', '<C-k>', [[<cmd> wincmd k<CR>]], { desc = 'Move focus up' })
+map('t', '<C-l>', [[<cmd> wincmd l<CR>]], { desc = 'Move focus right' })
+
 -- one small step
 map('n', '<Leader>dl', function()
   require('osv').launch({ port = 8086 })

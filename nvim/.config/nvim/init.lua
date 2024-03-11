@@ -8,8 +8,7 @@ end
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
--- bootstrap lazy.nvim!
-if not vim.loop.fs_stat(lazypath) then
+if not vim.uv.fs_stat(lazypath) then
   require('core.bootstrap').lazy(lazypath)
 end
 

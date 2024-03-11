@@ -110,16 +110,15 @@ M.mode = function()
   M.modes['!'][3] = '  '
 
   local m = vim.api.nvim_get_mode().mode
-  local current_mode = --[[ host .. ]]
-    '%#' .. M.modes[m][2] .. '#' .. (M.modes[m][3] or '  ') .. M.modes[m][1] .. ' '
+  local current_mode = '%#' .. M.modes[m][2] .. '#' .. (M.modes[m][3] or '  ') .. M.modes[m][1] .. ' '
   local mode_sep1 = '%#' .. M.modes[m][2] .. 'Sep#'
 
   local recording_register = vim.fn.reg_recording()
 
   if recording_register == '' then
-    return current_mode .. mode_sep1 --[[  .. '%#ST_EmptySpace#' .. '' ]]
+    return current_mode .. mode_sep1
   else
-    return  --[[ host .. ]]'%#ST_Macro# 󰑊 MACRO ' .. recording_register .. '%#ST_MacroSep# '
+    return '%#ST_Macro# 󰑊 MACRO ' .. recording_register .. '%#ST_MacroSep# '
   end
 end
 
@@ -142,17 +141,6 @@ local function truncate_filename(filename, max_length)
 
   return base_name:sub(1, partial_len) .. '…' .. base_name:sub(-partial_len) .. '.' .. extension
 end
-
--- M.fileformat = function()
---   local symbols = {
---     unix = '%#St_unix#  ', -- e712
---     dos = '%#St_windows#  ', -- e70f
---     mac = '%#St_mac#  ', -- e711
---   }
-
---   local format = symbols[vim.bo.fileformat]
---   return format or ''
--- end
 
 M.file_info = function()
   local icon = ' 󰈚 '
@@ -179,13 +167,9 @@ M.file_info = function()
   end
 
   local filetypes = {
-    terminal = {
-      icon = '%#St_toggleterm#  ',
-      label = 'TOGGLETERM',
-    },
     Colors = {
-      icon = '%#St_colors1#  ',
-      label = '%#St_colors2#C' .. '%#St_colors3#O' .. '%#St_colors4#L' .. '%#St_colors5#O' .. '%#St_colors6#R' .. '%#St_colors7#S',
+      icon = '%#St_Colors1#  ',
+      label = '%#St_Colors2#C' .. '%#St_Colors3#O' .. '%#St_Colors4#L' .. '%#St_Colors5#O' .. '%#St_Colors6#R' .. '%#St_Colors7#S',
     },
     DressingInput = {
       icon = '  ',
@@ -195,20 +179,28 @@ M.file_info = function()
       icon = '  ',
       label = 'HARPOON',
     },
+    mason = {
+      icon = '%#St_Mason# 󱌣 ',
+      label = 'MASON',
+    },
     undotree = {
       icon = '  ',
       label = 'UNDOTREE',
     },
     NvimTree = {
-      icon = '%#St_nvimtree#  ',
+      icon = '%#St_NvimTree#  ',
       label = 'NVIMTREE',
     },
+    lazy = {
+      icon = '%#St_Lazy# 💤 ',
+      label = 'LAZY',
+    },
     lazygit = {
-      icon = '%#St_lazygit#  ',
+      icon = '%#St_Lazygit#  ',
       label = 'LAZYGIT',
     },
     Trouble = {
-      icon = '%#St_trouble# 𝍐 ',
+      icon = '%#St_Trouble# 𝍐 ',
       label = 'TROUBLE',
     },
     TelescopePrompt = {
@@ -225,7 +217,7 @@ M.file_info = function()
     end
   end
 
-  return '%#St_file_info#' .. icon .. name .. '%#St_file_sep#' .. ''
+  return '%#St_FileInfo#' .. icon .. name .. '%#St_FileSep#' .. ''
 end
 
 M.git = function()
@@ -235,12 +227,12 @@ M.git = function()
 
   local git_status = vim.b[stbufnr()].gitsigns_status_dict
 
-  local added = (git_status.added and git_status.added ~= 0) and ('%#St_gitAdd#  ' .. git_status.added) or ''
-  local changed = (git_status.changed and git_status.changed ~= 0) and ('%#St_gitChange#  ' .. git_status.changed) or ''
-  local removed = (git_status.removed and git_status.removed ~= 0) and ('%#St_gitRemove#  ' .. git_status.removed) or ''
-  local branch_name = '  ' .. git_status.head
+  local added = (git_status.added and git_status.added ~= 0) and ('%#St_GitAdd#  ' .. git_status.added) or ''
+  local changed = (git_status.changed and git_status.changed ~= 0) and ('%#St_GitChange#  ' .. git_status.changed) or ''
+  local removed = (git_status.removed and git_status.removed ~= 0) and ('%#St_GitRemove#  ' .. git_status.removed) or ''
+  local branch_name = '%#St_GitBranch#  ' .. git_status.head .. ' '
 
-  return '%#St_gitIcons#' .. branch_name .. added .. changed .. removed
+  return branch_name .. added .. changed .. removed
 end
 
 M.lsp_diagnostics = function()
@@ -261,10 +253,10 @@ M.lsp_diagnostics = function()
   -- ---@type integer|string
   -- local info = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.INFO })
 
-  errors = (errors and errors > 0) and ('%#St_lspError# 󰅚 ' .. errors .. ' ') or ''
-  warnings = (warnings and warnings > 0) and ('%#St_lspWarning# ' .. warnings .. ' ') or ''
+  errors = (errors and errors > 0) and ('%#St_LspError# 󰅚 ' .. errors .. ' ') or ''
+  warnings = (warnings and warnings > 0) and ('%#St_LspWarning# ' .. warnings .. ' ') or ''
   hints = (hints and hints > 0) and ('%#St_LspHints#󱧣 ' .. hints .. ' ') or ''
-  info = (info and info > 0) and ('%#St_lspInfo# ' .. info .. ' ') or ''
+  info = (info and info > 0) and ('%#St_LspInfo# ' .. info .. ' ') or ''
 
   return vim.o.columns > 140 and errors .. warnings .. hints .. info or ''
 end
@@ -310,7 +302,7 @@ M.cursor_position = function()
     end
   end
 
-  return vim.o.columns > 140 and '%#St_pos_sep#' .. '' .. '%#St_pos_text# Ln %l, Col %c ' or ''
+  return vim.o.columns > 140 and '%#St_PosSep#' .. '' .. '%#St_PosText# Ln %l, Col %c ' or ''
 end
 
 M.time = function()
@@ -318,7 +310,7 @@ M.time = function()
 end
 
 M.cwd = function()
-  local dir_name = '%#St_cwd_sep#' .. '' .. ' 󰉖 ' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t') .. ' '
+  local dir_name = '%#St_CwdSep#' .. '' .. ' 󰉖 ' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t') .. ' '
   return (vim.o.columns > 85 and dir_name) or ''
 end
 
@@ -332,8 +324,8 @@ vim.api.nvim_create_autocmd('ModeChanged', {
   callback = function()
     local m = vim.api.nvim_get_mode().mode
     local hl = vim.api.nvim_get_hl(0, { name = M.modes[m][2] })
-    vim.api.nvim_set_hl(0, 'St_nvimtree', { fg = hl.fg, bg = hl.bg, italic = true })
-    vim.api.nvim_set_hl(0, 'St_harpoon', { fg = hl.fg, bg = hl.bg, italic = true })
+    vim.api.nvim_set_hl(0, 'St_NvimTree', { fg = hl.fg, bg = hl.bg, italic = true })
+    vim.api.nvim_set_hl(0, 'St_Harpoon', { fg = hl.fg, bg = hl.bg, italic = true })
   end,
 })
 

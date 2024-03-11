@@ -1,4 +1,3 @@
--- require('base46.term')
 local api = vim.api
 local augroup = api.nvim_create_augroup
 local autocmd = api.nvim_create_autocmd
@@ -7,7 +6,6 @@ local close_win = api.nvim_win_close
 local create_buf = api.nvim_create_buf
 local delete_buf = api.nvim_buf_delete
 local get_win = api.nvim_get_current_win
-local map = vim.keymap.set
 local open_win = api.nvim_open_win
 local set_win = api.nvim_set_current_win
 local valid_buf = api.nvim_buf_is_valid
@@ -99,6 +97,7 @@ end
 local function show_float(term, create)
   if create then
     term.bufnr = create_buf(false, true)
+
     ---@diagnostic disable-next-line
     term.winnr = open_win(term.bufnr, true, term.config)
     term_open(term)
@@ -188,21 +187,11 @@ function M.toggle(direction)
   show(term, direction)
 end
 
-local function set_terminal_keymaps()
-  local opts = { buffer = 0 }
-  vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { buffer = 0 })
-  vim.keymap.set('t', '<C-h>', [[<cmd> wincmd h<CR>]], opts)
-  vim.keymap.set('t', '<C-j>', [[<cmd> wincmd j<CR>]], opts)
-  vim.keymap.set('t', '<C-k>', [[<cmd> wincmd k<CR>]], opts)
-  vim.keymap.set('t', '<C-l>', [[<cmd> wincmd l<CR>]], opts)
-end
-
 -- autoinsert when entering term buffers
 autocmd({ 'BufEnter' }, {
   pattern = 'term://*',
   group = augroup('TermGroup', { clear = true }),
   callback = function()
-    set_terminal_keymaps()
     vim.cmd('startinsert')
   end,
 })

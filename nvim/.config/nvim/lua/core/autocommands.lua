@@ -53,6 +53,7 @@ autocmd('FileType', {
   pattern = 'help',
   group = general,
   callback = function()
+    print('help')
     vim.api.nvim_set_option_value('bufhidden', 'unload', { scope = 'local' })
     vim.cmd('wincmd L')
     vim.api.nvim_win_set_width(0, 100)
@@ -89,20 +90,20 @@ autocmd('VimEnter', {
         ui.nav_file(i)
       end
 
-      -- if os.getenv('DEBUG') == '1' then
-      --   require('plugins.local_plugs.logger'):show()
-      --   vim.defer_fn(function()
-      --     vim.cmd([[
-      --     vsplit
-      --     vertical resize 80
-      --     wincmd h
-      --   ]])
-      --     ui.nav_file(1)
-      --   end, 0)
-      -- else
-      ui.nav_file(1)
-      vim.cmd("echo ' '")
-      -- end
+      if os.getenv('DEBUG') == '1' then
+        require('plugins.local.logger'):show()
+        vim.defer_fn(function()
+          vim.cmd([[
+          vsplit
+          vertical resize 80
+          wincmd h
+        ]])
+          ui.nav_file(1)
+        end, 0)
+      else
+        ui.nav_file(1)
+        vim.cmd("echo ' '")
+      end
     end)
   end,
 })
