@@ -1,4 +1,5 @@
-local options = {
+dofile(vim.g.base46_cache .. 'syntax')
+return {
   ensure_installed = {
     'gitignore',
     'bash',
@@ -50,5 +51,3 @@ local options = {
     end,
   },
 }
-
-return options

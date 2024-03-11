@@ -1,5 +1,11 @@
 local map = vim.keymap.set
 
+local function load_ext(opts)
+  for _, ext in ipairs(opts.extensions_list) do
+    require('telescope').load_extension(ext)
+  end
+end
+
 local default_plugins = {
 
   -- https://github.com/nvim-lua/plenary.nvim
@@ -82,13 +88,10 @@ local default_plugins = {
   {
     -- https://github.com/nvim-tree/nvim-web-devicons
     'nvim-tree/nvim-web-devicons',
-    opts = function()
-      return { override = require('nvchad.icons.devicons') }
-    end,
-    config = function(_, opts)
+    config = function()
       require('plugins.configs.devicon')
       dofile(vim.g.base46_cache .. 'devicons')
-      require('nvim-web-devicons').setup(opts)
+      require('nvim-web-devicons').setup({ override = require('nvchad.icons.devicons') })
     end,
   },
 
@@ -97,12 +100,9 @@ local default_plugins = {
     'nvim-treesitter/nvim-treesitter',
     cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' },
     build = ':TSUpdate',
-    opts = function()
-      return require('plugins.configs.treesitter')
-    end,
-    config = function(_, opts)
+    config = function()
       dofile(vim.g.base46_cache .. 'syntax')
-      require('nvim-treesitter.configs').setup(opts)
+      require('nvim-treesitter.configs').setup(require('plugins.configs.treesitter'))
     end,
   },
 
@@ -110,12 +110,9 @@ local default_plugins = {
     -- https://github.com/lewis6991/gitsigns.nvim
     'lewis6991/gitsigns.nvim',
     event = 'VeryLazy',
-    opts = function()
-      return require('plugins.configs.gitsigns')
-    end,
-    config = function(_, opts)
+    config = function()
       dofile(vim.g.base46_cache .. 'git')
-      require('gitsigns').setup(opts)
+      require('gitsigns').setup(require('plugins.configs.gitsigns'))
     end,
   },
 
@@ -126,14 +123,9 @@ local default_plugins = {
       { 'e', "<cmd>lua require('spider').motion('e')<CR>" },
       { 'b', "<cmd>lua require('spider').motion('b')<CR>" },
     },
-    config = function()
-      require('spider').setup({
-        customPatterns = {
-          patterns = { '%<', '%>', "%'", '%"', '%(', '%)', '%{', '%}' },
-          overrideDefault = false,
-        },
-      })
-    end,
+    opts = {
+      customPatterns = { patterns = { '%<', '%>', "%'", '%"', '%(', '%)', '%{', '%}' }, overrideDefault = false },
+    },
   },
 
   {
@@ -207,11 +199,8 @@ local default_plugins = {
     -- https://github.com/nvim-tree/nvim-tree.lua
     'nvim-tree/nvim-tree.lua',
     lazy = false,
-    opts = function()
-      return require('plugins.configs.nvimtree')
-    end,
-    config = function(_, opts)
-      require('nvim-tree').setup(opts)
+    config = function()
+      require('nvim-tree').setup(require('plugins.configs.nvimtree'))
       dofile(vim.g.base46_cache .. 'nvimtree')
     end,
   },
@@ -224,16 +213,11 @@ local default_plugins = {
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     },
     cmd = 'Telescope',
-    opts = function()
-      return require('plugins.configs.telescope')
-    end,
-    config = function(_, opts)
+    config = function()
       dofile(vim.g.base46_cache .. 'telescope')
-      local telescope = require('telescope')
-      telescope.setup(opts)
-      for _, ext in ipairs(opts.extensions_list) do
-        telescope.load_extension(ext)
-      end
+      local opts = require('plugins.configs.telescope')
+      require('telescope').setup(opts)
+      load_ext(opts)
     end,
   },
 
@@ -271,8 +255,9 @@ local default_plugins = {
       'nvim-lua/plenary.nvim',
       'neovim/nvim-lspconfig',
     },
-    opts = function()
-      return require('plugins.configs.lsp.lang.typescript')
+    config = function()
+      local opts = require('plugins.configs.lsp.lang.typescript')
+      require('typescript-tools').setup(opts)
     end,
   },
 
@@ -292,9 +277,7 @@ local default_plugins = {
   {
     -- https://github.com/numToStr/Comment.nvim
     'numToStr/Comment.nvim',
-    keys = {
-      { 'gc', mode = { 'n', 'v' }, 'gcc' },
-    },
+    keys = { { 'gc', mode = { 'n', 'v' }, 'gcc' } },
     config = function()
       ---@diagnostic disable-next-line
       require('Comment').setup({
@@ -307,20 +290,16 @@ local default_plugins = {
   {
     -- https://github.com/folke/trouble.nvim
     'folke/trouble.nvim',
-    keys = { { '<leader>tf', mode = { 'n' } }, { '<leader>tt', mode = { 'n' } } },
     opts = {},
   },
 
   {
     -- https://github.com/hiphish/rainbow-delimiters.nvim
     'hiphish/rainbow-delimiters.nvim',
-    event = 'VeryLazy',
-    opts = function()
-      return require('plugins.configs.rainbow_delimiters')
-    end,
-    config = function(_, opts)
+    event = 'VimEnter',
+    config = function()
       dofile(vim.g.base46_cache .. 'rainbowdelimiters')
-      require('rainbow-delimiters.setup').setup(opts)
+      require('rainbow-delimiters.setup').setup(require('plugins.configs.rainbow_delimiters'))
     end,
   },
 
@@ -337,7 +316,15 @@ local default_plugins = {
     -- https://github.com/mbbill/undotree
     'mbbill/undotree',
     keys = {
-      { '<Leader>ut', vim.cmd.UndotreeToggle, mode = { 'n' }, desc = 'Toggle UndoTree 󰕍 ' },
+      {
+        '<Leader>ut',
+        function()
+          require('nvim-tree.api').tree.close()
+          vim.cmd.UndotreeToggle()
+        end,
+        mode = { 'n' },
+        desc = 'Toggle UndoTree 󰕍 ',
+      },
     },
   },
 
@@ -386,11 +373,8 @@ local default_plugins = {
     -- https://github.com/stevearc/conform.nvim
     'stevearc/conform.nvim',
     event = 'BufWritePre',
-    opts = function()
-      return require('plugins.configs.conform')
-    end,
-    config = function(_, opts)
-      require('conform').setup(opts)
+    config = function()
+      require('conform').setup(require('plugins.configs.conform'))
     end,
   },
 
@@ -417,11 +401,8 @@ local default_plugins = {
     -- https://github.com/folke/todo-comments.nvim
     'folke/todo-comments.nvim',
     event = 'VeryLazy',
-    opts = function()
-      return require('plugins.configs.todo')
-    end,
-    config = function(_, opts)
-      require('todo-comments').setup(opts)
+    config = function()
+      require('todo-comments').setup(require('plugins.configs.todo'))
       dofile(vim.g.base46_cache .. 'todo')
     end,
   },
