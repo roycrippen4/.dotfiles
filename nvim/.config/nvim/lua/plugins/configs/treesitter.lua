@@ -25,6 +25,7 @@ local options = {
     'regex',
     'ron',
     'rust',
+    'sxhkdrc',
     'svelte',
     'toml',
     'tsx',
