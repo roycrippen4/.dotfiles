@@ -8,8 +8,8 @@ local default_plugins = {
     'mfussenegger/nvim-dap',
     dependencies = {
       'rcarriga/nvim-dap-ui',
+      'jbyuki/one-small-step-for-vimkind',
       { 'theHamsta/nvim-dap-virtual-text', opts = { virt_text_pos = 'eol' } },
-      { 'jbyuki/one-small-step-for-vimkind', ft = { 'lua' } },
     },
     keys = { '<Leader>dc', '<Leader>do', '<Leader>dO', '<Leader>di', '<Leader>db' },
     config = function()
