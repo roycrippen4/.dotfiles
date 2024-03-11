@@ -79,7 +79,7 @@ end
 function M.set_cur_file_first_mark()
   local mark = require('harpoon.mark')
   local bufname = vim.api.nvim_buf_get_name(0)
-  local path = require('plenary.path'):new(bufname):make_relative(vim.loop.cwd())
+  local path = require('plenary.path'):new(bufname):make_relative(vim.uv.cwd())
   local marks = require('core.utils').get_marked_files()
   ---@type integer|nil
   local file_idx
@@ -105,6 +105,7 @@ function M.set_cur_file_first_mark()
     ::continue::
   end
   mark.set_mark_list(new_marks)
+  vim.cmd('redrawtabline')
 end
 
 --- Adds highlighting to any marked files that are currently visible

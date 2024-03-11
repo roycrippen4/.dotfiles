@@ -93,23 +93,24 @@ go_to_wt_config() {
 	cd "$HOME/../../mnt/c/Users/Roy/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/"
 }
 
-alias wconf=go_to_wt_config
-alias nconf=go_to_nvim_config
+alias cb="cd .."
+alias cl="clear"
+alias dot='cd && cd .dotfiles'
+alias hacker="cmatrix -c"
 alias hconf=go_to_home_config
 alias kconf=go_to_kitty_config
-alias ndev=go_to_neodev_config
-alias lg='lazygit'
-alias ls='lsd'
 alias l='ls -l'
 alias la='ls -a'
+alias lg='lazygit'
 alias lla='ls -la'
-alias lt='ls --tree'
 alias lp='echo "${PATH//:/\n}"'
-alias dot='cd && cd .dotfiles'
+alias ls='lsd'
+alias lt='ls --tree'
+alias nconf=go_to_nvim_config
+alias ndev=go_to_neodev_config
 alias so="$HOME/.dotfiles/home/.bin/source.zsh"
 alias sync="$HOME/.dotfiles/home/.bin/sync.sh"
-alias hacker="cmatrix -c"
-alias cb="cd .."
+alias wconf=go_to_wt_config
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
@@ -117,3 +118,24 @@ alias cb="cd .."
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 eval "$(zoxide init zsh --cmd c)"
+
+autoload -U add-zsh-hook
+load-nvmrc() {
+	local node_version="$(nvm version)"
+	local nvmrc_path="$(nvm_find_nvmrc)"
+
+	if [ -n "$nvmrc_path" ]; then
+		local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
+
+		if [ "$nvmrc_node_version" = "N/A" ]; then
+			nvm install
+		elif [ "$nvmrc_node_version" != "$node_version" ]; then
+			nvm use
+		fi
+	elif [ "$node_version" != "$(nvm version default)" ]; then
+		echo "Reverting to nvm default version"
+		nvm use default
+	fi
+}
+add-zsh-hook chpwd load-nvmrc
+load-nvmrc

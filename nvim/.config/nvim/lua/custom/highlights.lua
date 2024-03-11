@@ -30,9 +30,9 @@ M.add = {
   DiagnosticUnderlineError = { undercurl = true },
 
   -- dressing
-  DressingBorder = { fg = 'red', bg = nil },
-  DressingNormal = { bg = 'black' },
-  DressingTitle  = { fg = 'red', bg = 'black' },
+  DressingBorder  = { fg = 'red', bg = nil },
+  DressingNormal  = { bg = 'black' },
+  DressingTitle   = { fg = 'red', bg = 'black' },
 
   -- harpoon
   HarpoonWindow   = { bg = 'black', },

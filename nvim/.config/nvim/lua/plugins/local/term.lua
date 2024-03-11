@@ -165,7 +165,7 @@ local function show(term, direction, create)
 end
 
 ---@param direction 'F'|'H'|'V'
-function M.toggle(direction)
+local function toggle(direction)
   local term = terms[direction]
   if not term.bufnr then
     show(term, direction, true)
@@ -185,6 +185,18 @@ function M.toggle(direction)
   end
 
   show(term, direction)
+end
+
+function M.toggle_horizontal()
+  toggle('H')
+end
+
+function M.toggle_vertical()
+  toggle('V')
+end
+
+function M.toggle_floating()
+  toggle('F')
 end
 
 -- autoinsert when entering term buffers

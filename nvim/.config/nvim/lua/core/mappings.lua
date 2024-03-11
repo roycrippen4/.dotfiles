@@ -8,6 +8,16 @@ local function toggle_auto_trigger()
   print('Copilot autotrigger: ' .. tostring(auto_trigger))
 end
 
+local function add_file()
+  require('harpoon.mark').add_file()
+  vim.cmd('redrawtabline')
+end
+
+local function show_harpoon_menu()
+  require('harpoon.ui').toggle_quick_menu()
+  vim.wo.cursorline = true
+end
+
 local function fml()
   local choice = math.random(1, 3)
 
@@ -68,45 +78,14 @@ local function close_buf()
 end
 
 -- Terminal
-map('n', '<A-v>', function()
-  require('plugins.local.term').toggle('V')
-end, { desc = 'New vertical term' })
-
-map('n', '<A-h>', function()
-  require('plugins.local.term').toggle('H')
-end, { desc = 'New horizontal term' })
-
-map('n', '<A-f>', function()
-  require('plugins.local.term').toggle('F')
-end, { desc = 'Toggleable Floating term' })
-
-map('t', '<A-v>', function()
-  require('plugins.local.term').toggle('V')
-end, { desc = 'New vertical term' })
-
-map('t', '<A-h>', function()
-  require('plugins.local.term').toggle('H')
-end, { desc = 'New vertical term' })
-
-map('t', '<A-f>', function()
-  require('plugins.local.term').toggle('F')
-end, { desc = 'Toggleable Floating term' })
+map({ 'n', 't' }, '<A-v>', require('plugins.local.term').toggle_vertical, { desc = 'New vertical term' })
+map({ 'n', 't' }, '<A-h>', require('plugins.local.term').toggle_horizontal, { desc = 'New horizontal term' })
+map({ 'n', 't' }, '<A-f>', require('plugins.local.term').toggle_floating, { desc = 'Toggleable Floating term' })
 
 -- Harpoon
-map('n', 'F', function()
-  require('core.utils').set_cur_file_first_mark()
-  vim.cmd('redrawtabline')
-end)
-
-map('n', '<C-f>', function()
-  require('harpoon.mark').add_file()
-  vim.cmd('redrawtabline')
-end, { desc = 'Mark file' })
-
-map('n', '<C-e>', function()
-  require('harpoon.ui').toggle_quick_menu()
-  vim.wo.cursorline = true
-end)
+map('n', 'F', require('core.utils').set_cur_file_first_mark, { desc = 'Set current file as first mark' })
+map('n', '<C-f>', add_file, { desc = 'Mark file' })
+map('n', '<C-e>', show_harpoon_menu, { desc = 'Harpoon menu' })
 
 map('n', '<C-1>', function()
   require('harpoon.ui').nav_file(1)
@@ -155,15 +134,9 @@ map('i', '<C-j>', '<Down>', { desc = 'Move down' })
 map('i', '<C-k>', '<Up>', { desc = 'Move up' })
 map('i', '<M-j>', '<ESC>:m .+1<CR>==gi', { desc = 'Shift line up', nowait = true, silent = true })
 map('i', '<M-k>', '<ESC>:m .-2<CR>==gi', { desc = 'Shift line up', nowait = true, silent = true })
-
 map('n', '<leader>lr', '<cmd>luafile%<CR>', { desc = 'Run lua file  ' })
 map('n', ';', ':', { desc = 'enter commandline', nowait = true })
 map('n', 'yil', '^y$', { desc = 'yank in line', noremap = true })
--- treesitter shit
-map('n', '<Leader>i', ':Inspect<CR>', { desc = 'Inspect word under cursor', nowait = true, silent = true })
-map('n', '<Leader>t', ':InspectTree<CR>', { desc = 'Inspect word under cursor', nowait = true, silent = true })
-map('n', '<Leader>q', ':EditQuery<CR>', { desc = 'Inspect word under cursor', nowait = true, silent = true })
-
 map('n', 'dd', black_hole, { desc = 'smart delete', nowait = true, noremap = true })
 map('n', '<C-h>', '<C-w>h', { desc = 'Window left' })
 map('n', '<C-l>', '<C-w>l', { desc = 'Window right' })
@@ -174,22 +147,18 @@ map('n', '<Leader>h', '<C-w>h', { desc = 'Horizontal Split  ', nowait = true 
 map('n', '<Leader><Leader>', '<cmd> Lazy<CR>', { desc = 'Open Lazy  ' })
 map('n', '<C-s>', '<cmd> w<CR>', { desc = 'Save file' })
 map('n', '<C-c>', '<cmd> %y+<CR>', { desc = 'Copy whole file' })
-map('n', 'j', 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { desc = 'Move down', expr = true })
-map('n', 'k', 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = 'Move up', expr = true })
 map('n', '<M-S-.>', '<C-w>>', { desc = 'Increase window width', nowait = true })
 map('n', '<M-S-,>', '<C-w><', { desc = 'Decrease window width', nowait = true })
 map('n', '<M-j>', ':m .+1<CR>==', { desc = 'Shift line down', nowait = true, silent = true })
 map('n', '<M-k>', ':m .-2<CR>==', { desc = 'Shift line up', nowait = true, silent = true })
 map('n', '<Leader>h', toggle_hints, { desc = 'Toggle lsp inlay hints 󰊠 ' })
-
 map('v', '<', '<gv', { desc = 'Un-Indent line' })
 map('v', '>', '>gv', { desc = 'Indent line' })
 map('v', '<M-j>', ":m '>+1<CR>gv=gv", { desc = 'Shift selection up', nowait = true, silent = true })
 map('v', '<M-k>', ":m '<-2<CR>gv=gv", { desc = 'Shift selection down', nowait = true, silent = true })
-
-map('x', 'j', 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { desc = 'Move down', expr = true })
-map('x', 'k', 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = 'Move up', expr = true })
 map('x', 'p', 'p:let @+=@0<CR>:let @"=@0<CR>', { desc = 'Dont copy replaced text', silent = true })
+map({ 'n', 'x' }, 'j', 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { desc = 'Move down', expr = true })
+map({ 'n', 'x' }, 'k', 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = 'Move up', expr = true })
 
 -- tabufline
 map('n', 'L', require('plugins.local.tabufline').tabuflineNext)
@@ -238,5 +207,10 @@ map('n', '<Leader>fml', fml, { desc = 'Fuck shit up!' })
 
 -- copiolot
 map({ 'n', 'i' }, '<M-I>', toggle_auto_trigger)
+
+-- treesitter
+map('n', '<Leader>i', ':Inspect<CR>', { desc = 'Inspect word under cursor', nowait = true, silent = true })
+map('n', '<Leader>it', ':InspectTree<CR>', { desc = 'Show AST', nowait = true, silent = true })
+map('n', '<Leader>q', ':EditQuery<CR>', { desc = 'Edit TS query', nowait = true, silent = true })
 
 return M

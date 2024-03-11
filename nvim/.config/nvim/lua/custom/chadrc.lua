@@ -2,6 +2,7 @@ local M = {}
 local status_modules = require('plugins.local.statusline')
 local highlights = require('custom.highlights')
 
+---@diagnostic disable-next-line
 local timer = vim.uv.new_timer()
 
 local function redraw()
