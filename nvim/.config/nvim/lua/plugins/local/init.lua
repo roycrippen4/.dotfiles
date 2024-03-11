@@ -10,8 +10,6 @@ local term_ok, _ = pcall(require, 'plugins.local.term')
 if not term_ok then
   print('term not ok')
   log('term not ok')
-else
-  print('term ok')
 end
 
 local macro_flash_ok, _ = pcall(require, 'plugins.local.macro_flash')

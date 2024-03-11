@@ -1,11 +1,3 @@
-local patterns = { '%<', '%>', "%'", '%"', '%(', '%)', '%{', '%}' }
-local spider_opts = {
-  customPatterns = {
-    patterns = patterns,
-    overrideDefault = false,
-  },
-}
-
 local map = vim.keymap.set
 local M = {}
 
@@ -223,43 +215,6 @@ map('n', '<leader>fr', '<cmd> Telescope resume <CR>', { desc = 'Find oldfiles �
 map('n', '<leader>fs', '<cmd> Telescope themes <CR>', { desc = 'Find scheme  ' })
 map('n', '<leader>fw', '<cmd> Telescope live_grep <CR>', { desc = 'Find word (cwd)  ' })
 map('n', '<leader>fz', '<cmd> Telescope current_buffer_fuzzy_find <CR>', { desc = 'Find in current buffer  ' })
-
--- spider
-map('n', 'w', function()
-  require('spider').motion('w', spider_opts)
-end)
-
-map('n', 'e', function()
-  require('spider').motion('e', spider_opts)
-end)
-
-map('n', 'b', function()
-  require('spider').motion('b', spider_opts)
-end)
-
-map('x', 'w', function()
-  require('spider').motion('w', spider_opts)
-end)
-
-map('x', 'e', function()
-  require('spider').motion('e', spider_opts)
-end)
-
-map('x', 'b', function()
-  require('spider').motion('b', spider_opts)
-end)
-
-map('o', 'w', function()
-  require('spider').motion('w', spider_opts)
-end)
-
-map('o', 'e', function()
-  require('spider').motion('e', spider_opts)
-end)
-
-map('o', 'b', function()
-  require('spider').motion('b', spider_opts)
-end)
 
 -- one small step
 map('n', '<Leader>dl', function()

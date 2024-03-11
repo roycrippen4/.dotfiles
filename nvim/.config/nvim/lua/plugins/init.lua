@@ -11,6 +11,7 @@ local default_plugins = {
       { 'theHamsta/nvim-dap-virtual-text', opts = { virt_text_pos = 'eol' } },
       { 'jbyuki/one-small-step-for-vimkind', ft = { 'lua' } },
     },
+    keys = { '<Leader>dc', '<Leader>do', '<Leader>dO', '<Leader>di', '<Leader>db' },
     config = function()
       local dap = require('dap')
       map('n', '<Leader>dc', dap.continue, { desc = ' Continue' })
@@ -120,7 +121,19 @@ local default_plugins = {
 
   {
     'chrisgrieser/nvim-spider',
-    keys = { 'w', 'e', 'b' },
+    keys = {
+      { 'w', "<cmd>lua require('spider').motion('w')<CR>" },
+      { 'e', "<cmd>lua require('spider').motion('e')<CR>" },
+      { 'b', "<cmd>lua require('spider').motion('b')<CR>" },
+    },
+    config = function()
+      require('spider').setup({
+        customPatterns = {
+          patterns = { '%<', '%>', "%'", '%"', '%(', '%)', '%{', '%}' },
+          overrideDefault = false,
+        },
+      })
+    end,
   },
 
   {
