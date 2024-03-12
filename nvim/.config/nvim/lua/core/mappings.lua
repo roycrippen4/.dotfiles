@@ -77,56 +77,28 @@ local function close_buf()
   end
 end
 
--- Terminal
-map({ 'n', 't' }, '<A-v>', require('plugins.local.term').toggle_vertical, { desc = 'New vertical term' })
-map({ 'n', 't' }, '<A-h>', require('plugins.local.term').toggle_horizontal, { desc = 'New horizontal term' })
-map({ 'n', 't' }, '<A-f>', require('plugins.local.term').toggle_floating, { desc = 'Toggleable Floating term' })
+local function harpoon_nav()
+  for i = 1, 10, 1 do
+    local n = i ~= 10 and i or 0
+    local str = ('<C-' .. n .. '>')
+    map('n', str, function()
+      require('harpoon.ui').nav_file(n)
+    end, { desc = 'Mark file' })
+  end
+end
 
 -- Harpoon
 map('n', 'F', require('core.utils').set_cur_file_first_mark, { desc = 'Set current file as first mark' })
 map('n', '<C-f>', add_file, { desc = 'Mark file' })
 map('n', '<C-e>', show_harpoon_menu, { desc = 'Harpoon menu' })
+harpoon_nav()
 
-map('n', '<C-1>', function()
-  require('harpoon.ui').nav_file(1)
-end, { desc = 'Mark file' })
+-- Terminal
+map({ 'n', 't' }, '<A-v>', require('plugins.local.term').toggle_vertical, { desc = 'New vertical term' })
+map({ 'n', 't' }, '<A-h>', require('plugins.local.term').toggle_horizontal, { desc = 'New horizontal term' })
+map({ 'n', 't' }, '<A-f>', require('plugins.local.term').toggle_floating, { desc = 'Toggleable Floating term' })
 
-map('n', '<C-2>', function()
-  require('harpoon.ui').nav_file(2)
-end, { desc = 'Mark file' })
-
-map('n', '<C-3>', function()
-  require('harpoon.ui').nav_file(3)
-end, { desc = 'Mark file' })
-
-map('n', '<C-4>', function()
-  require('harpoon.ui').nav_file(4)
-end, { desc = 'Mark file' })
-
-map('n', '<C-5>', function()
-  require('harpoon.ui').nav_file(5)
-end, { desc = 'Mark file' })
-
-map('n', '<C-6>', function()
-  require('harpoon.ui').nav_file(6)
-end, { desc = 'Mark file' })
-
-map('n', '<C-7>', function()
-  require('harpoon.ui').nav_file(7)
-end, { desc = 'Mark file' })
-
-map('n', '<C-8>', function()
-  require('harpoon.ui').nav_file(8)
-end, { desc = 'Mark file' })
-
-map('n', '<C-9>', function()
-  require('harpoon.ui').nav_file(9)
-end, { desc = 'Mark file' })
-
-map('n', '<C-0>', function()
-  require('harpoon.ui').nav_file(0)
-end, { desc = 'Mark file' })
-
+-- General
 map('i', '<', handle_angle, { desc = 'Angle brackets... sometimes...' })
 map('i', '<C-h>', '<Left>', { desc = 'Move left' })
 map('i', '<C-l>', '<Right>', { desc = 'Move right' })
