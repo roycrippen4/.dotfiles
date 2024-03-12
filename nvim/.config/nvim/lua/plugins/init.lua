@@ -119,13 +119,15 @@ local default_plugins = {
   {
     'chrisgrieser/nvim-spider',
     keys = {
-      { 'w', "<cmd>lua require('spider').motion('w')<CR>" },
-      { 'e', "<cmd>lua require('spider').motion('e')<CR>" },
-      { 'b', "<cmd>lua require('spider').motion('b')<CR>" },
+      { 'w', "<cmd>lua require('spider').motion('w')<CR>", mode = { 'n', 'o', 'x' } },
+      { 'e', "<cmd>lua require('spider').motion('e')<CR>", mode = { 'n', 'o', 'x' } },
+      { 'b', "<cmd>lua require('spider').motion('b')<CR>", mode = { 'n', 'o', 'x' } },
     },
-    opts = {
-      customPatterns = { patterns = { '%<', '%>', "%'", '%"', '%(', '%)', '%{', '%}' }, overrideDefault = false },
-    },
+    config = function()
+      require('spider').setup({
+        customPatterns = { patterns = { '%<', '%>', "%'", '%"', '%(', '%)', '%{', '%}' }, overrideDefault = false },
+      })
+    end,
   },
 
   {

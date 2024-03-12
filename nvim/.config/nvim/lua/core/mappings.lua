@@ -93,11 +93,6 @@ map('n', '<C-f>', add_file, { desc = 'Mark file' })
 map('n', '<C-e>', show_harpoon_menu, { desc = 'Harpoon menu' })
 harpoon_nav()
 
--- Terminal
-map({ 'n', 't' }, '<A-v>', require('plugins.local.term').toggle_vertical, { desc = 'New vertical term' })
-map({ 'n', 't' }, '<A-h>', require('plugins.local.term').toggle_horizontal, { desc = 'New horizontal term' })
-map({ 'n', 't' }, '<A-f>', require('plugins.local.term').toggle_floating, { desc = 'Toggleable Floating term' })
-
 -- General
 map('i', '<', handle_angle, { desc = 'Angle brackets... sometimes...' })
 map('i', '<C-h>', '<Left>', { desc = 'Move left' })
@@ -129,8 +124,13 @@ map('v', '>', '>gv', { desc = 'Indent line' })
 map('v', '<M-j>', ":m '>+1<CR>gv=gv", { desc = 'Shift selection up', nowait = true, silent = true })
 map('v', '<M-k>', ":m '<-2<CR>gv=gv", { desc = 'Shift selection down', nowait = true, silent = true })
 map('x', 'p', 'p:let @+=@0<CR>:let @"=@0<CR>', { desc = 'Dont copy replaced text', silent = true })
+map('n', '<Leader>fml', fml, { desc = 'Fuck shit up!' })
+map('n', '<Leader>i', ':Inspect<CR>', { desc = 'Inspect word under cursor', nowait = true, silent = true })
+map('n', '<Leader>it', ':InspectTree<CR>', { desc = 'Show AST', nowait = true, silent = true })
+map('n', '<Leader>q', ':EditQuery<CR>', { desc = 'Edit TS query', nowait = true, silent = true })
 map({ 'n', 'x' }, 'j', 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { desc = 'Move down', expr = true })
 map({ 'n', 'x' }, 'k', 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = 'Move up', expr = true })
+map({ 'n', 'i' }, '<M-I>', toggle_auto_trigger)
 
 -- tabufline
 map('n', 'L', require('plugins.local.tabufline').tabuflineNext)
@@ -163,6 +163,9 @@ map('t', '<C-h>', [[<cmd> wincmd h<CR>]], { desc = 'Move focus left' })
 map('t', '<C-j>', [[<cmd> wincmd j<CR>]], { desc = 'Move focus down' })
 map('t', '<C-k>', [[<cmd> wincmd k<CR>]], { desc = 'Move focus up' })
 map('t', '<C-l>', [[<cmd> wincmd l<CR>]], { desc = 'Move focus right' })
+map({ 'n', 't' }, '<A-v>', require('plugins.local.term').toggle_vertical, { desc = 'New vertical term' })
+map({ 'n', 't' }, '<A-h>', require('plugins.local.term').toggle_horizontal, { desc = 'New horizontal term' })
+map({ 'n', 't' }, '<A-f>', require('plugins.local.term').toggle_floating, { desc = 'Toggleable Floating term' })
 
 -- one small step
 map('n', '<Leader>dl', function()
@@ -173,16 +176,5 @@ end, { desc = ' Launch Lua adapter' })
 map('n', '<Leader>td', function()
   require('trouble').toggle('workspace_diagnostics')
 end, { desc = 'Trouble toggle workspace diagnostics  ' })
-
--- automata
-map('n', '<Leader>fml', fml, { desc = 'Fuck shit up!' })
-
--- copiolot
-map({ 'n', 'i' }, '<M-I>', toggle_auto_trigger)
-
--- treesitter
-map('n', '<Leader>i', ':Inspect<CR>', { desc = 'Inspect word under cursor', nowait = true, silent = true })
-map('n', '<Leader>it', ':InspectTree<CR>', { desc = 'Show AST', nowait = true, silent = true })
-map('n', '<Leader>q', ':EditQuery<CR>', { desc = 'Edit TS query', nowait = true, silent = true })
 
 return M
