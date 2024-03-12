@@ -129,6 +129,7 @@ M.override = {
   CmpPmenu             = { bg = 'black' },
   Comment              = { italic = true },
   FloatBorder          = { fg = l_blue, bg = darkest_black },
+  Search = { fg = '#AAAAAA', bg = '#475a97' },
 
   St_CommandMode      = { fg = d_red,            bg = darkest_black },
   St_CommandModeSep   = { fg = d_red,            bg = darkest_black },
