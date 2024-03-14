@@ -35,9 +35,10 @@ statuscol.setup({
   },
   relculright = true,
   segments = {
+    { text = { ' ' } },
     {
       sign = {
-        name = { 'Diagnostic' },
+        namespace = { 'diagnostic' },
         maxwidth = 1,
         auto = false,
       },
@@ -62,22 +63,24 @@ statuscol.setup({
         auto = false,
       },
     },
+    { text = { ' ' } },
     {
-      text = { ' ' },
+      text = { builtin.foldfunc },
+      click = 'v:lua.ScFa',
     },
+    { text = { ' ' } },
     {
       sign = {
         namespace = { 'gitsigns' },
         maxwidth = 1,
         auto = false,
         wrap = false,
-        fillchar = ' ',
       },
     },
-    {
-      text = { ' ' },
-      hl = 'Normal',
-      condition = { true, builtin.not_empty },
-    },
+    -- {
+    --   text = { ' ' },
+    --   hl = 'Normal',
+    --   condition = { true, builtin.not_empty },
+    -- },
   },
 })

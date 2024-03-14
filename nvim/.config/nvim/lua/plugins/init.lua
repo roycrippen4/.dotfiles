@@ -98,6 +98,7 @@ local default_plugins = {
   {
     -- https://github.com/nvim-treesitter/nvim-treesitter
     'nvim-treesitter/nvim-treesitter',
+    event = 'VimEnter',
     cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' },
     build = ':TSUpdate',
     config = function()
@@ -423,6 +424,20 @@ local default_plugins = {
     'luukvbaal/statuscol.nvim',
     branch = '0.10',
     event = 'BufReadPost',
+    dependencies = {
+      -- https://github.com/kevinhwang91/nvim-ufo
+      'kevinhwang91/nvim-ufo',
+      dependencies = 'kevinhwang91/promise-async',
+      opts = {
+        provider_selector = function()
+          return { 'treesitter', 'indent' }
+        end,
+      },
+      init = function()
+        vim.keymap.set('n', 'zR', require('ufo').openAllFolds)
+        vim.keymap.set('n', 'zM', require('ufo').closeAllFolds)
+      end,
+    },
     config = function()
       require('plugins.configs.statuscol')
     end,

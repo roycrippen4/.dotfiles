@@ -17,11 +17,11 @@ g.markdown_fenced_languages = {
 vim.treesitter.language.register('markdown', 'mdx')
 
 -- Fold
-opt.foldenable = true
-opt.foldcolumn = 'auto'
+opt.foldcolumn = '1'
 opt.foldnestmax = 0
 opt.foldlevel = 99
 opt.foldlevelstart = 99
+opt.foldenable = true
 
 -- General Options
 opt.cmdheight = 1
@@ -41,7 +41,6 @@ opt.tabstop = 2
 opt.softtabstop = 2
 
 opt.fillchars = {
-  eob = ' ',
   vert = ' ',
   vertright = ' ',
   vertleft = ' ',
@@ -49,6 +48,8 @@ opt.fillchars = {
   verthoriz = ' ',
   horizdown = '/',
   horiz = ' ',
+  eob = ' ',
+  fold = ' ',
   foldopen = '',
   foldclose = '',
   foldsep = ' ',

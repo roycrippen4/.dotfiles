@@ -155,6 +155,8 @@ M.override = {
   St_VisualModeSep    = { fg = 'pink',           bg = darkest_black },
   St_EmptySpace       = { fg = '#00C5FF',        bg = darkest_black },
   St_EmptySpace2      = { fg = darkest_black,    bg = darkest_black },
+
+  FoldColumn          = { bg = 'black' }
 }
 
 return M

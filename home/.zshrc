@@ -50,8 +50,10 @@ export NODE_PATH="which node"
 export PATH="$PATH:$HOME/.local/bin"
 # Julia
 export PATH="$PATH:$HOME/Opt/julia-1.9.4/bin"
-
+# nvim script
 export PATH="$HOME/.bin/nvim.sh:$PATH"
+# ytui_music dir
+export YTUI_MUSIC_DIR="~/opt/music/"
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL10k_MODE="nerdfont-complete"
