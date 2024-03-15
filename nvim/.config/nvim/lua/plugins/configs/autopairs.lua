@@ -2,44 +2,31 @@ local cmp_ok, cmp = pcall(require, 'cmp')
 local cmp_pairs_ok, cmp_autopairs = pcall(require, 'nvim-autopairs.completion.cmp')
 local pairs_ok, npairs = pcall(require, 'nvim-autopairs')
 local rule_ok, rule = pcall(require, 'nvim-autopairs.rule')
-local ts_conds_ok, ts_conds = pcall(require, 'nvim-autopairs.ts-conds')
 local conds_ok, conds = pcall(require, 'nvim-autopairs.conds')
 
 if not pairs_ok then
-  log('pairs fail')
   return
 end
 
 npairs.setup({})
 
 if not rule_ok then
-  log('rule fail')
   return
 end
 
 if not conds_ok then
-  log('cond fail')
   return
 end
 
-if not ts_conds_ok then
-  log('ts_conds fail')
-end
-
 if not cmp_pairs_ok then
-  log('cmp_pairs fail')
   return
 end
 
 if not cmp_ok then
-  log('cmp fail')
   return
 end
 
 cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-npairs.add_rules({
-  rule('%', '%', 'lua'):with_pair(ts_conds.is_ts_node({ 'string', 'comment' })),
-})
 
 for _, punct in pairs({ ',', ';' }) do
   npairs.add_rules({
@@ -85,6 +72,7 @@ npairs.add_rules({
       }, context)
     end),
 })
+
 for _, bracket in pairs(brackets) do
   npairs.add_rules({
     rule(bracket[1] .. ' ', ' ' .. bracket[2])

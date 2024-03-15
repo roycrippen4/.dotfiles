@@ -1,12 +1,8 @@
-local map = vim.keymap.set
-
 local function load_ext(opts)
   for _, ext in ipairs(opts.extensions_list) do
     require('telescope').load_extension(ext)
   end
 end
-
-local dap_keys = {}
 
 local default_plugins = {
 
@@ -28,14 +24,7 @@ local default_plugins = {
   {
     -- https://github.com/kdheepak/lazygit.nvim
     'kdheepak/lazygit.nvim',
-    keys = { { '<leader>gg', '<cmd> LazyGit<CR>', mode = { 'n' } } },
-    config = function()
-      vim.g.lazygit_floating_window_winblend = 0
-      vim.g.lazygit_floating_window_scaling_factor = 0.9
-      vim.g.lazygit_floating_window_border_chars = { '╭', '─', '╮', '│', '╯', '─', '╰', '│' }
-      vim.g.lazygit_floating_window_use_plenary = 0
-      vim.g.lazygit_use_custom_config_file_path = 0
-    end,
+    keys = { { '<leader>gg', '<cmd> LazyGit<CR>' } },
   },
 
   {
@@ -61,24 +50,7 @@ local default_plugins = {
     -- https://github.com/NvChad/nvim-colorizer.lua
     'NvChad/nvim-colorizer.lua',
     lazy = false,
-    config = function()
-      require('colorizer').setup({
-        filetypes = {
-          'lua',
-          'css',
-          'html',
-          'javascript',
-          'javascriptreact',
-          'typescript',
-          'typescriptreact',
-        },
-      })
-
-      -- execute colorizer as soon as possible
-      vim.defer_fn(function()
-        require('colorizer').attach_to_buffer(0)
-      end, 0)
-    end,
+    opts = { filetypes = { 'lua', 'css', 'html', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' } },
   },
 
   {
@@ -132,8 +104,7 @@ local default_plugins = {
     event = { 'BufRead Cargo.toml' },
     config = function()
       require('plugins.configs.lsp.lang.cargo')
-      ---@diagnostic disable-next-line
-      require('crates').setup()
+      require('crates').setup({})
     end,
   },
 
@@ -149,7 +120,7 @@ local default_plugins = {
   -- https://github.com/zbirenbaum/copilot.lua
   {
     'zbirenbaum/copilot.lua',
-    lazy = false,
+    event = 'BufReadPost',
     opts = {
       panel = { enabled = false },
       suggestion = {
@@ -321,7 +292,6 @@ local default_plugins = {
           require('nvim-tree.api').tree.close()
           vim.cmd.UndotreeToggle()
         end,
-        mode = { 'n' },
         desc = 'Toggle UndoTree 󰕍 ',
       },
     },
@@ -331,9 +301,7 @@ local default_plugins = {
     -- https://github.com/max397574/better-escape.nvim
     'max397574/better-escape.nvim',
     event = 'InsertEnter',
-    config = function()
-      require('better_escape').setup()
-    end,
+    opts = {},
   },
 
   {
@@ -341,11 +309,7 @@ local default_plugins = {
     'theprimeagen/harpoon',
     branch = 'master',
     config = function()
-      require('harpoon').setup({
-        menu = {
-          width = 130,
-        },
-      })
+      require('harpoon').setup({ menu = { width = 130 } })
     end,
   },
 
@@ -353,9 +317,7 @@ local default_plugins = {
     -- https://github.com/tzachar/highlight-undo.nvim
     'tzachar/highlight-undo.nvim',
     keys = { { 'u', mode = 'n' }, { '<C-r>', mode = 'n' } },
-    opts = {
-      duration = 400,
-    },
+    opts = { duration = 400 },
   },
 
   {
@@ -443,7 +405,6 @@ local default_plugins = {
     -- https://github.com/folke/which-key.nvim
     'folke/which-key.nvim',
     keys = { '<leader>', '<c-r>', '<c-w>', '"', "'", '`', 'c', 'v', 'g' },
-    cmd = 'WhichKey',
     config = function()
       dofile(vim.g.base46_cache .. 'whichkey')
       require('plugins.configs.whichkey')

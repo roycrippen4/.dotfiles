@@ -1,93 +1,23 @@
-local wk = require('which-key')
+local map = vim.keymap.set
 
-wk.register({
-  --[===========================================================================]
-  --[------------------------------- CRATES ------------------------------------]
-  --[===========================================================================]
+require('which-key').register({
   ['<leader>c'] = { 'Crates  ' },
-  ['<leader>ct'] = { name = 'Toggle', _ = 'which_key_ignore' },
-  ['<leader>cr'] = { name = 'Reload', _ = 'which_key_ignore' },
-  ['<leader>cv'] = { name = 'Show versions_popup', _ = 'which_key_ignore' },
-  ['<leader>cf'] = { name = 'Show features_popup', _ = 'which_key_ignore' },
-  ['<leader>cd'] = { name = 'Show dependencies popup', _ = 'which_key_ignore' },
-  ['<leader>cu'] = { name = 'Update crate(s)', mode = { 'n', 'v' }, _ = 'which_key_ignore' },
-  ['<leader>ca'] = { name = 'Update all crates', _ = 'which_key_ignore' },
-  ['<leader>cU'] = { name = 'Upgrade crate(s)', mode = { 'n', 'v' }, _ = 'which_key_ignore' },
-  ['<leader>cA'] = { name = 'Upgrade all crates', _ = 'which_key_ignore' },
-  ['<leader>ce'] = { name = 'Expand plain crate to inline table', _ = 'which_key_ignore' },
-  ['<leader>cE'] = { name = 'Extract crate into table', _ = 'which_key_ignore' },
-  ['<leader>cH'] = { name = 'Open homepage', _ = 'which_key_ignore' },
-  ['<leader>cR'] = { name = 'Open repository', _ = 'which_key_ignore' },
-  ['<leader>cD'] = { name = 'Open documentation', _ = 'which_key_ignore' },
-  ['<leader>cC'] = { name = 'Open crates io', _ = 'which_key_ignore' },
 })
 
 local bufnr = vim.api.nvim_get_current_buf()
 
-vim.keymap.set('n', '<leader>ct', function()
-  require('crates').toggle()
-end, { silent = true, buffer = bufnr })
-
-vim.keymap.set('n', '<leader>cr', function()
-  require('crates').reload()
-end, { silent = true, buffer = bufnr })
-
-vim.keymap.set('n', '<leader>cv', function()
-  require('crates').show_versions_popup()
-end, { silent = true, buffer = bufnr })
-
-vim.keymap.set('n', '<leader>cf', function()
-  require('crates').show_features_popup()
-end, { silent = true, buffer = bufnr })
-
-vim.keymap.set('n', '<leader>cd', function()
-  require('crates').show_dependencies_popup()
-end, { silent = true, buffer = bufnr })
-
-vim.keymap.set('n', '<leader>cu', function()
-  require('crates').update_crate()
-end, { silent = true, buffer = bufnr })
-
-vim.keymap.set('n', '<leader>ca', function()
-  require('crates').update_all_crates()
-end, { silent = true, buffer = bufnr })
-
-vim.keymap.set('n', '<leader>cU', function()
-  require('crates').upgrade_crate()
-end, { silent = true, buffer = bufnr })
-
-vim.keymap.set('n', '<leader>cA', function()
-  require('crates').upgrade_all_crates()
-end, { silent = true, buffer = bufnr })
-
-vim.keymap.set('n', '<leader>ce', function()
-  require('crates').expand_plain_crate_to_inline_table()
-end, { silent = true, buffer = bufnr })
-
-vim.keymap.set('n', '<leader>cE', function()
-  require('crates').extract_crate_into_table()
-end, { silent = true, buffer = bufnr })
-
-vim.keymap.set('n', '<leader>cH', function()
-  require('crates').open_homepage()
-end, { silent = true, buffer = bufnr })
-
-vim.keymap.set('n', '<leader>cR', function()
-  require('crates').open_repository()
-end, { silent = true, buffer = bufnr })
-
-vim.keymap.set('n', '<leader>cD', function()
-  require('crates').open_documentation()
-end, { silent = true, buffer = bufnr })
-
-vim.keymap.set('n', '<leader>cC', function()
-  require('crates').open_crates_io()
-end, { silent = true, buffer = bufnr })
-
-vim.keymap.set('n', '<leader>cu', function()
-  require('crates').update_crates()
-end, { silent = true, buffer = bufnr })
-
-vim.keymap.set('n', '<leader>cU', function()
-  require('crates').upgrade_crates()
-end, { silent = true, buffer = bufnr })
+map('n', '<leader>ct', require('crates').toggle, { silent = true, buffer = bufnr, desc = 'Toggle' })
+map('n', '<leader>cr', require('crates').reload, { silent = true, buffer = bufnr, desc = 'Reload' })
+map('n', '<leader>cv', require('crates').show_versions_popup, { silent = true, buffer = bufnr, desc = 'Show versions_popup' })
+map('n', '<leader>cf', require('crates').show_features_popup, { silent = true, buffer = bufnr, desc = 'Show features_popup' })
+map('n', '<leader>cd', require('crates').show_dependencies_popup, { silent = true, buffer = bufnr, desc = 'Show dependencies popup' })
+map({ 'n', 'v' }, '<leader>cu', require('crates').update_crate, { silent = true, buffer = bufnr, desc = 'Update crate(s)' })
+map({ 'n', 'v' }, '<leader>cU', require('crates').upgrade_crate, { silent = true, buffer = bufnr, desc = 'Upgrade crate(s)' })
+map('n', '<leader>ca', require('crates').update_all_crates, { silent = true, buffer = bufnr, desc = 'Update all crates' })
+map('n', '<leader>cA', require('crates').upgrade_all_crates, { silent = true, buffer = bufnr, desc = 'Upgrade all crates' })
+map('n', '<leader>ce', require('crates').expand_plain_crate_to_inline_table, { silent = true, buffer = bufnr, desc = 'Crate to inline' })
+map('n', '<leader>cE', require('crates').extract_crate_into_table, { silent = true, buffer = bufnr, desc = 'Extract crate into table' })
+map('n', '<leader>cH', require('crates').open_homepage, { silent = true, buffer = bufnr, desc = 'Open homepage' })
+map('n', '<leader>cR', require('crates').open_repository, { silent = true, buffer = bufnr, desc = 'Open repository' })
+map('n', '<leader>cD', require('crates').open_documentation, { silent = true, buffer = bufnr, desc = 'Open documentation' })
+map('n', '<leader>cC', require('crates').open_crates_io, { silent = true, buffer = bufnr, desc = 'Open crates io' })

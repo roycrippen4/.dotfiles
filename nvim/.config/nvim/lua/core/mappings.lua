@@ -141,6 +141,47 @@ map({ 'n', 't' }, '<A-v>', require('plugins.local.term').toggle_vertical, { desc
 map({ 'n', 't' }, '<A-h>', require('plugins.local.term').toggle_horizontal, { desc = 'New horizontal term' })
 map({ 'n', 't' }, '<A-f>', require('plugins.local.term').toggle_floating, { desc = 'Toggleable Floating term' })
 
+---@param key string
+local function feed(key)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), 'n', true)
+end
+
+local pairs = { '()', '[]', '{}', "''", '""', '``', '  ' }
+
+---@param key string
+---@param fallback string
+local function handle_pair(key, fallback)
+  local pos = vim.fn.getcmdpos()
+  local cmdline = vim.fn.getcmdline()
+
+  for _, pair in ipairs(pairs) do
+    if string.sub(cmdline, pos - 1, pos) == pair then
+      feed(key)
+      return
+    end
+  end
+  feed(fallback)
+end
+
+-- Command line
+map('c', '(', '()<Left>', { desc = 'Insert parenthesis' })
+map('c', '{', '{}<Left>', { desc = 'Insert curly braces' })
+map('c', '[', '[]<Left>', { desc = 'Insert square brackets' })
+map('c', "'", "''<Left>", { desc = 'Insert single quotes' })
+map('c', '"', '""<Left>', { desc = 'Insert double quotes' })
+map('c', '`', '``<Left>', { desc = 'Insert backticks' })
+map('c', ' ', function()
+  handle_pair('  <Left>', ' ')
+end)
+
+map('c', '<BS>', function()
+  handle_pair('<BS><Del>', '<BS>')
+end)
+
+map('c', '<Del>', function()
+  handle_pair('<Del><BS>', '<BS>')
+end)
+
 -- one small step
 map('n', '<Leader>dl', function()
   require('osv').launch({ port = 8086 })
