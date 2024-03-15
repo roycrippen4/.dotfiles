@@ -85,18 +85,24 @@ local default_plugins = {
     end,
   },
 
+  -- {
+  --   'chrisgrieser/nvim-spider',
+  --   keys = {
+  --     { 'w', "<cmd>lua require('spider').motion('w')<CR>", mode = { 'n', 'o', 'x' } },
+  --     { 'e', "<cmd>lua require('spider').motion('e')<CR>", mode = { 'n', 'o', 'x' } },
+  --     { 'b', "<cmd>lua require('spider').motion('b')<CR>", mode = { 'n', 'o', 'x' } },
+  --   },
+  --   config = function()
+  --     require('spider').setup({
+  --       customPatterns = { patterns = { '%<', '%>', "%'", '%"', '%(', '%)', '%{', '%}' }, overrideDefault = false },
+  --     })
+  --   end,
+  -- },
+
   {
-    'chrisgrieser/nvim-spider',
-    keys = {
-      { 'w', "<cmd>lua require('spider').motion('w')<CR>", mode = { 'n', 'o', 'x' } },
-      { 'e', "<cmd>lua require('spider').motion('e')<CR>", mode = { 'n', 'o', 'x' } },
-      { 'b', "<cmd>lua require('spider').motion('b')<CR>", mode = { 'n', 'o', 'x' } },
-    },
-    config = function()
-      require('spider').setup({
-        customPatterns = { patterns = { '%<', '%>', "%'", '%"', '%(', '%)', '%{', '%}' }, overrideDefault = false },
-      })
-    end,
+    -- https://github.com/chaoren/vim-wordmotion
+    'chaoren/vim-wordmotion',
+    event = 'BufRead',
   },
 
   {
@@ -307,7 +313,7 @@ local default_plugins = {
   {
     -- https://github.com/theprimeagen/harpoon
     'theprimeagen/harpoon',
-    branch = 'master',
+    commit = 'ccae1b9bec717ae284906b0bf83d720e59d12b91',
     config = function()
       require('harpoon').setup({ menu = { width = 130 } })
     end,

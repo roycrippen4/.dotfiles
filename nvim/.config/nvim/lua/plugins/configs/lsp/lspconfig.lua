@@ -37,11 +37,13 @@ M.on_attach = function(client, bufnr)
   map('n', 'gr', require('telescope.builtin').lsp_references, { desc = 'Goto References  ' })
   map('n', 'gi', require('telescope.builtin').lsp_implementations, { desc = 'Goto Implementation 󰡱 ' })
   map('n', 'gd', require('telescope.builtin').lsp_definitions, { desc = 'Goto Definition 󰼭 ' })
+  map('n', '<leader>la', vim.lsp.buf.code_action, { desc = 'Code Action  ' })
   map('n', '<leader>ld', toggle_diagnostics, { desc = 'Toggle Diagnostics 󰨚 ' })
   map('n', '<leader>lf', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message 󰉪 ' })
-  map('n', '<leader>r', require('plugins.local.renamer').open, { desc = 'LSP Rename 󰑕 ' })
-  map('n', '<leader>la', vim.lsp.buf.code_action, { desc = 'Code Action  ' })
   map('n', '<leader>lh', toggle_hints, { desc = 'Toggle lsp inlay hints 󰊠 ' })
+  map('n', '<leader>li', '<cmd> LspInfo<CR>', { desc = 'Show Lsp Info  ' })
+  map('n', '<leader>lR', '<cmd> LspRestart<CR>', { desc = 'Restart language servers  ' })
+  map('n', '<leader>r', require('plugins.local.renamer').open, { desc = 'LSP Rename 󰑕 ' })
 
   if client.name == 'svelte' then
     vim.api.nvim_create_autocmd('BufWritePost', {
