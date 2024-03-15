@@ -28,6 +28,13 @@ local skip_ft = {
   'toggleterm',
   'vim',
 }
+vim.api.nvim_get_mode()
+
+---@param key string
+---@param mode string
+function _G.feed(key, mode)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+end
 
 ---@param cwd string|nil
 function M.set_titlestring(cwd)

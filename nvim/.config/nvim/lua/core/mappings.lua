@@ -39,10 +39,10 @@ end
 
 local function handle_angle()
   if is_lua_comment_or_string() then
-    vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<><Left>', true, true, true), 'n', true)
+    feed('<><Left>', 'n')
     return
   end
-  return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<', true, true, true), 'n', true)
+  return feed('<', 'n')
 end
 
 local function close_buf()
@@ -141,11 +141,6 @@ map({ 'n', 't' }, '<A-v>', require('plugins.local.term').toggle_vertical, { desc
 map({ 'n', 't' }, '<A-h>', require('plugins.local.term').toggle_horizontal, { desc = 'New horizontal term' })
 map({ 'n', 't' }, '<A-f>', require('plugins.local.term').toggle_floating, { desc = 'Toggleable Floating term' })
 
----@param key string
-local function feed(key)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), 'n', true)
-end
-
 local pairs = { '()', '[]', '{}', "''", '""', '``', '  ' }
 
 ---@param key string
@@ -156,11 +151,11 @@ local function handle_pair(key, fallback)
 
   for _, pair in ipairs(pairs) do
     if string.sub(cmdline, pos - 1, pos) == pair then
-      feed(key)
+      feed(key, 'n')
       return
     end
   end
-  feed(fallback)
+  feed(fallback, 'n')
 end
 
 -- Command line

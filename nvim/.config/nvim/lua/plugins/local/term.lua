@@ -7,6 +7,7 @@ local create_buf = api.nvim_create_buf
 local delete_buf = api.nvim_buf_delete
 local get_win = api.nvim_get_current_win
 local open_win = api.nvim_open_win
+local send = api.nvim_chan_send
 local set_win = api.nvim_set_current_win
 local valid_buf = api.nvim_buf_is_valid
 local win_set_buf = api.nvim_win_set_buf
@@ -18,6 +19,7 @@ local terms = {
   V = {
     bufnr = nil,
     winnr = nil,
+    job_id = nil,
     visible = false,
     config = {
       size = 0.4,
@@ -28,6 +30,7 @@ local terms = {
   H = {
     bufnr = nil,
     winnr = nil,
+    job_id = nil,
     visible = false,
     config = {
       size = 0.3,
@@ -38,6 +41,7 @@ local terms = {
   F = {
     bufnr = nil,
     winnr = nil,
+    job_id = nil,
     visible = false,
     config = {
       relative = 'editor',
@@ -85,7 +89,7 @@ end
 
 ---@param term Terminal
 local function term_open(term)
-  vim.fn.termopen(vim.o.shell, {
+  term.job_id = vim.fn.termopen(vim.o.shell, {
     on_exit = function()
       close_window(term)
     end,
@@ -197,6 +201,30 @@ end
 
 function M.toggle_floating()
   toggle('F')
+end
+
+local ensure_and_send = function(cmd, type)
+  if not terms[type].bufnr then
+    show(terms[type], type, true)
+  end
+
+  if not terms[type].visible then
+    show(terms[type], type)
+  end
+
+  send(terms[type].job_id, cmd)
+  vim.schedule(function()
+    feed('<CR>', 'n')
+  end)
+end
+
+---@param cmd string
+---@param type 'F'|'H'|'V'
+function M.send(cmd, type)
+  if not cmd then
+    return
+  end
+  ensure_and_send(cmd, type)
 end
 
 -- autoinsert when entering term buffers

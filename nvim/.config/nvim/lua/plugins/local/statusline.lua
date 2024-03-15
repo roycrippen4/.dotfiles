@@ -242,18 +242,7 @@ M.lsp_diagnostics = function()
   local hints = count[3]
   local info = count[4]
 
-  -- The commented block below was used before `vim.diagnostic.count()` was implemented.
-  -- I've decided to keep it here for a while to ensure that the new function is here for good.
-  -- ---@type integer|string
-  -- local errors = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.ERROR })
-  -- ---@type integer|string
-  -- local warnings = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.WARN })
-  -- ---@type integer|string
-  -- local hints = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.HINT })
-  -- ---@type integer|string
-  -- local info = #vim.diagnostic.get(stbufnr(), { severity = vim.diagnostic.severity.INFO })
-
-  errors = (errors and errors > 0) and ('%#St_LspError# 󰅚 ' .. errors .. ' ') or ''
+  errors = (errors and errors > 0) and ('%#St_Lsp_Error#󰅚 ' .. errors .. ' ') or ''
   warnings = (warnings and warnings > 0) and ('%#St_LspWarning# ' .. warnings .. ' ') or ''
   hints = (hints and hints > 0) and ('%#St_LspHints#󱧣 ' .. hints .. ' ') or ''
   info = (info and info > 0) and ('%#St_LspInfo# ' .. info .. ' ') or ''

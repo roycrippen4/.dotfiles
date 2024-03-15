@@ -109,6 +109,7 @@
 ---@field border Border
 
 ---@class Terminal
+---@field job_id integer|nil
 ---@field bufnr integer|nil
 ---@field winnr integer|nil
 ---@field visible boolean

@@ -118,6 +118,7 @@ M.add = {
   St_PosText          = { fg = '#d6a000',        bg = darkest_black, bold = false },
   St_Time             = { fg = '#cc5e00',        bg = darkest_black },
   St_Trouble          = { fg = d_red,            bg = darkest_black, italic = true, bold = true },
+  St_Lsp_Error        = { fg = d_red,            bg = darkest_black },
 }
 
 -- stylua: ignore
@@ -136,7 +137,6 @@ M.override = {
   St_EmptySpace2        = { fg = darkest_black,    bg = darkest_black },
   St_InsertMode         = { fg = d_yellow,         bg = darkest_black },
   St_InsertModeSep      = { fg = d_yellow,         bg = darkest_black },
-  St_LspError           = { bg = darkest_black },
   St_LspHints           = { bg = darkest_black },
   St_LspInfo            = { bg = darkest_black },
   St_NTerminalMode      = { fg = green,            bg = darkest_black },
