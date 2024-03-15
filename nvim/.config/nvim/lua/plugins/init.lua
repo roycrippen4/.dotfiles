@@ -449,12 +449,6 @@ local default_plugins = {
       require('plugins.configs.whichkey')
     end,
   },
-
-  {
-    -- https://github.com/Eandrju/cellular-automaton.nvim
-    'Eandrju/cellular-automaton.nvim',
-    event = 'VeryLazy',
-  },
 }
 
 local config = require('core.utils').load_config()

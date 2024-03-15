@@ -18,25 +18,6 @@ local function show_harpoon_menu()
   vim.wo.cursorline = true
 end
 
-local function fml()
-  local choice = math.random(1, 3)
-
-  if choice == 1 then
-    print('scramble')
-    require('cellular-automaton').start_animation('scramble')
-  end
-
-  if choice == 2 then
-    print('game_of_life')
-    require('cellular-automaton').start_animation('game_of_life')
-  end
-
-  if choice == 3 then
-    print('make_it_rain')
-    require('cellular-automaton').start_animation('make_it_rain')
-  end
-end
-
 ---@return boolean
 local function is_lua_comment_or_string()
   if vim.bo.ft ~= 'lua' then
@@ -118,7 +99,6 @@ map('v', '>', '>gv', { desc = 'Indent line' })
 map('v', '<M-j>', ":m '>+1<CR>gv=gv", { desc = 'Shift selection up', nowait = true, silent = true })
 map('v', '<M-k>', ":m '<-2<CR>gv=gv", { desc = 'Shift selection down', nowait = true, silent = true })
 map('x', 'p', 'p:let @+=@0<CR>:let @"=@0<CR>', { desc = 'Dont copy replaced text', silent = true })
-map('n', '<Leader>fml', fml, { desc = 'Fuck shit up!' })
 map('n', '<Leader>i', ':Inspect<CR>', { desc = 'Inspect word under cursor', nowait = true, silent = true })
 map('n', '<Leader>it', ':InspectTree<CR>', { desc = 'Show AST', nowait = true, silent = true })
 map('n', '<Leader>q', ':EditQuery<CR>', { desc = 'Edit TS query', nowait = true, silent = true })
