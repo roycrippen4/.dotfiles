@@ -18,8 +18,7 @@ for _, sign in ipairs(M.diagnostic_signs) do
   vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = '' })
 end
 
----@type vim.diagnostic.Opts
-local config = {
+vim.diagnostic.config({
   signs = {
     active = M.diagnostic_signs, -- show signs
   },
@@ -27,12 +26,11 @@ local config = {
   underline = true,
   severity_sort = true,
   float = {
-    focusable = true,
+    focusable = false,
+    border = 'rounded',
     style = 'minimal',
     source = true,
     header = 'Diagnostic',
     prefix = '',
   },
-}
-
-vim.diagnostic.config(config)
+})

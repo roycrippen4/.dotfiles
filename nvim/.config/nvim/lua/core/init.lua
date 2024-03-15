@@ -3,40 +3,62 @@ local g = vim.g
 require('core.autocommands')
 require('core.diagnostic')
 require('plugins.local')
+vim.treesitter.language.register('markdown', 'mdx')
 
--------------------------------------- globals -----------------------------------------
+-----------------------------------------------------------
+-- Global
+-----------------------------------------------------------
 g.autosave = false
 g.base46_cache = vim.fn.stdpath('data') .. '/nvchad/base46/'
-g.toggle_theme_icon = '   '
 g.NvimTreeOverlayTitle = ''
 g.skip_ts_context_commentstring_module = true
 g.markdown_fenced_languages = {
   'ts=typescript',
 }
+g.mapleader = ' '
 
-vim.treesitter.language.register('markdown', 'mdx')
+-----------------------------------------------------------
+-- General
+-----------------------------------------------------------
+-- stylua: ignore start
+opt.completeopt   = { 'menu', 'menuone', 'noselect' } -- Sets the completion options
+opt.mouse         = 'a'                               -- Enables mouse support
+opt.scrolloff     = 14                                -- Show x lines above and below the cursor
+opt.signcolumn    = 'yes'                             -- Show signs in the signcolumn
+opt.ignorecase    = true                              -- Ignores case in search
+opt.smartcase     = true                              -- Override the 'ignorecase' option if the search pattern contains upper case characters
+opt.splitbelow    = true                              -- Split below instead of above
+opt.splitright    = true                              -- Split right instead of left
+opt.termguicolors = true                              -- Enable true color support
+opt.timeoutlen    = 300                               -- Faster timeout wait time
+opt.undofile      = true                              -- Save undo history to file
+opt.updatetime    = 250                               -- interval for writing swap file to disk, also used by gitsigns
+opt.cmdheight     = 1                                 -- Height of the command bar
+opt.formatoptions = ''                                -- Don't use vim for formatting
+opt.laststatus    = 3                                 -- global statusline
+opt.showmode      = false                             -- Don't display mode
+opt.title         = true                              -- Show the title in the window titlebar
+opt.whichwrap:append('<>[]hl')                        -- go to previous/next line with h,l,left arrow and right arrow
+opt.clipboard = 'unnamedplus'                         -- Use system clipboard
+opt.cursorline = true                                 -- Enable highlighting of the current line
 
--- Fold
-opt.foldcolumn = '1'
-opt.foldnestmax = 0
-opt.foldlevel = 99
-opt.foldlevelstart = 99
-opt.foldenable = true
+-----------------------------------------------------------
+-- Fold settings
+-----------------------------------------------------------
+opt.foldexpr       = 'nvim_treesitter#foldexpr()' -- Treesitter folding
+opt.foldcolumn     = '1' -- Enable fold column
+opt.foldlevel      = 99  -- This is just a default level, it will be changed by ufo 
+opt.foldlevelstart = 99  -- This is just a default level, it will be changed by ufo
+opt.foldenable     = true
+-- opt.foldnestmax    = 0   -- Deepest fold is 20 levels
 
--- General Options
-opt.cmdheight = 1
-opt.formatoptions = ''
-opt.laststatus = 3 -- global statusline
-opt.showmode = false
-opt.title = true
-
-opt.clipboard = 'unnamedplus'
-opt.cursorline = true
-
--- Indenting
+-----------------------------------------------------------
+-- Indent settings
+-----------------------------------------------------------
 opt.expandtab = true
 opt.shiftwidth = 2
 opt.smartindent = false
+opt.autoindent = false
 opt.tabstop = 2
 opt.softtabstop = 2
 
@@ -56,12 +78,9 @@ opt.fillchars = {
   stl = ' ',
 }
 
-opt.completeopt = { 'menu', 'menuone', 'noselect' }
-opt.ignorecase = true
-opt.smartcase = true
-opt.mouse = 'a'
-
+-----------------------------------------------------------
 -- Numbers
+-----------------------------------------------------------
 opt.number = true
 opt.relativenumber = true
 opt.numberwidth = 2
@@ -70,23 +89,6 @@ opt.ruler = false
 -- FoOCItTsl
 -- disable nvim intro
 opt.shortmess:append('qWcsI')
-
-opt.signcolumn = 'yes'
-opt.splitbelow = true
-opt.splitright = true
-opt.termguicolors = true
-opt.timeoutlen = 300
-opt.undofile = true
-opt.scrolloff = 14
-
--- interval for writing swap file to disk, also used by gitsigns
-opt.updatetime = 250
-
--- go to previous/next line with h,l,left arrow and right arrow
--- when cursor reaches end/beginning of line
-opt.whichwrap:append('<>[]hl')
-
-g.mapleader = ' '
 
 -- disable some default providers
 for _, provider in ipairs({ 'node', 'perl', 'python3', 'ruby' }) do
@@ -110,6 +112,7 @@ autocmd('FileType', {
 -- reload some chadrc options on-save
 autocmd('BufWritePost', {
   pattern = vim.tbl_map(function(path)
+    ---@diagnostic disable-next-line
     local realpath = vim.uv.fs_realpath(path)
     if realpath then
       return vim.fs.normalize(realpath)

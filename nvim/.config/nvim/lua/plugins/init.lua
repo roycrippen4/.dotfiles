@@ -1,3 +1,5 @@
+vim.cmd([[ hi LspProgressMessageCompleted ctermfg=Green guifg=Green ]])
+
 local function load_ext(opts)
   for _, ext in ipairs(opts.extensions_list) do
     require('telescope').load_extension(ext)
@@ -5,15 +7,17 @@ local function load_ext(opts)
 end
 
 local default_plugins = {
+  'nvim-lua/plenary.nvim', -- https://github.com/nvim-lua/plenary.nvim
 
-  -- https://github.com/nvim-lua/plenary.nvim
-  'nvim-lua/plenary.nvim',
   {
-    'mfussenegger/nvim-dap',
+    'mfussenegger/nvim-dap', -- https://github.com/mfussenegger/nvim-dap
     dependencies = {
-      'rcarriga/nvim-dap-ui',
-      'jbyuki/one-small-step-for-vimkind',
-      { 'theHamsta/nvim-dap-virtual-text', opts = { virt_text_pos = 'eol' } },
+      'rcarriga/nvim-dap-ui', -- https://github.com/rcarriga/nvim-dap-ui
+      'jbyuki/one-small-step-for-vimkind', -- https://github.com/jbyuki/one-small-step-for-vimkind
+      {
+        'theHamsta/nvim-dap-virtual-text', -- https://github.com/theHamsta/nvim-dap-virtual-text
+        opts = { virt_text_pos = 'eol' },
+      },
     },
     keys = require('plugins.configs.dap.keys'),
     config = function()
@@ -22,14 +26,12 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/kdheepak/lazygit.nvim
-    'kdheepak/lazygit.nvim',
+    'kdheepak/lazygit.nvim', -- https://github.com/kdheepak/lazygit.nvim
     keys = { { '<leader>gg', '<cmd> LazyGit<CR>' } },
   },
 
   {
-    -- https://github.com/NvChad/base46
-    'NvChad/base46',
+    'NvChad/base46', -- https://github.com/NvChad/base46
     commit = '15ed57cdeb7048fe3e6466d3f7573e81fd1f3e9d',
     build = function()
       require('base46').load_all_highlights()
@@ -37,8 +39,7 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/NvChad/ui
-    'NvChad/ui',
+    'NvChad/ui', -- https://github.com/NvChad/ui
     commit = 'de6bf300a2b8e5ac0e9968dda9f31a50cf9fe8a5',
     lazy = false,
     config = function()
@@ -47,15 +48,13 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/NvChad/nvim-colorizer.lua
-    'NvChad/nvim-colorizer.lua',
+    'NvChad/nvim-colorizer.lua', -- https://github.com/NvChad/nvim-colorizer.lua
     lazy = false,
     opts = { filetypes = { 'lua', 'css', 'html', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' } },
   },
 
   {
-    -- https://github.com/nvim-tree/nvim-web-devicons
-    'nvim-tree/nvim-web-devicons',
+    'nvim-tree/nvim-web-devicons', -- https://github.com/nvim-tree/nvim-web-devicons
     config = function()
       require('plugins.configs.devicon')
       dofile(vim.g.base46_cache .. 'devicons')
@@ -64,8 +63,7 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/nvim-treesitter/nvim-treesitter
-    'nvim-treesitter/nvim-treesitter',
+    'nvim-treesitter/nvim-treesitter', -- https://github.com/nvim-treesitter/nvim-treesitter
     event = 'VimEnter',
     cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' },
     build = ':TSUpdate',
@@ -76,8 +74,7 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/lewis6991/gitsigns.nvim
-    'lewis6991/gitsigns.nvim',
+    'lewis6991/gitsigns.nvim', -- https://github.com/lewis6991/gitsigns.nvim
     event = 'VeryLazy',
     config = function()
       dofile(vim.g.base46_cache .. 'git')
@@ -100,13 +97,12 @@ local default_plugins = {
   -- },
 
   {
-    -- https://github.com/chaoren/vim-wordmotion
-    'chaoren/vim-wordmotion',
+    'chaoren/vim-wordmotion', -- https://github.com/chaoren/vim-wordmotion
     event = 'BufRead',
   },
 
   {
-    'saecki/crates.nvim',
+    'saecki/crates.nvim', --https://github.com/saecki/crates.nvim
     event = { 'BufRead Cargo.toml' },
     config = function()
       require('plugins.configs.lsp.lang.cargo')
@@ -115,17 +111,15 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/windwp/nvim-autopairs
-    'windwp/nvim-autopairs',
+    'windwp/nvim-autopairs', -- https://github.com/windwp/nvim-autopairs
     event = 'InsertEnter',
     config = function()
       require('plugins.configs.autopairs')
     end,
   },
 
-  -- https://github.com/zbirenbaum/copilot.lua
   {
-    'zbirenbaum/copilot.lua',
+    'zbirenbaum/copilot.lua', -- https://github.com/zbirenbaum/copilot.lua
     event = 'BufReadPost',
     opts = {
       panel = { enabled = false },
@@ -140,30 +134,23 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/hrsh7th/nvim-cmp
-    'hrsh7th/nvim-cmp',
+    'hrsh7th/nvim-cmp', -- https://github.com/hrsh7th/nvim-cmp
     event = 'InsertEnter',
     dependencies = {
       {
-        -- https://github.com/L3MON4D3/LuaSnip
-        'L3MON4D3/LuaSnip',
-        dependencies = 'rafamadriz/friendly-snippets',
+        'L3MON4D3/LuaSnip', -- https://github.com/L3MON4D3/LuaSnip
+        dependencies = 'rafamadriz/friendly-snippets', -- https://github.com/rafamadriz/friendly-snippets
         config = function()
           require('luasnip').config.set_config({ history = true, updateevents = 'TextChanged,TextChangedI' })
           require('plugins.configs.luasnip')
         end,
       },
       {
-        -- https://github.com/hrsh7th/cmp-nvim-lua
-        'hrsh7th/cmp-nvim-lua',
-        -- https://github.com/saadparwaiz1/cmp_luasnip
-        'saadparwaiz1/cmp_luasnip',
-        -- https://github.com/hrsh7th/cmp-nvim-lsp
-        'hrsh7th/cmp-nvim-lsp',
-        -- https://github.com/hrsh7th/cmp-path
-        'hrsh7th/cmp-path',
-        -- https://github.com/hrsh7th/cmp-cmdline
-        'hrsh7th/cmp-cmdline',
+        'hrsh7th/cmp-nvim-lua', -- https://github.com/hrsh7th/cmp-nvim-lua
+        'saadparwaiz1/cmp_luasnip', -- https://github.com/saadparwaiz1/cmp_luasnip
+        'hrsh7th/cmp-nvim-lsp', -- https://github.com/hrsh7th/cmp-nvim-lsp
+        'hrsh7th/cmp-path', -- https://github.com/hrsh7th/cmp-path
+        'hrsh7th/cmp-cmdline', -- https://github.com/hrsh7th/cmp-cmdline
       },
     },
     config = function()
@@ -172,8 +159,7 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/nvim-tree/nvim-tree.lua
-    'nvim-tree/nvim-tree.lua',
+    'nvim-tree/nvim-tree.lua', -- https://github.com/nvim-tree/nvim-tree.lua
     lazy = false,
     config = function()
       require('nvim-tree').setup(require('plugins.configs.nvimtree'))
@@ -182,10 +168,9 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/nvim-telescope/telescope.nvim
-    'nvim-telescope/telescope.nvim',
+    'nvim-telescope/telescope.nvim', -- https://github.com/nvim-telescope/telescope.nvim
     dependencies = {
-      'nvim-treesitter/nvim-treesitter',
+      'nvim-treesitter/nvim-treesitter', -- https://github.com/nvim-treesitter/nvim-treesitter
       { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make' },
     },
     cmd = 'Telescope',
@@ -198,25 +183,20 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/folke/zen-mode.nvim
-    'folke/zen-mode.nvim',
+    'folke/zen-mode.nvim', -- https://github.com/folke/zen-mode.nvim
     cmd = 'ZenMode',
     keys = { { '<Leader>z', ':ZenMode<CR>' } },
     opts = require('plugins.configs.zenmode'),
   },
 
   {
-    -- https://github.com/neovim/nvim-lspconfig
-    'neovim/nvim-lspconfig',
+    'neovim/nvim-lspconfig', -- https://github.com/neovim/nvim-lspconfig
     lazy = false,
     dependencies = {
-      'folke/neodev.nvim',
-
-      -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
-      'WhoIsSethDaniel/mason-tool-installer.nvim',
-
-      -- https://github.com/williamboman/mason.nvim
-      { 'williamboman/mason.nvim', cmd = 'Mason' },
+      'folke/neodev.nvim', -- https://github.com/folke/neodev.nvim
+      'WhoIsSethDaniel/mason-tool-installer.nvim', -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
+      { 'williamboman/mason.nvim', cmd = 'Mason' }, -- https://github.com/williamboman/mason.nvim
+      'b0o/schemastore.nvim',
     },
     config = function()
       require('plugins.configs.lsp.servers')
@@ -224,12 +204,11 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/pmizio/typescript-tools.nvim
-    'pmizio/typescript-tools.nvim',
+    'pmizio/typescript-tools.nvim', -- https://github.com/pmizio/typescript-tools.nvim
     ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'svelte' },
     dependencies = {
-      'nvim-lua/plenary.nvim',
-      'neovim/nvim-lspconfig',
+      'nvim-lua/plenary.nvim', -- https://github.com/nvim-lua/plenary.nvim
+      'neovim/nvim-lspconfig', -- https://github.com/neovim/nvim-lspconfig
     },
     config = function()
       local opts = require('plugins.configs.lsp.lang.typescript')
@@ -238,21 +217,24 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/mrcjkb/rustaceanvim
-    'mrcjkb/rustaceanvim',
+    'mrcjkb/rustaceanvim', -- https://github.com/mrcjkb/rustaceanvim
     version = '^3',
     ft = { 'rust' },
   },
 
   {
-    -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
-    'JoosepAlviste/nvim-ts-context-commentstring',
+    'JoosepAlviste/nvim-ts-context-commentstring', -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
     keys = { { 'gcc', mode = { 'n' } }, { 'gc', mode = { 'v' } } },
   },
 
   {
-    -- https://github.com/numToStr/Comment.nvim
-    'numToStr/Comment.nvim',
+    'LunarVim/bigfile.nvim', -- https://github.com/LunarVim/bigfile.nvim
+    event = 'BufRead',
+    opts = {},
+  },
+
+  {
+    'numToStr/Comment.nvim', -- https://github.com/numToStr/Comment.nvim
     keys = { { 'gc', mode = { 'n', 'v' }, 'gcc' } },
     config = function()
       ---@diagnostic disable-next-line
@@ -264,14 +246,12 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/folke/trouble.nvim
-    'folke/trouble.nvim',
+    'folke/trouble.nvim', -- https://github.com/folke/trouble.nvim
     opts = {},
   },
 
   {
-    -- https://github.com/hiphish/rainbow-delimiters.nvim
-    'hiphish/rainbow-delimiters.nvim',
+    'hiphish/rainbow-delimiters.nvim', -- https://github.com/hiphish/rainbow-delimiters.nvim
     event = 'VimEnter',
     config = function()
       dofile(vim.g.base46_cache .. 'rainbowdelimiters')
@@ -280,8 +260,7 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/stevearc/dressing.nvim
-    'stevearc/dressing.nvim',
+    'stevearc/dressing.nvim', -- https://github.com/stevearc/dressing.nvim
     lazy = false,
     config = function()
       require('plugins.configs.dressing')
@@ -289,8 +268,7 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/mbbill/undotree
-    'mbbill/undotree',
+    'mbbill/undotree', -- https://github.com/mbbill/undotree
     keys = {
       {
         '<Leader>ut',
@@ -304,15 +282,13 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/max397574/better-escape.nvim
-    'max397574/better-escape.nvim',
+    'max397574/better-escape.nvim', -- https://github.com/max397574/better-escape.nvim
     event = 'InsertEnter',
     opts = {},
   },
 
   {
-    -- https://github.com/theprimeagen/harpoon
-    'theprimeagen/harpoon',
+    'theprimeagen/harpoon', -- https://github.com/theprimeagen/harpoon
     commit = 'ccae1b9bec717ae284906b0bf83d720e59d12b91',
     config = function()
       require('harpoon').setup({ menu = { width = 130 } })
@@ -320,16 +296,14 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/tzachar/highlight-undo.nvim
-    'tzachar/highlight-undo.nvim',
+    'tzachar/highlight-undo.nvim', -- https://github.com/tzachar/highlight-undo.nvim
     keys = { { 'u', mode = 'n' }, { '<C-r>', mode = 'n' } },
     opts = { duration = 400 },
   },
 
   {
-    -- https://github.com/windwp/nvim-ts-autotag
-    'windwp/nvim-ts-autotag',
-    dependencies = 'nvim-treesitter/nvim-treesitter',
+    'windwp/nvim-ts-autotag', -- https://github.com/windwp/nvim-ts-autotag
+    dependencies = 'nvim-treesitter/nvim-treesitter', -- https://github.com/nvim-treesitter/nvim-treesitter
     ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'html', 'svelte', 'jsx', 'tsx', 'markdown', 'mdx' },
     config = function()
       require('nvim-ts-autotag').setup()
@@ -337,8 +311,7 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/stevearc/conform.nvim
-    'stevearc/conform.nvim',
+    'stevearc/conform.nvim', -- https://github.com/stevearc/conform.nvim
     event = 'BufWritePre',
     config = function()
       require('conform').setup(require('plugins.configs.conform'))
@@ -346,8 +319,7 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/kylechui/nvim-surround
-    'kylechui/nvim-surround',
+    'kylechui/nvim-surround', -- https://github.com/kylechui/nvim-surround
     event = 'VeryLazy',
     config = function()
       require('nvim-surround').setup()
@@ -355,8 +327,7 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/iamcco/markdown-preview.nvim
-    'iamcco/markdown-preview.nvim',
+    'iamcco/markdown-preview.nvim', -- https://github.com/iamcco/markdown-preview.nvim
     ft = { 'markdown' },
     keys = { { '<leader>mp', '<cmd> MarkdownPreview<CR>', mode = { 'n' } } },
     build = function()
@@ -365,8 +336,7 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/folke/todo-comments.nvim
-    'folke/todo-comments.nvim',
+    'folke/todo-comments.nvim', -- https://github.com/folke/todo-comments.nvim
     event = 'VeryLazy',
     config = function()
       require('todo-comments').setup(require('plugins.configs.todo'))
@@ -375,8 +345,7 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/lukas-reineke/indent-blankline.nvim
-    'lukas-reineke/indent-blankline.nvim',
+    'lukas-reineke/indent-blankline.nvim', -- https://github.com/lukas-reineke/indent-blankline.nvim
     event = 'VeryLazy',
     config = function()
       require('plugins.configs.blankline')
@@ -384,14 +353,12 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/luukvbaal/statuscol.nvim
-    'luukvbaal/statuscol.nvim',
+    'luukvbaal/statuscol.nvim', -- https://github.com/luukvbaal/statuscol.nvim
     branch = '0.10',
     event = 'BufReadPost',
     dependencies = {
-      -- https://github.com/kevinhwang91/nvim-ufo
-      'kevinhwang91/nvim-ufo',
-      dependencies = 'kevinhwang91/promise-async',
+      'kevinhwang91/nvim-ufo', -- https://github.com/kevinhwang91/nvim-ufo
+      dependencies = 'kevinhwang91/promise-async', -- https://github.com/kevinhwang91/promise-async
       opts = {
         provider_selector = function()
           return { 'treesitter', 'indent' }
@@ -408,8 +375,7 @@ local default_plugins = {
   },
 
   {
-    -- https://github.com/folke/which-key.nvim
-    'folke/which-key.nvim',
+    'folke/which-key.nvim', -- https://github.com/folke/which-key.nvim
     keys = { '<leader>', '<c-r>', '<c-w>', '"', "'", '`', 'c', 'v', 'g' },
     config = function()
       dofile(vim.g.base46_cache .. 'whichkey')

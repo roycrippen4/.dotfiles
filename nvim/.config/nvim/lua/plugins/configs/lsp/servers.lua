@@ -110,4 +110,5 @@ lspconfig['taplo'].setup({
 lspconfig['yamlls'].setup({
   capabilities = M.capabilities,
   on_attach = M.on_attach,
+  settings = require('plugins.configs.lsp.lang.yaml'),
 })
