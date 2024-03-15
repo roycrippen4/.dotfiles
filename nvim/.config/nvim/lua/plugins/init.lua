@@ -286,10 +286,11 @@ local default_plugins = {
   },
 
   {
-    'theprimeagen/harpoon', -- https://github.com/theprimeagen/harpoon
-    commit = 'ccae1b9bec717ae284906b0bf83d720e59d12b91',
+    'roycrippen4/harpoon',
+    dir = 'harpoon',
+    dev = true,
     config = function()
-      require('harpoon').setup({ menu = { width = 130 } })
+      require('harpoon').setup({ menu = { width = 60 } })
     end,
   },
 
