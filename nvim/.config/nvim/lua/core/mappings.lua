@@ -64,11 +64,6 @@ local function handle_angle()
   return vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<', true, true, true), 'n', true)
 end
 
-local function toggle_hints()
-  vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled(0))
-  print('inlay hints: ' .. tostring(vim.lsp.inlay_hint.is_enabled()))
-end
-
 local function close_buf()
   if #vim.api.nvim_list_wins() == 1 and string.sub(vim.api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
     vim.cmd([[ q ]])
@@ -110,7 +105,7 @@ map('n', '<C-l>', '<C-w>l', { desc = 'Window right' })
 map('n', '<C-j>', '<C-w>j', { desc = 'Window down' })
 map('n', '<C-k>', '<C-w>k', { desc = 'Window up' })
 map('n', '<Leader>v', '<C-w>v', { desc = 'Vertical Split  ', nowait = true })
-map('n', '<Leader>h', '<C-w>h', { desc = 'Horizontal Split  ', nowait = true })
+map('n', '<Leader>h', '<C-w>s', { desc = 'Horizontal Split  ', nowait = true })
 map('n', '<Leader><Leader>', '<cmd> Lazy<CR>', { desc = 'Open Lazy  ' })
 map('n', '<C-s>', '<cmd> w<CR>', { desc = 'Save file' })
 map('n', '<C-c>', '<cmd> %y+<CR>', { desc = 'Copy whole file' })
@@ -118,7 +113,6 @@ map('n', '<M-S-.>', '<C-w>>', { desc = 'Increase window width', nowait = true })
 map('n', '<M-S-,>', '<C-w><', { desc = 'Decrease window width', nowait = true })
 map('n', '<M-j>', ':m .+1<CR>==', { desc = 'Shift line down', nowait = true, silent = true })
 map('n', '<M-k>', ':m .-2<CR>==', { desc = 'Shift line up', nowait = true, silent = true })
-map('n', '<Leader>h', toggle_hints, { desc = 'Toggle lsp inlay hints 󰊠 ' })
 map('v', '<', '<gv', { desc = 'Un-Indent line' })
 map('v', '>', '>gv', { desc = 'Indent line' })
 map('v', '<M-j>', ":m '>+1<CR>gv=gv", { desc = 'Shift selection up', nowait = true, silent = true })
@@ -135,7 +129,7 @@ map({ 'n', 'i' }, '<M-I>', toggle_auto_trigger)
 -- tabufline
 map('n', 'L', require('plugins.local.tabufline').tabuflineNext)
 map('n', 'H', require('plugins.local.tabufline').tabuflinePrev)
-map('n', '<leader>x', close_buf)
+map('n', '<leader>x', close_buf, { desc = 'Close current buffer ' })
 
 -- Nvimtree
 map('n', '<C-n>', '<cmd> NvimTreeToggle<CR>')

@@ -19,13 +19,18 @@ local function check_trigger_chars(chars)
   local cur_line = vim.api.nvim_get_current_line()
   local pos = vim.api.nvim_win_get_cursor(0)[2]
 
-  cur_line = cur_line:gsub('%s+', '') -- rm trailing spaces
+  cur_line = cur_line:gsub('%s+', '')
 
   for _, char in ipairs(chars) do
     if cur_line:sub(pos, pos) == char then
       return true
     end
   end
+end
+
+local function toggle_hints()
+  vim.lsp.inlay_hint.enable(0, not vim.lsp.inlay_hint.is_enabled(0))
+  print('inlay hints: ' .. tostring(vim.lsp.inlay_hint.is_enabled()))
 end
 
 M.on_attach = function(client, bufnr)
@@ -36,6 +41,7 @@ M.on_attach = function(client, bufnr)
   map('n', '<leader>lf', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message 󰉪 ' })
   map('n', '<leader>r', require('plugins.local.renamer').open, { desc = 'LSP Rename 󰑕 ' })
   map('n', '<leader>la', vim.lsp.buf.code_action, { desc = 'Code Action  ' })
+  map('n', '<leader>lh', toggle_hints, { desc = 'Toggle lsp inlay hints 󰊠 ' })
 
   if client.name == 'svelte' then
     vim.api.nvim_create_autocmd('BufWritePost', {

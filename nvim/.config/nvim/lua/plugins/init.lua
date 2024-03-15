@@ -6,6 +6,8 @@ local function load_ext(opts)
   end
 end
 
+local dap_keys = {}
+
 local default_plugins = {
 
   -- https://github.com/nvim-lua/plenary.nvim
@@ -17,14 +19,8 @@ local default_plugins = {
       'jbyuki/one-small-step-for-vimkind',
       { 'theHamsta/nvim-dap-virtual-text', opts = { virt_text_pos = 'eol' } },
     },
-    keys = { '<Leader>dc', '<Leader>do', '<Leader>dO', '<Leader>di', '<Leader>db' },
+    keys = require('plugins.configs.dap.keys'),
     config = function()
-      local dap = require('dap')
-      map('n', '<Leader>dc', dap.continue, { desc = ' Continue' })
-      map('n', '<Leader>do', dap.step_into, { desc = ' Step Over' })
-      map('n', '<Leader>dO', dap.step_out, { desc = ' Step out' })
-      map('n', '<Leader>di', dap.step_into, { desc = ' Step into' })
-      map('n', '<Leader>db', dap.toggle_breakpoint, { desc = ' Toggle breakpoint' })
       require('plugins.configs.dap')
     end,
   },
