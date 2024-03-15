@@ -1,5 +1,3 @@
-vim.cmd([[ hi LspProgressMessageCompleted ctermfg=Green guifg=Green ]])
-
 local function load_ext(opts)
   for _, ext in ipairs(opts.extensions_list) do
     require('telescope').load_extension(ext)
