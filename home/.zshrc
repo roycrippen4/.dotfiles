@@ -28,11 +28,6 @@ export ZSH="$HOME/.dotfiles/home/.oh-my-zsh"
 export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
 fpath+=$HOME/.dotfiles/home/.zfunc/
 
-# go
-export GOROOT=/usr/local/go
-export GOPATH=$HOME/go
-export PATH=$PATH:/usr/local/go/bin
-
 # NVM stuff
 export NVM_DIR="$HOME/.nvm"
 # shellcheck source=../../.nvm/nvm.sh
@@ -97,7 +92,7 @@ go_to_wt_config() {
 alias cb="cd .."
 alias cl="clear"
 alias dot='cd && cd .dotfiles'
-alias fzf="fzf --preview 'bat --color=always --style=header,grid --line-range :500 {}' --multi --bind 'enter:become(nvim {+})' "
+alias fzf="fzf --preview 'bat --color=always --style=header,grid --line-range :500 {}' --multi --bind 'enter:become(nvim {+})'"
 alias hacker="cmatrix -c"
 alias hconf=go_to_home_config
 alias kconf=go_to_kitty_config
@@ -121,3 +116,4 @@ source "$HOME/.bin/load-nvmrc.sh"
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 eval "$(zoxide init zsh --cmd c)"
+eval "$(fzf --zsh)"

@@ -8,7 +8,7 @@ echo "${BLUE} Navigating to .zshrc..."
 cd && cd "$HOME/.dotfiles/home/"
 
 if [ $? -ne 0 ]; then
-  echo "${RED}Error: Failed to navigate to .zshrc directory. (Exit Code: $?)"
+	echo "${RED}Error: Failed to navigate to .zshrc directory. (Exit Code: $?)"
 fi
 
 ls
@@ -18,8 +18,8 @@ source .zshrc
 
 source_exit_code=$?
 if [ $source_exit_code -ne 0 ]; then
-  echo "${RED}ERROR: Failed to source .zshrc (Exit Code: $source_exit_code)."
-  exit 1
+	echo "${RED}ERROR: Failed to source .zshrc (Exit Code: $source_exit_code)."
+	exit 1
 fi
 
 echo "${GREEN} Sourced .zshrc"
