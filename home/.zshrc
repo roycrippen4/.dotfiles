@@ -67,7 +67,6 @@ plugins=(
 	# zsh-vi-mode
 	git
 	zsh-autosuggestions
-	fzf
 	zsh-syntax-highlighting
 )
 
@@ -98,6 +97,7 @@ go_to_wt_config() {
 alias cb="cd .."
 alias cl="clear"
 alias dot='cd && cd .dotfiles'
+alias fzf="fzf --preview 'bat --color=always --style=header,grid --line-range :500 {}' --multi --bind 'enter:become(nvim {+})' "
 alias hacker="cmatrix -c"
 alias hconf=go_to_home_config
 alias kconf=go_to_kitty_config
@@ -114,30 +114,10 @@ alias so="$HOME/.dotfiles/home/.bin/source.zsh"
 alias sync="$HOME/.dotfiles/home/.bin/sync.sh"
 alias wconf=go_to_wt_config
 
+source "$HOME/.bin/load-nvmrc.sh"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env" # ghcup-env
+[ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env"
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 eval "$(zoxide init zsh --cmd c)"
-
-autoload -U add-zsh-hook
-load-nvmrc() {
-	local node_version="$(nvm version)"
-	local nvmrc_path="$(nvm_find_nvmrc)"
-
-	if [ -n "$nvmrc_path" ]; then
-		local nvmrc_node_version=$(nvm version "$(cat "${nvmrc_path}")")
-
-		if [ "$nvmrc_node_version" = "N/A" ]; then
-			nvm install
-		elif [ "$nvmrc_node_version" != "$node_version" ]; then
-			nvm use
-		fi
-	elif [ "$node_version" != "$(nvm version default)" ]; then
-		echo "Reverting to nvm default version"
-		nvm use default
-	fi
-}
-add-zsh-hook chpwd load-nvmrc
-load-nvmrc
