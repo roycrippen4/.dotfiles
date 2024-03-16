@@ -236,6 +236,10 @@ M.git = function()
 end
 
 M.lsp_diagnostics = function()
+  if vim.bo.ft == 'lazy' then
+    return ''
+  end
+
   local count = vim.diagnostic.count(0)
   local errors = count[1]
   local warnings = count[2]

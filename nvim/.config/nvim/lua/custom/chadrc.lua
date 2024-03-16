@@ -18,6 +18,7 @@ local function set_modules(modules)
   modules[2] = status_modules.mode()
   modules[3] = status_modules.file_info()
   modules[4] = status_modules.git()
+  modules[5] = ''
   modules[6] = '%='
   modules[7] = status_modules.lsp_diagnostics()
   modules[8] = status_modules.lsp_status()
