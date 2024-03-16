@@ -287,8 +287,8 @@ local default_plugins = {
 
   {
     'roycrippen4/harpoon',
-    dir = 'harpoon',
-    dev = true,
+    -- dir = 'harpoon',
+    -- dev = true,
     config = function()
       require('harpoon').setup({ menu = { width = 60 } })
     end,
@@ -381,6 +381,12 @@ local default_plugins = {
       require('plugins.configs.whichkey')
     end,
   },
+
+  -- {
+  --   'roycrippen4/colors.nvim',
+  --   event = 'VeryLazy',
+  --   opts = { debug = false },
+  -- },
 }
 
 local config = require('core.utils').load_config()

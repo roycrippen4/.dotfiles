@@ -2,7 +2,6 @@ require('mason').setup(require('plugins.configs.lsp.mason'))
 require('mason-tool-installer').setup(require('plugins.configs.lsp.mason_installer'))
 
 local lspconfig = require('lspconfig')
--- local utils = require('core.utils')
 local M = require('plugins.configs.lsp.lspconfig')
 
 local cwd = vim.fn.getcwd(-1, -1)
