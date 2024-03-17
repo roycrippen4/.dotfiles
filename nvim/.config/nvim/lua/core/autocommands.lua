@@ -154,7 +154,6 @@ autocmd('BufWritePre', {
   callback = function()
     local diagnostics = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
     if #diagnostics > 0 then
-      -- log('comma')
       require('core.utils').add_missing_commas(diagnostics)
     end
   end,

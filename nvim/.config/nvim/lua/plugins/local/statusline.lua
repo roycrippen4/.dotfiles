@@ -192,16 +192,16 @@ M.file_info = function()
       icon = '%#St_NvimTree#  ',
       label = 'NVIMTREE',
     },
-    lazy = {
-      icon = '%#St_Lazy# 💤 ',
-      label = 'LAZY',
-    },
     lazygit = {
       icon = '%#St_Lazygit#  ',
       label = 'LAZYGIT',
     },
+    lazy = {
+      icon = '%#St_Lazy# 💤 ',
+      label = 'LAZY',
+    },
     Trouble = {
-      icon = '%#St_Trouble# 𝍐 ',
+      icon = '%#St_Trouble#  ',
       label = 'TROUBLE',
     },
     TelescopePrompt = {
