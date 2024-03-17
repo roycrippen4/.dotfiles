@@ -93,7 +93,7 @@ local options = {
 
   extensions_list = {
     --'colors'
-    'themes',
+    -- 'themes',
     'fzf',
   },
   extensions = {

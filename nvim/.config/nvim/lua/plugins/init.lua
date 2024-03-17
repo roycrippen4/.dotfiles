@@ -383,7 +383,7 @@ local default_plugins = {
   -- },
 }
 
-local config = require('core.utils').load_config()
+local config = require('plugins.configs.ui')
 
 if #config.plugins ~= 0 then
   table.insert(default_plugins({ import = config.plugins }))
