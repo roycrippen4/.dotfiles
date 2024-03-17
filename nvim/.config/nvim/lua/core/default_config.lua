@@ -39,32 +39,7 @@ M.ui = {
 }
 
 M.base46 = {
-  integrations = {
-    'alpha',
-    'blankline',
-    'bufferline',
-    'cmp',
-    'codeactionmenu',
-    'dap',
-    'defaults',
-    'devicons',
-    'git',
-    'hop',
-    'lsp',
-    'lspsaga',
-    'mason',
-    'nvimtree',
-    'rainbowdelimiters',
-    'semantic_tokens',
-    'statusline',
-    'syntax',
-    'tbline',
-    'telescope',
-    'todo',
-    'treesitter',
-    'trouble',
-    'whichkey',
-  },
+  integrations = {},
 }
 
 M.plugins = ''

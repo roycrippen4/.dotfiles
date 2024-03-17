@@ -197,37 +197,40 @@ M.ui = {
   theme = 'onedark',
   hl_add = M.add,
   hl_override = M.override,
-
-  statusline = {
-    overriden_modules = function(modules)
-      set_modules(modules)
-    end,
+  changed_themes = {},
+  cmp = {
+    icons = true,
+    lspkind_text = true,
+    style = 'default', -- default/flat_light/flat_dark/atom/atom_colored
   },
+  telescope = { style = 'borderless' }, -- borderless / bordered
 
-  integrations = {
-    'blankline',
-    'bufferline',
-    'cmp',
-    'codeactionmenu',
-    'dap',
-    'defaults',
-    'devicons',
-    'git',
-    'hop',
-    'illuminate',
-    'lsp',
-    'lspsaga',
-    'mason',
-    'nvimtree',
-    'rainbowdelimiters',
-    'semantic_tokens',
-    'statusline',
-    'syntax',
-    'telescope',
-    'todo',
-    'treesitter',
-    'trouble',
-    'whichkey',
+  base46 = {
+    integrations = {
+      'blankline',
+      'bufferline',
+      'cmp',
+      'codeactionmenu',
+      'dap',
+      'defaults',
+      'devicons',
+      'git',
+      'hop',
+      'illuminate',
+      'lsp',
+      'lspsaga',
+      'mason',
+      'nvimtree',
+      'rainbowdelimiters',
+      'semantic_tokens',
+      -- 'statusline',
+      'syntax',
+      'telescope',
+      'todo',
+      'treesitter',
+      'trouble',
+      'whichkey',
+    },
   },
 }
 

@@ -109,7 +109,6 @@ autocmd('FileType', {
   end,
 })
 
--- reload some chadrc options on-save
 autocmd('BufWritePost', {
   pattern = vim.tbl_map(function(path)
     ---@diagnostic disable-next-line
@@ -118,7 +117,7 @@ autocmd('BufWritePost', {
       return vim.fs.normalize(realpath)
     end
   end, vim.fn.glob(vim.fn.stdpath('config') .. '/lua/**/*.lua', true, true, true)),
-  group = vim.api.nvim_create_augroup('ReloadNvChad', {}),
+  group = vim.api.nvim_create_augroup('ReloadConfig', {}),
 
   callback = function(opts)
     local fp = vim.fn.fnamemodify(vim.fs.normalize(vim.api.nvim_buf_get_name(opts.buf)), ':r') --[[@as string]]
@@ -132,7 +131,6 @@ autocmd('BufWritePost', {
     require('plenary.reload').reload_module('plugins.local.tabufline.modules')
     vim.opt.tabline = "%!v:lua.require('plugins.local.tabufline.modules').run()"
 
-    -- require('base46').load_all_highlights()
-    -- vim.cmd("redraw!")
+    require('base46').load_all_highlights()
   end,
 })

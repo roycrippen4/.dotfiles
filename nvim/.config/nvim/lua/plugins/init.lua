@@ -32,21 +32,13 @@ local default_plugins = {
     -- 'NvChad/base46', -- https://github.com/NvChad/base46
     -- commit = '15ed57cdeb7048fe3e6466d3f7573e81fd1f3e9d',
     'roycrippen4/base46',
-    dir = 'harpoon',
+    dir = 'base46',
     dev = true,
+    -- lazy = false,
     build = function()
       require('base46').load_all_highlights()
     end,
   },
-
-  -- {
-  --   'NvChad/ui', -- https://github.com/NvChad/ui
-  --   commit = 'de6bf300a2b8e5ac0e9968dda9f31a50cf9fe8a5',
-  --   lazy = false,
-  --   config = function()
-  --     require('nvchad')
-  --   end,
-  -- },
 
   {
     'NvChad/nvim-colorizer.lua', -- https://github.com/NvChad/nvim-colorizer.lua
@@ -57,9 +49,8 @@ local default_plugins = {
   {
     'nvim-tree/nvim-web-devicons', -- https://github.com/nvim-tree/nvim-web-devicons
     config = function()
-      require('plugins.configs.devicon')
       dofile(vim.g.base46_cache .. 'devicons')
-      require('nvim-web-devicons').setup(--[[ { override = require('nvchad.icons.devicons') } ]])
+      require('nvim-web-devicons').setup({ override = require('plugins.configs.devicon') })
     end,
   },
 

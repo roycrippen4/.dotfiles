@@ -191,10 +191,13 @@ M.load_config = function()
   return config
 end
 
+---@diagnostic disable-next-line
 ---@param diagnostics Diagnostic[]
 function M.add_missing_commas(diagnostics)
   for _, diag in pairs(diagnostics) do
+    ---@diagnostic disable-next-line
     if diag.message == 'Miss symbol `,` or `;` .' or diag.message == 'Missed symbol `,`.' then
+      ---@diagnostic disable-next-line
       vim.api.nvim_buf_set_text(0, diag.lnum, diag.col, diag.lnum, diag.col, { ',' })
     end
   end

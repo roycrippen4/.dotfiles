@@ -17,12 +17,11 @@ M.lazy = function(install_path)
 
   M.echo('  Compiling base46 theme to bytecode ...')
 
-  local base46_repo = 'https://github.com/NvChad/base46'
+  local base46_repo = 'https://github.com/roycrippen4/base46'
   shell_call({ 'git', 'clone', '--depth', '1', '-b', 'v3.0', base46_repo, lazy_path })
   vim.opt.rtp:prepend(lazy_path)
 
-  -- require("base46").compile()
-
+  require('base46').compile()
   --------- lazy.nvim ---------------
   M.echo('  Installing lazy.nvim & plugins ...')
   local repo = 'https://github.com/folke/lazy.nvim.git'
@@ -31,15 +30,12 @@ M.lazy = function(install_path)
 
   -- install plugins
   require('plugins')
-
-  -- mason packages & show post_bootstrap screen
-  vim.cmd('MasonInstallAll')
   local lastpkg = vim.g.mason_binaries_list[#vim.g.mason_binaries_list]
 
   -- Keep track of which mason pkgs get installed
   require('mason-registry'):on('package:install:success', function(pkg)
     if tostring(pkg) == 'Package(name=' .. lastpkg .. ')' then
-      print('All done! Now read nvchad.com ')
+      print('Installation successful')
     end
   end)
 end
