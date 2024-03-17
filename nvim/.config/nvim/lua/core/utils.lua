@@ -194,4 +194,83 @@ function M.add_missing_commas(diagnostics)
   end
 end
 
+function M.handle_lazygit_close()
+  if vim.bo.ft == 'lazygit' then
+    feed('q', 'n')
+    return
+  end
+  feed([[<C-\><C-n>]], 'n')
+end
+
+local pairs = { '()', '[]', '{}', "''", '""', '``', '  ' }
+---@param key string
+---@param fallback string
+function M.handle_cmdline_pair(key, fallback)
+  local pos = vim.fn.getcmdpos()
+  local cmdline = vim.fn.getcmdline()
+
+  for _, pair in ipairs(pairs) do
+    if string.sub(cmdline, pos - 1, pos) == pair then
+      feed(key, 'n')
+      return
+    end
+  end
+  feed(fallback, 'n')
+end
+
+function M.harpoon_add_file()
+  require('harpoon.mark').add_file()
+  vim.cmd('redrawtabline')
+end
+
+function M.show_harpoon_menu()
+  require('harpoon.ui').toggle_quick_menu()
+  vim.wo.cursorline = true
+end
+
+function M.create_harpoon_nav_mappings()
+  for i = 1, 10, 1 do
+    local n = i ~= 10 and i or 0
+    local str = ('<C-' .. n .. '>')
+    vim.keymap.set('n', str, function()
+      require('harpoon.ui').nav_file(n)
+    end, { desc = 'Mark file' })
+  end
+end
+
+function M.close_buf()
+  if #vim.api.nvim_list_wins() == 1 and string.sub(vim.api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
+    vim.cmd([[ q ]])
+  else
+    require('plugins.local.tabufline').close_buffer()
+  end
+end
+
+---@return boolean
+local function is_lua_comment_or_string()
+  if vim.bo.ft ~= 'lua' then
+    return false
+  end
+
+  local node = vim.treesitter.get_node():type()
+  return node == 'comment' or node == 'comment_content' or node == 'chunk' or node == 'string' or node == 'string_content'
+end
+
+function M.handle_angle_pairs()
+  if is_lua_comment_or_string() then
+    feed('<><Left>', 'n')
+    return
+  end
+  return feed('<', 'n')
+end
+
+function M.send_to_black_hole()
+  local line_content = vim.fn.line('.')
+  if type(line_content) == 'string' and string.match(line_content, '^%s*$') then
+    vim.cmd('normal! "_dd')
+  else
+    vim.cmd('normal! dd')
+  end
+end
+
 return M

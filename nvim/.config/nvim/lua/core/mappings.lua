@@ -1,76 +1,15 @@
+local utils = require('core.utils')
 local map = vim.keymap.set
 local M = {}
 
-local auto_trigger = true
-local function toggle_auto_trigger()
-  require('copilot.suggestion').toggle_auto_trigger()
-  auto_trigger = not auto_trigger
-  print('Copilot autotrigger: ' .. tostring(auto_trigger))
-end
-
-local function add_file()
-  require('harpoon.mark').add_file()
-  vim.cmd('redrawtabline')
-end
-
-local function show_harpoon_menu()
-  require('harpoon.ui').toggle_quick_menu()
-  vim.wo.cursorline = true
-end
-
----@return boolean
-local function is_lua_comment_or_string()
-  if vim.bo.ft ~= 'lua' then
-    return false
-  end
-
-  local node = vim.treesitter.get_node():type()
-  return node == 'comment' or node == 'comment_content' or node == 'chunk' or node == 'string' or node == 'string_content'
-end
-
-local function black_hole()
-  local line_content = vim.fn.line('.')
-  if type(line_content) == 'string' and string.match(line_content, '^%s*$') then
-    vim.cmd('normal! "_dd')
-  else
-    vim.cmd('normal! dd')
-  end
-end
-
-local function handle_angle()
-  if is_lua_comment_or_string() then
-    feed('<><Left>', 'n')
-    return
-  end
-  return feed('<', 'n')
-end
-
-local function close_buf()
-  if #vim.api.nvim_list_wins() == 1 and string.sub(vim.api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
-    vim.cmd([[ q ]])
-  else
-    require('plugins.local.tabufline').close_buffer()
-  end
-end
-
-local function harpoon_nav()
-  for i = 1, 10, 1 do
-    local n = i ~= 10 and i or 0
-    local str = ('<C-' .. n .. '>')
-    map('n', str, function()
-      require('harpoon.ui').nav_file(n)
-    end, { desc = 'Mark file' })
-  end
-end
-
 -- Harpoon
-map('n', 'F', require('core.utils').set_cur_file_first_mark, { desc = 'Set current file as first mark' })
-map('n', '<C-f>', add_file, { desc = 'Mark file' })
-map('n', '<C-e>', show_harpoon_menu, { desc = 'Harpoon menu' })
-harpoon_nav()
+map('n', 'F', utils.set_cur_file_first_mark, { desc = 'Set current file as first mark' })
+map('n', '<C-f>', utils.harpoon_add_file, { desc = 'Mark file' })
+map('n', '<C-e>', utils.show_harpoon_menu, { desc = 'Harpoon menu' })
+require('core.utils').create_harpoon_nav_mappings()
 
 -- General
-map('i', '<', handle_angle, { desc = 'Angle brackets... sometimes...' })
+map('i', '<', utils.handle_angle_pairs, { desc = 'Angle brackets... sometimes...' })
 map('i', '<C-h>', '<Left>', { desc = 'Move left' })
 map('i', '<C-l>', '<Right>', { desc = 'Move right' })
 map('i', '<C-j>', '<Down>', { desc = 'Move down' })
@@ -81,7 +20,7 @@ map('n', '<leader>M', '<cmd>Mason<CR>', { desc = 'Show Mason  ' })
 map('n', '<leader>lr', '<cmd>luafile%<CR>', { desc = 'Run lua file  ' })
 map('n', ';', ':', { desc = 'enter commandline', nowait = true })
 map('n', 'yil', '^y$', { desc = 'yank in line', noremap = true })
-map('n', 'dd', black_hole, { desc = 'smart delete', nowait = true, noremap = true })
+map('n', 'dd', utils.send_to_black_hole, { desc = 'smart delete', nowait = true, noremap = true })
 map('n', '<C-h>', '<C-w>h', { desc = 'Window left' })
 map('n', '<C-l>', '<C-w>l', { desc = 'Window right' })
 map('n', '<C-j>', '<C-w>j', { desc = 'Window down' })
@@ -105,12 +44,11 @@ map('n', '<Leader>it', ':InspectTree<CR>', { desc = 'Show AST', nowait = true, s
 map('n', '<Leader>q', ':EditQuery<CR>', { desc = 'Edit TS query', nowait = true, silent = true })
 map({ 'n', 'x' }, 'j', 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { desc = 'Move down', expr = true })
 map({ 'n', 'x' }, 'k', 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = 'Move up', expr = true })
-map({ 'n', 'i' }, '<M-I>', toggle_auto_trigger)
 
 -- tabufline
 map('n', 'L', require('plugins.local.tabufline').tabuflineNext)
 map('n', 'H', require('plugins.local.tabufline').tabuflinePrev)
-map('n', '<leader>x', close_buf, { desc = 'Close current buffer ' })
+map('n', '<leader>x', utils.close_buf, { desc = 'Close current buffer ' })
 
 -- Nvimtree
 map('n', '<C-n>', '<cmd> NvimTreeToggle<CR>')
@@ -133,7 +71,7 @@ map('n', '<leader>fw', '<cmd> Telescope live_grep <CR>', { desc = 'Find word (cw
 map('n', '<leader>fz', '<cmd> Telescope current_buffer_fuzzy_find <CR>', { desc = 'Find in current buffer  ' })
 
 -- Terminal
-map('t', '<Esc>', [[<C-\><C-n>]], { desc = 'NTerminal mode' })
+map('t', '<Esc>', require('core.utils').handle_lazygit_close, { desc = 'NTerminal mode' })
 map('t', '<C-h>', [[<cmd> wincmd h<CR>]], { desc = 'Move focus left' })
 map('t', '<C-j>', [[<cmd> wincmd j<CR>]], { desc = 'Move focus down' })
 map('t', '<C-k>', [[<cmd> wincmd k<CR>]], { desc = 'Move focus up' })
@@ -142,23 +80,6 @@ map({ 'n', 't' }, '<A-v>', require('plugins.local.term').toggle_vertical, { desc
 map({ 'n', 't' }, '<A-h>', require('plugins.local.term').toggle_horizontal, { desc = 'New horizontal term' })
 map({ 'n', 't' }, '<A-f>', require('plugins.local.term').toggle_floating, { desc = 'Toggleable Floating term' })
 
-local pairs = { '()', '[]', '{}', "''", '""', '``', '  ' }
-
----@param key string
----@param fallback string
-local function handle_pair(key, fallback)
-  local pos = vim.fn.getcmdpos()
-  local cmdline = vim.fn.getcmdline()
-
-  for _, pair in ipairs(pairs) do
-    if string.sub(cmdline, pos - 1, pos) == pair then
-      feed(key, 'n')
-      return
-    end
-  end
-  feed(fallback, 'n')
-end
-
 -- Command line
 map('c', '(', '()<Left>', { desc = 'Insert parenthesis' })
 map('c', '{', '{}<Left>', { desc = 'Insert curly braces' })
@@ -166,26 +87,13 @@ map('c', '[', '[]<Left>', { desc = 'Insert square brackets' })
 map('c', "'", "''<Left>", { desc = 'Insert single quotes' })
 map('c', '"', '""<Left>', { desc = 'Insert double quotes' })
 map('c', '`', '``<Left>', { desc = 'Insert backticks' })
-map('c', ' ', function()
-  handle_pair('  <Left>', ' ')
-end)
 
-map('c', '<BS>', function()
-  handle_pair('<BS><Del>', '<BS>')
-end)
-
-map('c', '<Del>', function()
-  handle_pair('<Del><BS>', '<BS>')
-end)
-
--- one small step
-map('n', '<Leader>dl', function()
-  require('osv').launch({ port = 8086 })
-end, { desc = ' Launch Lua adapter' })
-
--- trouble
-map('n', '<Leader>td', function()
-  require('trouble').toggle('workspace_diagnostics')
-end, { desc = 'Trouble toggle workspace diagnostics  ' })
+-- stylua: ignore start
+map('c', ' ', function() utils.handle_cmdline_pair('  <Left>', ' ') end)
+map('c', '<BS>', function() utils.handle_cmdline_pair('<BS><Del>', '<BS>') end)
+map('c', '<Del>', function() utils.handle_cmdline_pair('<Del><BS>', '<BS>') end) -- one small step for vimkind
+map('n', '<Leader>dl', function() require('osv').launch({ port = 8086 }) end, { desc = ' Launch Lua adapter' }) -- trouble
+map('n', '<Leader>td', function() require('trouble').toggle('workspace_diagnostics') end, { desc = 'Trouble toggle workspace diagnostics  ' })
+-- stylua: ignore end
 
 return M
