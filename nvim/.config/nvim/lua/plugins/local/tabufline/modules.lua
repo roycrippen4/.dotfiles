@@ -5,7 +5,7 @@ local is_buf_valid = function(bufnr)
   return vim.api.nvim_buf_is_valid(bufnr) and vim.bo[bufnr].buflisted
 end
 
-dofile(vim.g.base46_cache .. 'tbline')
+-- dofile(vim.g.base46_cache .. 'tbline')
 ---------------------------------------------------------- btn onclick functions ----------------------------------------------
 
 vim.cmd("function! TbGoToBuf(bufnr,b,c,d) \n execute 'b'..a:bufnr \n endfunction")

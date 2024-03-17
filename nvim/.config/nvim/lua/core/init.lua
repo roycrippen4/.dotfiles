@@ -9,7 +9,7 @@ vim.treesitter.language.register('markdown', 'mdx')
 -- Global
 -----------------------------------------------------------
 g.autosave = false
-g.base46_cache = vim.fn.stdpath('data') .. '/nvchad/base46/'
+-- g.base46_cache = vim.fn.stdpath('data') .. '/nvchad/base46/'
 g.NvimTreeOverlayTitle = ''
 g.skip_ts_context_commentstring_module = true
 g.markdown_fenced_languages = {
@@ -117,7 +117,7 @@ autocmd('BufWritePost', {
     if realpath then
       return vim.fs.normalize(realpath)
     end
-  end, vim.fn.glob(vim.fn.stdpath('config') .. '/lua/custom/**/*.lua', true, true, true)),
+  end, vim.fn.glob(vim.fn.stdpath('config') .. '/lua/**/*.lua', true, true, true)),
   group = vim.api.nvim_create_augroup('ReloadNvChad', {}),
 
   callback = function(opts)
@@ -125,23 +125,14 @@ autocmd('BufWritePost', {
     local app_name = vim.env.NVIM_APPNAME and vim.env.NVIM_APPNAME or 'nvim'
     local module = string.gsub(fp, '^.*/' .. app_name .. '/lua/', ''):gsub('/', '.')
 
-    require('plenary.reload').reload_module('nvconfig')
     require('plenary.reload').reload_module('base46')
     require('plenary.reload').reload_module(module)
-
-    local config = require('nvconfig')
-
-    -- statusline
-    if config.ui.statusline.theme ~= 'custom' then
-      require('plenary.reload').reload_module('nvchad.statusline.' .. config.ui.statusline.theme)
-      vim.opt.statusline = "%!v:lua.require('nvchad.statusline." .. config.ui.statusline.theme .. "').run()"
-    end
 
     -- tabufline
     require('plenary.reload').reload_module('plugins.local.tabufline.modules')
     vim.opt.tabline = "%!v:lua.require('plugins.local.tabufline.modules').run()"
 
-    require('base46').load_all_highlights()
+    -- require('base46').load_all_highlights()
     -- vim.cmd("redraw!")
   end,
 })

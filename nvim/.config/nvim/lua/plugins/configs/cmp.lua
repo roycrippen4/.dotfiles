@@ -1,34 +1,34 @@
 local cmp = require('cmp')
 
-dofile(vim.g.base46_cache .. 'cmp')
+-- dofile(vim.g.base46_cache .. 'cmp')
 
-local cmp_ui = require('nvconfig').ui.cmp
-local cmp_style = cmp_ui.style
+-- local cmp_ui = require('nvconfig').ui.cmp
+-- local cmp_style = cmp_ui.style
 
 local field_arrangement = {
   atom = { 'kind', 'abbr', 'menu' },
   atom_colored = { 'kind', 'abbr', 'menu' },
 }
 
-local format = {
-  fields = field_arrangement[cmp_style] or { 'abbr', 'kind', 'menu' },
+-- local format = {
+--   fields = field_arrangement[cmp_style] or { 'abbr', 'kind', 'menu' },
 
-  format = function(_, item)
-    local icons = require('nvchad.icons.lspkind')
-    local icon = (cmp_ui.icons and icons[item.kind]) or ''
+--   format = function(_, item)
+--     local icons = require('nvchad.icons.lspkind')
+--     local icon = (cmp_ui.icons and icons[item.kind]) or ''
 
-    if cmp_style == 'atom' or cmp_style == 'atom_colored' then
-      icon = ' ' .. icon .. ' '
-      item.menu = cmp_ui.lspkind_text and '   (' .. item.kind .. ')' or ''
-      item.kind = icon
-    else
-      icon = cmp_ui.lspkind_text and (' ' .. icon .. ' ') or icon
-      item.kind = string.format('%s %s', icon, cmp_ui.lspkind_text and item.kind or '')
-    end
+--     if cmp_style == 'atom' or cmp_style == 'atom_colored' then
+--       icon = ' ' .. icon .. ' '
+--       item.menu = cmp_ui.lspkind_text and '   (' .. item.kind .. ')' or ''
+--       item.kind = icon
+--     else
+--       icon = cmp_ui.lspkind_text and (' ' .. icon .. ' ') or icon
+--       item.kind = string.format('%s %s', icon, cmp_ui.lspkind_text and item.kind or '')
+--     end
 
-    return item
-  end,
-}
+--     return item
+--   end,
+-- }
 
 cmp.setup({
   sources = {
@@ -39,7 +39,7 @@ cmp.setup({
     { name = 'crates' },
   },
   preselect = cmp.PreselectMode.Insert,
-  formatting = format,
+  -- formatting = format,
   completion = {
     completeopt = 'menu,menuone,noselect',
     autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged },

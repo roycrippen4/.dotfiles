@@ -28,13 +28,13 @@ local default_plugins = {
     keys = { { '<leader>gg', '<cmd> LazyGit<CR>' } },
   },
 
-  {
-    'NvChad/base46', -- https://github.com/NvChad/base46
-    commit = '15ed57cdeb7048fe3e6466d3f7573e81fd1f3e9d',
-    build = function()
-      require('base46').load_all_highlights()
-    end,
-  },
+  -- {
+  --   'NvChad/base46', -- https://github.com/NvChad/base46
+  --   commit = '15ed57cdeb7048fe3e6466d3f7573e81fd1f3e9d',
+  --   build = function()
+  --     require('base46').load_all_highlights()
+  --   end,
+  -- },
 
   -- {
   --   'NvChad/ui', -- https://github.com/NvChad/ui
@@ -55,7 +55,7 @@ local default_plugins = {
     'nvim-tree/nvim-web-devicons', -- https://github.com/nvim-tree/nvim-web-devicons
     config = function()
       require('plugins.configs.devicon')
-      dofile(vim.g.base46_cache .. 'devicons')
+      -- dofile(vim.g.base46_cache .. 'devicons')
       require('nvim-web-devicons').setup(--[[ { override = require('nvchad.icons.devicons') } ]])
     end,
   },
@@ -66,7 +66,7 @@ local default_plugins = {
     cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' },
     build = ':TSUpdate',
     config = function()
-      dofile(vim.g.base46_cache .. 'syntax')
+      -- dofile(vim.g.base46_cache .. 'syntax')
       require('nvim-treesitter.configs').setup(require('plugins.configs.treesitter'))
     end,
   },
@@ -75,7 +75,7 @@ local default_plugins = {
     'lewis6991/gitsigns.nvim', -- https://github.com/lewis6991/gitsigns.nvim
     event = 'VeryLazy',
     config = function()
-      dofile(vim.g.base46_cache .. 'git')
+      -- dofile(vim.g.base46_cache .. 'git')
       require('gitsigns').setup(require('plugins.configs.gitsigns'))
     end,
   },
@@ -161,7 +161,7 @@ local default_plugins = {
     lazy = false,
     config = function()
       require('nvim-tree').setup(require('plugins.configs.nvimtree'))
-      dofile(vim.g.base46_cache .. 'nvimtree')
+      -- dofile(vim.g.base46_cache .. 'nvimtree')
     end,
   },
 
@@ -173,7 +173,7 @@ local default_plugins = {
     },
     cmd = 'Telescope',
     config = function()
-      dofile(vim.g.base46_cache .. 'telescope')
+      -- dofile(vim.g.base46_cache .. 'telescope')
       local opts = require('plugins.configs.telescope')
       require('telescope').setup(opts)
       load_ext(opts)
@@ -252,7 +252,7 @@ local default_plugins = {
     'hiphish/rainbow-delimiters.nvim', -- https://github.com/hiphish/rainbow-delimiters.nvim
     event = 'VimEnter',
     config = function()
-      dofile(vim.g.base46_cache .. 'rainbowdelimiters')
+      -- dofile(vim.g.base46_cache .. 'rainbowdelimiters')
       require('rainbow-delimiters.setup').setup(require('plugins.configs.rainbow_delimiters'))
     end,
   },
@@ -339,7 +339,7 @@ local default_plugins = {
     event = 'VeryLazy',
     config = function()
       require('todo-comments').setup(require('plugins.configs.todo'))
-      dofile(vim.g.base46_cache .. 'todo')
+      -- dofile(vim.g.base46_cache .. 'todo')
     end,
   },
 
@@ -377,7 +377,7 @@ local default_plugins = {
     'folke/which-key.nvim', -- https://github.com/folke/which-key.nvim
     keys = { '<leader>', '<c-r>', '<c-w>', '"', "'", '`', 'c', 'v', 'g' },
     config = function()
-      dofile(vim.g.base46_cache .. 'whichkey')
+      -- dofile(vim.g.base46_cache .. 'whichkey')
       require('plugins.configs.whichkey')
     end,
   },

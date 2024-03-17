@@ -1,5 +1,5 @@
 local ibl = require('ibl')
-dofile(vim.g.base46_cache .. 'blankline')
+-- dofile(vim.g.base46_cache .. 'blankline')
 
 local hooks = require('ibl.hooks')
 local highlight = {
@@ -13,7 +13,9 @@ local highlight = {
 }
 
 ibl.setup({
-  indent = { char = '▏', highlight = 'IblChar' },
+  indent = {
+    char = '▏' --[[ , highlight = 'IblChar' ]],
+  },
   scope = {
     char = '▏',
     highlight = highlight,
