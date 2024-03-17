@@ -36,14 +36,14 @@ local default_plugins = {
     end,
   },
 
-  {
-    'NvChad/ui', -- https://github.com/NvChad/ui
-    commit = 'de6bf300a2b8e5ac0e9968dda9f31a50cf9fe8a5',
-    lazy = false,
-    config = function()
-      require('nvchad')
-    end,
-  },
+  -- {
+  --   'NvChad/ui', -- https://github.com/NvChad/ui
+  --   commit = 'de6bf300a2b8e5ac0e9968dda9f31a50cf9fe8a5',
+  --   lazy = false,
+  --   config = function()
+  --     require('nvchad')
+  --   end,
+  -- },
 
   {
     'NvChad/nvim-colorizer.lua', -- https://github.com/NvChad/nvim-colorizer.lua
@@ -56,7 +56,7 @@ local default_plugins = {
     config = function()
       require('plugins.configs.devicon')
       dofile(vim.g.base46_cache .. 'devicons')
-      require('nvim-web-devicons').setup({ override = require('nvchad.icons.devicons') })
+      require('nvim-web-devicons').setup(--[[ { override = require('nvchad.icons.devicons') } ]])
     end,
   },
 

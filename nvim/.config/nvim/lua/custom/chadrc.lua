@@ -1,6 +1,5 @@
 local M = {}
 local status_modules = require('plugins.local.statusline')
--- local highlights = require('custom.highlights')
 
 local cursorline = '#252931'
 local sep_color = '#454951'

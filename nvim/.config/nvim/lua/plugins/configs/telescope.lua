@@ -91,9 +91,9 @@ local options = {
     },
   },
 
-  extensions_list = { --[[ 'colors' ]]
-    'themes',
-    'terms',
+  extensions_list = {
+    --'colors'
+    -- 'themes',
     'fzf',
   },
   extensions = {
