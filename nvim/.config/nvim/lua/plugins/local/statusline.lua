@@ -341,20 +341,4 @@ end
 
 vim.opt.statusline = "%!v:lua.require('plugins.local.statusline').generate_statusline()"
 
--- local function set_modules(modules)
---   modules[1] = ''
---   modules[2] = status_modules.mode()
---   modules[3] = status_modules.file_info()
---   modules[4] = status_modules.git()
---   modules[5] = ''
---   modules[6] = '%='
---   modules[7] = status_modules.lsp_diagnostics()
---   modules[8] = status_modules.lsp_status()
---   modules[9] = status_modules.cursor_position()
---   modules[10] = status_modules.time()
---   modules[11] = status_modules.cwd()
---   return modules
---   -- end
--- end
-
 return M
