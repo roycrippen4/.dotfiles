@@ -8,7 +8,7 @@ gui:
     optionsTextColor:
       - blue
     selectedLineBgColor:
-      - black # set to `default` to have no background colour
+      - black
     selectedRangeBgColor:
       - default
     cherryPickedCommitBgColor:
@@ -27,3 +27,7 @@ disableStartupPopups: true
 notARepository: 'skip' # one of: 'prompt' | 'create' | 'skip'
 os:
   editCommand: 'nvim'
+keybinding:
+  universal:
+    scrollUpMain: '<c-p>'
+    scrollDownMain: '<c-n>'
