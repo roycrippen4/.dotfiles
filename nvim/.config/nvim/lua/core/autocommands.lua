@@ -4,6 +4,40 @@ local namespace = vim.api.nvim_create_namespace
 local general = augroup('General', { clear = true })
 local pattern = { 'DressingInput', 'help', 'logger', 'man', 'qf', 'query', 'scratch', 'undotree' }
 
+-- don't list quickfix buffers
+autocmd('FileType', {
+  pattern = 'qf',
+  callback = function()
+    vim.opt_local.buflisted = false
+  end,
+})
+
+autocmd('BufWritePost', {
+  pattern = vim.tbl_map(function(path)
+    ---@diagnostic disable-next-line
+    local realpath = vim.uv.fs_realpath(path)
+    if realpath then
+      return vim.fs.normalize(realpath)
+    end
+  end, vim.fn.glob(vim.fn.stdpath('config') .. '/lua/**/*.lua', true, true, true)),
+  group = augroup('ReloadConfig', {}),
+
+  callback = function(opts)
+    local fp = vim.fn.fnamemodify(vim.fs.normalize(vim.api.nvim_buf_get_name(opts.buf)), ':r') --[[@as string]]
+    local app_name = vim.env.NVIM_APPNAME and vim.env.NVIM_APPNAME or 'nvim'
+    local module = string.gsub(fp, '^.*/' .. app_name .. '/lua/', ''):gsub('/', '.')
+
+    require('plenary.reload').reload_module('base46')
+    require('plenary.reload').reload_module(module)
+
+    -- tabufline
+    require('plenary.reload').reload_module('plugins.local.tabufline.modules')
+    vim.opt.tabline = "%!v:lua.require('plugins.local.tabufline.modules').run()"
+
+    require('base46').load_all_highlights()
+  end,
+})
+
 if vim.fn.has('wsl') == 1 then
   autocmd('TextYankPost', {
     group = augroup('WSLYank', { clear = true }),

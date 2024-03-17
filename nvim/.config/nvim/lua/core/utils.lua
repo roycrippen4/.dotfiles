@@ -1,5 +1,4 @@
 local M = {}
-local merge_tb = vim.tbl_deep_extend
 
 vim.api.nvim_set_hl(0, 'UrlHighlight', { fg = 'gray' })
 local url_ns = vim.api.nvim_create_namespace('UrlHighlight')

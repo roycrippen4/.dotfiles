@@ -77,10 +77,5 @@ statuscol.setup({
         wrap = false,
       },
     },
-    -- {
-    --   text = { ' ' },
-    --   hl = 'Normal',
-    --   condition = { true, builtin.not_empty },
-    -- },
   },
 })

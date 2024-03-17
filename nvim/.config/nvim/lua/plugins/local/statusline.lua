@@ -2,6 +2,17 @@ local function stbufnr()
   return vim.api.nvim_win_get_buf(0)
 end
 
+---@diagnostic disable-next-line
+local timer = vim.uv.new_timer()
+
+local function redraw()
+  vim.cmd('redrawstatus')
+end
+
+if timer then
+  timer:start(1000, 1000, vim.schedule_wrap(redraw))
+end
+
 local M = {}
 
 local command_icon = '  '

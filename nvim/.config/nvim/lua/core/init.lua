@@ -1,7 +1,6 @@
 local opt = vim.opt
 local g = vim.g
 require('core.autocommands')
-require('core.diagnostic')
 require('plugins.local')
 vim.treesitter.language.register('markdown', 'mdx')
 
@@ -98,39 +97,37 @@ end
 -- add binaries installed by mason.nvim to path
 vim.env.PATH = vim.fn.stdpath('data') .. '/mason/bin:' .. vim.env.PATH
 
--------------------------------------- autocmds ------------------------------------------
-local autocmd = vim.api.nvim_create_autocmd
+vim.fn.sign_define('DapBreakpoint', { text = '🟥', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapBreakpointCondition', { text = '❓', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapLogPoint', { text = '📝', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapStopped', { text = '➡️', texthl = '', linehl = '', numhl = '' })
+vim.fn.sign_define('DapBreakpointRejected', { text = '❌', texthl = '', linehl = '', numhl = '' })
 
--- don't list quickfix buffers
-autocmd('FileType', {
-  pattern = 'qf',
-  callback = function()
-    vim.opt_local.buflisted = false
-  end,
-})
+-- Configuration for diagnostics
+local diagnostic_signs = {
+  { name = 'DiagnosticSignError', text = '💀' },
+  { name = 'DiagnosticSignWarn', text = ' ' },
+  { name = 'DiagnosticSignHint', text = '󱡴 ' },
+  { name = 'DiagnosticSignInfo', text = ' ' },
+}
 
-autocmd('BufWritePost', {
-  pattern = vim.tbl_map(function(path)
-    ---@diagnostic disable-next-line
-    local realpath = vim.uv.fs_realpath(path)
-    if realpath then
-      return vim.fs.normalize(realpath)
-    end
-  end, vim.fn.glob(vim.fn.stdpath('config') .. '/lua/**/*.lua', true, true, true)),
-  group = vim.api.nvim_create_augroup('ReloadConfig', {}),
+for _, sign in ipairs(diagnostic_signs) do
+  vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = '' })
+end
 
-  callback = function(opts)
-    local fp = vim.fn.fnamemodify(vim.fs.normalize(vim.api.nvim_buf_get_name(opts.buf)), ':r') --[[@as string]]
-    local app_name = vim.env.NVIM_APPNAME and vim.env.NVIM_APPNAME or 'nvim'
-    local module = string.gsub(fp, '^.*/' .. app_name .. '/lua/', ''):gsub('/', '.')
-
-    require('plenary.reload').reload_module('base46')
-    require('plenary.reload').reload_module(module)
-
-    -- tabufline
-    require('plenary.reload').reload_module('plugins.local.tabufline.modules')
-    vim.opt.tabline = "%!v:lua.require('plugins.local.tabufline.modules').run()"
-
-    require('base46').load_all_highlights()
-  end,
+vim.diagnostic.config({
+  signs = {
+    active = diagnostic_signs, -- show signs
+  },
+  update_in_insert = false,
+  underline = true,
+  severity_sort = true,
+  float = {
+    focusable = false,
+    border = 'rounded',
+    style = 'minimal',
+    source = true,
+    header = 'Diagnostic',
+    prefix = '',
+  },
 })

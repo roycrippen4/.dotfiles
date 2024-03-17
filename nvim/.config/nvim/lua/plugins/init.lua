@@ -23,11 +23,9 @@ local default_plugins = {
   },
 
   {
-    -- 'NvChad/base46', -- https://github.com/NvChad/base46
-    -- commit = '15ed57cdeb7048fe3e6466d3f7573e81fd1f3e9d',
     'roycrippen4/base46',
-    dir = 'base46',
-    dev = true,
+    -- dir = 'base46',
+    -- dev = true,
     build = function()
       require('base46').load_all_highlights()
     end,
@@ -49,7 +47,7 @@ local default_plugins = {
 
   {
     'nvim-treesitter/nvim-treesitter', -- https://github.com/nvim-treesitter/nvim-treesitter
-    event = 'VimEnter',
+    lazy = false,
     cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' },
     build = ':TSUpdate',
     config = function()
@@ -340,8 +338,8 @@ local default_plugins = {
 
   {
     'luukvbaal/statuscol.nvim', -- https://github.com/luukvbaal/statuscol.nvim
+    lazy = false,
     branch = '0.10',
-    event = 'BufReadPost',
     dependencies = {
       'kevinhwang91/nvim-ufo', -- https://github.com/kevinhwang91/nvim-ufo
       dependencies = 'kevinhwang91/promise-async', -- https://github.com/kevinhwang91/promise-async
