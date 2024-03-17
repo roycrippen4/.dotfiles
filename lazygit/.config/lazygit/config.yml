@@ -31,3 +31,6 @@ keybinding:
   universal:
     scrollUpMain: '<c-p>'
     scrollDownMain: '<c-n>'
+  files:
+    commitChangesWithEditor: 'c'
+    commitChanges: 'C'
