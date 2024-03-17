@@ -32,14 +32,6 @@ M.lazy = function(install_path)
 
   -- install plugins
   require('plugins')
-  -- local lastpkg = vim.g.mason_binaries_list[#vim.g.mason_binaries_list]
-
-  -- Keep track of which mason pkgs get installed
-  -- require('mason-registry'):on('package:install:success', function(pkg)
-  --   if tostring(pkg) == 'Package(name=' .. lastpkg .. ')' then
-  --     print('Installation successful')
-  --   end
-  -- end)
 end
 
 return M
