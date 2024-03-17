@@ -1,13 +1,8 @@
 require('core')
 
-local custom_init_path = vim.api.nvim_get_runtime_file('lua/custom/init.lua', false)[1]
-
-if custom_init_path then
-  dofile(custom_init_path)
-end
-
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
+---@diagnostic disable-next-line
 if not vim.uv.fs_stat(lazypath) then
   require('core.bootstrap').lazy(lazypath)
 end
