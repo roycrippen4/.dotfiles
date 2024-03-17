@@ -1,9 +1,3 @@
-local function load_ext(opts)
-  for _, ext in ipairs(opts.extensions_list) do
-    require('telescope').load_extension(ext)
-  end
-end
-
 local default_plugins = {
   'nvim-lua/plenary.nvim', -- https://github.com/nvim-lua/plenary.nvim
 
@@ -170,7 +164,7 @@ local default_plugins = {
       dofile(vim.g.base46_cache .. 'telescope')
       local opts = require('plugins.configs.telescope')
       require('telescope').setup(opts)
-      load_ext(opts)
+      require('core.utils').load_ext(opts)
     end,
   },
 

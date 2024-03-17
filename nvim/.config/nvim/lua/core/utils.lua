@@ -163,6 +163,13 @@ M.list_open_files = function()
   return visible_bufs
 end
 
+---@param opts table
+function M.load_ext(opts)
+  for _, ext in ipairs(opts.extensions_list) do
+    require('telescope').load_extension(ext)
+  end
+end
+
 --- Returns true if the currently opened file is marked
 ---@return boolean|integer
 function M.is_current_file_marked()
