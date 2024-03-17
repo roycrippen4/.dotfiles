@@ -9,7 +9,7 @@ vim.treesitter.language.register('markdown', 'mdx')
 -- Global
 -----------------------------------------------------------
 g.autosave = false
--- g.base46_cache = vim.fn.stdpath('data') .. '/nvchad/base46/'
+g.base46_cache = vim.fn.stdpath('data') .. '/base46/'
 g.NvimTreeOverlayTitle = ''
 g.skip_ts_context_commentstring_module = true
 g.markdown_fenced_languages = {
