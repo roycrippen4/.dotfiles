@@ -3,6 +3,7 @@ local function stbufnr()
 end
 
 local M = {}
+
 local command_icon = '  '
 local normal_icon = '  '
 local insert_icon = '  '
@@ -321,5 +322,39 @@ vim.api.nvim_create_autocmd('ModeChanged', {
     vim.api.nvim_set_hl(0, 'St_Harpoon', { fg = hl.fg, bg = hl.bg, italic = true })
   end,
 })
+
+function M.generate_statusline()
+  local statusline = {
+    M.mode(),
+    M.file_info(),
+    M.git(),
+    '%=',
+    M.lsp_diagnostics(),
+    M.lsp_status(),
+    M.cursor_position(),
+    M.time(),
+    M.cwd(),
+  }
+
+  return table.concat(statusline)
+end
+
+vim.opt.statusline = "%!v:lua.require('plugins.local.statusline').generate_statusline()"
+
+-- local function set_modules(modules)
+--   modules[1] = ''
+--   modules[2] = status_modules.mode()
+--   modules[3] = status_modules.file_info()
+--   modules[4] = status_modules.git()
+--   modules[5] = ''
+--   modules[6] = '%='
+--   modules[7] = status_modules.lsp_diagnostics()
+--   modules[8] = status_modules.lsp_status()
+--   modules[9] = status_modules.cursor_position()
+--   modules[10] = status_modules.time()
+--   modules[11] = status_modules.cwd()
+--   return modules
+--   -- end
+-- end
 
 return M
