@@ -196,7 +196,7 @@ end
 
 function M.handle_lazygit_close()
   if vim.bo.ft == 'lazygit' then
-    feed('q', 'n')
+    feed('<Esc>', 'n')
     return
   end
   feed([[<C-\><C-n>]], 'n')
