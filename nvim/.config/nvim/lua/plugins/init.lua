@@ -28,7 +28,6 @@ local default_plugins = {
     'roycrippen4/base46',
     dir = 'base46',
     dev = true,
-    -- lazy = false,
     build = function()
       require('base46').load_all_highlights()
     end,

@@ -58,7 +58,7 @@ vim.on_key(function(char)
   end
 
   if mode == 'i' and vim.bo.ft == 'lua' and should_format_lua_func() and is_cr then
-    feed('<Esc>', 'n')
+    feed('<Esc>O', 'n')
     return
   end
 end, ns)
