@@ -2,7 +2,7 @@ local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 local namespace = vim.api.nvim_create_namespace
 local general = augroup('General', { clear = true })
-local pattern = { 'DressingInput', 'help', 'logger', 'man', 'qf', 'query', 'scratch', 'undotree' }
+local pattern = { 'DressingInput', 'help', 'logger', 'man', 'qf', 'query', 'scratch', 'undotree', 'telescope', 'TelescopePrompt' }
 
 -- don't list quickfix buffers
 autocmd('FileType', {

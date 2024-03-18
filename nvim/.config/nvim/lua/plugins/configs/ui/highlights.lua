@@ -112,6 +112,7 @@ return {
     TblineFill           = { bg = 'darker_black'  },
     WinBar                 = { fg = "red", bg = black },
     WinBarNC               = { fg = black, bg = black },
+
     ['@constant'] = { fg = { 'red', -2 } },
     ['@keyword.operator'] = { fg = 'pink', italic = true },
     ['@operator'] = { fg = 'pink' },
