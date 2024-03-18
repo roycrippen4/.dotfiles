@@ -70,29 +70,30 @@ alias nvim="$HOME/.dotfiles/home/.bin/nvim.sh"
 alias vim="$HOME/.dotfiles/home/.bin/nvim.sh"
 
 go_to_nvim_config() {
-	cd "$HOME/.dotfiles/nvim/.config/nvim/"
+	c "$HOME/.dotfiles/nvim/.config/nvim/"
 }
 
 go_to_home_config() {
-	cd "$HOME/.dotfiles/home"
+	c "$HOME/.dotfiles/home"
 }
 
 go_to_kitty_config() {
-	cd "$HOME/.dotfiles/kitty/.config/kitty"
+	c "$HOME/.dotfiles/kitty/.config/kitty"
 }
 
 go_to_neodev_config() {
-	cd "$HOME/.dotfiles/nvim/.config/nvim/dev"
+	c "$HOME/.dotfiles/nvim/.config/nvim/dev"
 }
 
 go_to_wt_config() {
-	cd "$HOME/../../mnt/c/Users/Roy/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/"
+	c "$HOME/../../mnt/c/Users/Roy/AppData/Local/Packages/Microsoft.WindowsTerminal_8wekyb3d8bbwe/LocalState/"
 }
 
 alias cb="cd .."
 alias cl="clear"
 alias dot='cd && cd .dotfiles'
 alias fz="fzf --preview 'bat --color=always --style=header,grid --line-range :500 {}' --multi --bind 'enter:become(nvim {+})'"
+alias fp="fzf -q .png --preview='kitten icat --clear --transfer-mode=memory --stdin=no --place=256x256@20x1 {} > /dev/tty'"
 alias hacker="cmatrix -c"
 alias hconf=go_to_home_config
 alias kconf=go_to_kitty_config
