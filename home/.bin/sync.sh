@@ -15,7 +15,7 @@ echo "${BLUE}Stashing existing changes...${NC}"
 stash_result=$(git stash push -m "sync-dotfiles: Before syncing dotfiles")
 needs_pop=1
 if [ "$stash_result" = "No local changes to save" ]; then
-  needs_pop=0
+	needs_pop=0
 fi
 
 echo "${BLUE}Pulling updates from dotfiles repo...${NC}"
@@ -24,17 +24,18 @@ git pull origin master
 echo
 
 if [ $needs_pop -eq 1 ]; then
-  echo "${BLUE}Popping stashed changes...${NC}"
-  echo
-  git stash pop
+	echo "${BLUE}Popping stashed changes...${NC}"
+	echo
+	git stash pop
 fi
 
 unmerged_files=$(git diff --name-only --diff-filter=U)
 if [ -n "$unmerged_files" ]; then
-  echo "${RED}The following files have merge conflicts after popping the stash:${NC}"
-  echo
-  printf %"s\n" "$unmerged_files" # Ensure newlines are printed
+	echo "${RED}The following files have merge conflicts after popping the stash:${NC}"
+	echo
+	printf %"s\n" "$unmerged_files" # Ensure newlines are printed
 else
-  # Run stow to ensure all new dotfiles are linked
-  cd && cd "$HOME/.dotfiles/" stow */
+	cd
+	cd "$HOME/.dotfiles/"
+	stow */
 fi
