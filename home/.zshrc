@@ -110,7 +110,7 @@ alias so="$HOME/.dotfiles/home/.bin/source.zsh"
 alias sync="$HOME/.dotfiles/home/.bin/sync.sh"
 alias wconf=go_to_wt_config
 
-source "$HOME/.bin/load-nvmrc.sh"
+# source "$HOME/.bin/load-nvmrc.sh"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
