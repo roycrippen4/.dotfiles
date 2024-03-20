@@ -59,10 +59,7 @@ lspconfig['html'].setup({
   on_attach = M.on_attach,
 })
 
-lspconfig['htmx'].setup({
-  capabilities = M.capabilities,
-  on_attach = M.on_attach,
-})
+lspconfig['htmx'].setup({})
 
 lspconfig['jsonls'].setup({
   capabilities = M.capabilities,
