@@ -6,7 +6,7 @@ return {
     'dockerfile-language-server',
     'emmet-language-server',
     'eslint-lsp',
-    -- 'gopls',
+    'gopls',
     'html-lsp',
     'htmx-lsp',
     'json-lsp',
