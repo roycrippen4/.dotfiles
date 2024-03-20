@@ -65,20 +65,6 @@ local default_plugins = {
     end,
   },
 
-  -- {
-  --   'chrisgrieser/nvim-spider',
-  --   keys = {
-  --     { 'w', "<cmd>lua require('spider').motion('w')<CR>", mode = { 'n', 'o', 'x' } },
-  --     { 'e', "<cmd>lua require('spider').motion('e')<CR>", mode = { 'n', 'o', 'x' } },
-  --     { 'b', "<cmd>lua require('spider').motion('b')<CR>", mode = { 'n', 'o', 'x' } },
-  --   },
-  --   config = function()
-  --     require('spider').setup({
-  --       customPatterns = { patterns = { '%<', '%>', "%'", '%"', '%(', '%)', '%{', '%}' }, overrideDefault = false },
-  --     })
-  --   end,
-  -- },
-
   {
     'chaoren/vim-wordmotion', -- https://github.com/chaoren/vim-wordmotion
     event = 'BufRead',
@@ -365,6 +351,13 @@ local default_plugins = {
       dofile(vim.g.base46_cache .. 'whichkey')
       require('plugins.configs.whichkey')
     end,
+  },
+
+  {
+    -- https://github.com/petertriho/nvim-scrollbar
+    'petertriho/nvim-scrollbar',
+    event = 'BufRead',
+    opts = { handlers = { cursor = false } },
   },
 
   -- {
