@@ -1,8 +1,7 @@
 lastupdatecheck: 0
 recentrepos:
 - /home/roy/.dotfiles
-- /home/roy/dev/webapps/building-tool
-startuppopupversion: 5
+startuppopupversion: 0
 customcommandshistory: []
 hidecommandlog: false
 ignorewhitespaceindiffview: false
