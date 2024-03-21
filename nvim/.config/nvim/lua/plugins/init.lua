@@ -34,7 +34,7 @@ local default_plugins = {
   {
     'NvChad/nvim-colorizer.lua', -- https://github.com/NvChad/nvim-colorizer.lua
     lazy = false,
-    opts = { filetypes = { 'lua', 'css', 'html', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact' } },
+    opts = { filetypes = { 'lua', 'css', 'html', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'svelte' } },
   },
 
   {
@@ -272,7 +272,8 @@ local default_plugins = {
   },
 
   {
-    'windwp/nvim-ts-autotag', -- https://github.com/windwp/nvim-ts-autotag
+    -- 'windwp/nvim-ts-autotag', -- https://github.com/windwp/nvim-ts-autotag -- waiting for PR
+    'roycrippen4/nvim-ts-autotag', -- https://github.com/windwp/nvim-ts-autotag
     dependencies = 'nvim-treesitter/nvim-treesitter', -- https://github.com/nvim-treesitter/nvim-treesitter
     ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'html', 'svelte', 'jsx', 'tsx', 'markdown', 'mdx' },
     config = function()

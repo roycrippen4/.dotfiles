@@ -2,5 +2,5 @@ lazy-lock.json
 dev
 .vscode
 .idea
-lazygit/.config/lazygit/state.yml
+state.yml
 
