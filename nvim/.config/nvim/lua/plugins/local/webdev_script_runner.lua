@@ -134,28 +134,4 @@ autocmd('BufEnter', {
   callback = M.setup,
 })
 
-autocmd({ 'UIEnter', 'DirChanged' }, {
-  group = augroup('nvmrc', { clear = true }),
-  pattern = '*',
-  callback = function()
-    vim.schedule(function()
-      local nvmrc = vim.fn.findfile('.nvmrc', vim.fn.getcwd())
-      if nvmrc == '' then
-        return
-      end
-      local node_version = vim.fn.trim(vim.fn.readfile(nvmrc)[1])
-
-      if node_version == 'v:null' then
-        vim.notify('No node version specified in .nvmrc', 3)
-        return
-      end
-
-      term.send('nvm use ' .. node_version, 'H')
-      vim.defer_fn(function()
-        term.toggle_horizontal()
-      end, 50)
-    end)
-  end,
-})
-
 return M

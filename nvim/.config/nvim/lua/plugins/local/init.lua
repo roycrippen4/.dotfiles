@@ -42,9 +42,8 @@ if not scroll_ok then
   return
 end
 
-require('plugins.local.node')
--- local node_ok, _ = pcall(require, 'plugins.local.node')
--- if not node_ok then
---   log('node not ok')
---   return
--- end
+local runner_ok, _ = pcall(require, 'plugins.local.webdev_script_runner')
+if not runner_ok then
+  log('node not ok')
+  return
+end
