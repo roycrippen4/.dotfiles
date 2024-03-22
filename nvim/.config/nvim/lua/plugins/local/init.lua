@@ -44,6 +44,6 @@ end
 
 local runner_ok, _ = pcall(require, 'plugins.local.webdev_script_runner')
 if not runner_ok then
-  log('node not ok')
+  log('runner not ok')
   return
 end
