@@ -34,10 +34,7 @@ fpath+=$HOME/.dotfiles/home/.zfunc/
 
 # NVM stuff
 export NVM_DIR="$HOME/.nvm"
-# shellcheck source=../../.nvm/nvm.sh
-[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh" # This loads nvm
-
-# shellcheck source=../../.nvm/bash_completion
+[ -s "$NVM_DIR/nvm.sh" ] && \. "$NVM_DIR/nvm.sh"                   # This loads nvm
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 . "$HOME/.cargo/env"
 

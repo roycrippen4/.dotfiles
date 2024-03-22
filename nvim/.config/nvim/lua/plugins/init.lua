@@ -99,6 +99,7 @@ local default_plugins = {
           accept = '<M-CR>',
         },
       },
+      copilot_node_command = vim.fn.expand('$HOME') .. '/.nvm/versions/node/v21.6.2/bin/node',
     },
   },
 

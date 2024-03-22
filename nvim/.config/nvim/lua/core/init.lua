@@ -7,7 +7,6 @@ vim.treesitter.language.register('markdown', 'mdx')
 -----------------------------------------------------------
 -- Global
 -----------------------------------------------------------
-g.node_host_prog = vim.fn.expand('$HOME') .. '/.nvm/versions/node/v21.6.2/'
 g.autosave = false
 g.base46_cache = vim.fn.stdpath('data') .. '/base46/'
 g.NvimTreeOverlayTitle = ''

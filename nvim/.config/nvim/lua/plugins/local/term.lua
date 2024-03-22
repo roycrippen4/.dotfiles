@@ -204,7 +204,9 @@ function M.toggle_floating()
   toggle('F')
 end
 
-local ensure_and_send = function(cmd, type)
+---@param cmd string
+---@param type 'F'|'H'|'V'
+function M.send(cmd, type)
   if not terms[type].bufnr then
     show(terms[type], type, true)
   end
@@ -215,16 +217,6 @@ local ensure_and_send = function(cmd, type)
 
   send(terms[type].job_id, cmd)
   feed('<CR>', 'n')
-end
-
----@param cmd string
----@param type 'F'|'H'|'V'
-function M.send(cmd, type)
-  if not cmd then
-    return
-  end
-
-  ensure_and_send(cmd, type)
 end
 
 -- autoinsert when entering term buffers

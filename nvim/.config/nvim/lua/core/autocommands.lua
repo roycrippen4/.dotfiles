@@ -111,6 +111,13 @@ autocmd('VimEnter', {
   callback = function()
     require('core.utils').set_titlestring(vim.fn.getcwd())
 
+    if vim.fn.filereadable('.nvmrc') == 1 then
+      require('plugins.local.term').send('nvm use', 'H')
+    end
+    vim.schedule(function()
+      require('plugins.local.term').toggle_horizontal()
+    end)
+
     vim.schedule(function()
       local ui = require('harpoon.ui')
       local mark = require('harpoon.mark')
