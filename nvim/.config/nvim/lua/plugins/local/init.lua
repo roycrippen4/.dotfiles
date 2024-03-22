@@ -41,3 +41,10 @@ if not scroll_ok then
   log('scroll not ok')
   return
 end
+
+require('plugins.local.node')
+-- local node_ok, _ = pcall(require, 'plugins.local.node')
+-- if not node_ok then
+--   log('node not ok')
+--   return
+-- end

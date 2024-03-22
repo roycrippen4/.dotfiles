@@ -15,6 +15,7 @@ local win_set_buf = api.nvim_win_set_buf
 local M = {}
 
 local origin_win = nil
+
 local terms = {
   V = {
     bufnr = nil,
@@ -213,9 +214,7 @@ local ensure_and_send = function(cmd, type)
   end
 
   send(terms[type].job_id, cmd)
-  vim.schedule(function()
-    feed('<CR>', 'n')
-  end)
+  feed('<CR>', 'n')
 end
 
 ---@param cmd string
@@ -224,6 +223,7 @@ function M.send(cmd, type)
   if not cmd then
     return
   end
+
   ensure_and_send(cmd, type)
 end
 
