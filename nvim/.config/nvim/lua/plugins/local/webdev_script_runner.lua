@@ -131,7 +131,10 @@ end
 autocmd('BufEnter', {
   pattern = 'package.json',
   group = augroup('PackageCheck', { clear = true }),
-  callback = M.setup,
+  callback = function()
+    M.setup()
+    require('package-info').show()
+  end,
 })
 
 return M

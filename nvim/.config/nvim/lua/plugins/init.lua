@@ -48,6 +48,7 @@ local default_plugins = {
   {
     'nvim-treesitter/nvim-treesitter', -- https://github.com/nvim-treesitter/nvim-treesitter
     lazy = false,
+    priority = 1000,
     cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' },
     build = ':TSUpdate',
     config = function()
@@ -131,6 +132,7 @@ local default_plugins = {
   {
     'nvim-tree/nvim-tree.lua', -- https://github.com/nvim-tree/nvim-tree.lua
     lazy = false,
+    priority = 1001,
     config = function()
       require('nvim-tree').setup(require('plugins.configs.nvimtree'))
       dofile(vim.g.base46_cache .. 'nvimtree')
@@ -328,6 +330,7 @@ local default_plugins = {
   {
     'luukvbaal/statuscol.nvim', -- https://github.com/luukvbaal/statuscol.nvim
     lazy = false,
+    priority = 1000,
     branch = '0.10',
     dependencies = {
       'kevinhwang91/nvim-ufo', -- https://github.com/kevinhwang91/nvim-ufo
@@ -361,6 +364,12 @@ local default_plugins = {
     'petertriho/nvim-scrollbar',
     event = 'BufRead',
     opts = { handlers = { cursor = false } },
+  },
+
+  {
+    'vuki656/package-info.nvim', -- https://github.com/vuki656/package-info.nvim
+    filetypes = { 'package.json' },
+    opts = {},
   },
 
   -- {
