@@ -106,7 +106,7 @@ local default_plugins = {
 
   {
     'hrsh7th/nvim-cmp', -- https://github.com/hrsh7th/nvim-cmp
-    event = 'InsertEnter',
+    event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
       {
         'L3MON4D3/LuaSnip', -- https://github.com/L3MON4D3/LuaSnip

@@ -87,6 +87,7 @@ map('c', '[', '[]<Left>', { desc = 'Insert square brackets' })
 map('c', "'", "''<Left>", { desc = 'Insert single quotes' })
 map('c', '"', '""<Left>', { desc = 'Insert double quotes' })
 map('c', '`', '``<Left>', { desc = 'Insert backticks' })
+map('c', '<Esc>', '<C-c>', { desc = 'Exit command mode' })
 
 -- stylua: ignore start
 map('c', ' ', function() utils.handle_cmdline_pair('  <Left>', ' ') end)
