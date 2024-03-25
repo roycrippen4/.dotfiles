@@ -97,7 +97,7 @@ go_to_wofi_config() {
 }
 
 go_to_waybar_config() {
-	c "$HOME/.dotfiles/wofi/.config/wofi"
+	c "$HOME/.dotfiles/waybar/.config/waybar"
 }
 
 alias cb="cd .."
@@ -121,6 +121,7 @@ alias kconf=go_to_kitty_config
 alias nconf=go_to_nvim_config
 alias ndev=go_to_neodev_config
 alias wconf=go_to_wofi_config
+alias bconf=go_to_waybar_config
 
 # source "$HOME/.bin/load-nvmrc.sh"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
