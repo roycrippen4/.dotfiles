@@ -9,6 +9,7 @@ zstyle :compinstall filename "$HOME/.zshrc"
 autoload -Uz compinit
 compinit
 
+# p10k setup
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-$USER.zsh" ]]; then
 	source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-$USER.zsh"
 fi
@@ -20,6 +21,7 @@ export PATH="$GOPATH/bin:$PATH"
 # Editor settings
 export VISUAL=nvim
 export EDITOR="$VISUAL"
+export MANPAGER='nvim +Man!'
 
 # bun
 export BUN_INSTALL="$HOME/.bun"
@@ -116,5 +118,5 @@ alias wconf=go_to_wt_config
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env"
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 eval "$(zoxide init zsh --cmd c)"

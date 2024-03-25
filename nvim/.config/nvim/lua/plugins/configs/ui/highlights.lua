@@ -121,6 +121,11 @@ return {
     ['@type.argument'] = { italic = true },
     ['@variable'] = { fg = 'white' },
     ['@variable.member'] = { fg = { 'red', -2 } },
+
+
+    ['@css.classname']   = { fg = d_yellow, italic = true },
+    ['@css.plain_value'] = { fg = 'white'  },
+    ['@css.id_name']     = { fg = 'purple' },
   },
 
   -- stylua: ignore

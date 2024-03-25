@@ -1,0 +1,13 @@
+# vim: commentstring=#\ %s
+
+# images
+allow_images=true
+image_size=30
+
+# window
+width=15%
+height=363
+
+# keybinds
+key_up=Ctrl-p
+key_down=Ctrl-n
