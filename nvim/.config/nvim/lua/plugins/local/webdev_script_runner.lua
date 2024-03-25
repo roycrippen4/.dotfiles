@@ -12,29 +12,72 @@ local function is_package_json()
 end
 
 -- returns a table of a scripts and their associated line numbers
-local function get_script_table()
-  M.scripts = {}
-  local lines = vim.fn.readfile(vim.fn.expand('%'))
+-- local function get_script_table()
+--   M.scripts = {}
+--   local lines = vim.fn.readfile(vim.fn.expand('%')) ---@type string[]
+
+--   for i, line in ipairs(lines) do
+--     if line:find('scripts') then
+--       local start_line = i
+--       local end_line = start_line
+
+--       for j = start_line + 1, #lines do
+--         if lines[j]:find('}') then
+--           end_line = j
+--           break
+--         end
+--       end
+
+--       -- need to also check for items like "check:watch"
+--       for k = start_line + 1, end_line do
+--         local script = lines[k]:match('"[%s]*(.-)[%s]*":')
+--         if script then
+--           table.insert(M.scripts, { line = k, script = script })
+--         end
+--       end
+--     end
+--   end
+
+--   return M.scripts
+-- end
+
+---@param lines string[]
+---@return integer, integer
+local function find_script_range(lines)
+  local start_line = 0
+  local end_line = 0
 
   for i, line in ipairs(lines) do
     if line:find('scripts') then
-      local start_line = i
-      local end_line = start_line
+      start_line = i
+      break
+    end
+  end
 
-      for j = start_line + 1, #lines do
-        if lines[j]:find('}') then
-          end_line = j
-          break
-        end
-      end
+  for i = start_line + 1, #lines do
+    if lines[i]:find('}') then
+      end_line = i
+      break
+    end
+  end
 
-      -- need to also check for items like "check:watch"
-      for k = start_line + 1, end_line do
-        local script = lines[k]:match('"[%s]*(.-)[%s]*":')
-        if script then
-          table.insert(M.scripts, { line = k, script = script })
-        end
-      end
+  return start_line, end_line
+end
+
+local function get_script_table()
+  M.scripts = {}
+  local lines = vim.fn.readfile(vim.fn.expand('%')) ---@type string[]
+  local start_line, end_line = find_script_range(lines)
+
+  if start_line == 0 or end_line == 0 then
+    return {}
+  end
+
+  for i = start_line + 1, end_line do
+    local script = lines[i]:match('"[%s]*(.-)[%s]*":')
+    if script then
+      script = script:gsub('%-', '%%-')
+      table.insert(M.scripts, { line = i, script = script })
     end
   end
 
@@ -113,10 +156,9 @@ local function set_virtual_text()
   end
 
   for _, script in ipairs(M.scripts) do
-    local col = vim.fn.getline(script.line):find('"' .. script.script) - 4
     vim.api.nvim_buf_set_extmark(0, M.ns_id, script.line - 1, 0, {
       virt_text = { { ' ', 'RunScript' } },
-      virt_text_win_col = col,
+      virt_text_win_col = 1,
     })
   end
 end
