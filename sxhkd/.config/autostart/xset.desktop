@@ -1,6 +1,6 @@
 [Desktop Entry]
 Type=Application
-Exec=xset r rate 300 33
+Exec=xset r rate 250 50
 Hidden=false
 NoDisplay=false
 X-GNOME-Autostart-enabled=true

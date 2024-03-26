@@ -2,6 +2,6 @@
 Type=Application
 Exec=bash -c 'sxhkd & disown'
 Hidden=false
-Autostart-enabled=true
+X-GNOME-Autostart-enabled=true
 Name=keybind
 Comment=hotkey daemon

@@ -27,5 +27,6 @@ vim.filetype.add({
     ['.*config/git/config'] = 'gitconfig',
     ['.env.*'] = 'sh',
     ['.*/hypr/.*%.conf'] = 'hyprlang',
+    ['todo%.txt'] = 'todotxt',
   },
 })

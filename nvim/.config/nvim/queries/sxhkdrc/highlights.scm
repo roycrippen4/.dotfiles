@@ -1,0 +1,3 @@
+; extends
+
+(keysym) @sxhkdrc.keysym
