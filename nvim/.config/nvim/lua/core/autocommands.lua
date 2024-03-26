@@ -14,7 +14,6 @@ autocmd('FileType', {
 
 autocmd('BufWritePost', {
   pattern = vim.tbl_map(function(path)
-    ---@diagnostic disable-next-line
     local realpath = vim.uv.fs_realpath(path)
     if realpath then
       return vim.fs.normalize(realpath)

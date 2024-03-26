@@ -2,7 +2,6 @@ local function stbufnr()
   return vim.api.nvim_win_get_buf(0)
 end
 
----@diagnostic disable-next-line
 local timer = vim.uv.new_timer()
 
 local function redraw()

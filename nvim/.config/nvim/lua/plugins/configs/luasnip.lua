@@ -7,8 +7,7 @@ require('luasnip.loaders.from_snipmate').load()
 require('luasnip.loaders.from_snipmate').lazy_load({ paths = vim.g.snipmate_snippets_path or '' })
 
 require('luasnip.loaders.from_lua').load()
----@diagnostic disable-next-line
-require('luasnip.loaders.from_lua').lazy_load({ paths = './snippets' })
+require('luasnip.loaders.from_lua').lazy_load({ paths = { './snippets' } })
 
 map('i', '<Tab>', function()
   return require('luasnip').jumpable(1) and '<Plug>luasnip-jump-next' or '<tab>'

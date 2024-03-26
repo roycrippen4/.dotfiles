@@ -85,7 +85,6 @@ end
 function M.set_cur_file_first_mark()
   local mark = require('harpoon.mark')
   local bufname = vim.api.nvim_buf_get_name(0)
-  ---@diagnostic disable-next-line
   local path = require('plenary.path'):new(bufname):make_relative(vim.uv.cwd())
   local marks = require('core.utils').get_marked_files()
   ---@type integer|nil

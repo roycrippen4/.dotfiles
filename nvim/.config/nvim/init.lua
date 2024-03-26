@@ -2,7 +2,6 @@ require('core')
 
 local lazypath = vim.fn.stdpath('data') .. '/lazy/lazy.nvim'
 
----@diagnostic disable-next-line
 if not vim.uv.fs_stat(lazypath) then
   require('core.bootstrap').lazy(lazypath)
 end

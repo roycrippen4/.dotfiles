@@ -4,8 +4,6 @@ local term = require('plugins.local.term')
 
 local M = {}
 
-M.ns_id = vim.api.nvim_create_namespace('package_json_runner')
-
 ---@return boolean
 local function is_package_json()
   return vim.bo.ft == 'json' and vim.fn.expand('%:t') == 'package.json'
