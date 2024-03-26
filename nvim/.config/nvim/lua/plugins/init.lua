@@ -80,19 +80,19 @@ local default_plugins = {
     end,
   },
 
-  {
-    'altermo/ultimate-autopair.nvim',
-    event = { 'InsertEnter', 'CmdlineEnter' },
-    branch = 'v0.6',
-  },
-
   -- {
-  --   'windwp/nvim-autopairs', -- https://github.com/windwp/nvim-autopairs
-  --   event = 'InsertEnter',
-  --   config = function()
-  --     require('plugins.configs.autopairs')
-  --   end,
-  -- },,,
+  --   'altermo/ultimate-autopair.nvim',
+  --   event = { 'InsertEnter', 'CmdlineEnter' },
+  --   branch = 'v0.6',
+  -- },
+
+  {
+    'windwp/nvim-autopairs', -- https://github.com/windwp/nvim-autopairs
+    event = 'InsertEnter',
+    config = function()
+      require('plugins.configs.autopairs')
+    end,
+  },
 
   {
     'zbirenbaum/copilot.lua', -- https://github.com/zbirenbaum/copilot.lua
