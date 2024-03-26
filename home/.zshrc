@@ -13,6 +13,10 @@ compinit
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-$USER.zsh" ]]; then
 	source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-$USER.zsh"
 fi
+[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
+
+# for tree-sitter
+export PATH=$PATH:./node_modules/.bin
 
 # go
 export GOPATH="$HOME/go"
@@ -26,6 +30,7 @@ export MANPAGER='nvim +Man!'
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 # Path to your oh-my-zsh installation.
 export ZSH="$HOME/.dotfiles/home/.oh-my-zsh"
@@ -59,10 +64,10 @@ POWERLEVEL10k_MODE="nerdfont-complete"
 DISABLE_AUTO_TITLE="true"
 ZLE_RPROMPT_INDENT=0
 DISABLE_UNTRACKED_FILES_DIRTY="true"
-# ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
+ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 
 plugins=(
-	# zsh-vi-mode
+	zsh-vi-mode
 	git
 	zsh-autosuggestions
 	zsh-syntax-highlighting
@@ -123,10 +128,6 @@ alias ndev=go_to_neodev_config
 alias wconf=go_to_wofi_config
 alias bconf=go_to_waybar_config
 
-# source "$HOME/.bin/load-nvmrc.sh"
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env"
-# eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 eval "$(zoxide init zsh --cmd c)"

@@ -9,7 +9,7 @@ map('n', '<C-e>', utils.show_harpoon_menu, { desc = 'Harpoon menu' })
 require('core.utils').create_harpoon_nav_mappings()
 
 -- General
-map('i', '<', utils.handle_angle_pairs, { desc = 'Angle brackets... sometimes...' })
+-- map('i', '<', utils.handle_angle_pairs, { desc = 'Angle brackets... sometimes...' })
 map('i', '<C-h>', '<Left>', { desc = 'Move left' })
 map('i', '<C-l>', '<Right>', { desc = 'Move right' })
 map('i', '<C-j>', '<Down>', { desc = 'Move down' })
@@ -81,13 +81,13 @@ map({ 'n', 't' }, '<A-h>', require('plugins.local.term').toggle_horizontal, { de
 map({ 'n', 't' }, '<A-f>', require('plugins.local.term').toggle_floating, { desc = 'Toggleable Floating term' })
 
 -- Command line
-map('c', '(', '()<Left>', { desc = 'Insert parenthesis' })
-map('c', '{', '{}<Left>', { desc = 'Insert curly braces' })
-map('c', '[', '[]<Left>', { desc = 'Insert square brackets' })
-map('c', "'", "''<Left>", { desc = 'Insert single quotes' })
-map('c', '"', '""<Left>', { desc = 'Insert double quotes' })
-map('c', '`', '``<Left>', { desc = 'Insert backticks' })
-map('c', '<Esc>', '<C-c>', { desc = 'Exit command mode' })
+-- map('c', '(', '()<Left>', { desc = 'Insert parenthesis' })
+-- map('c', '{', '{}<Left>', { desc = 'Insert curly braces' })
+-- map('c', '[', '[]<Left>', { desc = 'Insert square brackets' })
+-- map('c', "'", "''<Left>", { desc = 'Insert single quotes' })
+-- map('c', '"', '""<Left>', { desc = 'Insert double quotes' })
+-- map('c', '`', '``<Left>', { desc = 'Insert backticks' })
+-- map('c', '<Esc>', '<C-c>', { desc = 'Exit command mode' })
 
 -- stylua: ignore start
 map('c', ' ', function() utils.handle_cmdline_pair('  <Left>', ' ') end)
