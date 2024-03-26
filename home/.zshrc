@@ -15,8 +15,7 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-$USER.zsh" ]]; the
 fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-# for tree-sitter
-export PATH=$PATH:./node_modules/.bin
+export PATH=$PATH:./node_modules/.bin # for tree-sitter
 
 # go
 export GOPATH="$HOME/go"
@@ -32,8 +31,7 @@ export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
-# Path to your oh-my-zsh installation.
-export ZSH="$HOME/.dotfiles/home/.oh-my-zsh"
+export ZSH="$HOME/.dotfiles/home/.oh-my-zsh" # Path to oh-my-zsh
 
 # bob exec/bob zsh completions
 export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
@@ -45,18 +43,11 @@ export NVM_DIR="$HOME/.nvm"
 [ -s "$NVM_DIR/bash_completion" ] && \. "$NVM_DIR/bash_completion" # This loads nvm bash_completion
 . "$HOME/.cargo/env"
 
-# User configuration
 export MANPATH="/usr/local/man:$MANPATH"
-# export NVM_DIR='~/.nvm/'
 export NODE_PATH="which node"
-# kitty
-export PATH="$PATH:$HOME/.local/bin"
-# Julia
-export PATH="$PATH:$HOME/Opt/julia-1.9.4/bin"
-# nvim script
-export PATH="$HOME/.bin/nvim.sh:$PATH"
-# ytui_music dir
-export YTUI_MUSIC_DIR="~/opt/music/"
+export PATH="$PATH:$HOME/.local/bin"          # kitty
+export PATH="$PATH:$HOME/Opt/julia-1.9.4/bin" # Julia
+export PATH="$HOME/.bin/nvim.sh:$PATH"        # nvim script
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL10k_MODE="nerdfont-complete"

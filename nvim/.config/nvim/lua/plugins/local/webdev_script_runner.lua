@@ -11,36 +11,6 @@ local function is_package_json()
   return vim.bo.ft == 'json' and vim.fn.expand('%:t') == 'package.json'
 end
 
--- returns a table of a scripts and their associated line numbers
--- local function get_script_table()
---   M.scripts = {}
---   local lines = vim.fn.readfile(vim.fn.expand('%')) ---@type string[]
-
---   for i, line in ipairs(lines) do
---     if line:find('scripts') then
---       local start_line = i
---       local end_line = start_line
-
---       for j = start_line + 1, #lines do
---         if lines[j]:find('}') then
---           end_line = j
---           break
---         end
---       end
-
---       -- need to also check for items like "check:watch"
---       for k = start_line + 1, end_line do
---         local script = lines[k]:match('"[%s]*(.-)[%s]*":')
---         if script then
---           table.insert(M.scripts, { line = k, script = script })
---         end
---       end
---     end
---   end
-
---   return M.scripts
--- end
-
 ---@param lines string[]
 ---@return integer, integer
 local function find_script_range(lines)
