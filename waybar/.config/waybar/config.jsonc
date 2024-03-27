@@ -75,6 +75,10 @@
       ]
     }
   },
+  "custom/discord": {
+    "on-click": "$HOME/.dotfiles/waybar/.config/waybar/scripts/focus_or_start.sh 'discord' 'discord' '3'",
+    "format": "󰙯 "
+  },
   "pulseaudio#microphone": {
     "format": "{format_source}",
     "format-source": "",
@@ -112,6 +116,7 @@
   "modules-left": [
     "custom/cpuinfo",
     "memory",
-    "custom/appmenu"
+    "custom/appmenu",
+    "custom/discord"
   ]
 }

@@ -67,6 +67,17 @@ tooltip {
   border-radius: 10px;
 }
 
+#custom-discord {
+  color: #aaaaaa;
+  background: #4c4f69;
+  opacity: 1;
+  margin-left: 3px;
+  margin-right: 3px;
+  padding-left: 10px;
+  padding-right: 8px;
+  border-radius: 10px;
+}
+
 #custom-power {
   color: #aaaaaa;
   background: #4c4f69;
