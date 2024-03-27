@@ -12,7 +12,7 @@
 }
 {
     "label" : "logout",
-    "action" : "$HOME/dotfiles/hypr/scripts/exit.sh",
+    "action" : "$HOME/.dotfiles/waybar/.config/waybar/scripts/exit.sh",
     "text" : "Exit",
     "keybind" : "e"
 }

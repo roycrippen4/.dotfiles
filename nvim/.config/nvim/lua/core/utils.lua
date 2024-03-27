@@ -245,24 +245,6 @@ function M.close_buf()
   end
 end
 
--- ---@return boolean
--- local function is_lua_comment_or_string()
---   if vim.bo.ft ~= 'lua' then
---     return false
---   end
-
---   local node = vim.treesitter.get_node():type()
---   return node == 'comment' or node == 'comment_content' or node == 'chunk' or node == 'string' or node == 'string_content'
--- end
-
--- function M.handle_angle_pairs()
---   if is_lua_comment_or_string() then
---     feed('<><Left>', 'n')
---     return
---   end
---   return feed('<', 'n')
--- end
-
 -- checks if cursor is between "<" and ">"
 ---@return boolean
 function M.cursor_between_angles()

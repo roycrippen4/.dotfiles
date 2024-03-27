@@ -88,10 +88,9 @@
   },
   "custom/power": {
     "format": " {}",
-    "exec": "echo ; echo  logout",
-    "on-click": "wlogout",
+    "on-click": "$HOME/.dotfiles/waybar/.config/waybar/scripts/logoutlaunch.sh 2",
     "interval": 86400,
-    "tooltip": false
+    "tooltip": true
   },
   "custom/cpuinfo": {
     "exec": "$HOME/.dotfiles/waybar/.config/waybar/scripts/cpuinfo.sh",
