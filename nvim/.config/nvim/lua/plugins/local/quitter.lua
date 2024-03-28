@@ -10,6 +10,7 @@ local plug_types = {
   terminal = true,
   toggleterm = true,
   fidget = true,
+  notify = true,
 }
 
 local function quit_vim()

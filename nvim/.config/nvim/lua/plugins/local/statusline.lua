@@ -270,7 +270,7 @@ M.lsp_status = function()
     ---@diagnostic disable-next-line
     for _, client in ipairs(vim.lsp.get_active_clients()) do
       if client.attached_buffers[stbufnr()] then
-        return (vim.o.columns > 100 and '%#St_LspStatus#' .. '   LSP ~ ' .. client.name .. ' ') or '   LSP '
+        return (vim.o.columns > 100 and '%#St_LspStatus#' .. '   LSP [' .. client.name .. '] ') or '   LSP '
       end
     end
   end

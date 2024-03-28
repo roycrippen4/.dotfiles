@@ -80,12 +80,6 @@ local default_plugins = {
     end,
   },
 
-  -- {
-  --   'altermo/ultimate-autopair.nvim',
-  --   event = { 'InsertEnter', 'CmdlineEnter' },
-  --   branch = 'v0.6',
-  -- },
-
   {
     'windwp/nvim-autopairs', -- https://github.com/windwp/nvim-autopairs
     event = 'InsertEnter',

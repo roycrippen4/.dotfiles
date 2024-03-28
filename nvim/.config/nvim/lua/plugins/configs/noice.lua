@@ -13,7 +13,14 @@ return { ---@type NoiceConfig
       view = 'mini',
     },
   },
-  cmdline = { view = 'cmdline' },
-  presets = { bottom_search = true, long_message_to_split = true, lsp_doc_border = true },
+  cmdline = {
+    format = {
+      cmdline = { icon = '>' },
+      search_down = { icon = '' },
+      search_up = { icon = '' },
+      lua = { icon = '' },
+    },
+  },
+  presets = { long_message_to_split = true, lsp_doc_border = true },
   messages = { view_search = false },
 }
