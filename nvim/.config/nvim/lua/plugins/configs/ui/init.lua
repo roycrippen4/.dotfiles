@@ -3,7 +3,7 @@ local hl = require('plugins.configs.ui.highlights')
 require('plugins.local.statusline')
 
 M.ui = {
-  theme = 'onedark',
+  theme = 'catppuccin',
   hl_add = hl.add,
   hl_override = hl.override,
   changed_themes = {},
