@@ -81,18 +81,15 @@ map({ 'n', 't' }, '<A-h>', require('plugins.local.term').toggle_horizontal, { de
 map({ 'n', 't' }, '<A-f>', require('plugins.local.term').toggle_floating, { desc = 'Toggleable Floating term' })
 
 -- Command line
--- map('c', '(', '()<Left>', { desc = 'Insert parenthesis' })
--- map('c', '{', '{}<Left>', { desc = 'Insert curly braces' })
--- map('c', '[', '[]<Left>', { desc = 'Insert square brackets' })
--- map('c', "'", "''<Left>", { desc = 'Insert single quotes' })
--- map('c', '"', '""<Left>', { desc = 'Insert double quotes' })
--- map('c', '`', '``<Left>', { desc = 'Insert backticks' })
+map('c', '(', '()<Left>', { desc = 'Insert parenthesis' })
+map('c', '{', '{}<Left>', { desc = 'Insert curly braces' })
+map('c', '[', '[]<Left>', { desc = 'Insert square brackets' })
+map('c', "'", "''<Left>", { desc = 'Insert single quotes' })
+map('c', '"', '""<Left>', { desc = 'Insert double quotes' })
+map('c', '`', '``<Left>', { desc = 'Insert backticks' })
 map('c', '<Esc>', '<C-c>', { desc = 'Exit command mode' })
 
 -- stylua: ignore start
-map('c', ' ', function() utils.handle_cmdline_pair('  <Left>', ' ') end)
-map('c', '<BS>', function() utils.handle_cmdline_pair('<BS><Del>', '<BS>') end)
-map('c', '<Del>', function() utils.handle_cmdline_pair('<Del><BS>', '<BS>') end) -- one small step for vimkind
 map('n', '<Leader>dl', function() require('osv').launch({ port = 8086 }) end, { desc = ' Launch Lua adapter' }) -- trouble
 map('n', '<Leader>td', function() require('trouble').toggle('workspace_diagnostics') end, { desc = 'Trouble toggle workspace diagnostics  ' })
 -- stylua: ignore end

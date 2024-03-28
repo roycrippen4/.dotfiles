@@ -300,6 +300,27 @@ local default_plugins = {
   },
 
   {
+    'folke/noice.nvim', -- https://github.com/folke/noice.nvim
+    event = 'VeryLazy',
+    dependencies = {
+      'MunifTanjim/nui.nvim',
+      'rcarriga/nvim-notify',
+    },
+    -- stylua: ignore
+    keys = {
+      { '<leader>snl', function() require('noice').cmd('last') end, desc = 'Noice Last Message 󰮳 ' },
+      { '<leader>nh', function() require('noice').cmd('history') end, desc = 'Noice History  ' },
+      { '<leader>na', function() require('noice').cmd('all') end, desc = 'Noice All  ' },
+      { '<leader>nd', function() require('noice').cmd('dismiss') end, desc = 'Noice Dismiss 󰘪 ' },
+      { '<C-S-N>', function() if not require('noice.lsp').scroll(4) then return '<c-f>' end end, silent = true, expr = true, desc = 'Scroll forward', mode = {'i', 'n', 's'} },
+      { '<C-S-P>', function() if not require('noice.lsp').scroll(-4) then return '<c-b>' end end, silent = true, expr = true, desc = 'Scroll backward', mode = {'i', 'n', 's'}},
+    },
+    config = function()
+      require('noice').setup(require('plugins.configs.noice'))
+    end,
+  },
+
+  {
     'kylechui/nvim-surround', -- https://github.com/kylechui/nvim-surround
     event = 'VeryLazy',
     config = function()
@@ -363,13 +384,6 @@ local default_plugins = {
       dofile(vim.g.base46_cache .. 'whichkey')
       require('plugins.configs.whichkey')
     end,
-  },
-
-  {
-    -- https://github.com/petertriho/nvim-scrollbar
-    'petertriho/nvim-scrollbar',
-    event = 'BufRead',
-    opts = { handlers = { cursor = false } },
   },
 
   {
