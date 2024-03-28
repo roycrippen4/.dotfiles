@@ -1,4 +1,5 @@
 {
+  "layer": "top",
   "hyprland/workspaces": {
     "disable-scroll": true,
     "all-outputs": true,
@@ -77,7 +78,8 @@
   },
   "custom/discord": {
     "on-click": "$HOME/.dotfiles/waybar/.config/waybar/scripts/focus_or_start.sh 'discord' 'discord' '3'",
-    "format": "󰙯 "
+    "format": "󰙯 ",
+    "tooltip": false
   },
   "pulseaudio#microphone": {
     "format": "{format_source}",
@@ -94,7 +96,7 @@
     "format": " {}",
     "on-click": "$HOME/.dotfiles/waybar/.config/waybar/scripts/logoutlaunch.sh 2",
     "interval": 86400,
-    "tooltip": true
+    "tooltip": false
   },
   "custom/cpuinfo": {
     "exec": "$HOME/.dotfiles/waybar/.config/waybar/scripts/cpuinfo.sh",
@@ -103,6 +105,15 @@
     "interval": 5,
     "tooltip": true,
     "max-length": 1000
+  },
+  "custom/gpt": {
+    "on-click": "$HOME/.dotfiles/waybar/.config/waybar/scripts/gpt.sh",
+    "format": "󰭹",
+    "tooltip": false
+  },
+  "custom/paper": {
+    "on-click": "$HOME/.dotfiles/waybar/.config/waybar/scripts/wallpaper.sh",
+    "format": "󱅗"
   },
   "modules-right": [
     "pulseaudio",
@@ -117,6 +128,8 @@
     "custom/cpuinfo",
     "memory",
     "custom/appmenu",
-    "custom/discord"
+    "custom/discord",
+    "custom/gpt",
+    "custom/paper"
   ]
 }

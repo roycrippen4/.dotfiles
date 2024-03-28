@@ -100,7 +100,7 @@ alias cb="cd .."
 alias cl="clear"
 alias dot='cd && cd .dotfiles'
 alias fz="fzf --preview 'bat --color=always --style=header,grid --line-range :500 {}' --multi --bind 'enter:become(nvim {+})'"
-alias fp="fzf -q .png --preview='kitten icat --clear --transfer-mode=memory --stdin=no --place=256x256@20x1 {} > /dev/tty'"
+alias search_images="$HOME/.dotfiles/home/.bin/search_images.sh"
 alias hacker="cmatrix -c"
 alias l='ls -l'
 alias la='ls -a'

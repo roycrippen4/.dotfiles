@@ -12,8 +12,9 @@ window#waybar {
 }
 
 tooltip {
-  background: #9ca0b0;
-  color: #4c4f69;
+  background: #2a2d47;
+  margin-left: 3px;
+  margin-right: 3px;
 }
 
 #workspaces button {
@@ -51,7 +52,9 @@ tooltip {
 
 #clock,
 #custom-cpuinfo,
+#custom-gpt,
 #custom-gpuinfo,
+#custom-paper,
 #memory,
 #pulseaudio,
 #tray,
