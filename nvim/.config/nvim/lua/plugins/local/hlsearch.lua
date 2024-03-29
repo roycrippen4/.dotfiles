@@ -1,3 +1,6 @@
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
+
 ---@return boolean
 local function should_format_lua_func()
   local line = vim.api.nvim_get_current_line()
@@ -67,3 +70,13 @@ vim.on_key(function(char)
   --   return
   -- end
 end, ns)
+
+autocmd({ 'BufLeave', 'BufEnter' }, {
+  group = augroup('HL_Search', { clear = true }),
+  pattern = '*',
+  callback = function()
+    if id ~= nil then
+      clear()
+    end
+  end,
+})
