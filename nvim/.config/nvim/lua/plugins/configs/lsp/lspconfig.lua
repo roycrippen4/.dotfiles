@@ -55,20 +55,20 @@ M.on_attach = function(client, bufnr)
     })
   end
 
-  --   if client.server_capabilities.signatureHelpProvider then
-  --     local group = vim.api.nvim_create_augroup('LspSignature', { clear = false })
-  --     vim.api.nvim_clear_autocmds({ group = group, buffer = bufnr })
+  if client.server_capabilities.signatureHelpProvider then
+    local group = vim.api.nvim_create_augroup('LspSignature', { clear = false })
+    vim.api.nvim_clear_autocmds({ group = group, buffer = bufnr })
 
-  --     vim.api.nvim_create_autocmd('TextChangedI', {
-  --       group = group,
-  --       buffer = bufnr,
-  --       callback = function()
-  --         if check_trigger_chars(client.server_capabilities.signatureHelpProvider.triggerCharacters) then
-  --           vim.lsp.buf.signature_help()
-  --         end
-  --       end,
-  --     })
-  --   end
+    vim.api.nvim_create_autocmd('TextChangedI', {
+      group = group,
+      buffer = bufnr,
+      callback = function()
+        if check_trigger_chars(client.server_capabilities.signatureHelpProvider.triggerCharacters) then
+          vim.lsp.buf.signature_help()
+        end
+      end,
+    })
+  end
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()

@@ -62,8 +62,8 @@ vim.on_key(function(char)
     return
   end
 
-  if mode == 'i' and require('core.utils').cursor_between_angles() and is_cr then
-    feed('<Esc>O', 'n')
-    return
-  end
+  -- if mode == 'i' and require('core.utils').cursor_between_angles() and is_cr then
+  --   feed('<Esc>O', 'n')
+  --   return
+  -- end
 end, ns)

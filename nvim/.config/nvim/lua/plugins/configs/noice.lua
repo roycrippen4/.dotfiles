@@ -8,6 +8,7 @@ return { ---@type NoiceConfig
           { find = '; after #%d+' },
           { find = '; before #%d+' },
           { find = 'fewer lines' },
+          { find = '' },
         },
       },
       view = 'mini',
