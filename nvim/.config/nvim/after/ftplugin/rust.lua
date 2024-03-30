@@ -1,7 +1,7 @@
 local register = require('which-key').register
 
 local diagnostic_status = true
-local toggle_diagnostics = function()
+local function toggle_diagnostics()
   diagnostic_status = not diagnostic_status
   if diagnostic_status then
     vim.api.nvim_echo({ { 'Show diagnostics' } }, false, {})

@@ -117,7 +117,7 @@ end
 --- Adds highlighting to any marked files that are currently visible
 ---@param bufnr integer harpoon.ui buffer handle
 ---@param ns_id integer namespace identifier
-M.highlight_marked_files = function(bufnr, ns_id)
+function M.highlight_marked_files(bufnr, ns_id)
   local open_files = M.list_open_files()
   local marked = M.get_marked_files()
 
@@ -134,7 +134,7 @@ end
 
 --- Takes a bufnr. Returns true if bufnr is visible, [false] if not
 ---@param bufnr integer buffer handle/number
-M.is_buf_visible = function(bufnr)
+function M.is_buf_visible(bufnr)
   local wins = vim.api.nvim_list_wins()
   local should_skip = vim.tbl_contains(skip_ft, vim.bo[bufnr].ft) or vim.api.nvim_buf_get_name(bufnr) == ''
 
@@ -148,7 +148,7 @@ end
 
 --- Get's a list of absolute paths for all open files. Ignores plugin windows/buffers
 ---@return string[] open_files list of open files
-M.list_open_files = function()
+function M.list_open_files()
   local bufs = vim.api.nvim_list_bufs()
   local visible_bufs = {}
 
