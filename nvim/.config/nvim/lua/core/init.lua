@@ -3,6 +3,7 @@ local g = vim.g
 require('core.autocommands')
 require('plugins.local')
 vim.treesitter.language.register('markdown', 'mdx')
+vim.treesitter.language.register('markdown', 'LspDocFloat')
 
 -----------------------------------------------------------
 -- Global

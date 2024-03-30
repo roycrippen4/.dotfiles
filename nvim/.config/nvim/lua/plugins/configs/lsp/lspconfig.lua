@@ -1,4 +1,7 @@
 local map = vim.keymap.set
+local augroup = vim.api.nvim_create_augroup
+local autocmd = vim.api.nvim_create_autocmd
+local clear_autocmds = vim.api.nvim_clear_autocmds
 local methods = vim.lsp.protocol.Methods
 local M = {}
 
@@ -46,8 +49,8 @@ M.on_attach = function(client, bufnr)
   map('n', '<leader>r', require('plugins.local.renamer').open, { desc = 'LSP Rename 󰑕 ' })
 
   if client.name == 'svelte' then
-    vim.api.nvim_create_autocmd('BufWritePost', {
-      group = vim.api.nvim_create_augroup('svelte_ondidchangetsorjsfile', { clear = true }),
+    autocmd('BufWritePost', {
+      group = augroup('svelte_ondidchangetsorjsfile', { clear = true }),
       pattern = { '*.js', '*.ts' },
       callback = function(ctx)
         client.notify('$/onDidChangeTsOrJsFile', { uri = ctx.match })
@@ -57,9 +60,9 @@ M.on_attach = function(client, bufnr)
 
   if client.server_capabilities.signatureHelpProvider then
     local group = vim.api.nvim_create_augroup('LspSignature', { clear = false })
-    vim.api.nvim_clear_autocmds({ group = group, buffer = bufnr })
+    clear_autocmds({ group = group, buffer = bufnr })
 
-    vim.api.nvim_create_autocmd('TextChangedI', {
+    autocmd('TextChangedI', {
       group = group,
       buffer = bufnr,
       callback = function()
@@ -102,6 +105,7 @@ end
 local show_handler = vim.diagnostic.handlers.virtual_text.show
 assert(show_handler)
 local hide_handler = vim.diagnostic.handlers.virtual_text.hide
+---@diagnostic disable-next-line
 vim.diagnostic.handlers.virtual_text = {
   show = function(ns, bufnr, diagnostics, opts)
     table.sort(diagnostics, function(diag1, diag2)
@@ -166,22 +170,23 @@ local function enhanced_float_handler(handler, focusable)
       return
     end
 
-    -- Conceal everything.
     vim.wo[winnr].concealcursor = 'n'
-
-    -- Extra highlights.
+    vim.wo[winnr].scrolloff = 0
+    vim.bo[bufnr].filetype = 'LspDocFloat'
     add_inline_highlights(bufnr)
 
-    -- Add keymaps for opening links.
+    -- stylua: ignore start
+    map({ 'n', 'i' }, '<C-S-N>', function() require('core.utils').scroll(winnr, 4) end, { buffer = true })
+    map({ 'n', 'i' }, '<C-S-P>', function() require('core.utils').scroll(winnr, -4) end, { buffer = true })
+    -- stylua: ignore end
+
     if focusable and not vim.b[bufnr].markdown_keys then
       vim.keymap.set('n', 'K', function()
-        -- Vim help links.
         local url = (vim.fn.expand('<cWORD>') --[[@as string]]):match('|(%S-)|')
         if url then
           return vim.cmd.help(url)
         end
 
-        -- Markdown links.
         local col = vim.api.nvim_win_get_cursor(0)[2] + 1
         local from, to
         from, to, url = vim.api.nvim_get_current_line():find('%[.-%]%((%S-)%)')
@@ -201,7 +206,7 @@ end
 vim.lsp.handlers[methods.textDocument_hover] = enhanced_float_handler(vim.lsp.handlers.hover, true)
 vim.lsp.handlers[methods.textDocument_signatureHelp] = enhanced_float_handler(vim.lsp.handlers.signature_help, false)
 
---- HACK: Override `vim.lsp.util.stylize_markdown` to use Treesitter.
+--- HACK: Override `vim.lsp.utl.stylize_markdown` to use Treesitter.
 ---
 ---@param bufnr integer
 ---@param contents string[]

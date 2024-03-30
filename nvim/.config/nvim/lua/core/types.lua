@@ -114,3 +114,11 @@
 ---@field winnr integer|nil
 ---@field visible boolean
 ---@field config FloatOpts|SplitOpts
+
+---@alias _.BorderStyle "'double'"|"'none'"|"'rounded'"|"'shadow'"|"'single'"|"'solid'"
+---@alias _.BorderPadding {top:number, right:number, bottom:number, left:number}
+
+---@class _.NuiBorder
+---@field padding? _.BorderPadding
+---@field style? _.BorderStyle
+---@field text? { top: string|boolean, bottom: string|boolean }

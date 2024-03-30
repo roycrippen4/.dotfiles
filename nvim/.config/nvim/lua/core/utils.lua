@@ -261,4 +261,83 @@ function M.send_to_black_hole()
   end
 end
 
+---@param opts? Border|_.BorderStyle|_.NuiBorder
+---@return _.BorderPadding
+function M.normalize_padding(opts)
+  opts = opts or {}
+  if type(opts) == 'string' then
+    opts = { style = opts }
+  end
+
+  if vim.tbl_islist(opts.padding) then
+    if #opts.padding == 2 then
+      return {
+        top = opts.padding[1],
+        bottom = opts.padding[1],
+        left = opts.padding[2],
+        right = opts.padding[2],
+      }
+    elseif #opts.padding == 4 then
+      return {
+        top = opts.padding[1],
+        right = opts.padding[2],
+        bottom = opts.padding[3],
+        left = opts.padding[4],
+      }
+    end
+  end
+  return vim.tbl_deep_extend('force', {
+    left = 0,
+    right = 0,
+    top = 0,
+    bottom = 0,
+  }, opts.padding or {})
+end
+
+---@param win integer
+---@param opts table
+function M.win_apply_config(win, opts)
+  opts = vim.tbl_deep_extend('force', vim.api.nvim_win_get_config(win), opts or {})
+  vim.api.nvim_win_set_config(win, opts)
+end
+
+--- Returns the height of the buffer in the window
+---@param winnr integer
+---@return integer
+function M.win_buf_height(winnr)
+  local buf = vim.api.nvim_win_get_buf(winnr)
+
+  if not vim.wo[winnr].wrap then
+    return vim.api.nvim_buf_line_count(buf)
+  end
+
+  local width = vim.api.nvim_win_get_width(winnr)
+
+  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+  local height = 0
+  for _, l in ipairs(lines) do
+    height = height + math.max(1, (math.ceil(vim.fn.strwidth(l) / width)))
+  end
+  return height
+end
+
+--- Scrolls the window by delta lines
+---@param winnr integer
+---@param delta integer
+function M.scroll(winnr, delta)
+  local info = vim.fn.getwininfo(winnr)[1] or {}
+  local top = info.topline or 1
+  local buf = vim.api.nvim_win_get_buf(winnr)
+  top = top + delta
+  top = math.max(top, 1)
+  top = math.min(top, M.win_buf_height(winnr) - info.height + 1)
+
+  vim.defer_fn(function()
+    vim.api.nvim_buf_call(buf, function()
+      vim.api.nvim_command('noautocmd silent! normal! ' .. top .. 'zt')
+      vim.api.nvim_exec_autocmds('WinScrolled', { modeline = false })
+    end)
+  end, 0)
+end
+
 return M
