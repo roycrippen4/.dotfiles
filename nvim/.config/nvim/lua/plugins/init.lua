@@ -383,7 +383,7 @@ local default_plugins = {
   {
     'vuki656/package-info.nvim', -- https://github.com/vuki656/package-info.nvim
     dependencies = 'MunifTanjim/nui.nvim',
-    filetypes = { 'package.json' },
+    event = 'VeryLazy',
     opts = {},
   },
 

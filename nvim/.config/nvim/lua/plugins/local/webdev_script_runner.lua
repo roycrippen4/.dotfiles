@@ -6,7 +6,7 @@ local M = {}
 
 ---@return boolean
 local function is_package_json()
-  return vim.bo.ft == 'json' and vim.fn.expand('%:t') == 'package.json'
+  return vim.fn.expand('%:t') == 'package.json'
 end
 
 ---@param lines string[]

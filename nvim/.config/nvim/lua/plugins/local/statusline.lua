@@ -322,6 +322,14 @@ M.max_length = function()
   return #M.mode() + #M.file_info() + #M.git()
 end
 
+M.package_info = function()
+  if vim.fn.expand('%:t') == 'package.json' then
+    return require('package-info').get_status()
+  end
+
+  return ''
+end
+
 -- Dynamically changes the highlight group of the statusline mode segment based on the current mode
 vim.api.nvim_create_autocmd('ModeChanged', {
   group = vim.api.nvim_create_augroup('StatusLineMode', { clear = true }),
@@ -338,6 +346,7 @@ function M.generate_statusline()
     M.mode(),
     M.file_info(),
     M.git(),
+    M.package_info(),
     '%=',
     M.lsp_diagnostics(),
     M.lsp_status(),
