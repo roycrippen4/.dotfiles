@@ -122,3 +122,17 @@
 ---@field padding? _.BorderPadding
 ---@field style? _.BorderStyle
 ---@field text? { top: string|boolean, bottom: string|boolean }
+
+---@class Arguments
+---@field name string
+---@field args string
+---@field fargs string[]
+---@field nargs string
+---@field bang boolean
+---@field line1 number
+---@field line2 number
+---@field range number
+---@field count number
+---@field reg string
+---@field mods string
+---@field smods table

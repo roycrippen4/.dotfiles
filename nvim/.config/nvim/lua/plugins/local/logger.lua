@@ -102,7 +102,7 @@ function Logger:show()
   end
 end
 
-_G.log = function(...)
+function _G.log(...)
   require('plugins.local.logger'):log(...)
 end
 

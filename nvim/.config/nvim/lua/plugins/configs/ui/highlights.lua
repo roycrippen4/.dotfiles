@@ -137,7 +137,7 @@ return {
     Comment               = { italic = true },
     FloatBorder           = { fg = l_blue, bg = 'black' },
     FoldColumn            = { bg = 'black' },
-    LspSignatureActiveParameter = { fg = "blue", bg = { 'black', -2 }, italic = true },
+    LspSignatureActiveParameter = { fg = "blue", bg = 'black', italic = true },
     Search                = { fg = '#AAAAAA', bg = '#475a97' },
     TelescopeBorder       = { fg = { 'black', -3 },  bg = { 'black', -3 }  },
     TelescopeNormal       = { bg = { 'black', -3 }  },
