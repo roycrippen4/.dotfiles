@@ -1,4 +1,5 @@
-local set = function(value)
+---@param value any
+local function set(value)
   vim.fn.setreg('+', value)
 end
 

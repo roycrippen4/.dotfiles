@@ -26,6 +26,9 @@ export VISUAL=nvim
 export EDITOR="$VISUAL"
 export MANPAGER='nvim +Man!'
 
+# emacs
+export PATH="$HOME/.emacs.d/bin:$PATH"
+
 # bun
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
@@ -97,6 +100,8 @@ go_to_waybar_config() {
 }
 
 alias cb="cd .."
+alias emacs="emacsclient -c -a 'emacs'"
+alias claer="clear"
 alias cl="clear"
 alias dot='cd && cd .dotfiles'
 alias fz="fzf --preview 'bat --color=always --style=header,grid --line-range :500 {}' --multi --bind 'enter:become(nvim {+})'"

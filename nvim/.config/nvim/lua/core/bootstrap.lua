@@ -1,7 +1,7 @@
 local M = {}
 local fn = vim.fn
 
-M.echo = function(str)
+function M.echo(str)
   vim.cmd('redraw')
   vim.api.nvim_echo({ { str, 'Bold' } }, true, {})
 end
@@ -11,7 +11,7 @@ local function shell_call(args)
   assert(vim.v.shell_error == 0, 'External call failed with error code: ' .. vim.v.shell_error .. '\n' .. output)
 end
 
-M.lazy = function(install_path)
+function M.lazy(install_path)
   ------------- base46 ---------------
   local lazy_path = fn.stdpath('data') .. '/lazy/base46'
 

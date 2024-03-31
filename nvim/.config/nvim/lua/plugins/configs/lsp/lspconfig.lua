@@ -36,7 +36,7 @@ local function toggle_hints()
   print('inlay hints: ' .. tostring(vim.lsp.inlay_hint.is_enabled()))
 end
 
-M.on_attach = function(client, bufnr)
+function M.on_attach(client, bufnr)
   map('n', 'gr', require('telescope.builtin').lsp_references, { desc = 'Goto References  ' })
   map('n', 'gi', require('telescope.builtin').lsp_implementations, { desc = 'Goto Implementation 󰡱 ' })
   map('n', 'gd', require('telescope.builtin').lsp_definitions, { desc = 'Goto Definition 󰼭 ' })
@@ -62,7 +62,7 @@ M.on_attach = function(client, bufnr)
     local group = vim.api.nvim_create_augroup('LspSignature', { clear = false })
     clear_autocmds({ group = group, buffer = bufnr })
 
-    autocmd('TextChangedI', {
+    autocmd({ 'TextChangedI', 'TextChangedP', 'InsertEnter' }, {
       group = group,
       buffer = bufnr,
       callback = function()
@@ -152,7 +152,7 @@ end
 ---@param focusable boolean
 ---@return fun(err: any, result: any, ctx: any, config: any)
 local function enhanced_float_handler(handler, focusable)
-  local limit = vim.o.lines * 0.5
+  local limit = vim.o.lines * 0.3
   return function(err, result, ctx, config)
     local bufnr, winnr = handler(
       err,
@@ -213,7 +213,7 @@ vim.lsp.handlers[methods.textDocument_signatureHelp] = enhanced_float_handler(vi
 ---@param opts table
 ---@return string[]
 ---@diagnostic disable-next-line: duplicate-set-field
-vim.lsp.util.stylize_markdown = function(bufnr, contents, opts)
+function vim.lsp.util.stylize_markdown(bufnr, contents, opts)
   contents = vim.lsp.util._normalize_markdown(contents, {
     width = vim.lsp.util._make_floating_popup_size(contents, opts),
   })

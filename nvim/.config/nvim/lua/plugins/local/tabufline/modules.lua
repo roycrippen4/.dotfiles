@@ -1,7 +1,10 @@
 local api = vim.api
 local fn = vim.fn
 
-local is_buf_valid = function(bufnr)
+--- checks if the buffer is valid and listed
+---@param bufnr integer
+---@return boolean
+local function is_buf_valid(bufnr)
   return vim.api.nvim_buf_is_valid(bufnr) and vim.bo[bufnr].buflisted
 end
 
@@ -10,16 +13,18 @@ end
 vim.cmd("function! TbGoToBuf(bufnr,b,c,d) \n execute 'b'..a:bufnr \n endfunction")
 
 vim.cmd([[
-   function! TbKillBuf(bufnr,b,c,d) 
-        call luaeval('require("plugins.local.tabufline").close_buffer(_A)', a:bufnr)
-  endfunction]])
+         function! TbKillBuf(bufnr,b,c,d) 
+           call luaeval('require("plugins.local.tabufline").close_buffer(_A)', a:bufnr)
+         endfunction
+       ]])
 
 vim.cmd('function! TbNewTab(a,b,c,d) \n tabnew \n endfunction')
 vim.cmd("function! TbGotoTab(tabnr,b,c,d) \n execute a:tabnr ..'tabnext' \n endfunction")
 vim.cmd("function! TbTabClose(a,b,c,d) \n lua require('tabufline.local.tabufline').closeAllBufs('closeTab') \n endfunction")
 
 -------------------------------------------------------- functions ------------------------------------------------------------
-
+--- gets the width of the nvim-tree window
+---@return integer
 local function get_nvim_tree_width()
   for _, win in pairs(api.nvim_tabpage_list_wins(0)) do
     if vim.bo[api.nvim_win_get_buf(win)].ft == 'NvimTree' then
@@ -29,6 +34,8 @@ local function get_nvim_tree_width()
   return 0
 end
 
+--- gets the width of the buttons on the right side of the tabline
+---@return integer
 local function get_btns_width() -- close, theme toggle btn etc
   local width = 6
   if fn.tabpagenr('$') ~= 1 then
@@ -56,10 +63,16 @@ end
 -- end
 
 -- currently running original harpoon. use the above function when you switch back
+---@param bufnr integer
+---@return integer
 local function is_buf_marked(bufnr)
-  return tonumber(string.sub(require('harpoon.mark').status(bufnr), 2, 2))
+  return tonumber(string.sub(require('harpoon.mark').status(bufnr), 2, 2)) --[[@as integer]]
 end
 
+--- adds file info to the buffer tab
+---@param name string
+---@param bufnr integer
+---@return string
 local function add_file_info(name, bufnr)
   if name ~= ' No Name ' then
     for _, value in ipairs(vim.t.bufs) do
@@ -117,6 +130,9 @@ local function add_file_info(name, bufnr)
   end
 end
 
+--- styles the buffer tab contents
+---@param nr integer
+---@return string
 local function style_buffer_tab(nr)
   local close_btn = '%' .. nr .. '@TbKillBuf@ 󰅖 %X'
   local filepath = api.nvim_buf_get_name(nr)
@@ -138,15 +154,15 @@ end
 ---------------------------------------------------------- components ------------------------------------------------------------
 local M = {}
 
-M.host = function()
-  return '%#St_HostSep#  %#St_Host#IV%#St_HostSep# '
-end
-
-M.nvimtree_overlay = function()
+--- sets the overlay above the nvim-tree window
+--- @return string
+function M.nvimtree_overlay()
   return '%#NvimTreeNormal#' .. (vim.g.nvimtree_side == 'right' and '' or string.rep(' ', get_nvim_tree_width()))
 end
 
-M.bufferlist = function()
+--- sets the buffer list on the tabline
+--- @return string
+function M.bufferlist()
   local buffers = {} -- buffersults
   local available_space = vim.o.columns - get_nvim_tree_width() - get_btns_width() - 5
   local current_buf = api.nvim_get_current_buf()
@@ -170,7 +186,9 @@ M.bufferlist = function()
   return table.concat(buffers) .. '%#TblineFill#' .. '%=' -- buffers + empty space
 end
 
-M.run = function()
+--- runs the tabline components
+--- @return string
+function M.run()
   local modules = {
     M.nvimtree_overlay(),
     M.bufferlist(),

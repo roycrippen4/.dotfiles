@@ -33,7 +33,7 @@ return {
     HarpoonWindow             = { bg = 'black', },
     LineNumber                = { fg = 'white' },
     NoiceVirtualTextOn        = { fg = '#53bf00',     bg = cursorline,    italic = true },
-    NormalFloat               = { bg = { 'black', -2 } },
+    NormalFloat               = { bg = 'black' },
     NvimTreeBookmark          = { fg = { "red",    -10 } },
     NvimTreeBookmarkHL        = { fg = { "red",    -10 } },
     NvimTreeExecFile          = { fg = 'green' },
@@ -135,7 +135,7 @@ return {
   override = {
     CmpPmenu              = { bg = 'black' },
     Comment               = { italic = true },
-    FloatBorder           = { fg = l_blue, bg = darkest_black },
+    FloatBorder           = { fg = l_blue, bg = 'black' },
     FoldColumn            = { bg = 'black' },
     LspSignatureActiveParameter = { fg = "blue", bg = { 'black', -2 }, italic = true },
     Search                = { fg = '#AAAAAA', bg = '#475a97' },
