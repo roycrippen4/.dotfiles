@@ -2,7 +2,7 @@
 
 directory=~/opt/wallpapers
 monitor_top=DP-1
-monitor_bot=DP-3
+monitor_bot=DP-2
 
 if [ -d "$directory" ]; then
 	random_background=$(ls $directory/*.{jpg,png} | shuf -n 1)
