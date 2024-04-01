@@ -1,6 +1,6 @@
 #!/bin/bash
 
-directory=~/opt/wallpapers
+directory=~/.dotfiles/waybar/.config/waybar/wallpapers/
 monitor_top=DP-1
 monitor_bot=DP-2
 

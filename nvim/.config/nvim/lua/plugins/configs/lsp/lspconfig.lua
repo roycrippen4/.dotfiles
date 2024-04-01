@@ -2,7 +2,7 @@ local map = vim.keymap.set
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
 local clear_autocmds = vim.api.nvim_clear_autocmds
-local methods = vim.lsp.protocol.Methods
+local ms = vim.lsp.protocol.Methods
 local M = {}
 
 local diagnostic_status = true
@@ -176,8 +176,8 @@ local function enhanced_float_handler(handler, focusable)
     add_inline_highlights(bufnr)
 
     -- stylua: ignore start
-    map({ 'n', 'i' }, '<C-S-N>', function() require('core.utils').scroll(winnr, 4) end, { buffer = true })
-    map({ 'n', 'i' }, '<C-S-P>', function() require('core.utils').scroll(winnr, -4) end, { buffer = true })
+    map({ 'n', 'i' }, '<C-S-N>', function() require('core.utils').scroll(winnr, 4) end, { buffer = bufnr })
+    map({ 'n', 'i' }, '<C-S-P>', function() require('core.utils').scroll(winnr, -4) end, { buffer = bufnr })
     -- stylua: ignore end
 
     if focusable and not vim.b[bufnr].markdown_keys then
@@ -203,8 +203,8 @@ local function enhanced_float_handler(handler, focusable)
   end
 end
 
-vim.lsp.handlers[methods.textDocument_hover] = enhanced_float_handler(vim.lsp.handlers.hover, true)
-vim.lsp.handlers[methods.textDocument_signatureHelp] = enhanced_float_handler(vim.lsp.handlers.signature_help, false)
+vim.lsp.handlers[ms.textDocument_hover] = enhanced_float_handler(vim.lsp.handlers.hover, true)
+vim.lsp.handlers[ms.textDocument_signatureHelp] = enhanced_float_handler(vim.lsp.handlers.signature_help, false)
 
 --- HACK: Override `vim.lsp.utl.stylize_markdown` to use Treesitter.
 ---
