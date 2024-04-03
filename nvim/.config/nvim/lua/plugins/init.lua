@@ -261,8 +261,6 @@ local default_plugins = {
 
   {
     'roycrippen4/harpoon',
-    -- dir = 'harpoon',
-    -- dev = true,
     config = function()
       require('harpoon').setup({ menu = { width = 60 } })
     end,

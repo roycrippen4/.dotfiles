@@ -65,7 +65,7 @@ local function prettify(winnr, bufnr)
   vim.wo[winnr].signcolumn = 'no'
   vim.bo[bufnr].buflisted = false
   vim.bo[bufnr].ft = 'terminal'
-  vim.wo[winnr].winhl = 'Normal:NormalFloat,WinSeparator:WinSeparator'
+  vim.wo[winnr].winhl = 'Normal:Terminal,WinSeparator:WinSeparator'
   vim.cmd('startinsert')
 end
 

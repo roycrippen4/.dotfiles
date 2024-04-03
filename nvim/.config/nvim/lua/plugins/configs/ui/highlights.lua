@@ -110,6 +110,7 @@ return {
     TbLineUnmarkedBufOff      = { fg = { 'grey',     0 }, bg = 'darker_black' },
     TbLineUnmarkedBufOn       = { fg = { 'blue',   -20 }, bg = 'black' },
     TblineFill                = { bg = 'darker_black'  },
+    Terminal                  = { bg = 'darker_black'  },
     WinBar                    = { fg = "red", bg = black },
     WinBarNC                  = { fg = black, bg = black },
 
