@@ -176,8 +176,8 @@ local function enhanced_float_handler(handler, focusable)
     add_inline_highlights(bufnr)
 
     -- stylua: ignore start
-    map({ 'n', 'i' }, '<C-S-N>', function() require('core.utils').scroll(winnr, 4) end, { buffer = bufnr })
-    map({ 'n', 'i' }, '<C-S-P>', function() require('core.utils').scroll(winnr, -4) end, { buffer = bufnr })
+    map({ 'n', 'i' }, '<C-S-N>', function() require('core.utils').scroll(winnr, 4) end, { buffer = true })
+    map({ 'n', 'i' }, '<C-S-P>', function() require('core.utils').scroll(winnr, -4) end, { buffer = true })
     -- stylua: ignore end
 
     if focusable and not vim.b[bufnr].markdown_keys then
