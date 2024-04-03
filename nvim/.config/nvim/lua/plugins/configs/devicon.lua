@@ -1,251 +1,253 @@
+local i = require('plugins.configs.ui.icons').devicon
+
 return {
   default_icon = {
-    icon = '󰈚',
+    icon = i.default,
     name = 'Default',
   },
 
   c = {
-    icon = '',
+    icon = i.c,
     name = 'c',
   },
 
   css = {
-    icon = '',
+    icon = i.css,
     name = 'css',
   },
 
   dart = {
-    icon = '',
+    icon = i.dart,
     name = 'dart',
   },
 
   deb = {
-    icon = '',
+    icon = i.deb,
     name = 'deb',
   },
 
   Dockerfile = {
-    icon = '',
+    icon = i.Dockerfile,
     name = 'Dockerfile',
   },
 
   html = {
-    icon = '',
+    icon = i.html,
     name = 'html',
   },
 
   jpeg = {
-    icon = '󰉏',
+    icon = i.jpeg,
     name = 'jpeg',
   },
 
   jpg = {
-    icon = '󰉏',
+    icon = i.jpg,
     name = 'jpg',
   },
 
   js = {
-    icon = '󰌞',
+    icon = i.js,
     name = 'js',
   },
 
   kt = {
-    icon = '󱈙',
+    icon = i.kt,
     name = 'kt',
   },
 
   lock = {
-    icon = '󰌾',
+    icon = i.lock,
     name = 'lock',
   },
 
   lua = {
-    icon = '',
+    icon = i.lua,
     name = 'lua',
   },
 
   mp3 = {
-    icon = '󰎆',
+    icon = i.mp,
     name = 'mp3',
   },
 
   mp4 = {
-    icon = '',
+    icon = i.mp,
     name = 'mp4',
   },
 
   out = {
-    icon = '',
+    icon = i.out,
     name = 'out',
   },
 
   png = {
-    icon = '󰉏',
+    icon = i.png,
     name = 'png',
   },
 
   py = {
-    icon = '',
+    icon = i.py,
     name = 'py',
   },
 
   ['robots.txt'] = {
-    icon = '󰚩',
+    icon = i['robots.txt'],
     name = 'robots',
   },
 
   toml = {
-    icon = '',
+    icon = i.toml,
     name = 'toml',
   },
 
   ts = {
-    icon = '󰛦',
+    icon = i.ts,
     name = 'ts',
   },
 
   ttf = {
-    icon = '',
+    icon = i.ttf,
     name = 'TrueTypeFont',
   },
 
   rb = {
-    icon = '',
+    icon = i.rb,
     name = 'rb',
   },
 
   rpm = {
-    icon = '',
+    icon = i.rpm,
     name = 'rpm',
   },
 
   vue = {
-    icon = '󰡄',
+    icon = i.vue,
     name = 'vue',
   },
 
   woff = {
-    icon = '',
+    icon = i.woff,
     name = 'WebOpenFontFormat',
   },
 
   woff2 = {
-    icon = '',
+    icon = i.woff,
     name = 'WebOpenFontFormat2',
   },
 
   xz = {
-    icon = '',
+    icon = i.xz,
     name = 'xz',
   },
 
   zip = {
-    icon = '',
+    icon = i.zip,
     name = 'zip',
   },
 
   ['jsx'] = {
-    icon = '',
+    icon = i['jsx'],
     color = '#ccaa00',
     name = 'bun.lockb',
   },
   ['bun.lockb'] = {
-    icon = '󰯮',
+    icon = i['bun.lockb'],
     color = '#EEEE00',
     name = 'bun.lockb',
   },
   ['.env'] = {
-    icon = '',
+    icon = i['.env'],
     color = 'gray',
     name = '.env',
   },
   ['.development.env'] = {
-    icon = '',
+    icon = i['.development.env'],
     color = 'gray',
     name = '.development.env',
   },
   ['.eslintignore'] = {
-    icon = '',
+    icon = i['.eslintignore'],
     color = '#1a455f',
     name = '.eslintignore',
   },
   ['.eslintrc'] = {
-    icon = '',
+    icon = i['.eslintrc'],
     color = '#2c739e',
     name = 'Eslintrc',
   },
   ['.eslintrc.js'] = {
-    icon = '',
+    icon = i['.eslintrc.js'],
     color = '#2c739e',
     name = 'Eslintrc',
   },
   ['.eslintrc.cjs'] = {
-    icon = '',
+    icon = i['.eslintrc.cjs'],
     color = '#2c739e',
     name = 'Eslintrc',
   },
   ['.eslintrc.json'] = {
-    icon = '',
+    icon = i['.eslintrc.json'],
     color = '#2c739e',
     name = 'Eslintrc',
   },
   ['.eslintrc.yaml'] = {
-    icon = '',
+    icon = i['.eslintrc.yaml'],
     color = '#2c739e',
     name = 'Eslintrc',
   },
   ['http'] = {
-    icon = '󰖟',
+    icon = i['http'],
     color = '#519aba',
     name = 'Http',
   },
   ['makefile'] = {
-    icon = '',
+    icon = i['makefile'],
     color = '#f1502f',
     name = 'Makefile',
   },
   ['.nvmrc'] = {
-    icon = '󰎙',
+    icon = i['.nvmrc'],
     color = '#005500',
     name = '.nvmrc',
   },
   ['.npmrc'] = {
-    icon = '󰎙',
+    icon = i['.npmrc'],
     color = '#007700',
     name = '.npmrc',
   },
   ['package.json'] = {
-    icon = '',
+    icon = i['package.json'],
     color = '#e8274b',
     name = 'PackageJson',
   },
   ['package-lock.json'] = {
-    icon = '',
+    icon = i['package-lock.json'],
     color = '#7a0d21',
     name = 'PackageLockJson',
   },
   ['.prettierrc'] = {
-    icon = '',
+    icon = i['.prettierrc'],
     color = '#b11a7c',
     name = '.prettierrc',
   },
   ['.prettierignore'] = {
-    icon = '',
+    icon = i['.prettierignore'],
     color = '#580d3e',
     name = '.prettierignore',
   },
   ['tags'] = {
-    icon = '',
+    icon = i['tags'],
     color = '#bbbbbb',
     name = 'Tags',
   },
   ['tailwind.config.js'] = {
-    icon = '󱏿',
+    icon = i['tailwind.config.js'],
     color = '#4DB6AC',
     name = 'tailwind',
   },
   ['tailwind.config.cjs'] = {
-    icon = '󱏿',
+    icon = i['tailwind.config.cjs'],
     color = '#4DB6AC',
     name = 'tailwind',
   },
@@ -255,12 +257,12 @@ return {
     name = 'tailwind',
   },
   ['tailwind.config.cts'] = {
-    icon = '󱏿',
+    icon = i['tailwind.config.cts'],
     color = '#4DB6AC',
     name = 'tailwind',
   },
   ['tsconfig.json'] = {
-    icon = '',
+    icon = i['tsconfig.json'],
     color = '#519aba',
     name = 'tsconfig.json',
   },
@@ -270,7 +272,7 @@ return {
     name = 'tsconfig.node.json',
   },
   ['tsconfig.test.json'] = {
-    icon = '󰙨',
+    icon = i['tsconfig.test.json'],
     color = '#519aba',
     name = 'tsconfig.json',
   },
@@ -280,7 +282,7 @@ return {
     name = 'vite.config.ts',
   },
   ['vite.config.cjs'] = {
-    icon = '󰹭',
+    icon = i['vite.config.cjs'],
     color = '#7c0e8a',
     name = 'vite.config.ts',
   },
@@ -290,7 +292,7 @@ return {
     name = 'vite.config.ts',
   },
   ['vite.config.ts'] = {
-    icon = '󰹭',
+    icon = i['vite.config.ts'],
     color = '#7c0e8a',
     name = 'vite.config.ts',
   },
