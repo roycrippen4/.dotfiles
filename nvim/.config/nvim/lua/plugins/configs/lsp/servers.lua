@@ -108,3 +108,8 @@ lspconfig['yamlls'].setup({
   on_attach = M.on_attach,
   settings = require('plugins.configs.lsp.lang.yaml'),
 })
+
+lspconfig['zls'].setup({
+  capabilities = M.capabilities,
+  on_attach = M.on_attach,
+})

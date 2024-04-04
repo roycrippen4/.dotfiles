@@ -111,7 +111,7 @@ local function set_keymaps()
 end
 
 local function create_highlights()
-  vim.api.nvim_set_hl(0, 'RunScript', { fg = '#80F0F0' })
+  vim.api.nvim_set_hl(0, 'RunScript', { fg = '#08F000' })
 end
 
 local function set_virtual_text()
@@ -125,7 +125,8 @@ local function set_virtual_text()
 
   for _, script in ipairs(M.scripts) do
     vim.api.nvim_buf_set_extmark(0, M.ns_id, script.line - 1, 0, {
-      virt_text = { { ' ', 'RunScript' } },
+      virt_text = { { '  ', 'RunScript' } },
+      hl_mode = 'combine',
       virt_text_win_col = 1,
     })
   end
