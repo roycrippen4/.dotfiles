@@ -11,7 +11,6 @@ return {
     },
   }, {
     t({ 'vim.defer_fn(function()', '\t' }),
-    -- function name
     i(1),
     t({ '\t', 'end, ' }),
     i(0, '0'),
@@ -26,15 +25,9 @@ return {
     },
   }, {
     t({ 'vim.schedule(function()', '\t' }),
-    -- function name
     i(0),
     t({ '\t', 'end' }),
     t(')'),
-  }),
-
-  s('timer', {
-    t({ 'local _start = vim.loop.gettimeofday()', '\t' }),
-    t('local _end = vim.loop.gettimeofday()'),
   }),
 
   s({
