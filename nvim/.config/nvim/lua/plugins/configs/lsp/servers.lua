@@ -31,11 +31,11 @@ lspconfig['dockerls'].setup({
   on_attach = M.on_attach,
 })
 
-lspconfig['emmet_language_server'].setup({
-  capabilities = M.capabilities,
-  on_attach = M.on_attach,
-  filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less', 'svelte' },
-})
+-- lspconfig['emmet_language_server'].setup({
+--   capabilities = M.capabilities,
+--   on_attach = M.on_attach,
+--   filetypes = { 'html', 'typescriptreact', 'javascriptreact', 'css', 'sass', 'scss', 'less', 'svelte' },
+-- })
 
 lspconfig['eslint'].setup({
   capabilities = M.capabilities,
