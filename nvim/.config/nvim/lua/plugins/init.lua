@@ -6,10 +6,8 @@ local default_plugins = {
     dependencies = {
       'rcarriga/nvim-dap-ui', -- https://github.com/rcarriga/nvim-dap-ui
       'jbyuki/one-small-step-for-vimkind', -- https://github.com/jbyuki/one-small-step-for-vimkind
-      {
-        'theHamsta/nvim-dap-virtual-text', -- https://github.com/theHamsta/nvim-dap-virtual-text
-        opts = { virt_text_pos = 'eol' },
-      },
+      'nvim-neotest/nvim-nio', -- https://github.com/nvim-neotest/nvim-nio
+      { 'theHamsta/nvim-dap-virtual-text', opts = { virt_text_pos = 'eol' } }, -- https://github.com/theHamsta/nvim-dap-virtual-text
     },
     keys = require('plugins.configs.dap.keys'),
     config = function()
