@@ -3,3 +3,4 @@ dev
 .vscode
 .idea
 lazygit/.config/lazygit/state.yml
+fish_variables

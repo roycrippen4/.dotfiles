@@ -95,8 +95,8 @@ for _, provider in ipairs({ 'node', 'perl', 'python3', 'ruby' }) do
   vim.g['loaded_' .. provider .. '_provider'] = 0
 end
 
--- add binaries installed by mason.nvim to path
-vim.env.PATH = vim.fn.stdpath('data') .. '/mason/bin:' .. vim.env.PATH
+vim.g.node_host_prog = '~/.nvm/versions/node/v21.6.2/bin/node'
+vim.env.PATH = vim.fn.stdpath('data') .. '/mason/bin:' .. vim.env.PATH -- add binaries installed by mason.nvim to path
 
 vim.fn.sign_define('DapBreakpoint', { text = '🟥', texthl = '', linehl = '', numhl = '' })
 vim.fn.sign_define('DapBreakpointCondition', { text = '❓', texthl = '', linehl = '', numhl = '' })

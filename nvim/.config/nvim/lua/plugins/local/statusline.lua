@@ -158,6 +158,10 @@ M.file_info = function()
   local path = vim.api.nvim_buf_get_name(stbufnr())
   local name = (path == '' and 'Empty ') or path:match('([^/\\]+)[/\\]*$')
 
+  if name == 'fish' then
+    return ' %#St_Fish#󰈺 SHELL %#St_FileSep#'
+  end
+
   if name == '[Command Line]' then
     return '  CmdHistory '
   end
@@ -167,12 +171,8 @@ M.file_info = function()
   end
 
   if name ~= 'Empty ' then
-    local devicons_present, devicons = pcall(require, 'nvim-web-devicons')
-
-    if devicons_present then
-      local ft_icon = devicons.get_icon(name)
-      icon = (ft_icon ~= nil and ' ' .. ft_icon) or icon
-    end
+    local ft_icon, color = require('nvim-web-devicons').get_icon(name)
+    icon = ((ft_icon ~= nil and color ~= nil) and ' %#' .. color .. '#' .. ft_icon) or icon
 
     name = ' ' .. name .. ' '
   end
@@ -228,7 +228,7 @@ M.file_info = function()
     end
   end
 
-  return '%#St_FileInfo#' .. icon .. name .. '%#St_FileSep#' .. ''
+  return icon .. '%#St_FileInfo#' .. name .. '%#St_FileSep#' .. ''
 end
 
 M.git = function()
