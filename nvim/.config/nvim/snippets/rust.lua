@@ -27,13 +27,13 @@ return {
   }),
 
   s({
-    trig = 'map',
+    trig = '.map',
     name = 'map',
     desc = {
-      'map(|x| x)',
+      '.map(|x| x)',
     },
   }, {
-    t('map(|'),
+    t('.map(|'),
     i(1, 'x'),
     t('| x)'),
   }),
