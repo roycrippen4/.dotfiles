@@ -1,6 +1,7 @@
 local opt = vim.opt
 local g = vim.g
 require('core.autocommands')
+-- require('core.mappings')
 require('plugins.local')
 vim.treesitter.language.register('markdown', 'mdx')
 vim.treesitter.language.register('markdown', 'LspDocFloat')

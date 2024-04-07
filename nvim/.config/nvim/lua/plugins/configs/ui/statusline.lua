@@ -358,6 +358,6 @@ function M.generate_statusline()
   return table.concat(statusline)
 end
 
-vim.opt.statusline = "%!v:lua.require('plugins.local.statusline').generate_statusline()"
+vim.opt.statusline = "%!v:lua.require('plugins.configs.ui.statusline').generate_statusline()"
 
 return M

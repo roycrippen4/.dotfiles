@@ -30,8 +30,8 @@ autocmd('BufWritePost', {
     require('plenary.reload').reload_module(module)
 
     -- tabufline
-    require('plenary.reload').reload_module('plugins.local.tabufline.modules')
-    vim.opt.tabline = "%!v:lua.require('plugins.local.tabufline.modules').run()"
+    require('plenary.reload').reload_module('plugins.configs.ui.tabufline.modules')
+    vim.opt.tabline = "%!v:lua.require('plugins.configs.ui.tabufline.modules').run()"
 
     require('base46').load_all_highlights()
   end,

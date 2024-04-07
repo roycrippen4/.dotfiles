@@ -1,5 +1,3 @@
-require('plugins.local.tabufline.lazyload')
-
 local logger_ok, _ = pcall(require, 'plugins.local.logger')
 if not logger_ok then
   print('logger not ok')
@@ -10,12 +8,6 @@ local term_ok, _ = pcall(require, 'plugins.local.term')
 if not term_ok then
   print('term not ok')
   log('term not ok')
-end
-
-local macro_flash_ok, _ = pcall(require, 'plugins.local.macro_flash')
-if not macro_flash_ok then
-  log('macro_flash not ok')
-  return
 end
 
 local quitter_ok, _ = pcall(require, 'plugins.local.quitter')

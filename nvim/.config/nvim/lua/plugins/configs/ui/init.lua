@@ -1,6 +1,8 @@
 local M = {}
+require('plugins.configs.ui.tabufline.lazyload')
+require('plugins.configs.ui.statusline')
+require('plugins.configs.ui.macro_flash')
 local hl = require('plugins.configs.ui.highlights')
-require('plugins.local.statusline')
 
 M.ui = {
   theme = 'doomchad',

@@ -46,8 +46,8 @@ map({ 'n', 'x' }, 'j', 'v:count || mode(1)[0:1] == "no" ? "j" : "gj"', { desc = 
 map({ 'n', 'x' }, 'k', 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = 'Move up', expr = true })
 
 -- tabufline
-map('n', 'L', require('plugins.local.tabufline').tabuflineNext)
-map('n', 'H', require('plugins.local.tabufline').tabuflinePrev)
+map('n', 'L', require('plugins.configs.ui.tabufline').tabuflineNext)
+map('n', 'H', require('plugins.configs.ui.tabufline').tabuflinePrev)
 map('n', '<leader>x', utils.close_buf, { desc = 'Close current buffer ' })
 
 -- Nvimtree

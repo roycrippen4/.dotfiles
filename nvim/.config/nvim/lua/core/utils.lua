@@ -241,7 +241,7 @@ function M.close_buf()
   if #vim.api.nvim_list_wins() == 1 and string.sub(vim.api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
     vim.cmd([[ q ]])
   else
-    require('plugins.local.tabufline').close_buffer()
+    require('plugins.configs.ui.tabufline').close_buffer()
   end
 end
 

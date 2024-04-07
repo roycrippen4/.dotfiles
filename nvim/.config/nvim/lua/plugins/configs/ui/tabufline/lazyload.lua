@@ -4,7 +4,7 @@ local augroup = api.nvim_create_augroup
 local get_buf = api.nvim_get_current_buf
 local valid_buf = api.nvim_buf_is_valid
 local get_name = api.nvim_buf_get_name
-local get_option = api.nvim_buf_get_option
+local get_option = api.nvim_get_option_value
 local t = vim.t
 
 t.bufs = api.nvim_list_bufs()
@@ -43,7 +43,8 @@ autocmd({ 'BufAdd', 'BufEnter', 'tabnew' }, {
     if args.event == 'BufAdd' then
       local first_buf = t.bufs[1]
 
-      if #get_name(first_buf) == 0 and not get_option(first_buf, 'modified') then
+      -- if #get_name(first_buf) == 0 and not  get_option(first_buf, 'modified') then
+      if #get_name(first_buf) == 0 and not get_option('modified', { buf = first_buf }) then
         table.remove(bufs, 1)
         t.bufs = bufs
       end
@@ -74,7 +75,7 @@ autocmd({ 'BufNew', 'BufNewFile', 'BufRead', 'TabEnter', 'TermOpen' }, {
   callback = function()
     if #vim.fn.getbufinfo({ buflisted = 1 }) >= 2 or #api.nvim_list_tabpages() >= 2 then
       vim.opt.showtabline = 2
-      vim.opt.tabline = "%!v:lua.require('plugins.local.tabufline.modules').run()"
+      vim.opt.tabline = "%!v:lua.require('plugins.configs.ui.tabufline.modules').run()"
       api.nvim_del_augroup_by_name('TabuflineLazyLoad')
     end
   end,

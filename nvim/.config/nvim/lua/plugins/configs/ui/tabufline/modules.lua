@@ -14,13 +14,13 @@ vim.cmd("function! TbGoToBuf(bufnr,b,c,d) \n execute 'b'..a:bufnr \n endfunction
 
 vim.cmd([[
          function! TbKillBuf(bufnr,b,c,d) 
-           call luaeval('require("plugins.local.tabufline").close_buffer(_A)', a:bufnr)
+           call luaeval('require("plugins.configs.ui.tabufline").close_buffer(_A)', a:bufnr)
          endfunction
        ]])
 
 vim.cmd('function! TbNewTab(a,b,c,d) \n tabnew \n endfunction')
 vim.cmd("function! TbGotoTab(tabnr,b,c,d) \n execute a:tabnr ..'tabnext' \n endfunction")
-vim.cmd("function! TbTabClose(a,b,c,d) \n lua require('tabufline.local.tabufline').closeAllBufs('closeTab') \n endfunction")
+vim.cmd("function! TbTabClose(a,b,c,d) \n lua require('tabufline.configs.ui.tabufline').closeAllBufs('closeTab') \n endfunction")
 
 -------------------------------------------------------- functions ------------------------------------------------------------
 --- gets the width of the nvim-tree window
