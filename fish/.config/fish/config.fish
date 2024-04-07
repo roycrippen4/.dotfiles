@@ -92,4 +92,5 @@ alias fconf go_to_fish_config
 
 set --universal nvm_default_version v21.6.2
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env"
+# thefuck --alias fuck | source 
 zoxide init --cmd c fish | source
