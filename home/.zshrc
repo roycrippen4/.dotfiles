@@ -100,6 +100,7 @@ go_to_waybar_config() {
 }
 
 alias cb="cd .."
+alias x="exit"
 alias emacs="emacsclient -c -a 'emacs'"
 alias claer="clear"
 alias cl="clear"
