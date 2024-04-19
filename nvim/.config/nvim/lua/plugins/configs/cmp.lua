@@ -32,8 +32,8 @@ local format = {
 
 cmp.setup({
   sources = {
-    { name = 'nvim_lsp', trigger_characters = { '.', ':', '@', '-' } },
     { name = 'luasnip', keyword_length = 2 },
+    { name = 'nvim_lsp', trigger_characters = { '.', ':', '@', '-' }, keyword_length = 2 },
     { name = 'path' },
     { name = 'nvim_lua' },
     { name = 'crates' },

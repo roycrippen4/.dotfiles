@@ -121,13 +121,13 @@ local default_plugins = {
           require('plugins.configs.luasnip')
         end,
       },
-      {
-        'hrsh7th/cmp-nvim-lua', -- https://github.com/hrsh7th/cmp-nvim-lua
-        'saadparwaiz1/cmp_luasnip', -- https://github.com/saadparwaiz1/cmp_luasnip
-        'hrsh7th/cmp-nvim-lsp', -- https://github.com/hrsh7th/cmp-nvim-lsp
-        'hrsh7th/cmp-path', -- https://github.com/hrsh7th/cmp-path
-        'hrsh7th/cmp-cmdline', -- https://github.com/hrsh7th/cmp-cmdline
-      },
+      'luckasRanarison/tailwind-tools.nvim', -- https://github.com/luckasRanarison/tailwind-tools.nvim
+      'onsails/lspkind-nvim', -- https://github.com/hrsh7th/cmp-nvim-lua
+      'hrsh7th/cmp-nvim-lua', -- https://github.com/hrsh7th/cmp-nvim-lua
+      'saadparwaiz1/cmp_luasnip', -- https://github.com/saadparwaiz1/cmp_luasnip
+      'hrsh7th/cmp-nvim-lsp', -- https://github.com/hrsh7th/cmp-nvim-lsp
+      'hrsh7th/cmp-path', -- https://github.com/hrsh7th/cmp-path
+      'hrsh7th/cmp-cmdline', -- https://github.com/hrsh7th/cmp-cmdline
     },
     config = function()
       require('plugins.configs.cmp')
@@ -178,6 +178,13 @@ local default_plugins = {
     config = function()
       require('plugins.configs.lsp.servers')
     end,
+  },
+
+  {
+    'luckasRanarison/tailwind-tools.nvim', -- https://github.com/luckasRanarison/tailwind-tools.nvim
+    dependencies = { 'nvim-treesitter/nvim-treesitter' },
+    ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'svelte' },
+    opts = { conceal = { enabled = true, min_length = 40 } },
   },
 
   {
