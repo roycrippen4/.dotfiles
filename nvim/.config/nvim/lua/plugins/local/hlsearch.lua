@@ -34,6 +34,7 @@ local function draw_virt()
   return vim.api.nvim_buf_set_extmark(0, ns, vim.api.nvim_win_get_cursor(0)[1] - 1, 0, {
     virt_text = { { '[' .. count.current .. '/' .. count.total .. ']', 'NoiceVirtualTextOn' } },
     virt_text_pos = 'eol',
+    hl_mode = 'combine',
   })
 end
 

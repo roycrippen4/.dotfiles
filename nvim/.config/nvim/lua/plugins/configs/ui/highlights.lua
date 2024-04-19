@@ -32,7 +32,7 @@ return {
     HarpoonTitle              = { fg = 'black', bg = 'blue', italic = true },
     HarpoonWindow             = { bg = 'black', },
     LineNumber                = { fg = 'white' },
-    NoiceVirtualTextOn        = { fg = '#53bf00',     bg = cursorline,    italic = true },
+    NoiceVirtualTextOn        = { fg = '#53bf00', italic = true },
     NormalFloat               = { bg = 'black' },
     NvimTreeBookmark          = { fg = { "red",    -10 } },
     NvimTreeBookmarkHL        = { fg = { "red",    -10 } },
