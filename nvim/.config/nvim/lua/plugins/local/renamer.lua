@@ -6,14 +6,15 @@ M.open = function()
   vim.ui.input({
     prompt = ' Refactor: ' .. currName .. ' ',
     default = currName,
-  }, function(newName)
+  }, function(newName) ---@param newName string
     require('plugins.local.renamer').rename(newName, currName)
   end)
 end
 
 ---@param newName string
 ---@param currName string
-M.rename = function(newName, currName)
+---@return nil
+function M.rename(newName, currName)
   if not newName then
     return
   end
