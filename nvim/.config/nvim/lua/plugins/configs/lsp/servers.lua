@@ -61,6 +61,11 @@ lspconfig['html'].setup({
 
 lspconfig['htmx'].setup({})
 
+lspconfig['jdtls'].setup({
+  capabilities = M.capabilities,
+  on_attach = M.on_attach,
+})
+
 lspconfig['jsonls'].setup({
   capabilities = M.capabilities,
   on_attach = M.on_attach,

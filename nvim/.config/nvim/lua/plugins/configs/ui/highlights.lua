@@ -1,4 +1,3 @@
-local cursorline = '#252931'
 local sep_color = '#454951'
 local black = { 'black', 0 }
 local darkest_black = { 'black', -0.9 }
@@ -32,6 +31,7 @@ return {
     HarpoonTitle              = { fg = 'black', bg = 'blue', italic = true },
     HarpoonWindow             = { bg = 'black', },
     LineNumber                = { fg = 'white' },
+    MasonNormal               = { bg = { 'black', -3 }  },
     NoiceVirtualTextOn        = { fg = '#53bf00', italic = true },
     NormalFloat               = { bg = 'black' },
     NvimTreeBookmark          = { fg = { "red",    -10 } },

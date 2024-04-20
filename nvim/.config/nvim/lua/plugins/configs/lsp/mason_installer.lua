@@ -9,6 +9,7 @@ return {
     'gopls',
     'html-lsp',
     'htmx-lsp',
+    'jdtls',
     'json-lsp',
     'lua-language-server',
     'marksman',
