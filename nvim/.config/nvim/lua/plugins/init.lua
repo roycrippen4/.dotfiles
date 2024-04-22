@@ -53,7 +53,6 @@ local default_plugins = {
   {
     'nvim-treesitter/nvim-treesitter', -- https://github.com/nvim-treesitter/nvim-treesitter
     lazy = false,
-    priority = 1000,
     cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' },
     build = ':TSUpdate',
     config = function()
@@ -269,7 +268,7 @@ local default_plugins = {
 
   {
     'stevearc/dressing.nvim', -- https://github.com/stevearc/dressing.nvim
-    lazy = false,
+    event = 'VimEnter',
     config = function()
       require('plugins.configs.dressing')
     end,
@@ -369,8 +368,7 @@ local default_plugins = {
 
   {
     'luukvbaal/statuscol.nvim', -- https://github.com/luukvbaal/statuscol.nvim
-    lazy = false,
-    priority = 1000,
+    event = 'UIEnter',
     branch = '0.10',
     dependencies = {
       'kevinhwang91/nvim-ufo', -- https://github.com/kevinhwang91/nvim-ufo
