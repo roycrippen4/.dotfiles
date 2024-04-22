@@ -39,6 +39,7 @@ opt.formatoptions = ''                                -- Don't use vim for forma
 opt.laststatus    = 3                                 -- global statusline
 opt.showmode      = false                             -- Don't display mode
 opt.title         = true                              -- Show the title in the window titlebar
+opt.wrap          = false                             -- Display long lines as just one line
 opt.whichwrap:append('<>[]hl')                        -- go to previous/next line with h,l,left arrow and right arrow
 opt.clipboard = 'unnamedplus'                         -- Use system clipboard
 opt.cursorline = true                                 -- Enable highlighting of the current line
