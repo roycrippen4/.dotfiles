@@ -1,4 +1,5 @@
 local cmp = require('cmp')
+local compare = require('cmp.config.compare')
 local icons = require('plugins.configs.ui.icons').cmp
 
 dofile(vim.g.base46_cache .. 'cmp')
@@ -30,16 +31,29 @@ local format = {
   end,
 }
 
+---@type cmp.Setup
 cmp.setup({
   sources = {
-    { name = 'luasnip', keyword_length = 2 },
-    { name = 'nvim_lsp', trigger_characters = { '.', ':', '@', '-' }, keyword_length = 2 },
+    {
+      name = 'nvim_lsp',
+      trigger_characters = { '.', ':', '@', '-' },
+      ---@param entry function|cmp.Entry
+      entry_filter = function(entry, _)
+        return not entry:is_deprecated()
+      end,
+    },
+    { name = 'luasnip' },
     { name = 'path' },
-    { name = 'nvim_lua' },
     { name = 'crates' },
   },
-  preselect = cmp.PreselectMode.Insert,
+  preselect = cmp.PreselectMode.None,
   formatting = format,
+  sorting = {
+    priority_weight = 2,
+    comparators = {
+      compare.order,
+    },
+  },
   completion = {
     completeopt = 'menu,menuone,noselect',
     autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged },

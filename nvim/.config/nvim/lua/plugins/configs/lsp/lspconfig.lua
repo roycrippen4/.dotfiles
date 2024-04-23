@@ -22,10 +22,8 @@ local function check_trigger_chars(chars)
   local cur_line = vim.api.nvim_get_current_line()
   local pos = vim.api.nvim_win_get_cursor(0)[2]
 
-  cur_line = cur_line:gsub('%s+', '')
-
   for _, char in ipairs(chars) do
-    if cur_line:sub(pos, pos) == char then
+    if cur_line:sub(pos, pos) == char or cur_line:sub(pos - 1, pos) == ', ' then
       return true
     end
   end

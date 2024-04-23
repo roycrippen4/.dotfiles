@@ -1,26 +1,26 @@
 local default_plugins = {
   'nvim-lua/plenary.nvim', -- https://github.com/nvim-lua/plenary.nvim
 
-  {
-    'rcarriga/nvim-dap-ui', -- https://github.com/rcarriga/nvim-dap-ui
-    dependencies = {
-      {
-        'mfussenegger/nvim-dap', -- https://github.com/mfussenegger/nvim-dap
-        dependencies = {
-          'nvim-neotest/nvim-nio', -- https://github.com/nvim-neotest/nvim-nio
-          {
-            'theHamsta/nvim-dap-virtual-text', -- https://github.com/theHamsta/nvim-dap-virtual-text
-            opts = { virt_text_pos = 'eol' },
-          },
-        },
-        keys = require('plugins.configs.dap.keys'),
-        config = function()
-          require('plugins.configs.dap')
-        end,
-      },
-    },
-    opts = {},
-  },
+  -- {
+  --   'rcarriga/nvim-dap-ui', -- https://github.com/rcarriga/nvim-dap-ui
+  --   dependencies = {
+  --     {
+  --       'mfussenegger/nvim-dap', -- https://github.com/mfussenegger/nvim-dap
+  --       dependencies = {
+  --         'nvim-neotest/nvim-nio', -- https://github.com/nvim-neotest/nvim-nio
+  --         {
+  --           'theHamsta/nvim-dap-virtual-text', -- https://github.com/theHamsta/nvim-dap-virtual-text
+  --           opts = { virt_text_pos = 'eol' },
+  --         },
+  --       },
+  --       keys = require('plugins.configs.dap.keys'),
+  --       config = function()
+  --         require('plugins.configs.dap')
+  --       end,
+  --     },
+  --   },
+  --   opts = {},
+  -- },
 
   {
     'kdheepak/lazygit.nvim', -- https://github.com/kdheepak/lazygit.nvim
@@ -109,30 +109,6 @@ local default_plugins = {
   },
 
   {
-    'nvim-java/nvim-java', -- https://github.com/nvim-java/nvim-java
-    ft = { 'java' },
-    dependencies = {
-      'nvim-java/lua-async-await',
-      'nvim-java/nvim-java-core',
-      'nvim-java/nvim-java-test',
-      'nvim-java/nvim-java-dap',
-      'MunifTanjim/nui.nvim',
-      'neovim/nvim-lspconfig',
-      'mfussenegger/nvim-dap',
-      {
-        'williamboman/mason.nvim',
-        opts = {
-          registries = {
-            'github:nvim-java/mason-registry',
-            'github:mason-org/mason-registry',
-          },
-        },
-      },
-    },
-    opts = {},
-  },
-
-  {
     'hrsh7th/nvim-cmp', -- https://github.com/hrsh7th/nvim-cmp
     event = { 'InsertEnter', 'CmdlineEnter' },
     dependencies = {
@@ -145,8 +121,6 @@ local default_plugins = {
         end,
       },
       'luckasRanarison/tailwind-tools.nvim', -- https://github.com/luckasRanarison/tailwind-tools.nvim
-      'onsails/lspkind-nvim', -- https://github.com/hrsh7th/cmp-nvim-lua
-      'hrsh7th/cmp-nvim-lua', -- https://github.com/hrsh7th/cmp-nvim-lua
       'saadparwaiz1/cmp_luasnip', -- https://github.com/saadparwaiz1/cmp_luasnip
       'hrsh7th/cmp-nvim-lsp', -- https://github.com/hrsh7th/cmp-nvim-lsp
       'hrsh7th/cmp-path', -- https://github.com/hrsh7th/cmp-path
@@ -336,11 +310,11 @@ local default_plugins = {
 
   {
     'iamcco/markdown-preview.nvim', -- https://github.com/iamcco/markdown-preview.nvim
-    ft = { 'markdown' },
     keys = { { '<leader>mp', '<cmd> MarkdownPreview<CR>', mode = { 'n' } } },
     build = function()
       vim.fn['mkdp#util#install']()
     end,
+    opts = {},
   },
 
   {
