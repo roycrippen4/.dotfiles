@@ -342,7 +342,7 @@ local default_plugins = {
 
   {
     'luukvbaal/statuscol.nvim', -- https://github.com/luukvbaal/statuscol.nvim
-    event = 'UIEnter',
+    lazy = false,
     branch = '0.10',
     dependencies = {
       'kevinhwang91/nvim-ufo', -- https://github.com/kevinhwang91/nvim-ufo
