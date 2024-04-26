@@ -329,12 +329,6 @@ local default_plugins = {
   },
 
   {
-    'petertriho/nvim-scrollbar', -- https://github.com/petertriho/nvim-scrollbar
-    event = 'VeryLazy',
-    opts = { marks = { Cursor = { text = ' ' } } },
-  },
-
-  {
     'luukvbaal/statuscol.nvim', -- https://github.com/luukvbaal/statuscol.nvim
     lazy = false,
     branch = '0.10',
