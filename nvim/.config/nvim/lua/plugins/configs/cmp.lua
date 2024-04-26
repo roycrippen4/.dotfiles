@@ -1,5 +1,4 @@
 local cmp = require('cmp')
-local compare = require('cmp.config.compare')
 local icons = require('plugins.configs.ui.icons').cmp
 
 dofile(vim.g.base46_cache .. 'cmp')
@@ -48,12 +47,6 @@ cmp.setup({
   },
   preselect = cmp.PreselectMode.None,
   formatting = format,
-  sorting = {
-    priority_weight = 2,
-    comparators = {
-      compare.order,
-    },
-  },
   completion = {
     completeopt = 'menu,menuone,noselect',
     autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged },

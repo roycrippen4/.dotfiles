@@ -1,4 +1,5 @@
-local register = require('which-key').register
+local map = vim.keymap.set
+local builtin = require('telescope.builtin')
 
 local diagnostic_status = true
 local function toggle_diagnostics()
@@ -12,56 +13,19 @@ local function toggle_diagnostics()
   end
 end
 
-register({
-  ['gr'] = {
-    function()
-      require('telescope.builtin').lsp_references()
-    end,
-    'Goto References  ',
-  },
-
-  ['gi'] = {
-    function()
-      require('telescope.builtin').lsp_implementations()
-    end,
-    'Goto Implementation 󰡱 ',
-  },
-
-  ['gd'] = {
-    function()
-      require('telescope.builtin').lsp_definitions()
-    end,
-    'Goto Definition 󰼭 ',
-  },
-
-  ['<leader>l!'] = { '<cmd> RustAnalyzer restart <CR>', 'Restart RustAnalyzer  ' },
-  ['<leader>lc'] = { '<cmd> RustLsp openCargo <CR>', 'Open Cargo  ' },
-  ['<leader>lC'] = { '<cmd> RustLsp flyCheck <CR>', 'Rust run cargo check ' },
-  ['<leader>lD'] = { '<cmd> RustLsp debuggables <CR>', 'Debug rust  ' },
-  ['<leader>ld'] = { toggle_diagnostics, 'Toggle Diagnostics 󰨚 ' },
-  ['<leader>lE'] = { '<cmd> RustLsp externalDocs <CR>', 'Open Rust Documentation 󱔗 ' },
-  ['<leader>le'] = { '<cmd> RustLsp explainError <CR>', 'Explain error  ' },
-  ['<leader>lM'] = { '<cmd> RustLsp rebuildProcMacros <CR>', 'Rebuild proc macros  ' },
-  ['<leader>lm'] = { '<cmd> RustLsp expandMacro <CR>', 'Expand macro  ' },
-  ['<leader>lr'] = { '<cmd> RustLsp runnables <CR>', 'Run rust  ' },
-
-  ['<leader>lf'] = {
-    function()
-      vim.diagnostic.open_float()
-    end,
-    'Open floating diagnostic message 󰉪 ',
-  },
-  ['<leader>r'] = {
-    function()
-      require('plugins.local.renamer').open()
-    end,
-    'LSP Rename 󰑕 ',
-  },
-
-  ['<leader>la'] = {
-    function()
-      vim.lsp.buf.code_action()
-    end,
-    'Code Action  ',
-  },
-})
+map('n', 'gr', builtin.lsp_references, { desc = 'Goto References  ' })
+map('n', 'gi', builtin.lsp_implementations, { desc = 'Goto Implementation 󰡱 ' })
+map('n', 'gd', builtin.lsp_definitions, { desc = 'Goto Definition 󰼭 ' })
+map('n', '<leader>l!', '<cmd> RustAnalyzer restart <CR>', { desc = 'Restart RustAnalyzer  ' })
+map('n', '<leader>lc', '<cmd> RustLsp openCargo <CR>', { desc = 'Open Cargo  ' })
+map('n', '<leader>lC', '<cmd> RustLsp flyCheck <CR>', { desc = 'Rust run cargo check ' })
+map('n', '<leader>lD', '<cmd> RustLsp debuggables <CR>', { desc = 'Debug rust  ' })
+map('n', '<leader>ld', toggle_diagnostics, { desc = 'Toggle Diagnostics 󰨚 ' })
+map('n', '<leader>lE', '<cmd> RustLsp externalDocs <CR>', { desc = 'Open Rust Documentation 󱔗 ' })
+map('n', '<leader>le', '<cmd> RustLsp explainError <CR>', { desc = 'Explain error  ' })
+map('n', '<leader>lM', '<cmd> RustLsp rebuildProcMacros <CR>', { desc = 'Rebuild proc macros  ' })
+map('n', '<leader>lm', '<cmd> RustLsp expandMacro <CR>', { desc = 'Expand macro  ' })
+map('n', '<leader>lr', '<cmd> RustLsp runnables <CR>', { desc = 'Run rust  ' })
+map('n', '<leader>lf', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message 󰉪 ' })
+map('n', '<leader>r', require('plugins.local.renamer').open, { desc = 'LSP Rename 󰑕 ' })
+map('n', '<leader>la', vim.lsp.buf.code_action, { desc = 'Code Action  ' })

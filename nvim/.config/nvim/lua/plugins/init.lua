@@ -363,26 +363,11 @@ local default_plugins = {
   },
 
   {
-    'folke/which-key.nvim', -- https://github.com/folke/which-key.nvim
-    keys = { '<leader>', '<c-r>', '<c-w>', '"', "'", '`', 'c', 'v', 'g' },
-    config = function()
-      dofile(vim.g.base46_cache .. 'whichkey')
-      require('plugins.configs.whichkey')
-    end,
-  },
-
-  {
     'vuki656/package-info.nvim', -- https://github.com/vuki656/package-info.nvim
     dependencies = 'MunifTanjim/nui.nvim',
     event = 'VeryLazy',
     opts = {},
   },
-
-  -- {
-  --   'roycrippen4/colors.nvim',
-  --   event = 'VeryLazy',
-  --   opts = { debug = false },
-  -- },
 }
 
 local config = require('plugins.configs.ui')
