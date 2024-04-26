@@ -103,50 +103,50 @@ autocmd('FileType', {
 })
 
 -- Opens up all marked files. Also opens the logger buffer if -d gets passed in
-autocmd('VimEnter', {
-  group = general,
-  pattern = 'NvimTree_1',
-  once = true,
-  callback = function()
-    require('core.utils').set_titlestring(vim.fn.getcwd())
+-- autocmd('VimEnter', {
+--   group = general,
+--   pattern = 'NvimTree_1',
+--   once = true,
+--   callback = function()
+--     require('core.utils').set_titlestring(vim.fn.getcwd())
 
-    if vim.fn.filereadable('.nvmrc') == 1 then
-      require('plugins.local.term').send('nvm use', 'H')
-      vim.schedule(function()
-        require('plugins.local.term').toggle_horizontal()
-      end)
-    end
+--     if vim.fn.filereadable('.nvmrc') == 1 then
+--       require('plugins.local.term').send('nvm use', 'H')
+--       vim.schedule(function()
+--         require('plugins.local.term').toggle_horizontal()
+--       end)
+--     end
 
-    vim.schedule(function()
-      local ui = require('harpoon.ui')
-      local mark = require('harpoon.mark')
-      local length = mark.get_length()
+--     vim.schedule(function()
+--       local ui = require('harpoon.ui')
+--       local mark = require('harpoon.mark')
+--       local length = mark.get_length()
 
-      if length == 0 then
-        return
-      end
+--       if length == 0 then
+--         return
+--       end
 
-      for i = 1, mark.get_length() do
-        ui.nav_file(i)
-      end
+--       for i = 1, mark.get_length() do
+--         ui.nav_file(i)
+--       end
 
-      if os.getenv('DEBUG') == '1' then
-        require('plugins.local.logger'):show()
-        vim.defer_fn(function()
-          vim.cmd([[
-          vsplit
-          vertical resize 80
-          wincmd h
-        ]])
-          ui.nav_file(1)
-        end, 0)
-      else
-        ui.nav_file(1)
-        vim.cmd("echo ' '")
-      end
-    end)
-  end,
-})
+--       if os.getenv('DEBUG') == '1' then
+--         require('plugins.local.logger'):show()
+--         vim.defer_fn(function()
+--           vim.cmd([[
+--           vsplit
+--           vertical resize 80
+--           wincmd h
+--         ]])
+--           ui.nav_file(1)
+--         end, 0)
+--       else
+--         ui.nav_file(1)
+--         vim.cmd("echo ' '")
+--       end
+--     end)
+--   end,
+-- })
 
 -- Autocommand to restore the cursor position when the buffer is read
 autocmd('BufReadPost', {

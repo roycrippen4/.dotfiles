@@ -15,7 +15,7 @@ local default_plugins = {
 
   {
     'NvChad/nvim-colorizer.lua', -- https://github.com/NvChad/nvim-colorizer.lua
-    lazy = false,
+    event = 'BufReadPost',
     opts = { filetypes = { 'lua', 'css', 'html', 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'svelte' } },
   },
 
@@ -40,7 +40,6 @@ local default_plugins = {
     'lewis6991/gitsigns.nvim', -- https://github.com/lewis6991/gitsigns.nvim
     event = 'VeryLazy',
     config = function()
-      dofile(vim.g.base46_cache .. 'git')
       require('gitsigns').setup(require('plugins.configs.gitsigns'))
     end,
   },
@@ -126,7 +125,7 @@ local default_plugins = {
 
   {
     'neovim/nvim-lspconfig', -- https://github.com/neovim/nvim-lspconfig
-    lazy = false,
+    event = 'VimEnter',
     dependencies = {
       'folke/neodev.nvim', -- https://github.com/folke/neodev.nvim
       'WhoIsSethDaniel/mason-tool-installer.nvim', -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
@@ -291,7 +290,7 @@ local default_plugins = {
 
   {
     'luukvbaal/statuscol.nvim', -- https://github.com/luukvbaal/statuscol.nvim
-    lazy = false,
+    event = 'BufReadPost',
     branch = '0.10',
     dependencies = {
       'kevinhwang91/nvim-ufo', -- https://github.com/kevinhwang91/nvim-ufo
