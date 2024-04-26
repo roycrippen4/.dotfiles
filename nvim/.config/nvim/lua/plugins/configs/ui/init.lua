@@ -40,7 +40,6 @@ M.ui = {
       'todo',
       'treesitter',
       'trouble',
-      'whichkey',
     },
   },
 }

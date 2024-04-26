@@ -1,9 +1,4 @@
 local map = vim.keymap.set
-
-require('which-key').register({
-  ['<leader>c'] = { 'Crates  ' },
-})
-
 local bufnr = vim.api.nvim_get_current_buf()
 
 map('n', '<leader>ct', require('crates').toggle, { silent = true, buffer = bufnr, desc = 'Toggle' })
