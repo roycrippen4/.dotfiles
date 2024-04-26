@@ -97,7 +97,7 @@ end, { silent = true, noremap = true, desc = 'Update Package 󰚰 ' })
 
 -- stylua: ignore start
 -- map('n', '<Leader>dl', function() require('osv').launch({ port = 8086 }) end, { desc = ' Launch Lua adapter' }) -- trouble
--- map('n', '<Leader>td', function() require('trouble').toggle('workspace_diagnostics') end, { desc = 'Trouble toggle workspace diagnostics  ' })
+map('n', '<Leader>td', function() require('trouble').toggle('workspace_diagnostics') end, { desc = 'Trouble toggle workspace diagnostics  ' })
 -- stylua: ignore end
 
 return M

@@ -8,8 +8,6 @@ local default_plugins = {
 
   {
     'roycrippen4/base46',
-    -- dir = 'base46',
-    -- dev = true,
     build = function()
       require('base46').load_all_highlights()
     end,
@@ -74,13 +72,7 @@ local default_plugins = {
     event = 'BufReadPost',
     opts = {
       panel = { enabled = false },
-      suggestion = {
-        enabled = true,
-        auto_trigger = true,
-        keymap = {
-          accept = '<M-CR>',
-        },
-      },
+      suggestion = { enabled = true, auto_trigger = true, keymap = { accept = '<M-CR>' } },
       copilot_node_command = vim.fn.expand('$HOME') .. '/.nvm/versions/node/v21.6.2/bin/node',
     },
   },
@@ -111,10 +103,9 @@ local default_plugins = {
   {
     'nvim-tree/nvim-tree.lua', -- https://github.com/nvim-tree/nvim-tree.lua
     lazy = false,
-    priority = 1001,
     config = function()
-      require('nvim-tree').setup(require('plugins.configs.nvimtree'))
       dofile(vim.g.base46_cache .. 'nvimtree')
+      require('nvim-tree').setup(require('plugins.configs.nvimtree'))
     end,
   },
 
@@ -131,13 +122,6 @@ local default_plugins = {
       require('telescope').setup(opts)
       require('core.utils').load_ext(opts)
     end,
-  },
-
-  {
-    'folke/zen-mode.nvim', -- https://github.com/folke/zen-mode.nvim
-    cmd = 'ZenMode',
-    keys = { { '<Leader>z', ':ZenMode<CR>' } },
-    opts = require('plugins.configs.zenmode'),
   },
 
   {
