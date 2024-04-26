@@ -1,27 +1,6 @@
 local default_plugins = {
   'nvim-lua/plenary.nvim', -- https://github.com/nvim-lua/plenary.nvim
 
-  -- {
-  --   'rcarriga/nvim-dap-ui', -- https://github.com/rcarriga/nvim-dap-ui
-  --   dependencies = {
-  --     {
-  --       'mfussenegger/nvim-dap', -- https://github.com/mfussenegger/nvim-dap
-  --       dependencies = {
-  --         'nvim-neotest/nvim-nio', -- https://github.com/nvim-neotest/nvim-nio
-  --         {
-  --           'theHamsta/nvim-dap-virtual-text', -- https://github.com/theHamsta/nvim-dap-virtual-text
-  --           opts = { virt_text_pos = 'eol' },
-  --         },
-  --       },
-  --       keys = require('plugins.configs.dap.keys'),
-  --       config = function()
-  --         require('plugins.configs.dap')
-  --       end,
-  --     },
-  --   },
-  --   opts = {},
-  -- },
-
   {
     'kdheepak/lazygit.nvim', -- https://github.com/kdheepak/lazygit.nvim
     keys = { { '<leader>gg', '<cmd> LazyGit<CR>' } },
@@ -324,12 +303,6 @@ local default_plugins = {
     config = function()
       require('plugins.configs.blankline')
     end,
-  },
-
-  {
-    'petertriho/nvim-scrollbar', -- https://github.com/petertriho/nvim-scrollbar
-    event = 'VeryLazy',
-    opts = { marks = { Cursor = { text = ' ' } } },
   },
 
   {
