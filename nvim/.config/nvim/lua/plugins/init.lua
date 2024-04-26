@@ -276,12 +276,6 @@ local default_plugins = {
   },
 
   {
-    'tzachar/highlight-undo.nvim', -- https://github.com/tzachar/highlight-undo.nvim
-    keys = { { 'u', mode = 'n' }, { '<C-r>', mode = 'n' } },
-    opts = { duration = 400 },
-  },
-
-  {
     -- 'windwp/nvim-ts-autotag', -- https://github.com/windwp/nvim-ts-autotag -- waiting for PR
     'roycrippen4/nvim-ts-autotag', -- https://github.com/windwp/nvim-ts-autotag
     branch = 'fix_164',
