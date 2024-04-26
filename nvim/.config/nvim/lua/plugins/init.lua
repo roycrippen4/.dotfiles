@@ -53,8 +53,6 @@ local default_plugins = {
   {
     'nvim-treesitter/nvim-treesitter', -- https://github.com/nvim-treesitter/nvim-treesitter
     lazy = false,
-    cmd = { 'TSInstall', 'TSBufEnable', 'TSBufDisable', 'TSModuleInfo' },
-    build = ':TSUpdate',
     config = function()
       dofile(vim.g.base46_cache .. 'syntax')
       require('nvim-treesitter.configs').setup(require('plugins.configs.treesitter'))
@@ -326,6 +324,12 @@ local default_plugins = {
     config = function()
       require('plugins.configs.blankline')
     end,
+  },
+
+  {
+    'petertriho/nvim-scrollbar', -- https://github.com/petertriho/nvim-scrollbar
+    event = 'VeryLazy',
+    opts = { marks = { Cursor = { text = ' ' } } },
   },
 
   {
