@@ -164,7 +164,7 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
   group = general,
   pattern = '*/node_modules/*',
   callback = function(args)
-    vim.diagnostic.disable(args.buf)
+    vim.diagnostic.enabled(args.buf, false)
   end,
 })
 
