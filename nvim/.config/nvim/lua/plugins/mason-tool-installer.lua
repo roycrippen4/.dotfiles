@@ -1,0 +1,33 @@
+return {
+  'WhoIsSethDaniel/mason-tool-installer.nvim', -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
+  lazy = false,
+  opts = {
+    ensure_installed = {
+      'clangd',
+      'css-lsp',
+      'docker-compose-language-service',
+      'dockerfile-language-server',
+      'eslint-lsp',
+      'gopls',
+      'html-lsp',
+      'htmx-lsp',
+      'jdtls',
+      'json-lsp',
+      'lua-language-server',
+      'marksman',
+      'mdx-analyzer',
+      'prettier',
+      'prettierd',
+      'pyright',
+      'rust-analyzer',
+      'shfmt',
+      'stylua',
+      'svelte-language-server',
+      'tailwindcss-language-server',
+      'taplo',
+      'typescript-language-server',
+      'yaml-language-server',
+      'yamlfmt',
+    },
+  },
+}
