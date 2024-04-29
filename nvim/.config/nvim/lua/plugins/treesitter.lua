@@ -1,0 +1,70 @@
+return {
+  'nvim-treesitter/nvim-treesitter',
+  build = ':TSUpdate',
+  opts = {
+    ensure_installed = {
+      'bash',
+      'c',
+      'comment',
+      'cpp',
+      'css',
+      'dockerfile',
+      'git_config',
+      'git_rebase',
+      'gitattributes',
+      'gitcommit',
+      'gitignore',
+      'go',
+      'graphql',
+      'html',
+      'http',
+      'hyprlang',
+      'java',
+      'javascript',
+      'jsdoc',
+      'json',
+      'jsonc',
+      'lua',
+      'luadoc',
+      'luap',
+      'markdown',
+      'markdown_inline',
+      'python',
+      'query',
+      'rasi',
+      'regex',
+      'ron',
+      'rust',
+      'svelte',
+      'sxhkdrc',
+      'toml',
+      'tsx',
+      'typescript',
+      'vim',
+      'vimdoc',
+      'xml',
+      'yaml',
+      'zig',
+    },
+    autopairs = {
+      enable = true,
+    },
+    indent = {
+      enable = true,
+    },
+    highlight = {
+      enable = true,
+      use_languagetree = true,
+      additional_vim_regex_highlighting = false,
+      disable = function(_, bufnr)
+        return vim.api.nvim_buf_line_count(bufnr) > 50000
+      end,
+    },
+    auto_install = true,
+  },
+  config = function(_, opts)
+    require('nvim-treesitter.install').prefer_git = true
+    ---@diagnostic disable-next-line: missing-fields
+    require('nvim-treesitter.configs').setup(opts)
+  end,
+}

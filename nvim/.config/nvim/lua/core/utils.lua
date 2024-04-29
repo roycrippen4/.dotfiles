@@ -1,7 +1,10 @@
+local api = vim.api
+local fn = vim.fn
+
 local M = {}
 
-vim.api.nvim_set_hl(0, 'UrlHighlight', { fg = 'gray' })
-local url_ns = vim.api.nvim_create_namespace('UrlHighlight')
+api.nvim_set_hl(0, 'UrlHighlight', { fg = 'gray' })
+local url_ns = api.nvim_create_namespace('UrlHighlight')
 
 local skip_ft = {
   'NvimTree',
@@ -19,7 +22,6 @@ local skip_ft = {
   'harpoon',
   'lazy',
   'logger',
-  'neo-tree',
   'noice',
   'nvcheatsheet',
   'nvdash',
@@ -27,12 +29,11 @@ local skip_ft = {
   'toggleterm',
   'vim',
 }
-vim.api.nvim_get_mode()
 
 ---@param key string
 ---@param mode string
 function _G.feed(key, mode)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
+  api.nvim_feedkeys(api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
 ---@param cwd string|nil
@@ -62,10 +63,10 @@ function M.highlight_url()
       return
     end
 
-    vim.api.nvim_buf_clear_namespace(0, url_ns, 0, -1)
+    api.nvim_buf_clear_namespace(0, url_ns, 0, -1)
     if node:type() == 'uri' then
       local line, col_start, _, col_end = node:range()
-      vim.api.nvim_buf_add_highlight(0, url_ns, 'UrlHighlight', line, col_start, col_end)
+      api.nvim_buf_add_highlight(0, url_ns, 'UrlHighlight', line, col_start, col_end)
     end
   end
 end
@@ -84,7 +85,7 @@ end
 --- Sets the currently opened file to the first entry in the marks list
 function M.set_cur_file_first_mark()
   local mark = require('harpoon.mark')
-  local bufname = vim.api.nvim_buf_get_name(0)
+  local bufname = api.nvim_buf_get_name(0)
   local path = require('plenary.path'):new(bufname):make_relative(vim.uv.cwd())
   local marks = require('core.utils').get_marked_files()
   ---@type integer|nil
@@ -126,7 +127,7 @@ function M.highlight_marked_files(bufnr, ns_id)
       local marked_file = marked[idx]
 
       if string.find(open_file, marked_file) then
-        vim.api.nvim_buf_add_highlight(bufnr, ns_id, 'HarpoonOpenMark', idx - 1, 0, -1)
+        api.nvim_buf_add_highlight(bufnr, ns_id, 'HarpoonOpenMark', idx - 1, 0, -1)
       end
     end
   end
@@ -135,11 +136,11 @@ end
 --- Takes a bufnr. Returns true if bufnr is visible, [false] if not
 ---@param bufnr integer buffer handle/number
 function M.is_buf_visible(bufnr)
-  local wins = vim.api.nvim_list_wins()
-  local should_skip = vim.tbl_contains(skip_ft, vim.bo[bufnr].ft) or vim.api.nvim_buf_get_name(bufnr) == ''
+  local wins = api.nvim_list_wins()
+  local should_skip = vim.tbl_contains(skip_ft, vim.bo[bufnr].ft) or api.nvim_buf_get_name(bufnr) == ''
 
   for _, win in ipairs(wins) do
-    if vim.api.nvim_win_get_buf(win) == bufnr and not should_skip then
+    if api.nvim_win_get_buf(win) == bufnr and not should_skip then
       return true
     end
   end
@@ -149,12 +150,12 @@ end
 --- Get's a list of absolute paths for all open files. Ignores plugin windows/buffers
 ---@return string[] open_files list of open files
 function M.list_open_files()
-  local bufs = vim.api.nvim_list_bufs()
+  local bufs = api.nvim_list_bufs()
   local visible_bufs = {}
 
   for _, bufnr in ipairs(bufs) do
     if M.is_buf_visible(bufnr) then
-      local name = vim.api.nvim_buf_get_name(bufnr)
+      local name = api.nvim_buf_get_name(bufnr)
       table.insert(visible_bufs, name)
     end
   end
@@ -171,7 +172,7 @@ end
 --- Returns true if the currently opened file is marked
 ---@return boolean|integer
 function M.is_current_file_marked()
-  local current_file = vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf())
+  local current_file = api.nvim_buf_get_name(api.nvim_get_current_buf())
   local marked_files = M.get_marked_files()
   for _, file in ipairs(marked_files) do
     if string.find(current_file, file) then
@@ -188,7 +189,7 @@ function M.add_missing_commas(diagnostics)
     ---@diagnostic disable-next-line
     if diag.message == 'Miss symbol `,` or `;` .' or diag.message == 'Missed symbol `,`.' then
       ---@diagnostic disable-next-line
-      vim.api.nvim_buf_set_text(0, diag.lnum, diag.col, diag.lnum, diag.col, { ',' })
+      api.nvim_buf_set_text(0, diag.lnum, diag.col, diag.lnum, diag.col, { ',' })
     end
   end
 end
@@ -205,8 +206,8 @@ local pairs = { '()', '[]', '{}', "''", '""', '``', '  ' }
 ---@param key string
 ---@param fallback string
 function M.handle_cmdline_pair(key, fallback)
-  local pos = vim.fn.getcmdpos()
-  local cmdline = vim.fn.getcmdline()
+  local pos = fn.getcmdpos()
+  local cmdline = fn.getcmdline()
 
   for _, pair in ipairs(pairs) do
     if string.sub(cmdline, pos - 1, pos) == pair then
@@ -238,22 +239,15 @@ function M.create_harpoon_nav_mappings()
 end
 
 function M.close_buf()
-  if #vim.api.nvim_list_wins() == 1 and string.sub(vim.api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
+  if #api.nvim_list_wins() == 1 and string.sub(api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
     vim.cmd([[ q ]])
   else
-    require('plugins.configs.ui.tabufline').close_buffer()
+    require('local.tabufline').close_buffer()
   end
 end
 
--- checks if cursor is between "<" and ">"
----@return boolean
-function M.cursor_between_angles()
-  local curpos = vim.api.nvim_win_get_cursor(0)
-  return vim.api.nvim_get_current_line():sub(curpos[2], curpos[2] + 1) == '><'
-end
-
 function M.send_to_black_hole()
-  local line_content = vim.fn.line('.')
+  local line_content = fn.line('.')
   if type(line_content) == 'string' and string.match(line_content, '^%s*$') then
     vim.cmd('normal! "_dd')
   else
@@ -261,83 +255,11 @@ function M.send_to_black_hole()
   end
 end
 
----@param opts? Border|_.BorderStyle|_.NuiBorder
----@return _.BorderPadding
-function M.normalize_padding(opts)
-  opts = opts or {}
-  if type(opts) == 'string' then
-    opts = { style = opts }
-  end
-
-  if vim.tbl_islist(opts.padding) then
-    if #opts.padding == 2 then
-      return {
-        top = opts.padding[1],
-        bottom = opts.padding[1],
-        left = opts.padding[2],
-        right = opts.padding[2],
-      }
-    elseif #opts.padding == 4 then
-      return {
-        top = opts.padding[1],
-        right = opts.padding[2],
-        bottom = opts.padding[3],
-        left = opts.padding[4],
-      }
-    end
-  end
-  return vim.tbl_deep_extend('force', {
-    left = 0,
-    right = 0,
-    top = 0,
-    bottom = 0,
-  }, opts.padding or {})
-end
-
 ---@param win integer
 ---@param opts table
 function M.win_apply_config(win, opts)
-  opts = vim.tbl_deep_extend('force', vim.api.nvim_win_get_config(win), opts or {})
-  vim.api.nvim_win_set_config(win, opts)
-end
-
---- Returns the height of the buffer in the window
----@param winnr integer
----@return integer
-function M.win_buf_height(winnr)
-  local buf = vim.api.nvim_win_get_buf(winnr)
-
-  if not vim.wo[winnr].wrap then
-    return vim.api.nvim_buf_line_count(buf)
-  end
-
-  local width = vim.api.nvim_win_get_width(winnr)
-
-  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
-  local height = 0
-  for _, l in ipairs(lines) do
-    height = height + math.max(1, (math.ceil(vim.fn.strwidth(l) / width)))
-  end
-  return height
-end
-
---- Scrolls the window by delta lines
----@param winnr integer
----@param delta integer
-function M.scroll(winnr, delta)
-  local info = vim.fn.getwininfo(winnr)[1] or {}
-  local top = info.topline or 1
-  local buf = vim.api.nvim_win_get_buf(winnr)
-  top = top + delta
-  top = math.max(top, 1)
-  top = math.min(top, M.win_buf_height(winnr) - info.height + 1)
-
-  vim.defer_fn(function()
-    vim.api.nvim_buf_call(buf, function()
-      vim.api.nvim_command('noautocmd silent! normal! ' .. top .. 'zt')
-      vim.api.nvim_exec_autocmds('WinScrolled', { modeline = false })
-    end)
-  end, 0)
+  opts = vim.tbl_deep_extend('force', api.nvim_win_get_config(win), opts or {})
+  api.nvim_win_set_config(win, opts)
 end
 
 return M

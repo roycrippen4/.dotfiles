@@ -6,10 +6,10 @@ local function toggle_diagnostics()
   diagnostic_status = not diagnostic_status
   if diagnostic_status then
     vim.api.nvim_echo({ { 'Show diagnostics' } }, false, {})
-    vim.diagnostic.enable()
+    vim.diagnostic.enable(true)
   else
     vim.api.nvim_echo({ { 'Hide diagnostics' } }, false, {})
-    vim.diagnostic.disable()
+    vim.diagnostic.enable(false)
   end
 end
 
@@ -27,5 +27,4 @@ map('n', '<leader>lM', '<cmd> RustLsp rebuildProcMacros <CR>', { desc = 'Rebuild
 map('n', '<leader>lm', '<cmd> RustLsp expandMacro <CR>', { desc = 'Expand macro  ' })
 map('n', '<leader>lr', '<cmd> RustLsp runnables <CR>', { desc = 'Run rust  ' })
 map('n', '<leader>lf', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message 󰉪 ' })
-map('n', '<leader>r', require('plugins.local.renamer').open, { desc = 'LSP Rename 󰑕 ' })
 map('n', '<leader>la', vim.lsp.buf.code_action, { desc = 'Code Action  ' })
