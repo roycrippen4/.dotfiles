@@ -106,6 +106,7 @@ return {
         ts = {
           icon = require('core.icons').devicon.ts,
           name = 'ts',
+          color = require('core.colors').light_blue,
         },
 
         ttf = {
