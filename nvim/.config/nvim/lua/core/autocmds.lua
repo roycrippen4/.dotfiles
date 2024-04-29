@@ -3,7 +3,6 @@ local autocmd = vim.api.nvim_create_autocmd
 local namespace = vim.api.nvim_create_namespace
 local pattern = { 'DressingInput', 'help', 'logger', 'man', 'qf', 'query', 'scratch', 'undotree', 'telescope', 'TelescopePrompt' }
 local general = augroup('general', { clear = true })
-local gui_cursor = vim.go.guicursor
 
 autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
@@ -152,17 +151,5 @@ autocmd('CmdWinEnter', {
     vim.schedule(function()
       vim.cmd('setfiletype vim')
     end)
-  end,
-})
-
-autocmd({ 'WinEnter', 'BufEnter' }, {
-  group = augroup('ConcealCursor', { clear = true }),
-  callback = function()
-    if vim.bo.ft == 'NvimTree' then
-      vim.go.guicursor = 'a:NoCursor'
-      return
-    end
-
-    vim.go.guicursor = gui_cursor
   end,
 })
