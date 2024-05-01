@@ -4,14 +4,14 @@ local function stbufnr()
   return vim.api.nvim_win_get_buf(0)
 end
 
-local timer = vim.uv.new_timer()
+local clock_timer = vim.uv.new_timer()
 
 local function redraw()
   vim.cmd('redrawstatus')
 end
 
-if timer then
-  timer:start(1000, 1000, vim.schedule_wrap(redraw))
+if clock_timer then
+  clock_timer:start(1000, 1000, vim.schedule_wrap(redraw))
 end
 
 local M = {}
@@ -173,8 +173,8 @@ M.file_info = function()
   end
 
   if name ~= 'Empty ' then
-    local ft_icon, color = require('nvim-web-devicons').get_icon(name)
-    icon = ((ft_icon ~= nil and color ~= nil) and ' %#' .. color .. '#' .. ft_icon) or icon
+    local ft_icon, hl_group = require('nvim-web-devicons').get_icon(name)
+    icon = ((ft_icon ~= nil and hl_group ~= nil) and ' %#' .. hl_group .. '#' .. ft_icon) or icon
 
     name = ' ' .. name .. ' '
   end
@@ -245,7 +245,7 @@ M.git = function()
   local removed = (git_status.removed and git_status.removed ~= 0) and ('%#St_GitRemove#  ' .. git_status.removed) or ''
   local branch_name = '%#St_GitBranch#  ' .. git_status.head .. ' '
 
-  return branch_name .. added .. changed .. removed
+  return branch_name .. added .. changed .. removed .. '%#St_FileSep#  '
 end
 
 M.lsp_diagnostics = function()
@@ -272,12 +272,13 @@ M.lsp_status = function()
     ---@diagnostic disable-next-line
     for _, client in ipairs(vim.lsp.get_active_clients()) do
       if client.attached_buffers[stbufnr()] then
-        return (vim.o.columns > 100 and '%#St_LspStatus#' .. '   LSP [' .. client.name .. '] ') or '   LSP '
+        return (vim.o.columns > 100 and '%#St_LspStatus#' .. '   LSP [' .. client.name .. '] ') or '   LSP '
       end
     end
   end
   return ''
 end
+-- 
 
 M.cursor_position = function()
   local mode = vim.fn.mode(true)
@@ -286,7 +287,7 @@ M.cursor_position = function()
   local cur_line, cur_col = vim.fn.line('.'), vim.fn.col('.')
 
   if mode == '' then
-    return '%#St_VisualMode#' .. '' .. ' Ln ' .. math.abs(v_line - cur_line) + 1 .. ', Col ' .. math.abs(v_col - cur_col) + 1 .. ' '
+    return '%#St_VisualMode#' .. '' .. ' Ln ' .. math.abs(v_line - cur_line) + 1 .. ', Col ' .. math.abs(v_col - cur_col) + 1 .. ' '
   end
 
   local total_lines = math.abs(v_line - cur_line) + 1
@@ -294,29 +295,29 @@ M.cursor_position = function()
     local cur_line_is_bigger = v_line and cur_line and v_line < cur_line
 
     if cur_line_is_bigger then
-      return '%#St_VisualMode#' .. ' Ln ' .. v_line .. ' - Ln %l ⎸ ' .. total_lines
+      return '%#St_VisualMode#' .. ' Ln ' .. v_line .. ' - Ln %l ⎸ ' .. total_lines
     else
-      return '%#St_VisualMode#' .. ' Ln %l - Ln ' .. v_line .. ' ⎸ ' .. total_lines
+      return '%#St_VisualMode#' .. ' Ln %l - Ln ' .. v_line .. ' ⎸ ' .. total_lines
     end
   end
 
   if mode == 'v' then
     if v_line == cur_line then
-      return '%#St_VisualMode#' .. ' Col ' .. math.abs(v_col - cur_col) + 1 .. ' '
+      return '%#St_VisualMode#' .. ' Col ' .. math.abs(v_col - cur_col) + 1 .. ' '
     else
-      return '%#St_VisualMode#' .. ' Ln ' .. total_lines .. ' '
+      return '%#St_VisualMode#' .. ' Ln ' .. total_lines .. ' '
     end
   end
 
-  return vim.o.columns > 140 and '%#St_PosSep#' .. '' .. '%#St_PosText# Ln %l, Col %c ' or ''
+  return vim.o.columns > 140 and '%#St_PosSep#' .. '' .. '%#St_PosText# Ln %l, Col %c ' or ''
 end
 
 M.time = function()
-  return '%#St_Time# ' .. os.date('%I:%M:%S %p ', os.time())
+  return '%#St_Time# ' .. os.date('%I:%M:%S %p ', os.time())
 end
 
 M.cwd = function()
-  local dir_name = '%#St_CwdSep#' .. '' .. ' 󰉖 ' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t') .. ' '
+  local dir_name = '%#St_CwdSep#' .. '' .. ' 󰉖 ' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t') .. ' '
   return (vim.o.columns > 85 and dir_name) or ''
 end
 
@@ -348,6 +349,7 @@ function M.generate_statusline()
     M.mode(),
     M.file_info(),
     M.git(),
+    '%=',
     M.package_info(),
     '%=',
     M.lsp_diagnostics(),

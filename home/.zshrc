@@ -128,3 +128,14 @@ alias bconf=go_to_waybar_config
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env"
 eval "$(zoxide init zsh --cmd c)"
+
+# pnpm
+export PNPM_HOME="/home/roy/.local/share/pnpm"
+case ":$PATH:" in
+  *":$PNPM_HOME:"*) ;;
+  *) export PATH="$PNPM_HOME:$PATH" ;;
+esac
+# pnpm end
+
+# bun completions
+[ -s "/home/roy/.bun/_bun" ] && source "/home/roy/.bun/_bun"

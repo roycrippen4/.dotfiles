@@ -144,7 +144,6 @@ autocmd('BufEnter', {
   group = augroup('PackageCheck', { clear = true }),
   callback = function()
     M.setup()
-    require('package-info').show()
   end,
 })
 

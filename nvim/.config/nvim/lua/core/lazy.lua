@@ -9,6 +9,7 @@ vim.opt.rtp:prepend(lazypath)
 
 require('lazy').setup({ { import = 'plugins' } }, {
   change_detection = { notify = false },
+  dev = { path = '~/.dotfiles/nvim/.config/nvim/dev/' },
   install = { colorscheme = { 'onedark' } },
   ui = {
     icons = vim.g.have_nerd_font and {} or {

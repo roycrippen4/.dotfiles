@@ -12,7 +12,7 @@ local function toggle_diagnostics()
   diagnostic_status = not diagnostic_status
   if diagnostic_status then
     api.nvim_echo({ { 'Show diagnostics' } }, false, {})
-    vim.diagnostic.enable()
+    vim.diagnostic.enable(true)
   else
     api.nvim_echo({ { 'Hide diagnostics' } }, false, {})
     vim.diagnostic.enable(false)

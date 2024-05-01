@@ -81,7 +81,7 @@ autocmd('VimEnter', {
       end)
     end
 
-    vim.schedule(function()
+    vim.defer_fn(function()
       local ui = require('harpoon.ui')
       local mark = require('harpoon.mark')
       local length = mark.get_length()
@@ -90,35 +90,41 @@ autocmd('VimEnter', {
         return
       end
 
-      for i = 1, mark.get_length() do
+      for i = 1, length do
         ui.nav_file(i)
       end
 
-      if os.getenv('DEBUG') == '1' then
-        require('local.logger'):show()
-        vim.defer_fn(function()
-          vim.cmd([[
-          vsplit
-          vertical resize 80
-          wincmd h
-        ]])
-          ui.nav_file(1)
-        end, 0)
-      else
-        ui.nav_file(1)
-        vim.cmd("echo ' '")
-      end
-    end)
+      ui.nav_file(1)
+    end, 100)
+
+    -- vim.schedule(function()
+
+    -- if os.getenv('DEBUG') == '1' then
+    --   require('local.logger'):show()
+    --   vim.defer_fn(function()
+    --     vim.cmd([[
+    --     vsplit
+    --     vertical resize 80
+    --     wincmd h
+    --   ]])
+    --     ui.nav_file(1)
+    --   end, 0)
+    -- else
+    --   ui.nav_file(1)
+    --   vim.cmd("echo ' '")
+    -- end
+    -- end)
   end,
 })
 
 -- Autocommand to restore the cursor position when the buffer is read
 autocmd('BufReadPost', {
-  pattern = '*',
-  group = general,
-  callback = function()
-    if vim.fn.line('\'"') > 0 and vim.fn.line('\'"') <= vim.fn.line('$') then
-      vim.cmd('normal! g`"')
+  callback = function(args)
+    local valid_line = vim.fn.line([['"]]) >= 1 and vim.fn.line([['"]]) < vim.fn.line('$')
+    local not_commit = vim.b[args.buf].filetype ~= 'commit'
+
+    if valid_line and not_commit then
+      vim.cmd([[normal! g`"]])
     end
   end,
 })
@@ -127,8 +133,8 @@ autocmd('BufReadPost', {
 autocmd({ 'BufRead', 'BufNewFile' }, {
   group = general,
   pattern = '*/node_modules/*',
-  callback = function(args)
-    vim.diagnostic.enabled(args.buf, false)
+  callback = function()
+    vim.diagnostic.enable(false)
   end,
 })
 
