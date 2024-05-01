@@ -108,10 +108,9 @@ local function enhanced_float_handler(handler, focusable)
       return
     end
 
+    add_inline_highlights(bufnr)
     vim.wo[winnr].concealcursor = 'n'
     vim.wo[winnr].scrolloff = 0
-    vim.bo[bufnr].filetype = 'LspDocFloat'
-    add_inline_highlights(bufnr)
 
     -- stylua: ignore start
     map({ 'n', 'i' }, '<C-S-N>', function() scroll(winnr, 4) end, { buffer = true })

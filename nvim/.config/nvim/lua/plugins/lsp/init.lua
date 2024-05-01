@@ -1,3 +1,5 @@
+require('plugins.lsp.overrides')
+
 return {
   'neovim/nvim-lspconfig', -- https://github.com/neovim/nvim-lspconfig
   event = 'VimEnter',
@@ -55,25 +57,6 @@ return {
   config = function()
     local lspconfig = require('lspconfig')
     local M = require('plugins.lsp.lsp-utils')
-
-    local border = {
-      { '🭽', 'FloatBorder' },
-      { '▔', 'FloatBorder' },
-      { '🭾', 'FloatBorder' },
-      { '▕', 'FloatBorder' },
-      { '🭿', 'FloatBorder' },
-      { '▁', 'FloatBorder' },
-      { '🭼', 'FloatBorder' },
-      { '▏', 'FloatBorder' },
-    }
-
-    local orig_util_open_floating_preview = vim.lsp.util.open_floating_preview
-    ---@diagnostic disable-next-line
-    function vim.lsp.util.open_floating_preview(contents, syntax, opts, ...)
-      opts = opts or {}
-      opts.border = opts.border or border
-      return orig_util_open_floating_preview(contents, syntax, opts, ...)
-    end
 
     lspconfig['clangd'].setup({
       capabilities = M.capabilities,

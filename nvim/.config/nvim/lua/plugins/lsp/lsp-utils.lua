@@ -2,7 +2,6 @@ local api = vim.api
 local augroup = api.nvim_create_augroup
 local autocmd = api.nvim_create_autocmd
 local clear_autocmds = api.nvim_clear_autocmds
-local lsp = vim.lsp
 local map = vim.keymap.set
 
 local M = {}
@@ -20,8 +19,8 @@ local function toggle_diagnostics()
 end
 
 local function toggle_inlay_hints()
-  lsp.inlay_hint.enable(not lsp.inlay_hint.is_enabled(0))
-  print('inlay hints: ' .. tostring(lsp.inlay_hint.is_enabled()))
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(0))
+  print('inlay hints: ' .. tostring(vim.lsp.inlay_hint.is_enabled()))
 end
 
 ---@param chars string[]
@@ -73,7 +72,7 @@ function M.set_lsp_mappings()
   map('n', 'gr', require('telescope.builtin').lsp_references, { desc = 'Goto References  ' })
   map('n', 'gi', require('telescope.builtin').lsp_implementations, { desc = 'Goto Implementation 󰡱 ' })
   map('n', 'gd', require('telescope.builtin').lsp_definitions, { desc = 'Goto Definition 󰼭 ' })
-  map('n', '<leader>la', lsp.buf.code_action, { desc = 'Code Action  ' })
+  map('n', '<leader>la', vim.lsp.buf.code_action, { desc = 'Code Action  ' })
   map('n', '<leader>ld', toggle_diagnostics, { desc = 'Toggle Diagnostics 󰨚 ' })
   map('n', '<leader>lf', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message 󰉪 ' })
   map('n', '<leader>lh', toggle_inlay_hints, { desc = 'Toggle lsp inlay hints 󰊠 ' })
@@ -90,7 +89,7 @@ function M.on_attach(client, bufnr)
   setup_signature_helper(bufnr, client)
 end
 
-M.capabilities = lsp.protocol.make_client_capabilities()
+M.capabilities = vim.lsp.protocol.make_client_capabilities()
 M.capabilities.textDocument.completion.completionItem = {
   documentationFormat = { 'markdown', 'plaintext' },
   snippetSupport = true,
