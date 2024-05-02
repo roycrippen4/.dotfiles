@@ -1,256 +1,273 @@
+local devicons = require('core.icons').devicon
 return {
   'nvim-tree/nvim-web-devicons', -- https://github.com/nvim-tree/nvim-web-devicons
+  lazy = false,
   config = function()
     require('nvim-web-devicons').setup({
       override = {
         default_icon = {
-          icon = require('core.icons').devicon.default,
+          icon = devicons.default,
           name = 'Default',
         },
 
         c = {
-          icon = require('core.icons').devicon.c,
+          icon = devicons.c,
           name = 'c',
         },
 
         css = {
-          icon = require('core.icons').devicon.css,
+          icon = devicons.css,
           name = 'css',
+          color = '#2196f3',
+        },
+
+        postcss = {
+          icon = '',
+          color = '#DE4012',
+          name = 'Postcss',
         },
 
         dart = {
-          icon = require('core.icons').devicon.dart,
+          icon = devicons.dart,
           name = 'dart',
         },
 
         deb = {
-          icon = require('core.icons').devicon.deb,
+          icon = devicons.deb,
           name = 'deb',
         },
 
         Dockerfile = {
-          icon = require('core.icons').devicon.Dockerfile,
+          icon = devicons.Dockerfile,
           name = 'Dockerfile',
         },
 
         html = {
-          icon = require('core.icons').devicon.html,
+          icon = devicons.html,
           name = 'html',
+          color = '#ff9408',
         },
 
         jpeg = {
-          icon = require('core.icons').devicon.jpeg,
+          icon = devicons.jpeg,
           name = 'jpeg',
         },
 
         jpg = {
-          icon = require('core.icons').devicon.jpg,
+          icon = devicons.jpg,
           name = 'jpg',
         },
 
         js = {
-          icon = require('core.icons').devicon.js,
+          icon = devicons.js,
           name = 'js',
+          color = '#f7e025',
         },
 
         kt = {
-          icon = require('core.icons').devicon.kt,
+          icon = devicons.kt,
           name = 'kt',
         },
 
         lock = {
-          icon = require('core.icons').devicon.lock,
+          icon = devicons.lock,
           name = 'lock',
         },
 
         lua = {
-          icon = require('core.icons').devicon.lua,
+          icon = devicons.lua,
           name = 'lua',
         },
 
         mp3 = {
-          icon = require('core.icons').devicon.mp,
+          icon = devicons.mp3,
           name = 'mp3',
         },
 
         mp4 = {
-          icon = require('core.icons').devicon.mp,
+          icon = devicons.mp4,
           name = 'mp4',
         },
 
         out = {
-          icon = require('core.icons').devicon.out,
+          icon = devicons.out,
           name = 'out',
         },
 
         png = {
-          icon = require('core.icons').devicon.png,
+          icon = devicons.png,
           name = 'png',
         },
 
         py = {
-          icon = require('core.icons').devicon.py,
+          icon = devicons.py,
           name = 'py',
         },
 
         ['robots.txt'] = {
-          icon = require('core.icons').devicon['robots.txt'],
+          icon = devicons['robots.txt'],
           name = 'robots',
         },
 
         toml = {
-          icon = require('core.icons').devicon.toml,
+          icon = devicons.toml,
           name = 'toml',
+          color = '#838383',
         },
 
         ts = {
-          icon = require('core.icons').devicon.ts,
+          icon = devicons.ts,
           name = 'ts',
           color = require('core.colors').light_blue,
         },
 
         ttf = {
-          icon = require('core.icons').devicon.ttf,
+          icon = devicons.ttf,
           name = 'TrueTypeFont',
         },
 
         rb = {
-          icon = require('core.icons').devicon.rb,
+          icon = devicons.rb,
           name = 'rb',
         },
 
         rpm = {
-          icon = require('core.icons').devicon.rpm,
+          icon = devicons.rpm,
           name = 'rpm',
         },
 
         vue = {
-          icon = require('core.icons').devicon.vue,
+          icon = devicons.vue,
           name = 'vue',
         },
 
         woff = {
-          icon = require('core.icons').devicon.woff,
+          icon = devicons.woff,
           name = 'WebOpenFontFormat',
         },
 
         woff2 = {
-          icon = require('core.icons').devicon.woff,
+          icon = devicons.woff,
           name = 'WebOpenFontFormat2',
         },
 
         xz = {
-          icon = require('core.icons').devicon.xz,
+          icon = devicons.xz,
           name = 'xz',
         },
 
         zip = {
-          icon = require('core.icons').devicon.zip,
+          icon = devicons.zip,
           name = 'zip',
         },
 
         ['jsx'] = {
-          icon = require('core.icons').devicon['jsx'],
+          icon = devicons['jsx'],
           color = '#ccaa00',
           name = 'bun.lockb',
         },
         ['bun.lockb'] = {
-          icon = require('core.icons').devicon['bun.lockb'],
-          color = '#EEEE00',
+          icon = devicons['bun.lockb'],
+          color = '#fbf0df',
           name = 'bun.lockb',
         },
         ['.env'] = {
-          icon = require('core.icons').devicon['.env'],
+          icon = devicons['.env'],
           color = 'gray',
           name = '.env',
         },
         ['.development.env'] = {
-          icon = require('core.icons').devicon['.development.env'],
+          icon = devicons['.development.env'],
           color = 'gray',
           name = '.development.env',
         },
+        ['.ignore'] = {
+          icon = devicons['.ignore'],
+          color = '#aaaaaa',
+          name = '.ignore',
+        },
         ['.eslintignore'] = {
-          icon = require('core.icons').devicon['.eslintignore'],
+          icon = devicons['.eslintignore'],
           color = '#1a455f',
           name = '.eslintignore',
         },
         ['.eslintrc'] = {
-          icon = require('core.icons').devicon['.eslintrc'],
+          icon = devicons['.eslintrc'],
           color = '#2c739e',
           name = 'Eslintrc',
         },
         ['.eslintrc.js'] = {
-          icon = require('core.icons').devicon['.eslintrc.js'],
+          icon = devicons['.eslintrc.js'],
           color = '#2c739e',
           name = 'Eslintrc',
         },
         ['.eslintrc.cjs'] = {
-          icon = require('core.icons').devicon['.eslintrc.cjs'],
+          icon = devicons['.eslintrc.cjs'],
           color = '#2c739e',
           name = 'Eslintrc',
         },
         ['.eslintrc.json'] = {
-          icon = require('core.icons').devicon['.eslintrc.json'],
+          icon = devicons['.eslintrc.json'],
           color = '#2c739e',
           name = 'Eslintrc',
         },
         ['.eslintrc.yaml'] = {
-          icon = require('core.icons').devicon['.eslintrc.yaml'],
+          icon = devicons['.eslintrc.yaml'],
           color = '#2c739e',
           name = 'Eslintrc',
         },
         ['http'] = {
-          icon = require('core.icons').devicon['http'],
+          icon = devicons['http'],
           color = '#519aba',
           name = 'Http',
         },
         ['makefile'] = {
-          icon = require('core.icons').devicon['makefile'],
+          icon = devicons['makefile'],
           color = '#f1502f',
           name = 'Makefile',
         },
         ['.nvmrc'] = {
-          icon = require('core.icons').devicon['.nvmrc'],
+          icon = devicons['.nvmrc'],
           color = '#005500',
           name = '.nvmrc',
         },
         ['.npmrc'] = {
-          icon = require('core.icons').devicon['.npmrc'],
+          icon = devicons['.npmrc'],
           color = '#007700',
           name = '.npmrc',
         },
         ['package.json'] = {
-          icon = require('core.icons').devicon['package.json'],
+          icon = devicons['package.json'],
           color = '#e8274b',
           name = 'PackageJson',
         },
         ['package-lock.json'] = {
-          icon = require('core.icons').devicon['package-lock.json'],
+          icon = devicons['package-lock.json'],
           color = '#7a0d21',
           name = 'PackageLockJson',
         },
         ['.prettierrc'] = {
-          icon = require('core.icons').devicon['.prettierrc'],
+          icon = devicons['.prettierrc'],
           color = '#b11a7c',
           name = '.prettierrc',
         },
         ['.prettierignore'] = {
-          icon = require('core.icons').devicon['.prettierignore'],
+          icon = devicons['.prettierignore'],
           color = '#580d3e',
           name = '.prettierignore',
         },
         ['tags'] = {
-          icon = require('core.icons').devicon['tags'],
+          icon = devicons['tags'],
           color = '#bbbbbb',
           name = 'Tags',
         },
         ['tailwind.config.js'] = {
-          icon = require('core.icons').devicon['tailwind.config.js'],
+          icon = devicons['tailwind.config.js'],
           color = '#4DB6AC',
           name = 'tailwind',
         },
         ['tailwind.config.cjs'] = {
-          icon = require('core.icons').devicon['tailwind.config.cjs'],
+          icon = devicons['tailwind.config.cjs'],
           color = '#4DB6AC',
           name = 'tailwind',
         },
@@ -260,12 +277,12 @@ return {
           name = 'tailwind',
         },
         ['tailwind.config.cts'] = {
-          icon = require('core.icons').devicon['tailwind.config.cts'],
+          icon = devicons['tailwind.config.cts'],
           color = '#4DB6AC',
           name = 'tailwind',
         },
         ['tsconfig.json'] = {
-          icon = require('core.icons').devicon['tsconfig.json'],
+          icon = devicons['tsconfig.json'],
           color = '#519aba',
           name = 'tsconfig.json',
         },
@@ -275,27 +292,27 @@ return {
           name = 'tsconfig.node.json',
         },
         ['tsconfig.test.json'] = {
-          icon = require('core.icons').devicon['tsconfig.test.json'],
+          icon = devicons['tsconfig.test.json'],
           color = '#519aba',
           name = 'tsconfig.json',
         },
         ['vite.config.cts'] = {
-          icon = '󰹭',
+          icon = devicons['vite.config'],
           color = '#7c0e8a',
-          name = 'vite.config.ts',
+          name = 'vite.config.cts',
         },
         ['vite.config.cjs'] = {
-          icon = require('core.icons').devicon['vite.config.cjs'],
+          icon = devicons['vite.config'],
           color = '#7c0e8a',
-          name = 'vite.config.ts',
+          name = 'vite.config.cs',
         },
         ['vite.config.js'] = {
-          icon = '󰹭',
+          icon = devicons['vite.config'],
           color = '#7c0e8a',
-          name = 'vite.config.ts',
+          name = 'vite.config.js',
         },
         ['vite.config.ts'] = {
-          icon = require('core.icons').devicon['vite.config.ts'],
+          icon = devicons['vite.config'],
           color = '#7c0e8a',
           name = 'vite.config.ts',
         },

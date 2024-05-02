@@ -1,10 +1,5 @@
 local map = vim.keymap.set
 
---@param value any
-local function set(value)
-  vim.fn.setreg('+', value)
-end
-
 return {
   'nvim-telescope/telescope.nvim',
   event = 'VimEnter',
@@ -58,7 +53,6 @@ return {
         path_display = { 'truncate' },
         winblend = 0,
         border = {},
-        -- borderchars = { '─', '│', '─', '│', '╭', '╮', '╯', '╰' },
         color_devicons = true,
         set_env = { ['COLORTERM'] = 'truecolor' }, -- default = nil,
         file_previewer = previewers.vim_buffer_cat.new,
@@ -77,26 +71,6 @@ return {
               actions.results_scrolling_up(prompt_bufnr)
             end,
             ['<M-t>'] = actions.send_to_qflist + actions.open_qflist,
-            ['yy'] = function()
-              local state = require('telescope.actions.state')
-              local title = state.get_current_picker(vim.api.nvim_get_current_buf()).prompt_title
-              local selected = state.get_selected_entry()
-
-              if title == 'Find Files' then
-                set(selected[1])
-                vim.notify('Yanked ' .. selected[1] .. ' into register.')
-              end
-
-              if title == 'Live Grep' then
-                set(selected.filename)
-                vim.notify('Yanked ' .. selected.filename .. ' into register.')
-              end
-
-              if title == 'Highlights' then
-                set(selected.ordinal)
-                vim.notify('Yanked ' .. selected.ordinal .. ' into register.')
-              end
-            end,
           },
           i = {
             ['<M-t>'] = actions.send_to_qflist + actions.open_qflist,
