@@ -5,3 +5,4 @@ dev
 lazygit/.config/lazygit/state.yml
 fish_variables
 sxhkd/.config/autostart
+fishd.tmp.*

@@ -52,7 +52,6 @@ tooltip {
 
 #clock,
 #custom-cpuinfo,
-#custom-gpt,
 #custom-gpuinfo,
 #custom-paper,
 #memory,
@@ -68,8 +67,23 @@ tooltip {
   padding-left: 10px;
   padding-right: 10px;
   border-radius: 10px;
+  transition: all 0.3s cubic-bezier(0.55, -0.68, 0.48, 1.682);
+  margin-top: 2px;
 }
 
+#custom-paper {
+  color: #aaaaaa;
+  background: #4c4f69;
+  opacity: 1;
+  margin-left: 3px;
+  margin-right: 3px;
+  padding-left: 10px;
+  padding-right: 11px;
+  border-radius: 10px;
+  margin-top: 2px;
+}
+
+#custom-gpt,
 #custom-discord {
   color: #aaaaaa;
   background: #4c4f69;
@@ -77,8 +91,9 @@ tooltip {
   margin-left: 3px;
   margin-right: 3px;
   padding-left: 10px;
-  padding-right: 8px;
+  padding-right: 13px;
   border-radius: 10px;
+  margin-top: 2px;
 }
 
 #custom-power {
@@ -86,10 +101,27 @@ tooltip {
   background: #4c4f69;
   opacity: 1;
   margin-left: 3px;
-  margin-right: 6px;
+  margin-right: 3px;
   padding-left: 10px;
-  padding-right: 5px;
+  padding-right: 15px;
   border-radius: 10px;
+  margin-top: 2px;
+}
+
+#clock:hover,
+#custom-cpuinfo:hover,
+#custom-discord:hover,
+#custom-gpt:hover,
+#custom-gpuinfo:hover,
+#custom-paper:hover,
+#custom-power:hover,
+#memory:hover,
+#pulseaudio:hover,
+#tray:hover,
+#window:hover {
+  background: #dc8a78;
+  color: #dce0e8;
+  transition: all 0.2s cubic-bezier(0.55, -0.68, 0.48, 1.682);
 }
 
 #workspaces {
