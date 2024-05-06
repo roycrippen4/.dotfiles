@@ -1,7 +1,5 @@
 ; extends
 
-(
- (command) @injection.content
+((command) @injection.content
  (#set! injection.language "bash")
- (#set! injection.include-children)
- )
+ (#set! injection.include-children))
