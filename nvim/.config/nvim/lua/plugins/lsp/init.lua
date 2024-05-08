@@ -81,8 +81,6 @@ return {
     lspconfig['eslint'].setup({
       capabilities = M.capabilities,
       on_attach = M.on_attach,
-      filetypes = { 'javascript', 'javascriptreact', 'typescript', 'typescriptreact', 'mjs', 'vue', 'svelte' },
-      settings = { workingDirectory = { mode = 'auto' } },
     })
 
     lspconfig['gopls'].setup({
