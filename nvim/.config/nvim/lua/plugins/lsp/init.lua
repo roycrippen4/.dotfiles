@@ -152,6 +152,14 @@ return {
       on_attach = M.on_attach,
     })
 
+    lspconfig['typos_lsp'].setup({
+      cmd_env = { RUST_LOG = 'error' },
+      init_options = {
+        config = '~/code/typos-lsp/crates/typos-lsp/tests/typos.toml',
+        diagnosticSeverity = 'Error',
+      },
+    })
+
     lspconfig['svelte'].setup({
       capabilities = M.capabilities,
       on_attach = M.on_attach,

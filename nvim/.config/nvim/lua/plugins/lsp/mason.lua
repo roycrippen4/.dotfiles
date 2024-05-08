@@ -1,16 +1,16 @@
 return {
   ensure_installed = {
-    'lua-language-server',
-    'stylua',
+    'clang-format',
+    'clangd',
     'css-lsp',
     'html-lsp',
     'json-language-server',
+    'lua-language-server',
     'prettier',
     'prettierd',
     'rust-analyzer',
+    'stylua',
     'typescript-language-server',
-    'clangd',
-    'clang-format',
   },
   PATH = 'skip',
   ui = {
