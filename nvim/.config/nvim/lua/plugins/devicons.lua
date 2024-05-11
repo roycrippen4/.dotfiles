@@ -191,28 +191,33 @@ return {
           color = '#1a455f',
           name = '.eslintignore',
         },
+        ['eslint.config.js'] = {
+          icon = devicons['eslint'],
+          color = '#2c739e',
+          name = 'Eslintrc',
+        },
         ['.eslintrc'] = {
-          icon = devicons['.eslintrc'],
+          icon = devicons['eslint'],
           color = '#2c739e',
           name = 'Eslintrc',
         },
         ['.eslintrc.js'] = {
-          icon = devicons['.eslintrc.js'],
+          icon = devicons['eslint'],
           color = '#2c739e',
           name = 'Eslintrc',
         },
         ['.eslintrc.cjs'] = {
-          icon = devicons['.eslintrc.cjs'],
+          icon = devicons['eslint'],
           color = '#2c739e',
           name = 'Eslintrc',
         },
         ['.eslintrc.json'] = {
-          icon = devicons['.eslintrc.json'],
+          icon = devicons['eslint'],
           color = '#2c739e',
           name = 'Eslintrc',
         },
         ['.eslintrc.yaml'] = {
-          icon = devicons['.eslintrc.yaml'],
+          icon = devicons['eslint'],
           color = '#2c739e',
           name = 'Eslintrc',
         },
