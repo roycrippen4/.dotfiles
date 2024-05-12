@@ -173,8 +173,8 @@ M.file_info = function()
   end
 
   if name ~= 'Empty ' then
-    local ft_icon, hl_group = require('nvim-web-devicons').get_icon(name)
-    icon = ((ft_icon ~= nil and hl_group ~= nil) and ' %#' .. hl_group .. '#' .. ft_icon) or icon
+    local ft_icon, _ = require('nvim-web-devicons').get_icon(name)
+    icon = ((ft_icon ~= nil) and ' %#St_FtIcon#' .. ft_icon) or icon
 
     name = ' ' .. name .. ' '
   end
@@ -341,6 +341,21 @@ autocmd('ModeChanged', {
     local hl = vim.api.nvim_get_hl(0, { name = M.modes[m][2] })
     vim.api.nvim_set_hl(0, 'St_NvimTree', { fg = hl.fg, bg = hl.bg, italic = true })
     vim.api.nvim_set_hl(0, 'St_Harpoon', { fg = hl.fg, bg = hl.bg, italic = true })
+  end,
+})
+
+-- Dynamically changes the highlight group of the statusline filetype icon based on the current file
+autocmd('BufEnter', {
+  group = vim.api.nvim_create_augroup('StatusLineFiletype', { clear = true }),
+  callback = function()
+    local _, hl_group = require('nvim-web-devicons').get_icon(vim.fn.expand('%:e'))
+
+    if hl_group == nil then
+      return
+    end
+
+    local hl = vim.api.nvim_get_hl(0, { name = hl_group })
+    vim.api.nvim_set_hl(0, 'St_FtIcon', { fg = hl.fg, bg = '#21252b' })
   end,
 })
 
