@@ -188,7 +188,7 @@ return {
         },
         ['.eslintignore'] = {
           icon = devicons['.eslintignore'],
-          color = '#1a455f',
+          color = '#2c739e',
           name = '.eslintignore',
         },
         ['eslint.config.js'] = {

@@ -34,6 +34,7 @@ return {
     ['.env'] = '',
     ['.development.env'] = '',
     ['eslint'] = '',
+    ['.eslintignore'] = '󰫈',
     ['http'] = '󰖟',
     ['makefile'] = '',
     ['.nvmrc'] = '󰎙',
