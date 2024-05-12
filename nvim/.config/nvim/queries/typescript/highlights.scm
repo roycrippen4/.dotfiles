@@ -1,16 +1,15 @@
 ;; extends
 
-(generic_type 
-  type_arguments: (type_arguments 
-    (type_identifier) @type.argument)) 
+(type_arguments
+  (tuple_type
+    (type_identifier) @type.type_argument))
 
 (type_arguments
-            (predefined_type) @type.argument) 
+  (tuple_type
+    (predefined_type) @type.type_argument))
 
-(variable_declarator
-  (array_pattern
-    (identifier) @variable.useState
-    (identifier) @function.useState)
-  (call_expression
-    function: (identifier) @function.builtin.useState))
+(type_arguments
+  (predefined_type) @type.type_argument)
 
+(type_arguments
+  (type_identifier) @type.type_argument)
