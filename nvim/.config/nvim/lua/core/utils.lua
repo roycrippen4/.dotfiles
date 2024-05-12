@@ -262,4 +262,18 @@ function M.win_apply_config(win, opts)
   api.nvim_win_set_config(win, opts)
 end
 
+--- Returns true if the file exists
+---@param filename string
+---@return boolean
+function M.file_exists(filename)
+  local file = io.open(filename, 'r')
+
+  if file ~= nil then
+    io.close(file)
+    return true
+  end
+
+  return false
+end
+
 return M

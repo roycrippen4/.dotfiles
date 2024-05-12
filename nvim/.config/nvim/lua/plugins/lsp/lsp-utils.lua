@@ -19,8 +19,8 @@ local function toggle_diagnostics()
 end
 
 local function toggle_inlay_hints()
-  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled(0))
-  print('inlay hints: ' .. tostring(vim.lsp.inlay_hint.is_enabled()))
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }))
+  print('inlay hints: ' .. tostring(vim.lsp.inlay_hint.is_enabled({ bufnr = 0 })))
 end
 
 ---@param chars string[]

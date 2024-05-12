@@ -1,4 +1,10 @@
 require('plugins.lsp.overrides')
+local utils = require('core.utils')
+
+---@return boolean
+local function has_tailwind_config()
+  return utils.file_exists('tailwind.config.js') or utils.file_exists('tailwind.config.cjs') or utils.file_exists('tailwind.config.ts')
+end
 
 return {
   'neovim/nvim-lspconfig', -- https://github.com/neovim/nvim-lspconfig
@@ -163,10 +169,12 @@ return {
       on_attach = M.on_attach,
     })
 
-    lspconfig['tailwindcss'].setup({
-      capabilities = M.capabilities,
-      on_attach = M.on_attach,
-    })
+    if has_tailwind_config() then
+      lspconfig['tailwindcss'].setup({
+        capabilities = M.capabilities,
+        on_attach = M.on_attach,
+      })
+    end
 
     lspconfig['taplo'].setup({
       capabilities = M.capabilities,
