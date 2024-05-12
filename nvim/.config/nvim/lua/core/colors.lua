@@ -59,6 +59,7 @@ local groups = {
   HarpoonTitle = { fg = colors.one_bg, bg = colors.blue, italic = true },
   HarpoonWindow = { bg = colors.one_bg },
   LazyNormal = { bg = colors.black },
+  LazyProp = { fg = colors.sun, bg = colors.black },
   LspSignatureActiveParameter = { fg = colors.blue, bg = colors.black, italic = true },
   MasonNormal = { bg = colors.black },
   NoCursor = { blend = 100, nocombine = true },
@@ -162,22 +163,7 @@ local groups = {
   TelescopeSelection = { bg = colors.black2, fg = colors.white },
   Terminal = { bg = colors.darker_black },
 
-  -- ['@string.special.url.comment'] = { fg = base30.light_gray, underline = true },
-  -- ['@constant'] = { fg = base30.red },
-  -- ['@keyword.operator'] = { fg = base30.pink, italic = true },
-  -- ['@operator'] = { fg = base30.pink },
-  -- ['@type'] = { fg = base30.cyan },
-  -- ['@type.argument'] = { italic = true },
-  -- ['@variable'] = { fg = base30.white },
-  -- ['@variable.member'] = { fg = base30.red },
-
-  -- ['@css.classname'] = { fg = base30.sun, italic = true },
-  -- ['@css.plain_value'] = { fg = base30.white },
-  -- ['@css.id_name'] = { fg = base30.purple },
-  -- ['@bash.path'] = { fg = base30.dark_yellow, italic = true },
-  -- ['@bash.flag.single'] = { fg = base30.sun },
-  -- ['@bash.flag.double'] = { fg = base30.sun, italic = true },
-  -- ['@sxhkdrc.keysym'] = { fg = base30.pink },
+  ['@type.type_argument'] = { italic = true },
 }
 
 for group, color in pairs(groups) do
