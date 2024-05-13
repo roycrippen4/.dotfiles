@@ -1,6 +1,7 @@
 local map = vim.keymap.set
 local utils = require('core.utils')
 
+map('n', '<C-S-Y>', 'mZv_y`Z', { desc = 'Yank from cursor to start of line' })
 map('n', 'L', require('local.tabufline').tabuflineNext)
 map('n', 'H', require('local.tabufline').tabuflinePrev)
 map('n', '<Leader>x', utils.close_buf, { desc = 'Close current buffer ' })
