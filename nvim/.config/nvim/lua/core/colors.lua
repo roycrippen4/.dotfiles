@@ -40,6 +40,7 @@ local colors = {
   yellow = '#e7c787',
 }
 
+---@type table<string, vim.api.keyset.highlight>
 local groups = {
   Added = { fg = colors.green },
   Changed = { fg = colors.light_blue },
@@ -60,7 +61,7 @@ local groups = {
   HarpoonWindow = { bg = colors.one_bg },
   LazyNormal = { bg = colors.black },
   LazyProp = { fg = colors.sun, bg = colors.black },
-  LspSignatureActiveParameter = { fg = colors.blue, bg = colors.black, italic = true },
+  LspSignatureActiveParameter = { underline = true, sp = colors.blue },
   MasonNormal = { bg = colors.black },
   NoCursor = { blend = 100, nocombine = true },
   NoiceVirtualTextOn = { fg = '#53bf00', italic = true },
