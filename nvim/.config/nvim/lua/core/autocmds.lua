@@ -12,6 +12,14 @@ autocmd('TextYankPost', {
   end,
 })
 
+autocmd('BufWritePost', {
+  desc = 'Reload kitty config on save',
+  pattern = 'kitty.conf',
+  callback = function()
+    os.execute('pkill -USR1 kitty')
+  end,
+})
+
 -- don't list quickfix buffers
 autocmd('FileType', {
   pattern = 'qf',
