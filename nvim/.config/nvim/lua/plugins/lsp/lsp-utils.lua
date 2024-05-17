@@ -60,8 +60,8 @@ local function svelte_change_check(client)
   end
 end
 
---- Sets basic LSP mappings
-function M.set_lsp_mappings()
+---@param additional_keymaps? KeyPair[]
+function M.set_lsp_mappings(additional_keymaps)
   map('n', 'gr', require('telescope.builtin').lsp_references, { desc = 'Goto References  ' })
   map('n', 'gi', require('telescope.builtin').lsp_implementations, { desc = 'Goto Implementation 󰡱 ' })
   map('n', 'gd', require('telescope.builtin').lsp_definitions, { desc = 'Goto Definition 󰼭 ' })
@@ -72,6 +72,10 @@ function M.set_lsp_mappings()
   map('n', '<leader>li', '<cmd> LspInfo<CR>', { desc = 'Show Lsp Info  ' })
   map('n', '<leader>lR', '<cmd> LspRestart<CR>', { desc = 'Restart language servers  ' })
   map('n', '<leader>r', vim.lsp.buf.rename, { desc = 'LSP Rename 󰑕 ' })
+
+  if additional_keymaps then
+    require('core.utils').create_keymaps(additional_keymaps)
+  end
 end
 
 ---@param client table
