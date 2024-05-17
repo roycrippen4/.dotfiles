@@ -6,16 +6,9 @@ local map = vim.keymap.set
 
 local M = {}
 
-local diagnostic_status = true
+--- Toggles diagnostics
 local function toggle_diagnostics()
-  diagnostic_status = not diagnostic_status
-  if diagnostic_status then
-    api.nvim_echo({ { 'Show diagnostics' } }, false, {})
-    vim.diagnostic.enable(true)
-  else
-    api.nvim_echo({ { 'Hide diagnostics' } }, false, {})
-    vim.diagnostic.enable(false)
-  end
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end
 
 local function toggle_inlay_hints()

@@ -1,16 +1,8 @@
 local map = vim.keymap.set
 local builtin = require('telescope.builtin')
 
-local diagnostic_status = true
 local function toggle_diagnostics()
-  diagnostic_status = not diagnostic_status
-  if diagnostic_status then
-    vim.api.nvim_echo({ { 'Show diagnostics' } }, false, {})
-    vim.diagnostic.enable(true)
-  else
-    vim.api.nvim_echo({ { 'Hide diagnostics' } }, false, {})
-    vim.diagnostic.enable(false)
-  end
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end
 
 map('n', 'gr', builtin.lsp_references, { desc = 'Goto References  ' })
