@@ -1,5 +1,5 @@
 require('local.hlsearch')
-require('local.logger')
+-- require('local.logger')
 require('local.macro')
 require('local.quitter')
 require('local.scrolleof')
