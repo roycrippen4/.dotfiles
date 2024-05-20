@@ -1,23 +1,29 @@
--- vim.fn.sign_define('DapBreakpoint', { text = '🟥', texthl = '', linehl = '', numhl = '' })
--- vim.fn.sign_define('DapBreakpointCondition', { text = '❓', texthl = '', linehl = '', numhl = '' })
--- vim.fn.sign_define('DapLogPoint', { text = '📝', texthl = '', linehl = '', numhl = '' })
--- vim.fn.sign_define('DapStopped', { text = '➡️', texthl = '', linehl = '', numhl = '' })
--- vim.fn.sign_define('DapBreakpointRejected', { text = '❌', texthl = '', linehl = '', numhl = '' })
-
--- Configuration for diagnostics
-local diagnostic_signs = {
-  { name = 'DiagnosticSignError', text = '💀' },
-  { name = 'DiagnosticSignWarn', text = ' ' },
-  { name = 'DiagnosticSignHint', text = '󱡴 ' },
-  { name = 'DiagnosticSignInfo', text = ' ' },
+local signs = {
+  dap = { --- @type { name: string, opts: vim.fn.sign_define.dict }[]
+    { name = 'DapBreakpoint', opts = { text = '', texthl = 'red', linehl = '', numhl = '' } },
+    { name = 'DapBreakpointCondition', opts = { text = '', texthl = 'yellow', linehl = '', numhl = '' } },
+    { name = 'DapLogPoint', opts = { text = '', texthl = '', linehl = '', numhl = '' } },
+    { name = 'DapStopped', opts = { text = '', texthl = '', linehl = '', numhl = '' } },
+    { name = 'DapBreakpointRejected', opts = { text = '', texthl = '', linehl = '', numhl = '' } },
+  },
+  diagnostic = { --- @type { name: string, opts: vim.fn.sign_define.dict }[]
+    { name = 'DiagnosticSignError', opts = { text = '💀', texthl = 'DiagnosticSignError', linehl = '', numhl = '' } },
+    { name = 'DiagnosticSignWarn', opts = { text = '', texthl = 'DiagnosticSignWarn', linehl = '', numhl = '' } },
+    { name = 'DiagnosticSignHint', opts = { text = '󱡴', texthl = 'DiagnosticSignHint', linehl = '', numhl = '' } },
+    { name = 'DiagnosticSignInfo', opts = { text = '', texthl = 'DiagnosticSignInfo', linehl = '', numhl = '' } },
+  },
 }
 
-for _, sign in ipairs(diagnostic_signs) do
-  vim.fn.sign_define(sign.name, { texthl = sign.name, text = sign.text, numhl = '' })
+for _, sign in ipairs(signs.diagnostic) do
+  vim.fn.sign_define(sign.name, { text = sign.opts.text, texthl = sign.opts.texthl, linehl = sign.opts.linehl, numhl = sign.opts.numhl })
+end
+
+for _, sign in ipairs(signs.dap) do
+  vim.fn.sign_define(sign.name, { text = sign.opts.text, texthl = sign.opts.texthl, linehl = sign.opts.linehl, numhl = sign.opts.numhl })
 end
 
 vim.diagnostic.config({
-  signs = { active = diagnostic_signs },
+  signs = { active = signs.diagnostic },
   update_in_insert = false,
   underline = true,
   severity_sort = true,
