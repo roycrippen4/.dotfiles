@@ -23,6 +23,7 @@ gui:
   showBottomLine: false # for hiding the bottom information line (unless it has important information to tell you)
   showCommandLog: true
   showIcons: true
+  nerdFontsVersion: "3"
 disableStartupPopups: true
 notARepository: 'skip' # one of: 'prompt' | 'create' | 'skip'
 os:
