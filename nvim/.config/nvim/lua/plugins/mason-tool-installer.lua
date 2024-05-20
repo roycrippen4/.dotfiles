@@ -15,7 +15,6 @@ return {
       'json-lsp',
       'lua-language-server',
       'marksman',
-      'mdx-analyzer',
       'prettier',
       'prettierd',
       'pyright',

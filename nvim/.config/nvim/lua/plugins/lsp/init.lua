@@ -146,11 +146,6 @@ return {
       on_attach = M.on_attach,
     })
 
-    lspconfig['mdx_analyzer'].setup({
-      capabilities = M.capabilities,
-      on_attach = M.on_attach,
-    })
-
     lspconfig['pyright'].setup({
       capabilities = M.capabilities,
       on_attach = M.on_attach,

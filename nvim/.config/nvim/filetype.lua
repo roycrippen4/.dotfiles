@@ -6,7 +6,6 @@ vim.filetype.add({
     gif = 'image',
     jpeg = 'image',
     jpg = 'image',
-    mdx = 'mdx',
     mts = 'typescript',
     png = 'image',
     postcss = 'css',
