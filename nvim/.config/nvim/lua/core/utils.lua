@@ -276,4 +276,15 @@ function M.file_exists(filename)
   return false
 end
 
+--- @param keymaps KeyPair[]
+function M.create_keymaps(keymaps)
+  for _, keymap in ipairs(keymaps) do
+    if keymap.mode == nil then
+      vim.keymap.set('n', keymap.lhs, keymap.rhs, keymap.opts or {})
+    else
+      vim.keymap.set(keymap.mode, keymap.lhs, keymap.rhs, keymap.opts or {})
+    end
+  end
+end
+
 return M

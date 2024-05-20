@@ -46,12 +46,8 @@ return {
       'yaml',
       'zig',
     },
-    autopairs = {
-      enable = true,
-    },
-    indent = {
-      enable = true,
-    },
+    autopairs = { enable = true },
+    indent = { enable = true },
     highlight = {
       enable = true,
       use_languagetree = true,
@@ -64,7 +60,6 @@ return {
   },
   config = function(_, opts)
     require('nvim-treesitter.install').prefer_git = true
-    ---@diagnostic disable-next-line: missing-fields
     require('nvim-treesitter.configs').setup(opts)
   end,
 }

@@ -104,24 +104,6 @@ autocmd('VimEnter', {
 
       ui.nav_file(1)
     end, 100)
-
-    -- vim.schedule(function()
-
-    -- if os.getenv('DEBUG') == '1' then
-    --   require('local.logger'):show()
-    --   vim.defer_fn(function()
-    --     vim.cmd([[
-    --     vsplit
-    --     vertical resize 80
-    --     wincmd h
-    --   ]])
-    --     ui.nav_file(1)
-    --   end, 0)
-    -- else
-    --   ui.nav_file(1)
-    --   vim.cmd("echo ' '")
-    -- end
-    -- end)
   end,
 })
 
