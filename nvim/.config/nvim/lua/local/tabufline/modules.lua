@@ -9,13 +9,17 @@ local function is_buf_valid(bufnr)
 end
 
 ---------------------------------------------------------- btn onclick functions ----------------------------------------------
--- vim.cmd("function! TbGoToBuf(bufnr,b,c,d) \n execute 'b'..a:bufnr \n endfunction")
+vim.cmd("function! TbGoToBuf(bufnr,b,c,d) \n execute 'b'..a:bufnr \n endfunction")
 
 vim.cmd([[
          function! TbKillBuf(bufnr,b,c,d) 
            call luaeval('require("local.tabufline").close_buffer(_A)', a:bufnr)
          endfunction
        ]])
+
+vim.cmd('function! TbNewTab(a,b,c,d) \n tabnew \n endfunction')
+vim.cmd("function! TbGotoTab(tabnr,b,c,d) \n execute a:tabnr ..'tabnext' \n endfunction")
+vim.cmd("function! TbTabClose(a,b,c,d) \n lua require('local.tabufline').closeAllBufs('closeTab') \n endfunction")
 
 -------------------------------------------------------- functions ------------------------------------------------------------
 --- gets the width of the nvim-tree window
@@ -132,8 +136,7 @@ local function style_buffer_tab(nr)
   local close_btn = '%' .. nr .. '@TbKillBuf@ 󰅖 %X'
   local filepath = api.nvim_buf_get_name(nr)
   local name = (filepath == '' and ' No Name') or filepath:match('([^/\\]+)[/\\]*$')
-  -- name = '%' .. nr .. '@TbGoToBuf@' .. add_file_info(name, nr) .. '%X'
-  name = '%' .. nr .. add_file_info(name, nr) .. '%X'
+  name = '%' .. nr .. '@TbGoToBuf@' .. add_file_info(name, nr) .. '%X'
 
   -- color close btn for focused / hidden  buffers
   if nr == api.nvim_get_current_buf() then
