@@ -3,6 +3,7 @@ return {
   lazy = false,
   opts = {
     ensure_installed = {
+      'codelldb',
       'clangd',
       'css-lsp',
       'docker-compose-language-service',

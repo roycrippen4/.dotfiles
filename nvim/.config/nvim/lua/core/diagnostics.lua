@@ -1,10 +1,10 @@
 local signs = {
   dap = { --- @type { name: string, opts: vim.fn.sign_define.dict }[]
-    { name = 'DapBreakpoint', opts = { text = '', texthl = 'red', linehl = '', numhl = '' } },
-    { name = 'DapBreakpointCondition', opts = { text = '', texthl = 'yellow', linehl = '', numhl = '' } },
-    { name = 'DapLogPoint', opts = { text = '', texthl = '', linehl = '', numhl = '' } },
-    { name = 'DapStopped', opts = { text = '', texthl = '', linehl = '', numhl = '' } },
-    { name = 'DapBreakpointRejected', opts = { text = '', texthl = '', linehl = '', numhl = '' } },
+    { name = 'DapBreakpoint', opts = { text = '', texthl = 'DapBreakpoint', linehl = '', numhl = '' } },
+    { name = 'DapBreakpointCondition', opts = { text = '', texthl = 'DapBreakpointCondition', linehl = '', numhl = '' } },
+    { name = 'DapLogPoint', opts = { text = '', texthl = 'DapLogPoint', linehl = '', numhl = '' } },
+    { name = 'DapStopped', opts = { text = '', texthl = 'DapStopped', linehl = '', numhl = '' } },
+    { name = 'DapBreakpointRejected', opts = { text = '', texthl = 'DapBreakpointRejected', linehl = '', numhl = '' } },
   },
   diagnostic = { --- @type { name: string, opts: vim.fn.sign_define.dict }[]
     { name = 'DiagnosticSignError', opts = { text = '💀', texthl = 'DiagnosticSignError', linehl = '', numhl = '' } },
