@@ -4,7 +4,7 @@ return {
     local logger = require('logger')
     logger:setup({ show_on_start = false })
 
-    vim.keymap.set('n', '<leader>L', function()
+    vim.keymap.set('n', '<leader>ls', function()
       require('logger'):toggle()
     end)
 
