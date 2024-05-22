@@ -2,6 +2,6 @@ return {
   'vhyrro/luarocks.nvim',
   priority = 1001,
   opts = {
-    rocks = { 'magick' },
+    rocks = { 'lua-cjson', 'http', 'magick' },
   },
 }
