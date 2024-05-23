@@ -19,7 +19,7 @@ return {
               require('dapui').eval()
               require('dapui').eval()
             end,
-            desc = 'Evaluate expression',
+            desc = '󱈱  Evaluate expression',
           },
         },
         dependencies = { 'mfussenegger/nvim-dap', 'nvim-neotest/nvim-nio' },
@@ -66,7 +66,7 @@ return {
             function()
               require('osv').launch({ port = 8086 })
             end,
-            desc = 'Launch Lua adapter',
+            desc = '󱘖  Launch Lua adapter',
           },
         },
       },
@@ -77,14 +77,14 @@ return {
         function()
           require('dap').toggle_breakpoint()
         end,
-        desc = 'Toggle breakpoint',
+        desc = '  Toggle breakpoint',
       },
       {
         '<leader>dc',
         function()
           require('dap').set_breakpoint(vim.fn.input('Breakpoint condition: '))
         end,
-        desc = 'Breakpoint condition',
+        desc = '󰇽  Breakpoint condition',
       },
       {
         '<F5>',

@@ -19,17 +19,25 @@ end, {
   desc = 'Re-enable autoformat-on-save',
 })
 
+local format_enabled = true
+
 return {
   'stevearc/conform.nvim',
   lazy = false,
   keys = {
     {
-      '<leader>f',
+      '<leader>ft',
+      mode = 'n',
       function()
-        require('conform').format({ async = true, lsp_fallback = true })
+        if format_enabled then
+          vim.cmd('FormatDisable')
+          format_enabled = false
+        else
+          vim.cmd('FormatEnable')
+          format_enabled = true
+        end
       end,
-      mode = '',
-      desc = '[F]ormat buffer',
+      desc = '  Toggle autoformat-on-save',
     },
   },
   opts = {

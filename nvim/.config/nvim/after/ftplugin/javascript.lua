@@ -1,7 +1,7 @@
 -- Runs javascript files with node
 vim.keymap.set('n', '<leader>js', function()
   require('local.term').send('node ' .. vim.api.nvim_buf_get_name(vim.api.nvim_get_current_buf()), 'F')
-end, { desc = 'Run Javascript file' })
+end, { desc = '  Run Javascript file' })
 
 -- Automatically end a self-closing tag when pressing /
 vim.keymap.set('i', '/', function()

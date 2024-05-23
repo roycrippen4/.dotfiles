@@ -4,9 +4,9 @@ return {
     local logger = require('logger')
     logger:setup({ show_on_start = false })
 
-    vim.keymap.set('n', '<leader>ls', function()
+    vim.keymap.set('n', '<leader>L', function()
       require('logger'):toggle()
-    end)
+    end, { desc = '󰗽  Show logger' })
 
     function _G.log(...)
       logger:log(...)

@@ -60,23 +60,25 @@ local function svelte_change_check(client)
   end
 end
 
+-- stylua: ignore start
 ---@param additional_keymaps? KeyPair[]
 function M.set_lsp_mappings(additional_keymaps)
-  map('n', 'gr', require('telescope.builtin').lsp_references, { desc = 'Goto References  ' })
-  map('n', 'gi', require('telescope.builtin').lsp_implementations, { desc = 'Goto Implementation 󰡱 ' })
-  map('n', 'gd', require('telescope.builtin').lsp_definitions, { desc = 'Goto Definition 󰼭 ' })
-  map('n', '<leader>la', vim.lsp.buf.code_action, { desc = 'Code Action  ' })
-  map('n', '<leader>ld', toggle_diagnostics, { desc = 'Toggle Diagnostics 󰨚 ' })
-  map('n', '<leader>lf', vim.diagnostic.open_float, { desc = 'Open floating diagnostic message 󰉪 ' })
-  map('n', '<leader>lh', toggle_inlay_hints, { desc = 'Toggle lsp inlay hints 󰊠 ' })
-  map('n', '<leader>li', '<cmd> LspInfo<CR>', { desc = 'Show Lsp Info  ' })
-  map('n', '<leader>lR', '<cmd> LspRestart<CR>', { desc = 'Restart language servers  ' })
-  map('n', '<leader>r', vim.lsp.buf.rename, { desc = 'LSP Rename 󰑕 ' })
+  map('n', 'gr',         require('telescope.builtin').lsp_references,      { desc = '  Goto References'                 })
+  map('n', 'gi',         require('telescope.builtin').lsp_implementations, { desc = '󰡱  Goto Implementation'             })
+  map('n', 'gd',         require('telescope.builtin').lsp_definitions,     { desc = '󰼭  Goto Definition'                 })
+  map('n', '<leader>r',  vim.lsp.buf.rename,                               { desc = '  LSP Rename'                      })
+  map('n', '<leader>la', vim.lsp.buf.code_action,                          { desc = '  Code Action'                     })
+  map('n', '<leader>lf', vim.diagnostic.open_float,                        { desc = '󰉪 Open floating diagnostic message' })
+  map('n', '<leader>ld', toggle_diagnostics,                               { desc = '󰨚  Toggle Diagnostics '             })
+  map('n', '<leader>lh', toggle_inlay_hints,                               { desc = '󰊠  Toggle lsp inlay hints'          })
+  map('n', '<leader>li', '<cmd> LspInfo    <CR>',                          { desc = '  Show Lsp Info'                   })
+  map('n', '<leader>lR', '<cmd> LspRestart <CR>',                          { desc = '  Restart language servers'        })
 
   if additional_keymaps then
     require('core.utils').create_keymaps(additional_keymaps)
   end
 end
+-- stylua: ignore end
 
 ---@param client table
 ---@param bufnr integer
