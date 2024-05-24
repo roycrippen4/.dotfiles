@@ -14,7 +14,7 @@ return {
       ['<leader>m']  = { name = '  Markdown' },
       ['<leader>p']  = { name = '  Package'  },
       ['<leader>t']  = { name = '  Trouble'  },
-      ['<leader>u']  = { name = '  Undo'  },
+      ['<leader>u']  = { name = '  Undo'     },
       --stylua: ignore end
     })
   end,
