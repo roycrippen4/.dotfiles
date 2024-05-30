@@ -15,16 +15,20 @@ autocmd('TextYankPost', {
 autocmd('InsertEnter', {
   desc = 'Disable cursorline in insert mode',
   group = general,
-  callback = function()
-    vim.cmd('set nocul')
+  callback = function(args)
+    if not vim.tbl_contains(pattern, vim.bo[args.buf].ft) then
+      vim.cmd('set nocul')
+    end
   end,
 })
 
 autocmd('InsertLeave', {
   desc = 'Enable cursorline after leaving insert mode',
   group = general,
-  callback = function()
-    vim.cmd('set cul')
+  callback = function(args)
+    if not vim.tbl_contains(pattern, vim.bo[args.buf].ft) then
+      vim.cmd('set cul')
+    end
   end,
 })
 
