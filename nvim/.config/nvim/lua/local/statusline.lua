@@ -269,8 +269,7 @@ end
 
 M.lsp_status = function()
   if rawget(vim, 'lsp') then
-    ---@diagnostic disable-next-line
-    for _, client in ipairs(vim.lsp.get_active_clients()) do
+    for _, client in ipairs(vim.lsp.get_clients()) do
       if client.attached_buffers[stbufnr()] then
         return (vim.o.columns > 100 and '%#St_LspStatus#' .. '   LSP [' .. client.name .. '] ') or '   LSP '
       end
@@ -278,7 +277,6 @@ M.lsp_status = function()
   end
   return ''
 end
--- 
 
 M.cursor_position = function()
   local mode = vim.fn.mode(true)

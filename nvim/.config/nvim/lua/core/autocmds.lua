@@ -12,6 +12,22 @@ autocmd('TextYankPost', {
   end,
 })
 
+autocmd('InsertEnter', {
+  desc = 'Disable cursorline in insert mode',
+  group = general,
+  callback = function()
+    vim.cmd('set nocul')
+  end,
+})
+
+autocmd('InsertLeave', {
+  desc = 'Enable cursorline after leaving insert mode',
+  group = general,
+  callback = function()
+    vim.cmd('set cul')
+  end,
+})
+
 autocmd('BufWritePost', {
   desc = 'Reload kitty config on save',
   pattern = 'kitty.conf',
