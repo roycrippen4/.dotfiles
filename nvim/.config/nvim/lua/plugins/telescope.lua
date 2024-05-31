@@ -21,7 +21,6 @@ end
 return {
   'nvim-telescope/telescope.nvim',
   event = 'VimEnter',
-  tag = '0.1.6',
   dependencies = {
     'nvim-lua/plenary.nvim',
     {
@@ -73,11 +72,9 @@ return {
         buffer_previewer_maker = require('telescope.previewers').buffer_previewer_maker,
         mappings = { n = { ['q'] = require('telescope.actions').close } },
       },
-      extensions = { fzf = { fuzzy = true, override_generic_sorter = true, override_file_sorter = true, case_mode = 'smart_case' } },
     }
 
     require('telescope').setup(opts)
-
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('ui-select')
     create_mappings()
