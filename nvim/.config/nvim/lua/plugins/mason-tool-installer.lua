@@ -25,7 +25,6 @@ return {
       'svelte-language-server',
       'tailwindcss-language-server',
       'taplo',
-      'typos-lsp',
       'typescript-language-server',
       'yaml-language-server',
       'yamlfmt',
