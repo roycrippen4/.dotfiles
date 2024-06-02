@@ -226,6 +226,21 @@ return {
           color = '#519aba',
           name = 'Http',
         },
+        ['hypridle.conf'] = {
+          icon = devicons['hypr'],
+          color = '#00aaae',
+          name = 'Hypridle',
+        },
+        ['hyprlock.conf'] = {
+          icon = devicons['hypr'],
+          color = '#00aaae',
+          name = 'Hyprlock',
+        },
+        ['hyprpaper.conf'] = {
+          icon = devicons['hypr'],
+          color = '#00aaae',
+          name = 'Hyprpaper',
+        },
         ['makefile'] = {
           icon = devicons['makefile'],
           color = '#f1502f',

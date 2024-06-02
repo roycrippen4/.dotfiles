@@ -53,6 +53,7 @@ return {
     ['tsconfig.test.json'] = '󰙨',
     ['vite.config'] = '󰹭',
     ['.ignore'] = '',
+    ['hypr'] = '',
   },
   cmp = {
     Namespace = '󰌗',
