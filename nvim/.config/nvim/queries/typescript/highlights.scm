@@ -13,3 +13,7 @@
 
 (type_arguments
   (type_identifier) @type.type_argument)
+
+(type_arguments
+  (union_type
+    (type_identifier) @type.type_argument))
