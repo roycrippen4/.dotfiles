@@ -2,6 +2,7 @@
 
 return {
   s('dnl', { t('---@diagnostic disable-next-line') }),
+  s('leader', { t('<leader>') }),
 
   s({
     trig = 'defer',

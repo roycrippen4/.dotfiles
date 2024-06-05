@@ -94,38 +94,22 @@ autocmd('FileType', {
   end,
 })
 
--- Opens up all marked files. Also opens the logger buffer if -d gets passed in
--- autocmd('VimEnter', {
---   group = general,
---   pattern = 'NvimTree_1',
---   once = true,
---   callback = function()
---     require('core.utils').set_titlestring(vim.fn.getcwd())
+-- Sets terminal titlestring to the current working directory
+autocmd('VimEnter', {
+  group = general,
+  pattern = 'NvimTree_1',
+  once = true,
+  callback = function()
+    require('core.utils').set_titlestring(vim.fn.getcwd())
 
---     if vim.fn.filereadable('.nvmrc') == 1 then
---       require('local.term').send('nvm use', 'H')
---       vim.schedule(function()
---         require('local.term').toggle_horizontal()
---       end)
---     end
-
---     vim.defer_fn(function()
---       local ui = require('harpoon.ui')
---       local mark = require('harpoon.mark')
---       local length = mark.get_length()
-
---       if length == 0 then
---         return
---       end
-
---       for i = 1, length do
---         ui.nav_file(i)
---       end
-
---       ui.nav_file(1)
---     end, 100)
---   end,
--- })
+    -- if vim.fn.filereadable('.nvmrc') == 1 then
+    --   require('local.term').send('nvm use', 'H')
+    --   vim.schedule(function()
+    --     require('local.term').toggle_horizontal()
+    --   end)
+    -- end
+  end,
+})
 
 -- Autocommand to restore the cursor position when the buffer is read
 autocmd('BufReadPost', {

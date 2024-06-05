@@ -1,6 +1,7 @@
 local opt = vim.opt
 local g = vim.g
 
+g.node_host_prog = '~/.nvm/versions/node/v21.6.2/lib/node_modules'
 g.mapleader = ' '
 g.maplocalleader = ' '
 g.have_nerd_font = true

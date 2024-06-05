@@ -168,6 +168,8 @@ local groups = {
   TelescopeResultsTitle = { fg = colors.darker_black, bg = colors.darker_black },
   TelescopeSelection = { bg = colors.black2, fg = colors.white },
   Terminal = { bg = colors.darker_black },
+  TroubleNormal = { bg = colors.darker_black },
+  TroubleNormalNC = { bg = colors.darker_black },
 
   ['@type.type_argument'] = { italic = true },
 }

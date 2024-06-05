@@ -192,6 +192,10 @@ M.file_info = function()
       icon = '  ',
       label = 'HARPOON',
     },
+    lspinfo = {
+      icon = '  ',
+      label = 'LSP INFO',
+    },
     mason = {
       icon = '%#St_Mason# 󱌣 ',
       label = 'MASON',

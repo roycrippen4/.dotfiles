@@ -32,9 +32,11 @@ return {
         if format_enabled then
           vim.cmd('FormatDisable')
           format_enabled = false
+          vim.notify('Autoformat disabled', 'info', { title = 'Conform' })
         else
           vim.cmd('FormatEnable')
           format_enabled = true
+          vim.notify('Autoformat enabled', 'info', { title = 'Conform' })
         end
       end,
       desc = '  Toggle autoformat-on-save',
@@ -44,22 +46,29 @@ return {
     notify_on_error = false,
     quiet = false,
     formatters_by_ft = {
-      css = { { 'prettierd', 'prettier' } },
-      html = { { 'prettierd', 'prettier' } },
-      javascript = { { 'prettierd', 'prettier' } },
-      javascriptreact = { { 'prettierd', 'prettier' } },
-      json = { { 'prettierd', 'prettier' } },
+      -- css = { { 'prettierd', 'prettier' } },
+      -- html = { { 'prettierd', 'prettier' } },
+      -- javascript = { { 'prettierd', 'prettier' } },
+      -- javascriptreact = { { 'prettierd', 'prettier' } },
+      -- json = { { 'prettierd', 'prettier' } },
+      -- markdown = { { 'prettierd', 'prettier' } },
+      -- svelte = { { 'prettierd', 'prettier' } },
+      -- typescript = { { 'prettierd', 'prettier' } },
+      -- typescriptreact = { { 'prettierd', 'prettier' } },
+      css = { 'prettier' },
+      html = { 'pretter' },
+      javascript = { 'pretter' },
+      javascriptreact = { 'pretter' },
+      json = { 'pretter' },
+      markdown = { 'pretter' },
+      svelte = { 'pretter' },
+      typescript = { 'pretter' },
+      typescriptreact = { 'pretter' },
       lua = { 'stylua' },
-      markdown = { { 'prettierd', 'prettier' } },
       rust = { 'rustfmt' },
       sh = { 'shfmt' },
-      svelte = { { 'prettierd', 'prettier' } },
-      typescript = { { 'prettierd', 'prettier' } },
-      typescriptreact = { { 'prettierd', 'prettier' } },
       yaml = { { 'yamlfmt' } },
     },
-
-    -- stupid
 
     ---@param bufnr integer
     ---@return { timeout_ms: number, lsp_fallback: boolean }|nil

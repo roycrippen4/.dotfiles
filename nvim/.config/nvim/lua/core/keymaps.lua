@@ -27,9 +27,9 @@ map('n', '<M-S-.>',          '<C-w>>',                                 { desc = 
 map('n', '<M-S-,>',          '<C-w><',                                 { desc = 'Decrease window width'             })
 map('n', '<M-j>',            ':m .+1<CR>==',                           { desc = 'Shift line down'                   })
 map('n', '<M-k>',            ':m .-2<CR>==',                           { desc = 'Shift line up'                     })
-map('n', '<leader>i',        '<cmd> Inspect <CR>',                           { desc = '  Inspect word under cursor'      })
-map('n', '<leader>it',       '<cmd> InspectTree <CR>',                       { desc = '  Show AST'                       })
-map('n', '<leader>q',        '<cmd> EditQuery <CR>',                         { desc = '󱄶  Edit TS query'                  })
+map('n', '<leader>i',        '<cmd> Inspect <CR>',                     { desc = '  Inspect word under cursor'      })
+map('n', '<leader>it',       '<cmd> InspectTree <CR>',                 { desc = '  Show AST'                       })
+map('n', '<leader>q',        '<cmd> EditQuery <CR>',                   { desc = '󱄶  Edit TS query'                  })
 map('n', '<leader>lf',       vim.diagnostic.open_float,                { desc = '  Show errors in float'           })
 map('n', '<leader>M',        '<cmd> Mason <CR>',                       { desc = '  Show Mason'                     })
 map('n', '<leader>lr',       '<cmd> luafile% <CR>',                    { desc = '  Run lua file'                   })
@@ -39,8 +39,8 @@ map('n', '<Leader>x',        utils.close_buf,                          { desc = 
 map('n', '<Leader><Leader>', '<cmd> Lazy <CR>',                        { desc = '  Open Lazy'                      })
 -- stylua: ignore end
 
-map('i', '<C-h>', '<Left>')
-map('i', '<C-l>', '<Right>')
+map({ 'i', 'c' }, '<C-h>', '<Left>')
+map({ 'i', 'c' }, '<C-l>', '<Right>')
 map('i', '<C-j>', '<Down>')
 map('i', '<C-k>', '<Up>')
 map('i', '<C-s>', '<cmd> w<CR>', { desc = 'Save file' })
@@ -78,7 +78,3 @@ map('c', '<Esc>', '<C-c>', { desc = 'Exit command mode' })
 map('n', '<leader>pu', function()
   require('package-info').update()
 end, { desc = '󰚰  Update Package' })
-
--- stylua: ignore start
-map('n', '<leader>td', function() require('trouble').toggle('workspace_diagnostics') end, { desc = '  Trouble toggle workspace diagnostics' })
--- stylua: ignore end
