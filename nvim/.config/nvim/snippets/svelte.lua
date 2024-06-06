@@ -1,17 +1,17 @@
 ---@diagnostic disable: undefined-global
 
 return {
-  -- s({
-  --   trig = 'log',
-  --   name = 'console.log',
-  --   dscr = {
-  --     'console.log(…)',
-  --   },
-  -- }, {
-  --   t('console.log('),
-  --   i(1),
-  --   t(')'),
-  -- }),
+  s({
+    trig = 'log',
+    name = 'console.log',
+    dscr = {
+      'console.log(…)',
+    },
+  }, {
+    t('console.log('),
+    i(1),
+    t(')'),
+  }),
 
   s({
     trig = 'afn',

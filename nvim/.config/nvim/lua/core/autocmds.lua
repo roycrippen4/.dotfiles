@@ -101,6 +101,13 @@ autocmd('VimEnter', {
   once = true,
   callback = function()
     require('core.utils').set_titlestring(vim.fn.getcwd())
+
+    if vim.fn.filereadable('.nvmrc') == 1 then
+      require('local.term').send('nvm use', 'H')
+      vim.schedule(function()
+        require('local.term').toggle_horizontal()
+      end)
+    end
   end,
 })
 

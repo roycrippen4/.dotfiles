@@ -72,41 +72,21 @@ return {
     lspconfig['cssls'].setup({
       capabilities = M.capabilities,
       on_attach = M.on_attach,
-      cmd = {
-        vim.fn.expand('$HOME') .. '/.nvm/versions/node/v21.6.2/bin/node',
-        vim.fn.stdpath('data') .. '/mason/bin/vscode-css-language-server',
-        '--stdio',
-      },
     })
 
     lspconfig['docker_compose_language_service'].setup({
       capabilities = M.capabilities,
       on_attach = M.on_attach,
-      cmd = {
-        vim.fn.expand('$HOME') .. '/.nvm/versions/node/v21.6.2/bin/node',
-        vim.fn.stdpath('data') .. '/mason/bin/docker-compose-langserver',
-        '--stdio',
-      },
     })
 
     lspconfig['dockerls'].setup({
       capabilities = M.capabilities,
       on_attach = M.on_attach,
-      cmd = {
-        vim.fn.expand('$HOME') .. '/.nvm/versions/node/v21.6.2/bin/node',
-        vim.fn.stdpath('data') .. '/mason/bin/docker-langserver',
-        '--stdio',
-      },
     })
 
     lspconfig['eslint'].setup({
       capabilities = M.capabilities,
       on_attach = M.on_attach,
-      cmd = {
-        vim.fn.expand('$HOME') .. '/.nvm/versions/node/v21.6.2/bin/node',
-        vim.fn.stdpath('data') .. '/mason/bin/vscode-eslint-language-server',
-        '--stdio',
-      },
     })
 
     lspconfig['gopls'].setup({
@@ -122,11 +102,6 @@ return {
     lspconfig['html'].setup({
       capabilities = M.capabilities,
       on_attach = M.on_attach,
-      cmd = {
-        vim.fn.expand('$HOME') .. '/.nvm/versions/node/v21.6.2/bin/node',
-        vim.fn.stdpath('data') .. '/mason/bin/vscode-html-language-server',
-        '--stdio',
-      },
     })
 
     lspconfig['htmx'].setup({})
@@ -144,11 +119,6 @@ return {
           schemas = require('schemastore').json.schemas(),
           validate = { enable = true },
         },
-      },
-      cmd = {
-        vim.fn.expand('$HOME') .. '/.nvm/versions/node/v21.6.2/bin/node',
-        vim.fn.stdpath('data') .. '/mason/bin/vscode-json-language-server',
-        '--stdio',
       },
     })
 
@@ -184,32 +154,12 @@ return {
     lspconfig['svelte'].setup({
       capabilities = M.capabilities,
       on_attach = M.on_attach,
-      cmd = {
-        vim.fn.expand('$HOME') .. '/.nvm/versions/node/v21.6.2/bin/node',
-        vim.fn.stdpath('data') .. '/mason/bin/svelteserver',
-        '--stdio',
-      },
-    })
-
-    lspconfig['tsserver'].setup({
-      capabilities = M.capabilities,
-      on_attach = M.on_attach,
-      cmd = {
-        vim.fn.expand('$HOME') .. '/.nvm/versions/node/v21.6.2/bin/node',
-        vim.fn.stdpath('data') .. '/mason/bin/typescript-language-server',
-        '--stdio',
-      },
     })
 
     if has_tailwind_config() then
       lspconfig['tailwindcss'].setup({
         capabilities = M.capabilities,
         on_attach = M.on_attach,
-        cmd = {
-          vim.fn.expand('$HOME') .. '/.nvm/versions/node/v21.6.2/bin/node',
-          vim.fn.stdpath('data') .. '/mason/bin/tailwindcss-language-server',
-          '--stdio',
-        },
       })
     end
 
@@ -226,11 +176,6 @@ return {
           schemaStore = { enable = false, url = '' },
           scehmas = require('schemastore').yaml.schemas(),
         },
-      },
-      cmd = {
-        vim.fn.expand('$HOME') .. '/.nvm/versions/node/v21.6.2/bin/node',
-        vim.fn.stdpath('data') .. '/mason/bin/yaml-language-server',
-        '--stdio',
       },
     })
 

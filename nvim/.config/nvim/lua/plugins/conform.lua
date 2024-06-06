@@ -32,11 +32,11 @@ return {
         if format_enabled then
           vim.cmd('FormatDisable')
           format_enabled = false
-          vim.notify('Autoformat disabled', 'info', { title = 'Conform' })
+          vim.notify('Autoformat disabled', vim.log.levels.INFO, { title = 'Conform' })
         else
           vim.cmd('FormatEnable')
           format_enabled = true
-          vim.notify('Autoformat enabled', 'info', { title = 'Conform' })
+          vim.notify('Autoformat enabled', vim.log.levels.INFO, { title = 'Conform' })
         end
       end,
       desc = '  Toggle autoformat-on-save',
@@ -46,24 +46,15 @@ return {
     notify_on_error = false,
     quiet = false,
     formatters_by_ft = {
-      -- css = { { 'prettierd', 'prettier' } },
-      -- html = { { 'prettierd', 'prettier' } },
-      -- javascript = { { 'prettierd', 'prettier' } },
-      -- javascriptreact = { { 'prettierd', 'prettier' } },
-      -- json = { { 'prettierd', 'prettier' } },
-      -- markdown = { { 'prettierd', 'prettier' } },
-      -- svelte = { { 'prettierd', 'prettier' } },
-      -- typescript = { { 'prettierd', 'prettier' } },
-      -- typescriptreact = { { 'prettierd', 'prettier' } },
-      css = { 'prettier' },
-      html = { 'pretter' },
-      javascript = { 'pretter' },
-      javascriptreact = { 'pretter' },
-      json = { 'pretter' },
-      markdown = { 'pretter' },
-      svelte = { 'pretter' },
-      typescript = { 'pretter' },
-      typescriptreact = { 'pretter' },
+      css = { { 'prettierd', 'prettier' } },
+      html = { { 'prettierd', 'prettier' } },
+      javascript = { { 'prettierd', 'prettier' } },
+      javascriptreact = { { 'prettierd', 'prettier' } },
+      json = { { 'prettierd', 'prettier' } },
+      markdown = { { 'prettierd', 'prettier' } },
+      svelte = { { 'prettierd', 'prettier' } },
+      typescript = { { 'prettierd', 'prettier' } },
+      typescriptreact = { { 'prettierd', 'prettier' } },
       lua = { 'stylua' },
       rust = { 'rustfmt' },
       sh = { 'shfmt' },
