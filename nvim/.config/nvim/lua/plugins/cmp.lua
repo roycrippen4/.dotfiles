@@ -51,13 +51,142 @@ return {
     'hrsh7th/cmp-nvim-lsp', -- https://github.com/hrsh7th/cmp-nvim-lsp
     'hrsh7th/cmp-path', -- https://github.com/hrsh7th/cmp-path
     'hrsh7th/cmp-cmdline', -- https://github.com/hrsh7th/cmp-cmdline
+    'onsails/lspkind.nvim', -- https://github.com/onsails/lspkind.nvim
   },
   config = function()
+    local comparators = {
+      ---Deprioritize items starting with underscores (private or protected)
+      ---@type fun(lhs: cmp.Entry, rhs: cmp.Entry): boolean|nil
+      deprioritize_underscore = function(lhs, rhs)
+        local l = (lhs.completion_item.label:find('^_+')) and 1 or 0
+        local r = (rhs.completion_item.label:find('^_+')) and 1 or 0
+        if l ~= r then
+          return l < r
+        end
+      end,
+
+      ---Prioritize items that ends with "= ..." (usually for argument completion).
+      ---@type fun(lhs: cmp.Entry, rhs: cmp.Entry): boolean|nil
+      prioritize_argument = function(lhs, rhs)
+        local l = (lhs.completion_item.label:find('=$')) and 1 or 0
+        local r = (rhs.completion_item.label:find('=$')) and 1 or 0
+        if l ~= r then
+          return l > r
+        end
+      end,
+    }
+
+    ---@param text string
+    ---@param max_width number
+    local function truncate(text, max_width)
+      if #text > max_width then
+        return string.sub(text, 1, max_width) .. '…'
+      else
+        return text
+      end
+    end
+
+    ---@param entry cmp.Entry
+    ---@param vim_item vim.CompletedItem
+    local function format(entry, vim_item)
+      -- Truncate the item if it is too long
+      vim_item.abbr = truncate(vim_item.abbr, 80)
+      -- fancy icons and a name of kind
+      pcall(function() -- protect the call against potential API breakage (lspkind GH-45).
+        local lspkind = require('lspkind')
+        ---@diagnostic disable-next-line
+        vim_item.kind_symbol = (lspkind.symbolic or lspkind.get_symbol)(vim_item.kind)
+        vim_item.kind = ' ' .. vim_item.kind_symbol .. ' ' .. vim_item.kind
+      end)
+
+      -- The 'menu' section: source, detail information (lsp, snippet), etc.
+      -- set a name for each source (see the sources section below)
+      vim_item.menu = ({
+        buffer = 'Buffer',
+        nvim_lsp = 'LSP',
+        ultisnips = '',
+        nvim_lua = 'Lua',
+        latex_symbols = 'Latex',
+      })[entry.source.name] or string.format('%s', entry.source.name)
+
+      -- highlight groups for item.menu
+      vim_item.menu_hl_group = ({
+        buffer = 'CmpItemMenuBuffer',
+        nvim_lsp = 'CmpItemMenuLSP',
+        path = 'CmpItemMenuPath',
+        ultisnips = 'CmpItemMenuSnippet',
+      })[entry.source.name] -- default is CmpItemMenu
+
+      -- detail information (optional)
+      local cmp_item = entry:get_completion_item() --- @type lsp.CompletionItem
+
+      if entry.source.name == 'nvim_lsp' then
+        -- Display which LSP servers this item came from.
+        local lspserver_name = nil
+        pcall(function()
+          lspserver_name = entry.source.source.client.name
+          vim_item.menu = lspserver_name
+        end)
+
+        -- Some language servers provide details, e.g. type information.
+        -- The details info hide the name of lsp server, but mostly we'll have one LSP
+        -- per filetype, and we use special highlights so it's OK to hide it..
+        local detail_txt = (function()
+          if not cmp_item.detail then
+            return nil
+          end
+
+          if cmp_item.detail == 'Auto-import' then
+            local label = (cmp_item.labelDetails or {}).description
+            if not label or label == '' then
+              return nil
+            end
+            local logo = ({
+              pyright = '',
+              basedpyright = '',
+            })[lspserver_name] or '󰋺'
+            return logo .. ' ' .. truncate(label, 20)
+          else
+            return truncate(cmp_item.detail, 50)
+          end
+        end)()
+        if detail_txt then
+          vim_item.menu = detail_txt
+          vim_item.menu_hl_group = 'CmpItemMenuDetail'
+        end
+      elseif entry.source.name == 'zsh' then
+        -- cmp-zsh: Display documentation for cmdline flag ('' denotes zsh)
+        ---@diagnostic disable-next-line: undefined-field
+        local detail = tostring(cmp_item.documentation)
+        if detail then
+          vim_item.menu = detail
+          vim_item.menu_hl_group = 'CmpItemMenuZsh'
+          vim_item.kind = '  ' .. 'zsh'
+        end
+      elseif entry.source.name == 'ultisnips' then
+        ---@diagnostic disable-next-line: undefined-field
+        local description = (cmp_item.snippet or {}).description
+        if description then
+          vim_item.menu = truncate(description, 40)
+        end
+      end
+
+      -- Add a little bit more padding
+      vim_item.menu = ' ' .. vim_item.menu
+      return vim_item
+    end
+
     local cmp = require('cmp')
     local luasnip = require('luasnip')
     luasnip.config.setup({})
 
     cmp.setup({
+      ---@diagnostic disable-next-line
+      formatting = {
+        format = function(...)
+          return format(...)
+        end,
+      },
       sources = {
         {
           name = 'nvim_lsp',
@@ -88,6 +217,27 @@ return {
           max_width = math.floor(vim.o.columns * 0.4),
         },
       },
+
+      ---@diagnostic disable-next-line
+      sorting = {
+        comparators = {
+          cmp.config.compare.offset,
+          cmp.config.compare.exact,
+          cmp.config.compare.score,
+          function(...)
+            return comparators.prioritize_argument(...)
+          end,
+          function(...)
+            return comparators.deprioritize_underscore(...)
+          end,
+          cmp.config.compare.recently_used,
+          cmp.config.compare.kind,
+          cmp.config.compare.sort_text,
+          cmp.config.compare.length,
+          cmp.config.compare.order,
+        },
+      },
+
       snippet = {
         expand = function(args)
           require('luasnip').lsp_expand(args.body)
@@ -115,6 +265,7 @@ return {
         ),
       },
     })
+
     cmp.setup.cmdline(':', {
       mapping = cmp.mapping.preset.cmdline(),
       sources = cmp.config.sources({
