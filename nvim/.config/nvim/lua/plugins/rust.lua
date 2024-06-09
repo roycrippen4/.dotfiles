@@ -27,7 +27,7 @@ return {
       { lhs = '<leader>le', rhs = '<cmd> RustLsp explainError <CR>' },
       { lhs = '<leader>lM', rhs = '<cmd> RustLsp rebuildProcMacros <CR>' },
       { lhs = '<leader>lm', rhs = '<cmd> RustLsp expandMacro <CR>' },
-      { lhs = '<leader>lr', rhs = '<cmd> RustLsp runnables <CR>' },
+      { lhs = '<leader>lr', rhs = '<cmd> RustRun <CR>' },
       { lhs = '<leader>lf', rhs = vim.diagnostic.open_float },
       { lhs = '<leader>la', rhs = vim.lsp.buf.code_action },
     }

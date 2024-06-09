@@ -153,3 +153,11 @@ autocmd('CmdWinEnter', {
     end)
   end,
 })
+
+autocmd('FileType', {
+  group = general,
+  pattern = 'gitcommit',
+  callback = function()
+    feed('i', 'n')
+  end,
+})

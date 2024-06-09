@@ -60,6 +60,11 @@ local function svelte_change_check(client)
   end
 end
 
+local function organize_imports()
+  ---@diagnostic disable-next-line
+  vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
+end
+
 -- stylua: ignore start
 ---@param additional_keymaps? KeyPair[]
 function M.set_lsp_mappings(additional_keymaps)
@@ -73,6 +78,7 @@ function M.set_lsp_mappings(additional_keymaps)
   map('n', '<leader>lh', toggle_inlay_hints,                               { desc = '󰊠  Toggle lsp inlay hints'          })
   map('n', '<leader>li', '<cmd> LspInfo    <CR>',                          { desc = '  Show Lsp Info'                   })
   map('n', '<leader>lR', '<cmd> LspRestart <CR>',                          { desc = '  Restart language servers'        })
+  map('n', '<leader>lo', organize_imports,                                 { desc = '󰶘  Organize Imports'                })
 
   if additional_keymaps then
     require('core.utils').create_keymaps(additional_keymaps)

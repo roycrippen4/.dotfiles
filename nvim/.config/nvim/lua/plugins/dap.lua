@@ -96,7 +96,7 @@ return {
       {
         '<F8>',
         function()
-          require('dap').step_over()
+          require('dap').step_over({ steppingGranularity = 'instruction' })
         end,
         desc = 'Step over',
       },

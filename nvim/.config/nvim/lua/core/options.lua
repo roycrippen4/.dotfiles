@@ -1,7 +1,7 @@
 local opt = vim.opt
 local g = vim.g
 
-g.node_host_prog = '~/.nvm/versions/node/v21.6.2/lib/node_modules'
+g.loaded_perl_provider = 0
 g.mapleader = ' '
 g.maplocalleader = ' '
 g.have_nerd_font = true
@@ -87,5 +87,4 @@ opt.ruler = false
 -- disable nvim intro
 opt.shortmess:append('qWcsI')
 
-g.node_host_prog = '~/.nvm/versions/node/v21.6.2/bin/node'
 vim.env.PATH = vim.fn.stdpath('data') .. '/mason/bin:' .. vim.env.PATH -- add binaries installed by mason.nvim to path

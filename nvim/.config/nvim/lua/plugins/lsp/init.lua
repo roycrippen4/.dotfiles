@@ -126,7 +126,7 @@ return {
       on_attach = M.on_attach,
     })
 
-    lspconfig['htmx'].setup({})
+    -- lspconfig['htmx'].setup({})
 
     lspconfig['jdtls'].setup({
       capabilities = M.capabilities,

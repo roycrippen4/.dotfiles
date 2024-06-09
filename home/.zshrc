@@ -130,7 +130,7 @@ alias bconf=go_to_waybar_config
 eval "$(zoxide init zsh --cmd c)"
 
 # pnpm
-export PNPM_HOME="/home/roy/.local/share/pnpm"
+export PNPM_HOME="$HOME/.local/share/pnpm"
 case ":$PATH:" in
 *":$PNPM_HOME:"*) ;;
 *) export PATH="$PNPM_HOME:$PATH" ;;

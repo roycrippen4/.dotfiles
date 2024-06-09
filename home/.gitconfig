@@ -8,3 +8,5 @@
   prompt = false
 [mergetool "nvim"]
 	cmd = "nvim -D -c \"wincmd l\" -c \"norm c\" \"$LOCAL\" \"$MERGED\" \"$REMOTE\""
+[core]
+	editor = "$HOME/.local/share/bob/nvim-bin/nvim"
