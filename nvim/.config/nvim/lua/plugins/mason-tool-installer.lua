@@ -3,8 +3,8 @@ return {
   lazy = false,
   opts = {
     ensure_installed = {
-      'codelldb',
       'clangd',
+      'codelldb',
       'css-lsp',
       'docker-compose-language-service',
       'dockerfile-language-server',
@@ -12,6 +12,7 @@ return {
       'gopls',
       'html-lsp',
       'htmx-lsp',
+      'hyprls',
       'jdtls',
       'json-lsp',
       'lua-language-server',
