@@ -46,7 +46,6 @@ return {
         },
       },
     },
-    'luckasRanarison/tailwind-tools.nvim', -- https://github.com/luckasRanarison/tailwind-tools.nvim
     'saadparwaiz1/cmp_luasnip', -- https://github.com/saadparwaiz1/cmp_luasnip
     'hrsh7th/cmp-nvim-lsp', -- https://github.com/hrsh7th/cmp-nvim-lsp
     'hrsh7th/cmp-path', -- https://github.com/hrsh7th/cmp-path
