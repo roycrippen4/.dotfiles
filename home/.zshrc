@@ -15,8 +15,6 @@ if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-$USER.zsh" ]]; the
 fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
-export PATH=$PATH:./node_modules/.bin # for tree-sitter
-
 # go
 export GOPATH="$HOME/go"
 export PATH="$GOPATH/bin:$PATH"
@@ -99,7 +97,8 @@ go_to_waybar_config() {
 	c "$HOME/.dotfiles/waybar/.config/waybar"
 }
 
-alias cb="cd .."
+alias python="python3"
+alias cc="cd .."
 alias x="exit"
 alias emacs="emacsclient -c -a 'emacs'"
 alias claer="clear"
@@ -125,6 +124,10 @@ alias ndev=go_to_neodev_config
 alias wconf=go_to_wofi_config
 alias bconf=go_to_waybar_config
 
+alias dcb="sudo docker compose build"
+alias dcu="sudo docker compose up"
+alias dcd="sudo docker compose down"
+
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env"
 eval "$(zoxide init zsh --cmd c)"
@@ -139,3 +142,16 @@ esac
 
 # bun completions
 [ -s "/home/roy/.bun/_bun" ] && source "/home/roy/.bun/_bun"
+
+# auto activate/deactivate python venv when cd into/out of a folder
+python_venv() {
+	MYVENV=./venv
+	# when you cd into a folder that contains $MYVENV
+	[[ -d $MYVENV ]] && source ./venv/bin/activate >/dev/null 2>&1
+	# when you cd into a folder that doesn't
+	[[ ! -d $MYVENV ]] && deactivate >/dev/null 2>&1
+}
+autoload -U add-zsh-hook
+add-zsh-hook chpwd python_venv
+
+python_venv
