@@ -172,6 +172,7 @@ local groups = {
   TroubleNormalNC = { bg = colors.darker_black },
 
   ['@type.type_argument'] = { italic = true },
+  ['@lsp.type.class.svelte'] = {},
 }
 
 for group, color in pairs(groups) do
