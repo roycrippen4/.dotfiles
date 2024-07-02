@@ -70,7 +70,7 @@ end
 function M.set_lsp_mappings(additional_keymaps)
   map('n', 'gr',         require('telescope.builtin').lsp_references,      { desc = '  Goto References'                 })
   map('n', 'gi',         require('telescope.builtin').lsp_implementations, { desc = '󰡱  Goto Implementation'             })
-  map('n', 'gd',         require('telescope.builtin').lsp_definitions,     { desc = '󰼭  Goto Definition'                 })
+  map('n', 'gd',         vim.lsp.buf.definition,                           { desc = '󰼭  Goto Definition'                 })
   map('n', '<leader>r',  vim.lsp.buf.rename,                               { desc = '  LSP Rename'                      })
   map('n', '<leader>la', vim.lsp.buf.code_action,                          { desc = '  Code Action'                     })
   map('n', '<leader>lf', vim.diagnostic.open_float,                        { desc = '󰉪 Open floating diagnostic message' })
