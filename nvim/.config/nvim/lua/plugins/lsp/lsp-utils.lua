@@ -29,7 +29,7 @@ local function check_trigger_chars(chars)
 end
 
 ---@param bufnr integer
----@param client table
+---@param client vim.lsp.Client
 local function setup_signature_helper(bufnr, client)
   if client.server_capabilities.signatureHelpProvider then
     local group = augroup('LspSignature', { clear = false })
