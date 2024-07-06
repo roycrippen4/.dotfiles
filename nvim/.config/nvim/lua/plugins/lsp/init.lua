@@ -186,7 +186,7 @@ return {
     })
 
     lspconfig['svelte'].setup({
-      capabilities = M.capabilities,
+      capabilities = vim.tbl_deep_extend('force', M.capabilities, { workspace = { dynamicRegistration = true } }),
       on_attach = M.on_attach,
     })
 

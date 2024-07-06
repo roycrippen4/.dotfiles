@@ -15,6 +15,7 @@ local function create_mappings()
   map('n', '<leader>fz',  '<cmd> Telescope current_buffer_fuzzy_find <CR>', { desc = '  Find in current buffer' })
   map('n', '<leader>fgc', '<cmd> Telescope git_commits               <CR>', { desc = '  Find commits'           })
   map('n', '<leader>fgs', '<cmd> Telescope git_status                <CR>', { desc = '󱖫  Find Git status'        })
+  map('n', '<leader>fp',  '<cmd> Telescope treesitter_info           <CR>', { desc = '  Find treesitter info'   })
   -- stylua: ignore end
 end
 
@@ -25,10 +26,13 @@ return {
     'nvim-lua/plenary.nvim',
     {
       'nvim-telescope/telescope-fzf-native.nvim',
-      build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release && cmake --install build --prefix build',
+      build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release',
     },
-    { 'nvim-telescope/telescope-ui-select.nvim' },
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
+    { 'sharkdp/fd', build = 'cargo bindstall fd-find' },
+    { 'BurntSushi/ripgrep', build = 'cargo binstall ripgrep' },
+    'nvim-telescope/telescope-ui-select.nvim',
+    'roycrippen4/telescope-treesitter-info.nvim',
   },
   config = function()
     local opts = {
@@ -77,6 +81,7 @@ return {
     require('telescope').setup(opts)
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('ui-select')
+    require('telescope').load_extension('treesitter_info')
     create_mappings()
   end,
 }

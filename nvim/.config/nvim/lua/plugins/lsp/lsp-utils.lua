@@ -47,7 +47,7 @@ local function setup_signature_helper(bufnr, client)
   end
 end
 
----@param client table
+---@param client vim.lsp.Client
 local function svelte_change_check(client)
   if client.name == 'svelte' then
     autocmd('BufWritePost', {
@@ -70,7 +70,8 @@ end
 function M.set_lsp_mappings(additional_keymaps)
   map('n', 'gr',         require('telescope.builtin').lsp_references,      { desc = '  Goto References'                 })
   map('n', 'gi',         require('telescope.builtin').lsp_implementations, { desc = '󰡱  Goto Implementation'             })
-  map('n', 'gd',         vim.lsp.buf.definition,                           { desc = '󰼭  Goto Definition'                 })
+  map('n', 'gd',         require('telescope.builtin').lsp_definitions,     { desc = '󰼭  Goto Definition'                 })
+  -- map('n', 'gd',         vim.lsp.buf.definition,                           { desc = '󰼭  Goto Definition'                 })
   map('n', '<leader>r',  vim.lsp.buf.rename,                               { desc = '  LSP Rename'                      })
   map('n', '<leader>la', vim.lsp.buf.code_action,                          { desc = '  Code Action'                     })
   map('n', '<leader>lf', vim.diagnostic.open_float,                        { desc = '󰉪 Open floating diagnostic message' })
@@ -86,7 +87,7 @@ function M.set_lsp_mappings(additional_keymaps)
 end
 -- stylua: ignore end
 
----@param client table
+---@param client vim.lsp.Client
 ---@param bufnr integer
 function M.on_attach(client, bufnr)
   M.set_lsp_mappings()

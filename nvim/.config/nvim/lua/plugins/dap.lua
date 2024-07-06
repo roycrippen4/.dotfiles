@@ -47,17 +47,17 @@ return {
         'theHamsta/nvim-dap-virtual-text',
         opts = { virt_text_pos = 'eol' },
       },
-      {
-        'mxsdev/nvim-dap-vscode-js',
-        opts = {
-          debugger_path = vim.fn.stdpath('data') .. '/lazy/vscode-js-debug',
-          adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
-        },
-      },
-      {
-        'microsoft/vscode-js-debug',
-        build = 'npm i && npm run compile vsDebugServerBundle && rm -rf out && mv -f dist out',
-      },
+      -- {
+      --   'mxsdev/nvim-dap-vscode-js',
+      --   opts = {
+      --     debugger_path = vim.fn.stdpath('data') .. '/lazy/vscode-js-debug',
+      --     adapters = { 'pwa-node', 'pwa-chrome', 'pwa-msedge', 'node-terminal', 'pwa-extensionHost' },
+      --   },
+      -- },
+      -- {
+      --   'microsoft/vscode-js-debug',
+      --   build = 'npm i && npm run compile vsDebugServerBundle && rm -rf out && mv -f dist out',
+      -- },
       {
         'jbyuki/one-small-step-for-vimkind',
         keys = {
@@ -162,7 +162,7 @@ return {
       -- Add configurations from launch.json
       require('dap.ext.vscode').load_launchjs(nil, {
         ['codelldb'] = { 'c' },
-        ['pwa-node'] = { 'typescript', 'javascript' },
+        -- ['pwa-node'] = { 'typescript', 'javascript' },
       })
     end,
   },
