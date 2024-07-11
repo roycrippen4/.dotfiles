@@ -46,6 +46,8 @@ map('n', '<Leader>v',        '<C-w>v',                                 { desc = 
 map('n', '<Leader>h',        '<C-w>s',                                 { desc = '  Horizontal Split'               })
 map('n', '<Leader>x',        utils.close_buf,                          { desc = '  Close Buffer'                   })
 map('n', '<Leader><Leader>', '<cmd> Lazy <cr>',                        { desc = '  Open Lazy'                      })
+map('n', '<C-a>', utils.ctrl_a, { desc = 'Extended increment' })
+map('n', '<C-x>', utils.ctrl_x, { desc = 'Extended decrement' })
 -- stylua: ignore end
 
 map({ 'i', 'c' }, '<C-h>', '<Left>')

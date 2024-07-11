@@ -287,4 +287,33 @@ function M.create_keymaps(keymaps)
   end
 end
 
+--- @return boolean
+local function toggle_boolean()
+  local current_word = vim.fn.expand('<cword>')
+
+  if current_word == 'true' then
+    feed('ciwfalse<esc>', 'n')
+    return true
+  end
+
+  if current_word == 'false' then
+    feed('ciwtrue<esc>', 'n')
+    return true
+  end
+
+  return false
+end
+
+function M.ctrl_x()
+  if not toggle_boolean() then
+    feed('<C-x>', 'n')
+  end
+end
+
+function M.ctrl_a()
+  if not toggle_boolean() then
+    feed('<C-a>', 'n')
+  end
+end
+
 return M
