@@ -288,7 +288,7 @@ function M.create_keymaps(keymaps)
 end
 
 --- @return boolean
-local function toggle_boolean()
+local function toggle_text()
   local current_word = vim.fn.expand('<cword>')
 
   if current_word == 'true' then
@@ -301,17 +301,47 @@ local function toggle_boolean()
     return true
   end
 
+  if current_word == 'True' then
+    feed('ciwFalse<esc>', 'n')
+    return true
+  end
+
+  if current_word == 'False' then
+    feed('ciwTrue<esc>', 'n')
+    return true
+  end
+
+  if current_word == '&&' then
+    feed('ciw||<esc>', 'n')
+    return true
+  end
+
+  if current_word == '||' then
+    feed('ciw&&<esc>', 'n')
+    return true
+  end
+
+  if current_word == 'and' then
+    feed('ciwor<esc>', 'n')
+    return true
+  end
+
+  if current_word == 'or' then
+    feed('ciwand<esc>', 'n')
+    return true
+  end
+
   return false
 end
 
 function M.ctrl_x()
-  if not toggle_boolean() then
+  if not toggle_text() then
     feed('<C-x>', 'n')
   end
 end
 
 function M.ctrl_a()
-  if not toggle_boolean() then
+  if not toggle_text() then
     feed('<C-a>', 'n')
   end
 end
