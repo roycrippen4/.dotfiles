@@ -104,21 +104,7 @@ return {
       on_attach = M.on_attach,
     })
 
-    -- lspconfig['htmx'].setup({})
-
-    -- I'm not sure why the server doesn't autostart without this.
-    vim.api.nvim_create_autocmd({ 'BufEnter', 'BufWinEnter' }, {
-      pattern = { '*.hl', 'hypr*.conf' },
-      callback = function()
-        vim.lsp.start({
-          name = 'hyprlang',
-          cmd = { 'hyprls' },
-          root_dir = vim.fn.getcwd(),
-        })
-      end,
-    })
-
-    lspconfig['jdtls'].setup({
+    lspconfig['hyprls'].setup({
       capabilities = M.capabilities,
       on_attach = M.on_attach,
     })

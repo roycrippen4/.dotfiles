@@ -13,7 +13,6 @@ return {
       'html-lsp',
       'htmx-lsp',
       'hyprls',
-      'jdtls',
       'json-lsp',
       'lua-language-server',
       'marksman',
