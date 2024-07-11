@@ -25,12 +25,18 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim',
     {
+      'cargo-bins/cargo-binstall', -- https://github.com/cargo-bins/cargo-binstall
+      build = "curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash",
+    },
+    { 'sharkdp/fd', build = 'cargo bindstall fd-find', dependencies = 'cargo-bins/cargo-binstall' },
+    { 'BurntSushi/ripgrep', build = 'cargo binstall ripgrep', dependencies = 'cargo-bins/cargo-binstall' },
+    {
       'nvim-telescope/telescope-fzf-native.nvim',
       build = 'cmake -S. -Bbuild -DCMAKE_BUILD_TYPE=Release && cmake --build build --config Release',
     },
     { 'nvim-tree/nvim-web-devicons', enabled = vim.g.have_nerd_font },
-    { 'sharkdp/fd', build = 'cargo bindstall fd-find' },
-    { 'BurntSushi/ripgrep', build = 'cargo binstall ripgrep' },
+    'sharkdp/fd',
+    'BurntSushi/ripgrep',
     'nvim-telescope/telescope-ui-select.nvim',
     'roycrippen4/telescope-treesitter-info.nvim',
   },

@@ -85,6 +85,6 @@ opt.ruler = false
 
 -- FoOCItTsl
 -- disable nvim intro
-opt.shortmess:append('qWcsI')
+opt.shortmess:append('qWcCsIS')
 
 vim.env.PATH = vim.fn.stdpath('data') .. '/mason/bin:' .. vim.env.PATH -- add binaries installed by mason.nvim to path
