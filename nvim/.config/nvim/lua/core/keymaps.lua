@@ -3,7 +3,7 @@ local utils = require('core.utils')
 local term = require('local.term')
 utils.create_harpoon_nav_mappings()
 
-local function run_file()
+local function run_current_file()
   local ft = vim.bo.ft
 
   if ft == 'lua' then
@@ -68,7 +68,7 @@ map('n', '<leader>it',       '<cmd> InspectTree <cr>',                 { desc = 
 map('n', '<leader>q',        '<cmd> EditQuery <cr>',                   { desc = '󱄶  Edit TS query'                  })
 map('n', '<leader>lf',       vim.diagnostic.open_float,                { desc = '  Show errors in float'           })
 map('n', '<leader>M',        '<cmd> Mason <cr>',                       { desc = '  Show Mason'                     })
-map('n', '<leader>lr',       run_file,                             { desc = '  Run lua file'                   })
+map('n', '<leader>lr',       run_current_file,                             { desc = '  Run lua file'                   })
 map('n', '<Leader>v',        '<C-w>v',                                 { desc = '  Vertical Split'                 })
 map('n', '<Leader>h',        '<C-w>s',                                 { desc = '  Horizontal Split'               })
 map('n', '<Leader>x',        utils.close_buf,                          { desc = '  Close Buffer'                   })
