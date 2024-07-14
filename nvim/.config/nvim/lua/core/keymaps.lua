@@ -11,6 +11,24 @@ local function run_lua_file()
   vim.cmd('source')
 end
 
+-- wk.add({
+--   {
+--     mode = 'n',
+--     -- stylua: ignore start
+--     {'<leader>iw',       '<cmd> Inspect <cr>',      desc = 'Inspect word under cursor', icon = '' },
+--     {'<leader>it',       '<cmd> InspectTree <cr>',  desc = 'Show AST',                  icon = '' },
+--     {'<leader>q',        '<cmd> EditQuery <cr>',    desc = 'Edit TS query',             icon = '󱄶' },
+--     {'<leader>M',        '<cmd> Mason <cr>',        desc = 'Show Mason',                icon = '' },
+--     {'<Leader><Leader>', '<cmd> Lazy <cr>',         desc = 'Open Lazy',                 icon = '' },
+--     {'<Leader>v',        '<C-w>v',                  desc = 'Vertical Split',            icon = '' },
+--     {'<Leader>h',        '<C-w>s',                  desc = 'Horizontal Split',          icon = '' },
+--     {'<leader>lf',       vim.diagnostic.open_float, desc = 'Show errors in float',      icon = '' },
+--     {'<leader>R',        run_lua_file,               desc = 'Run lua file',             icon = '' },
+--     {'<Leader>x',        utils.close_buf,           desc = 'Close Buffer',              icon = '' },
+--     -- stylua: ignore end
+--   },
+-- })
+
 -- stylua: ignore start
 map('n', ';',                ':',                                      { desc = 'enter commandline'                 })
 map('n', 'F',                utils.set_cur_file_first_mark,            { desc = 'Set current file as first mark'    })

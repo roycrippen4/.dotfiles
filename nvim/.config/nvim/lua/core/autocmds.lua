@@ -82,6 +82,7 @@ autocmd('FileType', {
     vim.api.nvim_set_option_value('bufhidden', 'unload', { scope = 'local' })
     vim.cmd('wincmd L')
     vim.api.nvim_win_set_width(0, 100)
+    vim.cmd('set winhighlight=Normal:HelpNormal')
   end,
 })
 

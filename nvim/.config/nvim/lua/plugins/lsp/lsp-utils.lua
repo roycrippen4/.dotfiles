@@ -65,13 +65,29 @@ local function organize_imports()
   vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
 end
 
+  -- wk.add({
+  --   {
+  --     mode = 'n',
+  --     { 'gr', builtin.lsp_references,            desc = 'Goto References',            icon = '' },
+  --     { 'gi', builtin.lsp_definitions,           desc = 'Goto Definition',            icon = '󰼭' },
+  --     { 'gi', builtin.lsp_implementations,       desc = 'Goto Implementation',        icon = '󰡱' },
+  --     { '<leader>li', organize_imports,          desc = '[L]SP Organize Imports',     icon = '󰶘' },
+  --     { '<leader>lh', toggle_inlay_hints,        desc = '[L]SP Inlay Hints',          icon = '󰊠' },
+  --     { '<leader>ld', toggle_diagnostics,        desc = '[L]SP Diagnostics',                     },
+  --     { '<leader>r',  vim.lsp.buf.rename,        desc = '[L]SP Refactor',             icon = '' },
+  --     { '<leader>la', vim.lsp.buf.code_action,   desc = '[L]SP Code Action',          icon = '' },
+  --     { '<leader>lf', vim.diagnostic.open_float, desc = '[L]SP Floating Diagnostics', icon = '󰉪' },
+  --     { '<leader>li', '<cmd> LspInfo <cr>',      desc = '[L]SP Server Info',          icon = '' },
+  --     { '<leader>li', '<cmd> LspRestart <cr>',   desc = '[L]SP Restart Servers',      icon = '' },
+  --   }
+  -- })
+
 -- stylua: ignore start
 ---@param additional_keymaps? KeyPair[]
 function M.set_lsp_mappings(additional_keymaps)
   map('n', 'gr',         require('telescope.builtin').lsp_references,      { desc = '  Goto References'                 })
   map('n', 'gi',         require('telescope.builtin').lsp_implementations, { desc = '󰡱  Goto Implementation'             })
   map('n', 'gd',         require('telescope.builtin').lsp_definitions,     { desc = '󰼭  Goto Definition'                 })
-  -- map('n', 'gd',         vim.lsp.buf.definition,                           { desc = '󰼭  Goto Definition'                 })
   map('n', '<leader>r',  vim.lsp.buf.rename,                               { desc = '  LSP Rename'                      })
   map('n', '<leader>la', vim.lsp.buf.code_action,                          { desc = '  Code Action'                     })
   map('n', '<leader>lf', vim.diagnostic.open_float,                        { desc = '󰉪 Open floating diagnostic message' })

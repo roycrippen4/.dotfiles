@@ -1,11 +1,21 @@
 return {
   'folke/which-key.nvim',
   event = 'VeryLazy',
+  tag = 'v2.1.0',
+  opts = {},
   config = function()
-    local whichkey = require('which-key')
-    whichkey.setup({ icons = { group = '' } })
+    -- whichkey.add({
+    --   --stylua: ignore start
+    --   { '<leader>d',  group = '[D]ebug',    icon = { icon = '', color = 'green' } },
+    --   { '<leader>f',  group = '[F]ind',     icon = '' },
+    --   { '<leader>l',  group = '[L]SP',      icon = '' },
+    --   { '<leader>fg', group = '[G]it',      icon = '' },
+    --   { '<leader>p',  group = 'Package',    icon = '' },
+    --   { '<leader>t',  group = 'Trouble',    icon = '' },
+    --   --stylua: ignore end
+    -- })
 
-    whichkey.register({
+    require('which-key').register({
       --stylua: ignore start
       ['<leader>d']  = { name = '  Debug'    },
       ['<leader>f']  = { name = '  Find'     },
