@@ -2,11 +2,11 @@
 	name = roy.crippen4
 	email = roy.crippen4@archarithms.com
 [merge]
-  tool = "nvim"
+  tool = nvim
 [mergetool]
   keepBackup = false
   prompt = false
 [mergetool "nvim"]
-	cmd = "nvim -D -c \"wincmd l\" -c \"norm c\" \"$LOCAL\" \"$MERGED\" \"$REMOTE\""
+	cmd = nvim -n -c "DiffviewOpen" "$MERGE"
 [core]
 	editor = "$HOME/.local/share/bob/nvim-bin/nvim"
