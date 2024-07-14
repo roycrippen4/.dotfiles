@@ -1,14 +1,23 @@
 local map = vim.keymap.set
 local utils = require('core.utils')
+local term = require('local.term')
 utils.create_harpoon_nav_mappings()
 
-local function run_lua_file()
-  if vim.bo.ft ~= 'lua' then
-    vim.notify('"<leader> lr" can only execute lua files', vim.log.levels.ERROR)
+local function run_file()
+  local ft = vim.bo.ft
+
+  if ft == 'lua' then
+    vim.cmd('source')
     return
   end
 
-  vim.cmd('source')
+  if ft == 'typescript' or 'javascript' then
+    local file = vim.fn.expand('%')
+    term.send('bun run ' .. file, 'H')
+    return
+  end
+
+  vim.notify('Unknown filetype detected! Supported filetypes: lua, typescript, javascript', vim.log.levels.ERROR)
 end
 
 -- wk.add({
@@ -59,7 +68,7 @@ map('n', '<leader>it',       '<cmd> InspectTree <cr>',                 { desc = 
 map('n', '<leader>q',        '<cmd> EditQuery <cr>',                   { desc = '󱄶  Edit TS query'                  })
 map('n', '<leader>lf',       vim.diagnostic.open_float,                { desc = '  Show errors in float'           })
 map('n', '<leader>M',        '<cmd> Mason <cr>',                       { desc = '  Show Mason'                     })
-map('n', '<leader>lr',       run_lua_file,                             { desc = '  Run lua file'                   })
+map('n', '<leader>lr',       run_file,                             { desc = '  Run lua file'                   })
 map('n', '<Leader>v',        '<C-w>v',                                 { desc = '  Vertical Split'                 })
 map('n', '<Leader>h',        '<C-w>s',                                 { desc = '  Horizontal Split'               })
 map('n', '<Leader>x',        utils.close_buf,                          { desc = '  Close Buffer'                   })
