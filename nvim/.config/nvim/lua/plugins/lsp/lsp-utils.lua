@@ -2,7 +2,8 @@ local api = vim.api
 local augroup = api.nvim_create_augroup
 local autocmd = api.nvim_create_autocmd
 local clear_autocmds = api.nvim_clear_autocmds
-local map = vim.keymap.set
+local builtin = require('telescope.builtin')
+local wk = require('which-key')
 
 local M = {}
 
@@ -65,43 +66,33 @@ local function organize_imports()
   vim.lsp.buf.code_action({ context = { only = { 'source.organizeImports' } }, apply = true })
 end
 
-  -- wk.add({
-  --   {
-  --     mode = 'n',
-  --     { 'gr', builtin.lsp_references,            desc = 'Goto References',            icon = '' },
-  --     { 'gi', builtin.lsp_definitions,           desc = 'Goto Definition',            icon = '󰼭' },
-  --     { 'gi', builtin.lsp_implementations,       desc = 'Goto Implementation',        icon = '󰡱' },
-  --     { '<leader>li', organize_imports,          desc = '[L]SP Organize Imports',     icon = '󰶘' },
-  --     { '<leader>lh', toggle_inlay_hints,        desc = '[L]SP Inlay Hints',          icon = '󰊠' },
-  --     { '<leader>ld', toggle_diagnostics,        desc = '[L]SP Diagnostics',                     },
-  --     { '<leader>r',  vim.lsp.buf.rename,        desc = '[L]SP Refactor',             icon = '' },
-  --     { '<leader>la', vim.lsp.buf.code_action,   desc = '[L]SP Code Action',          icon = '' },
-  --     { '<leader>lf', vim.diagnostic.open_float, desc = '[L]SP Floating Diagnostics', icon = '󰉪' },
-  --     { '<leader>li', '<cmd> LspInfo <cr>',      desc = '[L]SP Server Info',          icon = '' },
-  --     { '<leader>li', '<cmd> LspRestart <cr>',   desc = '[L]SP Restart Servers',      icon = '' },
-  --   }
-  -- })
+-- local function goto_definition()
+--   vim.lsp.buf.definition({ reuse_win = false })
+-- end
 
--- stylua: ignore start
----@param additional_keymaps? KeyPair[]
+---@param additional_keymaps? wk.Mapping[]
 function M.set_lsp_mappings(additional_keymaps)
-  map('n', 'gr',         require('telescope.builtin').lsp_references,      { desc = '  Goto References'                 })
-  map('n', 'gi',         require('telescope.builtin').lsp_implementations, { desc = '󰡱  Goto Implementation'             })
-  map('n', 'gd',         require('telescope.builtin').lsp_definitions,     { desc = '󰼭  Goto Definition'                 })
-  map('n', '<leader>r',  vim.lsp.buf.rename,                               { desc = '  LSP Rename'                      })
-  map('n', '<leader>la', vim.lsp.buf.code_action,                          { desc = '  Code Action'                     })
-  map('n', '<leader>lf', vim.diagnostic.open_float,                        { desc = '󰉪 Open floating diagnostic message' })
-  map('n', '<leader>ld', toggle_diagnostics,                               { desc = '󰨚  Toggle Diagnostics '             })
-  map('n', '<leader>lh', toggle_inlay_hints,                               { desc = '󰊠  Toggle lsp inlay hints'          })
-  map('n', '<leader>li', '<cmd> LspInfo    <CR>',                          { desc = '  Show Lsp Info'                   })
-  map('n', '<leader>lR', '<cmd> LspRestart <CR>',                          { desc = '  Restart language servers'        })
-  map('n', '<leader>lo', organize_imports,                                 { desc = '󰶘  Organize Imports'                })
+  local keymaps = {
+    -- stylua: ignore start
+    mode = 'n',
+    { 'gr', builtin.lsp_references,            desc = 'Goto References',            icon = '' },
+    { 'gd', vim.lsp.buf.definition,            desc = 'Goto Definition',            icon = '󰼭' },
+    { 'gi', builtin.lsp_implementations,       desc = 'Goto Implementation',        icon = '󰡱' },
+    { '<leader>li', organize_imports,          desc = '[L]SP Organize Imports',     icon = '󰶘' },
+    { '<leader>lh', toggle_inlay_hints,        desc = '[L]SP Inlay Hints',          icon = '󰊠' },
+    { '<leader>ld', toggle_diagnostics,        desc = '[L]SP Diagnostics',                     },
+    { '<leader>r',  vim.lsp.buf.rename,        desc = 'Refactor',                   icon = '' },
+    { '<leader>la', vim.lsp.buf.code_action,   desc = '[L]SP Code Action',          icon = '' },
+    { '<leader>lf', vim.diagnostic.open_float, desc = '[L]SP Floating Diagnostics', icon = '󰉪' },
+    { '<leader>li', '<cmd> LspInfo <cr>',      desc = '[L]SP Server Info',          icon = '' },
+    { '<leader>li', '<cmd> LspRestart <cr>',   desc = '[L]SP Restart Servers',      icon = '' },
+    -- stylua: ignore end
+  }
 
-  if additional_keymaps then
-    require('core.utils').create_keymaps(additional_keymaps)
-  end
+  keymaps = vim.tbl_deep_extend('force', keymaps, additional_keymaps or {})
+
+  wk.add({ keymaps })
 end
--- stylua: ignore end
 
 ---@param client vim.lsp.Client
 ---@param bufnr integer

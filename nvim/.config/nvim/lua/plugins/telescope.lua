@@ -1,23 +1,4 @@
 local map = vim.keymap.set
-local function create_mappings()
-  -- stylua: ignore start
-  map('n', '<leader>fa',  '<cmd> Telescope autocommands              <CR>', { desc = '󱚟  Find autocommands'      })
-  map('n', '<leader>fb',  '<cmd> Telescope buffers                   <CR>', { desc = '  Find buffers'           })
-  map('n', '<leader>fc',  '<cmd> Telescope commands                  <CR>', { desc = '󰘳  Find commands'          })
-  map('n', '<leader>ff',  '<cmd> Telescope find_files                <CR>', { desc = '  Find files'             })
-  map('n', '<leader>fh',  '<cmd> Telescope help_tags                 <CR>', { desc = '󰋖  Find help'              })
-  map('n', '<leader>fk',  '<cmd> Telescope keymaps                   <CR>', { desc = '  Find keymaps'           })
-  map('n', '<leader>fl',  '<cmd> Telescope highlights                <CR>', { desc = '󰸱  Find highlight groups'  })
-  map('n', '<leader>fm',  '<cmd> Telescope marks                     <CR>', { desc = '  Find bookmarks'         })
-  map('n', '<leader>fo',  '<cmd> Telescope oldfiles                  <CR>', { desc = '  Find oldfiles'          })
-  map('n', '<leader>fr',  '<cmd> Telescope resume                    <CR>', { desc = '  Resume previous search' })
-  map('n', '<leader>fw',  '<cmd> Telescope live_grep                 <CR>', { desc = '  Find word (cwd)'        })
-  map('n', '<leader>fz',  '<cmd> Telescope current_buffer_fuzzy_find <CR>', { desc = '  Find in current buffer' })
-  map('n', '<leader>fgc', '<cmd> Telescope git_commits               <CR>', { desc = '  Find commits'           })
-  map('n', '<leader>fgs', '<cmd> Telescope git_status                <CR>', { desc = '󱖫  Find Git status'        })
-  map('n', '<leader>fp',  '<cmd> Telescope treesitter_info           <CR>', { desc = '  Find treesitter info'   })
-  -- stylua: ignore end
-end
 
 return {
   'nvim-telescope/telescope.nvim',
@@ -88,6 +69,26 @@ return {
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('ui-select')
     require('telescope').load_extension('treesitter_info')
-    create_mappings()
+    require('which-key').add({
+      {
+      -- stylua: ignore start
+      mode = 'n',
+      { '<leader>fa',  '<cmd> Telescope autocommands    <CR>', desc = 'Find autocommands',      icon =  "󱚟" },
+      { '<leader>fb',  '<cmd> Telescope buffers         <CR>', desc = 'Find buffers',           icon =  "" },
+      { '<leader>fc',  '<cmd> Telescope commands        <CR>', desc = 'Find commands',          icon =  "󰘳" },
+      { '<leader>ff',  '<cmd> Telescope find_files      <CR>', desc = 'Find files',             icon =  "" },
+      { '<leader>fh',  '<cmd> Telescope help_tags       <CR>', desc = 'Find help',              icon =  "󰋖" },
+      { '<leader>fk',  '<cmd> Telescope keymaps         <CR>', desc = 'Find keymaps',           icon =  "" },
+      { '<leader>fl',  '<cmd> Telescope highlights      <CR>', desc = 'Find highlight groups',  icon =  "󰸱" },
+      { '<leader>fm',  '<cmd> Telescope marks           <CR>', desc = 'Find bookmarks',         icon =  "" },
+      { '<leader>fo',  '<cmd> Telescope oldfiles        <CR>', desc = 'Find oldfiles',          icon =  "" },
+      { '<leader>fr',  '<cmd> Telescope resume          <CR>', desc = 'Resume previous search', icon =  "" },
+      { '<leader>fw',  '<cmd> Telescope live_grep       <CR>', desc = 'Find word (cwd)',        icon =  "" },
+      { '<leader>fgc', '<cmd> Telescope git_commits     <CR>', desc = 'Find commits',           icon =  "" },
+      { '<leader>fgs', '<cmd> Telescope git_status      <CR>', desc = 'Find Git status',        icon =  "󱖫" },
+      { '<leader>fp',  '<cmd> Telescope treesitter_info <CR>', desc = 'Find treesitter info',   icon =  "" },
+        -- stylua: ignore end
+      },
+    })
   end,
 }

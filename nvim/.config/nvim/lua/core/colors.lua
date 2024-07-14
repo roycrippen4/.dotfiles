@@ -170,7 +170,7 @@ local groups = {
   Terminal = { bg = colors.darker_black },
   TroubleNormal = { bg = colors.darker_black },
   TroubleNormalNC = { bg = colors.darker_black },
-  WhichKeyFloat = { bg = colors.black3 },
+  WhichKeyNormal = { bg = colors.black3 },
   HelpNormal = { bg = colors.black3 },
 
   ['@type.type_argument'] = { italic = true },

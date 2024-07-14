@@ -5,7 +5,7 @@ return {
     {
       '<leader>td',
       '<cmd> Trouble diagnostics toggle <cr>',
-      desc = 'Toggle Trouble Diagnostics',
+      desc = '[T]rouble Diagnostics',
     },
   },
 }

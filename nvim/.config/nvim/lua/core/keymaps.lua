@@ -1,6 +1,8 @@
 local map = vim.keymap.set
 local utils = require('core.utils')
 local term = require('local.term')
+local tabline = require('local.tabufline')
+local wk = require('which-key')
 utils.create_harpoon_nav_mappings()
 
 local function run_current_file()
@@ -17,64 +19,60 @@ local function run_current_file()
     return
   end
 
+  if ft == 'rust' then
+    vim.cmd('RustRun')
+    return
+  end
+
   vim.notify('Unknown filetype detected! Supported filetypes: lua, typescript, javascript', vim.log.levels.ERROR)
 end
 
--- wk.add({
---   {
---     mode = 'n',
---     -- stylua: ignore start
---     {'<leader>iw',       '<cmd> Inspect <cr>',      desc = 'Inspect word under cursor', icon = '' },
---     {'<leader>it',       '<cmd> InspectTree <cr>',  desc = 'Show AST',                  icon = '' },
---     {'<leader>q',        '<cmd> EditQuery <cr>',    desc = 'Edit TS query',             icon = '󱄶' },
---     {'<leader>M',        '<cmd> Mason <cr>',        desc = 'Show Mason',                icon = '' },
---     {'<Leader><Leader>', '<cmd> Lazy <cr>',         desc = 'Open Lazy',                 icon = '' },
---     {'<Leader>v',        '<C-w>v',                  desc = 'Vertical Split',            icon = '' },
---     {'<Leader>h',        '<C-w>s',                  desc = 'Horizontal Split',          icon = '' },
---     {'<leader>lf',       vim.diagnostic.open_float, desc = 'Show errors in float',      icon = '' },
---     {'<leader>R',        run_lua_file,               desc = 'Run lua file',             icon = '' },
---     {'<Leader>x',        utils.close_buf,           desc = 'Close Buffer',              icon = '' },
---     -- stylua: ignore end
---   },
--- })
+wk.add({
+  {
+    mode = 'n',
+    -- stylua: ignore start
+    { '<leader>iw',       '<cmd> Inspect     <cr>',       desc = '[I]nspect Word',    icon = '' },
+    { '<leader>it',       '<cmd> InspectTree <cr>',       desc = '[I]nspect AST',     icon = '' },
+    { '<leader>q',        '<cmd> EditQuery   <cr>',       desc = 'Edit TS query',     icon = '󱄶' },
+    { '<leader>M',        '<cmd> Mason       <cr>',       desc = '[M]ason',           icon = '' },
+    { '<Leader><Leader>', '<cmd> Lazy        <cr>',       desc = 'Open Lazy',         icon = '' },
+    { '<Leader>v',        '<C-w>v',                       desc = 'Vertical Split',    icon = '' },
+    { '<Leader>h',        '<C-w>s',                       desc = 'Horizontal Split',  icon = '' },
+    { '<leader>lf',       vim.diagnostic.open_float,      desc = '[L]SP Show Errors', icon = '' },
+    { '<leader>lr',       run_current_file,               desc = 'Run file',          icon = '' },
+    { '<Leader>x',        utils.close_buf,                desc = 'Close Buffer',      icon = '' },
+    { '<leader>pu',       require('package-info').update, desc = '[P]ackage Update',  icon = '󰚰' },
+    -- stylua: ignore end
+  },
+})
 
 -- stylua: ignore start
-map('n', ';',                ':',                                      { desc = 'enter commandline'                 })
-map('n', 'F',                utils.set_cur_file_first_mark,            { desc = 'Set current file as first mark'    })
-map('n', 'L',                require('local.tabufline').tabuflineNext, { desc = 'Go to next tabufline buffer'       })
-map('n', 'H',                require('local.tabufline').tabuflinePrev, { desc = 'Go to prev tabufline buffer'       })
-map('n', 'dd',               utils.send_to_black_hole,                 { desc = 'smart delete'                      })
-map('n', 'yil',              '^y$',                                    { desc = 'yank in line'                      })
-map('n', '<C-n>',            '<cmd> NvimTreeToggle <cr>',              { desc = 'Open NvimTree'                     })
-map('n', '<C-h>',            '<C-w><C-h>',                             { desc = 'Move focus to the left window'     })
-map('n', '<C-l>',            '<C-w><C-l>',                             { desc = 'Move focus to the right window'    })
-map('n', '<C-j>',            '<C-w><C-j>',                             { desc = 'Move focus to the lower window'    })
-map('n', '<C-k>',            '<C-w><C-k>',                             { desc = 'Move focus to the upper window'    })
-map('n', '<C-h>',            '<C-w>h',                                 { desc = 'Window left'                       })
-map('n', '<C-l>',            '<C-w>l',                                 { desc = 'Window right'                      })
-map('n', '<C-j>',            '<C-w>j',                                 { desc = 'Window down'                       })
-map('n', '<C-k>',            '<C-w>k',                                 { desc = 'Window up'                         })
-map('n', '<C-s>',            '<cmd> w <cr>',                           { desc = 'Save file'                         })
-map('n', '<C-c>',            '<cmd> %y+ <cr>',                         { desc = 'Copy whole file'                   })
-map('n', '<C-f>',            utils.harpoon_add_file,                   { desc = 'Mark file'                         })
-map('n', '<C-e>',            utils.show_harpoon_menu,                  { desc = 'Harpoon menu'                      })
-map('n', '<C-S-Y>',          'mZv_y`Z',                                { desc = 'Yank from cursor to start of line' })
-map('n', '<M-S-.>',          '<C-w>>',                                 { desc = 'Increase window width'             })
-map('n', '<M-S-,>',          '<C-w><',                                 { desc = 'Decrease window width'             })
-map('n', '<M-j>',            ':m .+1<cr>==',                           { desc = 'Shift line down'                   })
-map('n', '<M-k>',            ':m .-2<cr>==',                           { desc = 'Shift line up'                     })
-map('n', '<leader>i',        '<cmd> Inspect <cr>',                     { desc = '  Inspect word under cursor'      })
-map('n', '<leader>it',       '<cmd> InspectTree <cr>',                 { desc = '  Show AST'                       })
-map('n', '<leader>q',        '<cmd> EditQuery <cr>',                   { desc = '󱄶  Edit TS query'                  })
-map('n', '<leader>lf',       vim.diagnostic.open_float,                { desc = '  Show errors in float'           })
-map('n', '<leader>M',        '<cmd> Mason <cr>',                       { desc = '  Show Mason'                     })
-map('n', '<leader>lr',       run_current_file,                             { desc = '  Run lua file'                   })
-map('n', '<Leader>v',        '<C-w>v',                                 { desc = '  Vertical Split'                 })
-map('n', '<Leader>h',        '<C-w>s',                                 { desc = '  Horizontal Split'               })
-map('n', '<Leader>x',        utils.close_buf,                          { desc = '  Close Buffer'                   })
-map('n', '<Leader><Leader>', '<cmd> Lazy <cr>',                        { desc = '  Open Lazy'                      })
-map('n', '<C-a>', utils.ctrl_a, { desc = 'Extended increment' })
-map('n', '<C-x>', utils.ctrl_x, { desc = 'Extended decrement' })
+map('n', ';',                ':',                         { desc = 'enter commandline'                 })
+map('n', 'yil',              '^y$',                       { desc = 'yank in line'                      })
+map('n', '<C-n>',            '<cmd> NvimTreeToggle <cr>', { desc = 'Open NvimTree'                     })
+map('n', '<C-h>',            '<C-w><C-h>',                { desc = 'Move focus to the left window'     })
+map('n', '<C-l>',            '<C-w><C-l>',                { desc = 'Move focus to the right window'    })
+map('n', '<C-j>',            '<C-w><C-j>',                { desc = 'Move focus to the lower window'    })
+map('n', '<C-k>',            '<C-w><C-k>',                { desc = 'Move focus to the upper window'    })
+map('n', '<C-h>',            '<C-w>h',                    { desc = 'Window left'                       })
+map('n', '<C-l>',            '<C-w>l',                    { desc = 'Window right'                      })
+map('n', '<C-j>',            '<C-w>j',                    { desc = 'Window down'                       })
+map('n', '<C-k>',            '<C-w>k',                    { desc = 'Window up'                         })
+map('n', '<C-s>',            '<cmd> w <cr>',              { desc = 'Save file'                         })
+map('n', '<C-c>',            '<cmd> %y+ <cr>',            { desc = 'Copy whole file'                   })
+map('n', '<C-S-Y>',          'mZv_y`Z',                   { desc = 'Yank from cursor to start of line' })
+map('n', '<M-S-.>',          '<C-w>>',                    { desc = 'Increase window width'             })
+map('n', '<M-S-,>',          '<C-w><',                    { desc = 'Decrease window width'             })
+map('n', '<M-j>',            ':m .+1<cr>==',              { desc = 'Shift line down'                   })
+map('n', '<M-k>',            ':m .-2<cr>==',              { desc = 'Shift line up'                     })
+map('n', 'L',                tabline.tabufline_next,      { desc = 'Go to next tabufline buffer'       })
+map('n', 'H',                tabline.tabufline_prev,      { desc = 'Go to prev tabufline buffer'       })
+map('n', 'F',                utils.set_as_first_mark,     { desc = 'Set current file as first mark'    })
+map('n', 'dd',               utils.send_to_black_hole,    { desc = 'smart delete'                      })
+map('n', '<C-f>',            utils.harpoon_add_file,      { desc = 'Mark file'                         })
+map('n', '<C-e>',            utils.show_harpoon_menu,     { desc = 'Harpoon menu'                      })
+map('n', '<C-a>',            utils.ctrl_a,                { desc = 'Extended increment' })
+map('n', '<C-x>',            utils.ctrl_x,                { desc = 'Extended decrement' })
 -- stylua: ignore end
 
 map({ 'i', 'c' }, '<C-h>', '<Left>')
@@ -113,6 +111,3 @@ map('c', '`', '``<Left>', { desc = 'Insert backticks' })
 map('c', '<Esc>', '<C-c>', { desc = 'Exit command mode' })
 
 -- package-info.nvim
-map('n', '<leader>pu', function()
-  require('package-info').update()
-end, { desc = '󰚰  Update Package' })

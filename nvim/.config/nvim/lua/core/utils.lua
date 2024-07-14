@@ -83,7 +83,7 @@ function M.get_marked_files()
 end
 
 --- Sets the currently opened file to the first entry in the marks list
-function M.set_cur_file_first_mark()
+function M.set_as_first_mark()
   local mark = require('harpoon.mark')
   local bufname = api.nvim_buf_get_name(0)
   local path = require('plenary.path'):new(bufname):make_relative(vim.uv.cwd())
@@ -229,12 +229,24 @@ function M.show_harpoon_menu()
 end
 
 function M.create_harpoon_nav_mappings()
+  local wk = require('which-key')
+
   for i = 1, 10, 1 do
     local n = i ~= 10 and i or 0
     local str = ('<C-' .. n .. '>')
-    vim.keymap.set('n', str, function()
-      require('harpoon.ui').nav_file(n)
-    end, { desc = 'Mark file' })
+    wk.add({
+      {
+        mode = 'n',
+        {
+          str,
+          function()
+            require('harpoon.ui').nav_file(n)
+          end,
+          desc = 'Goto Mark ' .. n,
+          icon = '⇀',
+        },
+      },
+    })
   end
 end
 
