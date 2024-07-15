@@ -43,12 +43,14 @@ local function close_self_closing_tag(with_space)
   else
     vim.api.nvim_put({ '/>' }, '', true, false)
   end
-  vim.cmd([[normal! F>]])
+  local col = vim.fn.col('.') - 2
+  vim.api.nvim_win_set_cursor(0, { vim.fn.line('.'), col })
 end
 
 local function insert_slash()
-  vim.api.nvim_put({ '/' }, 'c', true, true)
-  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>a', true, true, true), 'n', false)
+  vim.api.nvim_put({ '/' }, '', true, true)
+  local col = vim.fn.col('.') + 1
+  vim.api.nvim_win_set_cursor(0, { vim.fn.line('.'), col })
 end
 
 ---@param node_type string
