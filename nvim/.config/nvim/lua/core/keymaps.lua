@@ -5,6 +5,149 @@ local tabline = require('local.tabufline')
 local wk = require('which-key')
 utils.create_harpoon_nav_mappings()
 
+--- Checks if a "<" is present in the current line
+---@return boolean
+local function has_unmatched_open_tag()
+  local line = vim.fn.getline('.')
+
+  local open_tag_count = 0
+  local i = 1
+  local length = #line
+
+  while i <= length do
+    if line:sub(i, i) == '<' then
+      if line:sub(i + 1, i + 1) ~= '/' then
+        open_tag_count = open_tag_count + 1
+      end
+    elseif line:sub(i, i) == '>' then
+      if open_tag_count > 0 then
+        open_tag_count = open_tag_count - 1
+      end
+    elseif line:sub(i, i + 1) == '/>' then
+      if open_tag_count > 0 then
+        open_tag_count = open_tag_count - 1
+      end
+      i = i + 1
+    end
+    i = i + 1
+  end
+
+  -- print('open_tag_count', open_tag_count)
+  return open_tag_count > 0
+end
+
+---@param with_space boolean
+local function close_self_closing_tag(with_space)
+  if with_space then
+    vim.api.nvim_put({ ' />' }, '', true, false)
+  else
+    vim.api.nvim_put({ '/>' }, '', true, false)
+  end
+  vim.cmd([[normal! F>]])
+end
+
+local function insert_slash()
+  vim.api.nvim_put({ '/' }, 'c', true, true)
+  vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>a', true, true, true), 'n', false)
+end
+
+---@param node_type string
+local function is_valid_node(node_type)
+  return vim
+    .iter({
+      'ERROR',
+      'STag',
+      'element',
+      'jsx_element',
+      'jsx_opening_element',
+      'start_tag',
+      'text_node',
+      'content',
+      'text',
+      'string_fragment',
+    })
+    :any(
+      ---@param valid_node_type string
+      function(valid_node_type)
+        return valid_node_type == node_type
+      end
+    )
+end
+
+local function is_invalid_node(node_type)
+  return vim
+    .iter({
+      'expression',
+      'jsx_expression',
+      'svelte_raw_text',
+    })
+    :any(
+      ---@param invalid_node_type string
+      function(invalid_node_type)
+        return invalid_node_type == node_type
+      end
+    )
+end
+
+local function is_tag_lang()
+  return vim
+    .iter({
+      'eruby',
+      'handlebars',
+      'html',
+      'javascript',
+      'javascriptreact',
+      'php',
+      'rescript',
+      'svelte',
+      'templ',
+      'typescript',
+      'typescriptreact',
+      'vue',
+      'xml',
+    })
+    :any(
+      ---@param lang string
+      function(lang)
+        return vim.bo.ft == lang
+      end
+    )
+end
+
+-- Automatically end a self-closing tag when pressing /
+vim.keymap.set('i', '/', function()
+  if not is_tag_lang() then
+    insert_slash()
+    return
+  end
+
+  local node = vim.treesitter.get_node()
+  if not node then
+    insert_slash()
+    return
+  end
+
+  local type = node:type()
+  if (is_valid_node(type) and has_unmatched_open_tag()) and not is_invalid_node(type) then
+    local line = vim.fn.getline('.')
+    local char_after_cursor = vim.fn.strcharpart(vim.fn.strpart(line, vim.fn.col('.') - 1), 0, 1) ---@type string
+
+    if char_after_cursor == '>' then
+      insert_slash()
+      return
+    end
+
+    local char_at_cursor = vim.fn.strcharpart(vim.fn.strpart(line, vim.fn.col('.') - 2), 0, 1) ---@type string
+    print(char_at_cursor)
+    local already_have_space = char_at_cursor == ' '
+
+    close_self_closing_tag(not already_have_space)
+    return
+  end
+
+  insert_slash()
+end, { noremap = true, silent = true })
+
 local function run_current_file()
   local ft = vim.bo.ft
 
@@ -67,7 +210,7 @@ map('n', '<M-j>',            ':m .+1<cr>==',              { desc = 'Shift line d
 map('n', '<M-k>',            ':m .-2<cr>==',              { desc = 'Shift line up'                     })
 map('n', 'L',                tabline.tabufline_next,      { desc = 'Go to next tabufline buffer'       })
 map('n', 'H',                tabline.tabufline_prev,      { desc = 'Go to prev tabufline buffer'       })
-map('n', 'F',                utils.set_as_first_mark,     { desc = 'Set current file as first mark'    })
+map('n', 'B',                utils.set_as_first_mark,     { desc = 'Set current file as first mark'    })
 map('n', 'dd',               utils.send_to_black_hole,    { desc = 'smart delete'                      })
 map('n', '<C-f>',            utils.harpoon_add_file,      { desc = 'Mark file'                         })
 map('n', '<C-e>',            utils.show_harpoon_menu,     { desc = 'Harpoon menu'                      })
@@ -109,5 +252,3 @@ map('c', "'", "''<Left>", { desc = 'Insert single quotes' })
 map('c', '"', '""<Left>', { desc = 'Insert double quotes' })
 map('c', '`', '``<Left>', { desc = 'Insert backticks' })
 map('c', '<Esc>', '<C-c>', { desc = 'Exit command mode' })
-
--- package-info.nvim
