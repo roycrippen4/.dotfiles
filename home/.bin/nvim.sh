@@ -9,11 +9,11 @@ VIM_OPTS=""      # Options to pass to Neovim
 
 # Function to display help message
 usage() {
-  echo "Usage: $0 [-c cmd] [-d] [-r] [-v] [-h] [-n] [path]"
+  echo "Usage: $0 [-c cmd] [-d] [-r] [-u config] [-v] [-h] [-n] [path]"
   echo "  -c cmd        Launch Neovim and execute a vimscript command"
   echo "  -d            Run in debug mode"
   echo "  -r            Enable re-launching of nvim upon exit"
-  echo "  -u            Launch Neovim without loading config"
+  echo "  -u config     Launch Neovim with a specified configuration file"
   echo "  -v            Display version information and exit"
   echo "  -h            Display this help and exit"
   echo "  -n            Disable swap files"
@@ -21,7 +21,7 @@ usage() {
 }
 
 # Process options
-while getopts "c:druvhn" opt; do
+while getopts "c:dru:vhn" opt; do
   case $opt in
   c)
     VIM_CMD="$OPTARG"
@@ -33,19 +33,14 @@ while getopts "c:druvhn" opt; do
     RELAUNCH=1
     ;;
   n)
-    nvim -n
+    VIM_OPTS="$VIM_OPTS -n"
     ;;
   v)
     nvim -v
     exit 0
     ;;
   u)
-    VIM_OPTS="$VIM_OPTS -n"
-    exit 0
-    ;;
-  u)
-    VIM_OPTS="$VIM_OPTS -u NONE -U NONE"
-    exit 0
+    VIM_OPTS="$VIM_OPTS -u $OPTARG"
     ;;
   h)
     usage
