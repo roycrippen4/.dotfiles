@@ -229,24 +229,12 @@ function M.show_harpoon_menu()
 end
 
 function M.create_harpoon_nav_mappings()
-  local wk = require('which-key')
-
   for i = 1, 10, 1 do
     local n = i ~= 10 and i or 0
     local str = ('<C-' .. n .. '>')
-    wk.add({
-      {
-        mode = 'n',
-        {
-          str,
-          function()
-            require('harpoon.ui').nav_file(n)
-          end,
-          desc = 'Goto Mark ' .. n,
-          icon = '⇀',
-        },
-      },
-    })
+    vim.keymap.set('n', str, function()
+      require('harpoon.ui').nav_file(n)
+    end, { desc = 'Mark file' })
   end
 end
 
@@ -286,17 +274,6 @@ function M.file_exists(filename)
   end
 
   return false
-end
-
---- @param keymaps KeyPair[]
-function M.create_keymaps(keymaps)
-  for _, keymap in ipairs(keymaps) do
-    if keymap.mode == nil then
-      vim.keymap.set('n', keymap.lhs, keymap.rhs, keymap.opts or {})
-    else
-      vim.keymap.set(keymap.mode, keymap.lhs, keymap.rhs, keymap.opts or {})
-    end
-  end
 end
 
 --- @return boolean
