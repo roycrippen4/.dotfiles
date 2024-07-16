@@ -76,7 +76,7 @@ function M.set_lsp_mappings(additional_keymaps)
     -- stylua: ignore start
     mode = 'n',
     { 'gr', builtin.lsp_references,            desc = 'Goto References',            icon = '' },
-    { 'gd', vim.lsp.buf.definition,            desc = 'Goto Definition',            icon = '󰼭' },
+    { 'gd', builtin.lsp_definitions,           desc = 'Goto Definition',            icon = '󰼭' },
     { 'gi', builtin.lsp_implementations,       desc = 'Goto Implementation',        icon = '󰡱' },
     { '<leader>li', organize_imports,          desc = '[L]SP Organize Imports',     icon = '󰶘' },
     { '<leader>lh', toggle_inlay_hints,        desc = '[L]SP Inlay Hints',          icon = '󰊠' },
