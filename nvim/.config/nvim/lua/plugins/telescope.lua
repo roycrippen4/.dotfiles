@@ -21,7 +21,6 @@ return {
     'folke/which-key.nvim',
   },
   config = function()
-    print('adding keymaps')
     require('which-key').add({
       {
       -- stylua: ignore start
