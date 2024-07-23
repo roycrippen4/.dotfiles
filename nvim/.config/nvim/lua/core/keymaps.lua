@@ -5,150 +5,149 @@ local tabline = require('local.tabufline')
 local wk = require('which-key')
 utils.create_harpoon_nav_mappings()
 
---- Checks if a "<" is present in the current line
----@return boolean
-local function has_unmatched_open_tag()
-  local line = vim.fn.getline('.')
+-- --- Checks if a "<" is present in the current line
+-- ---@return boolean
+-- local function has_unmatched_open_tag()
+--   local line = vim.fn.getline('.')
 
-  local open_tag_count = 0
-  local i = 1
-  local length = #line
+--   local open_tag_count = 0
+--   local i = 1
+--   local length = #line
 
-  while i <= length do
-    if line:sub(i, i) == '<' then
-      if line:sub(i + 1, i + 1) ~= '/' then
-        open_tag_count = open_tag_count + 1
-      end
-    elseif line:sub(i, i) == '>' then
-      if open_tag_count > 0 then
-        open_tag_count = open_tag_count - 1
-      end
-    elseif line:sub(i, i + 1) == '/>' then
-      if open_tag_count > 0 then
-        open_tag_count = open_tag_count - 1
-      end
-      i = i + 1
-    end
-    i = i + 1
-  end
+--   while i <= length do
+--     if line:sub(i, i) == '<' then
+--       if line:sub(i + 1, i + 1) ~= '/' then
+--         open_tag_count = open_tag_count + 1
+--       end
+--     elseif line:sub(i, i) == '>' then
+--       if open_tag_count > 0 then
+--         open_tag_count = open_tag_count - 1
+--       end
+--     elseif line:sub(i, i + 1) == '/>' then
+--       if open_tag_count > 0 then
+--         open_tag_count = open_tag_count - 1
+--       end
+--       i = i + 1
+--     end
+--     i = i + 1
+--   end
 
-  -- print('open_tag_count', open_tag_count)
-  return open_tag_count > 0
-end
+--   -- print('open_tag_count', open_tag_count)
+--   return open_tag_count > 0
+-- end
 
----@param with_space boolean
-local function close_self_closing_tag(with_space)
-  if with_space then
-    vim.api.nvim_put({ ' />' }, '', true, false)
-  else
-    vim.api.nvim_put({ '/>' }, '', true, false)
-  end
-  local col = vim.fn.col('.') - 2
-  vim.api.nvim_win_set_cursor(0, { vim.fn.line('.'), col })
-end
+-- ---@param with_space boolean
+-- local function close_self_closing_tag(with_space)
+--   if with_space then
+--     vim.api.nvim_put({ ' />' }, '', true, false)
+--   else
+--     vim.api.nvim_put({ '/>' }, '', true, false)
+--   end
+--   local col = vim.fn.col('.') - 2
+--   vim.api.nvim_win_set_cursor(0, { vim.fn.line('.'), col })
+-- end
 
-local function insert_slash()
-  vim.api.nvim_put({ '/' }, '', true, true)
-  local col = vim.fn.col('.') + 1
-  vim.api.nvim_win_set_cursor(0, { vim.fn.line('.'), col })
-end
+-- local function insert_slash()
+--   vim.api.nvim_put({ '/' }, '', true, true)
+--   local col = vim.fn.col('.') + 1
+--   vim.api.nvim_win_set_cursor(0, { vim.fn.line('.'), col })
+-- end
 
----@param node_type string
-local function is_valid_node(node_type)
-  return vim
-    .iter({
-      'ERROR',
-      'STag',
-      'element',
-      'jsx_element',
-      'jsx_opening_element',
-      'start_tag',
-      'text_node',
-      'content',
-      'text',
-      'string_fragment',
-    })
-    :any(
-      ---@param valid_node_type string
-      function(valid_node_type)
-        return valid_node_type == node_type
-      end
-    )
-end
+-- ---@param node_type string
+-- local function is_valid_node(node_type)
+--   return vim
+--     .iter({
+--       'ERROR',
+--       'STag',
+--       'element',
+--       'jsx_element',
+--       'jsx_opening_element',
+--       'start_tag',
+--       'text_node',
+--       'content',
+--       'text',
+--       'string_fragment',
+--     })
+--     :any(
+--       ---@param valid_node_type string
+--       function(valid_node_type)
+--         return valid_node_type == node_type
+--       end
+--     )
+-- end
 
-local function is_invalid_node(node_type)
-  return vim
-    .iter({
-      'expression',
-      'jsx_expression',
-      'svelte_raw_text',
-    })
-    :any(
-      ---@param invalid_node_type string
-      function(invalid_node_type)
-        return invalid_node_type == node_type
-      end
-    )
-end
+-- local function is_invalid_node(node_type)
+--   return vim
+--     .iter({
+--       'expression',
+--       'jsx_expression',
+--       'svelte_raw_text',
+--     })
+--     :any(
+--       ---@param invalid_node_type string
+--       function(invalid_node_type)
+--         return invalid_node_type == node_type
+--       end
+--     )
+-- end
 
-local function is_tag_lang()
-  return vim
-    .iter({
-      'eruby',
-      'handlebars',
-      'html',
-      'javascript',
-      'javascriptreact',
-      'php',
-      'rescript',
-      'svelte',
-      'templ',
-      'typescript',
-      'typescriptreact',
-      'vue',
-      'xml',
-    })
-    :any(
-      ---@param lang string
-      function(lang)
-        return vim.bo.ft == lang
-      end
-    )
-end
+-- local function is_tag_lang()
+--   return vim
+--     .iter({
+--       'eruby',
+--       'handlebars',
+--       'html',
+--       'javascript',
+--       'javascriptreact',
+--       'php',
+--       'rescript',
+--       'svelte',
+--       'templ',
+--       'typescript',
+--       'typescriptreact',
+--       'vue',
+--       'xml',
+--     })
+--     :any(
+--       ---@param lang string
+--       function(lang)
+--         return vim.bo.ft == lang
+--       end
+--     )
+-- end
 
--- Automatically end a self-closing tag when pressing /
-vim.keymap.set('i', '/', function()
-  if not is_tag_lang() then
-    insert_slash()
-    return
-  end
+-- -- Automatically end a self-closing tag when pressing /
+-- vim.keymap.set('i', '/', function()
+--   if not is_tag_lang() then
+--     insert_slash()
+--     return
+--   end
 
-  local node = vim.treesitter.get_node()
-  if not node then
-    insert_slash()
-    return
-  end
+--   local node = vim.treesitter.get_node()
+--   if not node then
+--     insert_slash()
+--     return
+--   end
 
-  local type = node:type()
-  if (is_valid_node(type) and has_unmatched_open_tag()) and not is_invalid_node(type) then
-    local line = vim.fn.getline('.')
-    local char_after_cursor = vim.fn.strcharpart(vim.fn.strpart(line, vim.fn.col('.') - 1), 0, 1) ---@type string
+--   local type = node:type()
+--   if (is_valid_node(type) and has_unmatched_open_tag()) and not is_invalid_node(type) then
+--     local line = vim.fn.getline('.')
+--     local char_after_cursor = vim.fn.strcharpart(vim.fn.strpart(line, vim.fn.col('.') - 1), 0, 1) ---@type string
 
-    if char_after_cursor == '>' then
-      insert_slash()
-      return
-    end
+--     if char_after_cursor == '>' then
+--       insert_slash()
+--       return
+--     end
 
-    local char_at_cursor = vim.fn.strcharpart(vim.fn.strpart(line, vim.fn.col('.') - 2), 0, 1) ---@type string
-    print(char_at_cursor)
-    local already_have_space = char_at_cursor == ' '
+--     local char_at_cursor = vim.fn.strcharpart(vim.fn.strpart(line, vim.fn.col('.') - 2), 0, 1) ---@type string
+--     local already_have_space = char_at_cursor == ' '
 
-    close_self_closing_tag(not already_have_space)
-    return
-  end
+--     close_self_closing_tag(not already_have_space)
+--     return
+--   end
 
-  insert_slash()
-end, { noremap = true, silent = true })
+--   insert_slash()
+-- end, { noremap = true, silent = true })
 
 local function run_current_file()
   local ft = vim.bo.ft

@@ -19,8 +19,6 @@ end, {
   desc = 'Re-enable autoformat-on-save',
 })
 
-local format_enabled = true
-
 return {
   'stevearc/conform.nvim',
   lazy = false,
@@ -29,44 +27,42 @@ return {
       '<leader>ft',
       mode = 'n',
       function()
-        if format_enabled then
+        if not vim.g.disable_autoformat then
           vim.cmd('FormatDisable')
-          format_enabled = false
+          vim.g.disable_autoformat = true
           vim.notify('Autoformat disabled', vim.log.levels.INFO, { title = 'Conform' })
         else
           vim.cmd('FormatEnable')
-          format_enabled = true
+          vim.g.disable_autoformat = false
           vim.notify('Autoformat enabled', vim.log.levels.INFO, { title = 'Conform' })
         end
       end,
       desc = '  Toggle autoformat-on-save',
     },
   },
-  opts = {
+  opts = { ---@type conform.setupOpts
     notify_on_error = false,
     quiet = false,
     formatters_by_ft = {
-      css = { { 'prettierd', 'prettier' } },
-      html = { { 'prettierd', 'prettier' } },
-      javascript = { { 'prettierd', 'prettier' } },
-      javascriptreact = { { 'prettierd', 'prettier' } },
-      json = { { 'prettierd', 'prettier' } },
-      markdown = { { 'prettierd', 'prettier' } },
-      svelte = { { 'prettierd', 'prettier' } },
-      typescript = { { 'prettierd', 'prettier' } },
-      typescriptreact = { { 'prettierd', 'prettier' } },
+      css = { 'prettierd', 'prettier', stop_after_first = true },
+      html = { 'prettierd', 'prettier', stop_after_first = true },
+      javascript = { 'prettierd', 'prettier', stop_after_first = true },
+      javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+      json = { 'prettierd', 'prettier', stop_after_first = true },
+      markdown = { 'prettierd', 'prettier', stop_after_first = true },
+      svelte = { 'prettierd', 'prettier', stop_after_first = true },
+      typescript = { 'prettierd', 'prettier', stop_after_first = true },
+      typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       lua = { 'stylua' },
       rust = { 'rustfmt' },
       sh = { 'shfmt' },
-      yaml = { { 'yamlfmt' } },
+      yaml = { 'yamlfmt' },
     },
 
     ---@param bufnr integer
     ---@return { timeout_ms: number, lsp_fallback: boolean }|nil
     format_on_save = function(bufnr)
-      local ignore_filetypes = { 'sql', 'java' }
-
-      if vim.tbl_contains(ignore_filetypes, vim.bo[bufnr].filetype) then
+      if vim.tbl_contains({ 'sql', 'java' }, vim.bo[bufnr].filetype) then
         return
       end
 
