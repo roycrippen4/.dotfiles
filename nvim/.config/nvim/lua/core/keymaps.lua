@@ -43,14 +43,12 @@ utils.create_harpoon_nav_mappings()
 --   else
 --     vim.api.nvim_put({ '/>' }, '', true, false)
 --   end
---   local col = vim.fn.col('.') - 2
---   vim.api.nvim_win_set_cursor(0, { vim.fn.line('.'), col })
+--   vim.cmd([[normal! F>]])
 -- end
 
 -- local function insert_slash()
---   vim.api.nvim_put({ '/' }, '', true, true)
---   local col = vim.fn.col('.') + 1
---   vim.api.nvim_win_set_cursor(0, { vim.fn.line('.'), col })
+--   vim.api.nvim_put({ '/' }, 'c', true, true)
+--   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>a', true, true, true), 'n', false)
 -- end
 
 -- ---@param node_type string
@@ -140,6 +138,7 @@ utils.create_harpoon_nav_mappings()
 --     end
 
 --     local char_at_cursor = vim.fn.strcharpart(vim.fn.strpart(line, vim.fn.col('.') - 2), 0, 1) ---@type string
+--     print(char_at_cursor)
 --     local already_have_space = char_at_cursor == ' '
 
 --     close_self_closing_tag(not already_have_space)
