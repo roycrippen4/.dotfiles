@@ -1,6 +1,8 @@
 require('plugins.lsp.overrides')
 local utils = require('core.utils')
 
+vim.g.zig_fmt_parse_errors = 0
+
 ---@return boolean
 local function has_tailwind_config()
   return utils.file_exists('tailwind.config.js') or utils.file_exists('tailwind.config.cjs') or utils.file_exists('tailwind.config.ts')

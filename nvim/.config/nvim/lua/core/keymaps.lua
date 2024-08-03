@@ -156,7 +156,7 @@ local function run_current_file()
     return
   end
 
-  if ft == 'typescript' or 'javascript' then
+  if ft == 'typescript' or ft == 'javascript' then
     local file = vim.fn.expand('%')
     term.send('bun run ' .. file, 'H')
     return
@@ -164,6 +164,12 @@ local function run_current_file()
 
   if ft == 'rust' then
     vim.cmd('RustRun')
+    return
+  end
+
+  if ft == 'zig' then
+    local file = vim.fn.expand('%')
+    term.send('zig run ' .. file, 'H')
     return
   end
 
