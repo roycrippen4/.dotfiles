@@ -30,11 +30,11 @@ return {
         if not vim.g.disable_autoformat then
           vim.cmd('FormatDisable')
           vim.g.disable_autoformat = true
-          vim.notify('Autoformat disabled', vim.log.levels.INFO, { title = 'Conform' })
+          print('Autoformat disabled')
         else
           vim.cmd('FormatEnable')
           vim.g.disable_autoformat = false
-          vim.notify('Autoformat enabled', vim.log.levels.INFO, { title = 'Conform' })
+          print('Autoformat enabled')
         end
       end,
       desc = '  Toggle autoformat-on-save',
