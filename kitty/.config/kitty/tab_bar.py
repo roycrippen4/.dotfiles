@@ -1,4 +1,4 @@
-from datetime import datetime
+# from datetime import datetime
 from kitty.boss import get_boss
 from kitty.fast_data_types import Screen, add_timer, get_options
 from kitty.utils import color_as_int
@@ -114,14 +114,14 @@ def draw_tab(
 ) -> int:
     global timer_id
     # global right_status_length
-    if timer_id is None:
-        timer_id = add_timer(_redraw_tab_bar, REFRESH_TIME, True)
-    cells = [
-        (LEFT_END_FGCOLOR, LEFT_END_BGCOLOR, LEFT_END),
-        (CLOCK_FG, CLOCK_BG, datetime.now().strftime(" %I:%M:%S")),
-        (DATE_FG, DATE_BG, CLOCK_SEP),
-        (DATE_FG, DATE_BG, datetime.now().strftime("%m/%d/%Y ")),
-    ]
+    # if timer_id is None:
+    #     timer_id = add_timer(_redraw_tab_bar, REFRESH_TIME, True)
+    # cells = [
+    #     (LEFT_END_FGCOLOR, LEFT_END_BGCOLOR, LEFT_END),
+    #     (CLOCK_FG, CLOCK_BG, datetime.now().strftime(" %I:%M:%S")),
+    #     (DATE_FG, DATE_BG, CLOCK_SEP),
+    #     (DATE_FG, DATE_BG, datetime.now().strftime("%m/%d/%Y ")),
+    # ]
     # right_status_length = RIGHT_MARGIN
     # for cell in cells:
     #     right_status_length += len(str(cell[2]))
