@@ -12,6 +12,7 @@ return {
       { '<leader>p',  group = '[P]ackage', icon = '' },
       { '<leader>t',  group = '[T]rouble', icon = '' },
       { '<leader>i',  group = '[I]nspect', icon = '󱡴' },
+      { '<leader>g',  group = '[G]it',     icon = '' },
       --stylua: ignore end
     })
   end,

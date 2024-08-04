@@ -247,7 +247,7 @@ M.git = function()
   local added = (git_status.added and git_status.added ~= 0) and ('%#St_GitAdd#  ' .. git_status.added) or ''
   local changed = (git_status.changed and git_status.changed ~= 0) and ('%#St_GitChange#  ' .. git_status.changed) or ''
   local removed = (git_status.removed and git_status.removed ~= 0) and ('%#St_GitRemove#  ' .. git_status.removed) or ''
-  local branch_name = '%#St_GitBranch#  ' .. git_status.head .. ' '
+  local branch_name = '%#St_GitBranch#  ' .. git_status.head
 
   return branch_name .. added .. changed .. removed .. '%#St_FileSep#  '
 end
@@ -265,7 +265,7 @@ M.lsp_diagnostics = function()
 
   errors = (errors and errors > 0) and ('%#St_Lsp_Error#󰅚 ' .. errors .. ' ') or ''
   warnings = (warnings and warnings > 0) and ('%#St_LspWarning# ' .. warnings .. ' ') or ''
-  hints = (hints and hints > 0) and ('%#St_LspHints#󱧣 ' .. hints .. ' ') or ''
+  hints = (hints and hints > 0) and ('%#St_LspHints#󱡴 ' .. hints .. ' ') or ''
   info = (info and info > 0) and ('%#St_LspInfo# ' .. info .. ' ') or ''
 
   return vim.o.columns > 140 and errors .. warnings .. hints .. info or ''
