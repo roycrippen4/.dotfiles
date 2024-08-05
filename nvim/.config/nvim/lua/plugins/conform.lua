@@ -54,6 +54,7 @@ return {
       typescript = { 'prettierd', 'prettier', stop_after_first = true },
       typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       lua = { 'stylua' },
+      python = { 'black' },
       rust = { 'rustfmt' },
       sh = { 'shfmt' },
       yaml = { 'yamlfmt' },

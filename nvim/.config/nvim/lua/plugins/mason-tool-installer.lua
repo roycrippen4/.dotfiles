@@ -3,6 +3,7 @@ return {
   lazy = false,
   opts = {
     ensure_installed = {
+      'black',
       'clangd',
       'codelldb',
       'css-lsp',
