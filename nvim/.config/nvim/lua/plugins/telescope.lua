@@ -38,6 +38,7 @@ return {
         { '<leader>fgc', '<cmd> Telescope git_commits     <CR>', desc = '[F]ind [G]it commits', icon = '' },
         { '<leader>fgs', '<cmd> Telescope git_status      <CR>', desc = '[F]ind [G]it status', icon = '󱖫' },
         { '<leader>fp', '<cmd> Telescope treesitter_info <CR>', desc = '[F]ind treesitter info', icon = '' },
+        { '<leader>ft', '<cmd> TodoTelescope <CR>', desc = '[F]ind [T]odos', icon = '' },
       },
     })
     local opts = {
