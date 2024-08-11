@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'folke/todo-comments.nvim',
   event = 'VimEnter',
@@ -5,10 +6,7 @@ return {
   opts = {
     keywords = {
       TODO = { icon = '', color = 'info' },
-      DONE = {
-        icon = '',
-        color = 'done',
-      },
+      DONE = { icon = '', color = 'done' },
       SECTION = { icon = ' ', color = 'section' },
     },
     colors = {

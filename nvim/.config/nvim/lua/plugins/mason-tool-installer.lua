@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'WhoIsSethDaniel/mason-tool-installer.nvim', -- https://github.com/WhoIsSethDaniel/mason-tool-installer.nvim
   lazy = false,

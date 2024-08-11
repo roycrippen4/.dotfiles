@@ -1,25 +1,48 @@
+---@type LazyPluginSpec
 return {
-  'saecki/crates.nvim', --https://github.com/saecki/crates.nvim
+  'saecki/crates.nvim', -- https://github.com/saecki/crates.nvim
   event = { 'BufRead Cargo.toml' },
-  config = function()
-    local map = vim.keymap.set
-    local bufnr = vim.api.nvim_get_current_buf()
+  opts = {
+    lsp = {
+      enabled = true,
+      actions = true,
+      completion = false,
+      hover = true,
+    },
+    popup = { border = 'rounded' },
+    completion = {
+      cmp = { enabled = true },
+      crates = { enabled = true },
+    },
+  },
+  config = function(_, opts)
+    local wk = require('which-key')
+    local crates = require('crates')
+    crates.setup(opts)
 
-    map('n', '<leader>ct', require('crates').toggle, { buffer = bufnr, desc = 'Toggle' })
-    map('n', '<leader>cr', require('crates').reload, { buffer = bufnr, desc = 'Reload' })
-    map('n', '<leader>cv', require('crates').show_versions_popup, { buffer = bufnr, desc = 'Show versions_popup' })
-    map('n', '<leader>cf', require('crates').show_features_popup, { buffer = bufnr, desc = 'Show features_popup' })
-    map('n', '<leader>cd', require('crates').show_dependencies_popup, { buffer = bufnr, desc = 'Show dependencies popup' })
-    map({ 'n', 'v' }, '<leader>cu', require('crates').update_crate, { buffer = bufnr, desc = 'Update crate(s)' })
-    map({ 'n', 'v' }, '<leader>cU', require('crates').upgrade_crate, { buffer = bufnr, desc = 'Upgrade crate(s)' })
-    map('n', '<leader>ca', require('crates').update_all_crates, { buffer = bufnr, desc = 'Update all crates' })
-    map('n', '<leader>cA', require('crates').upgrade_all_crates, { buffer = bufnr, desc = 'Upgrade all crates' })
-    map('n', '<leader>ce', require('crates').expand_plain_crate_to_inline_table, { buffer = bufnr, desc = 'Crate to inline' })
-    map('n', '<leader>cE', require('crates').extract_crate_into_table, { buffer = bufnr, desc = 'Extract crate into table' })
-    map('n', '<leader>cH', require('crates').open_homepage, { buffer = bufnr, desc = 'Open homepage' })
-    map('n', '<leader>cR', require('crates').open_repository, { buffer = bufnr, desc = 'Open repository' })
-    map('n', '<leader>cD', require('crates').open_documentation, { buffer = bufnr, desc = 'Open documentation' })
-    map('n', '<leader>cC', require('crates').open_crates_io, { buffer = bufnr, desc = 'Open crates io' })
-    require('crates').setup({})
+    wk.add({
+      ---@type wk.Spec
+      {
+        mode = 'n',
+        { '<leader>ct', crates.toggle, buffer = true, desc = '[C]rates toggle' },
+        { '<leader>cr', crates.reload, buffer = true, desc = '[C]rates reload', icon = '󰑓' },
+        { '<leader>cv', crates.show_versions_popup, buffer = true, desc = '[C]rates versions', icon = '' },
+        { '<leader>cf', crates.show_features_popup, buffer = true, desc = '[C]rates features', icon = '󰩉' },
+        { '<leader>cd', crates.show_dependencies_popup, buffer = true, desc = '[C]rates dependencies', icon = '' },
+        { '<leader>ca', crates.update_all_crates, buffer = true, desc = '[C]rates update all', icon = '󰚰' },
+        { '<leader>cA', crates.upgrade_all_crates, buffer = true, desc = '[C]rates upgrade all', icon = '' },
+        { '<leader>cH', crates.open_homepage, buffer = true, desc = '[C]rates open crate homepage', icon = '󰖟' },
+        { '<leader>cR', crates.open_repository, buffer = true, desc = '[C]rates open crate repository', icon = '󰳏' },
+        { '<leader>cD', crates.open_documentation, buffer = true, desc = '[C]rates open documentation', icon = '󰈙' },
+        { '<leader>cC', crates.open_crates_io, buffer = true, desc = 'Open crates io', icon = '' },
+      },
+      {
+        mode = { 'n', 'v' },
+        {
+          { '<leader>cu', crates.update_crate, buffer = true, desc = '[C]rates update crate(s)', icon = '󰚰' },
+          { '<leader>cU', crates.upgrade_crate, buffer = true, desc = '[C]rates upgrade crate(s)', icon = '' },
+        },
+      },
+    })
   end,
 }

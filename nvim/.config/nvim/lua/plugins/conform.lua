@@ -40,7 +40,9 @@ return {
       desc = '  Toggle autoformat-on-save',
     },
   },
-  opts = { --- @type conform.setupOpts
+  ---@module "conform"
+  --- @type conform.setupOpts
+  opts = {
     notify_on_error = false,
     quiet = false,
     formatters_by_ft = {

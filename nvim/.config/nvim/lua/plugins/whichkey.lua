@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'folke/which-key.nvim',
   lazy = false,
@@ -5,6 +6,7 @@ return {
   config = function()
     require('which-key').add({
       --stylua: ignore start
+      { '<leader>c',  group = '[C]rates',   icon = '' },
       { '<leader>d',  group = '[D]ebug',   icon = '' },
       { '<leader>f',  group = '[F]ind',    icon = '' },
       { '<leader>l',  group = '[L]SP',     icon = '' },

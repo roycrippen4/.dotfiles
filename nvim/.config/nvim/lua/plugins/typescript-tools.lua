@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'pmizio/typescript-tools.nvim', -- https://github.com/pmizio/typescript-tools.nvim
   ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'svelte' },
@@ -6,8 +7,8 @@ return {
     'neovim/nvim-lspconfig', -- https://github.com/neovim/nvim-lspconfig
   },
   opts = {
-    on_attach = require('plugins.lsp.lsp-utils').on_attach,
-    capabilities = require('plugins.lsp.lsp-utils').capabilities,
+    on_attach = require('core.utils').on_attach,
+    capabilities = require('core.utils').capabilities,
     settings = {
       tsserver_file_preferences = {
         includeInlayParameterNameHints = 'all',

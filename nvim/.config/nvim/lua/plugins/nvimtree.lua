@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'nvim-tree/nvim-tree.lua', -- https://github.com/nvim-tree/nvim-tree.lua
   lazy = false,

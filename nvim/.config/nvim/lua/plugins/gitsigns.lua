@@ -4,24 +4,25 @@ local function blame_full()
   require('gitsigns').blame_line({ full = true })
 end
 
+---@type LazyPluginSpec
 return {
   'lewis6991/gitsigns.nvim',
   event = 'VimEnter',
-  opts = {
-    signs = {
-      add = { text = icon },
-      change = { text = icon },
-      delete = { text = icon },
-      topdelete = { text = icon },
-      changedelete = { text = icon },
-      untracked = { text = icon },
-    },
-  },
-  config = function(_, opts)
+  config = function()
     local gitsigns = require('gitsigns')
-    gitsigns.setup(opts)
-
     local wk = require('which-key')
+
+    gitsigns.setup({
+      signs = {
+        add = { text = icon },
+        change = { text = icon },
+        delete = { text = icon },
+        topdelete = { text = icon },
+        changedelete = { text = icon },
+        untracked = { text = icon },
+      },
+    })
+
     wk.add({
       {
         mode = 'n',

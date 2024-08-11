@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'stevearc/dressing.nvim', -- https://github.com/stevearc/dressing.nvim
   event = 'VimEnter',

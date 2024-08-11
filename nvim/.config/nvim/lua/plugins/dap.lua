@@ -6,7 +6,7 @@ local arrows = {
 }
 
 return {
-  {
+  { ---@type LazyPluginSpec
     'mfussenegger/nvim-dap',
     dependencies = {
       {

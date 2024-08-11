@@ -1,5 +1,6 @@
+---@type LazyPluginSpec
 return {
-  'hiphish/rainbow-delimiters.nvim',
+  'hiphish/rainbow-delimiters.nvim', --- https://github.com/HiPhish/rainbow-delimiters.nvim
   event = 'VimEnter',
   config = function()
     require('rainbow-delimiters.setup').setup({

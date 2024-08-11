@@ -1,9 +1,10 @@
+---@type LazyPluginSpec
 return {
   'mrcjkb/rustaceanvim', -- https://github.com/mrcjkb/rustaceanvim
-  version = '^4',
+  version = '^5',
   ft = { 'rust' },
   config = function()
-    require('plugins.lsp.lsp-utils').set_lsp_mappings({
+    require('core.utils').set_lsp_mappings({
       -- stylua: ignore start
       { '<leader>lc', '<cmd> RustLsp openCargo    <cr>', desc = "[L]SP Open Cargo" },
       { '<leader>lC', '<cmd> RustLsp flyCheck     <cr>', desc = "[L]SP Run FlyCheck" },
@@ -14,16 +15,13 @@ return {
       -- stylua: ignore end
     })
 
+    ---@module 'rustaceanvim'
+    ---@type rustaceanvim.Opts
     vim.g.rustaceanvim = {
-      server = { --- @type RustaceanLspClientOpts
+      server = {
         on_attach = require('plugins.lsp.lsp-utils').on_attach,
       },
-      --- @type RustaceanToolsOpts
-      tools = {
-        float_win_config = {
-          border = 'rounded',
-        },
-      },
+      tools = { float_win_config = { border = 'rounded' } },
     }
   end,
 }

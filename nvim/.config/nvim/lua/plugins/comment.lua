@@ -1,4 +1,5 @@
-return { ---@type LazyPluginSpec
+---@type LazyPluginSpec
+return {
   'roycrippen4/Comment.nvim', -- https://github.com/roycrippen4/Comment.nvim
   event = 'BufEnter',
   dependencies = {

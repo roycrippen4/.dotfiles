@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'iamcco/markdown-preview.nvim', -- https://github.com/iamcco/markdown-preview.nvim
   ft = 'markdown',

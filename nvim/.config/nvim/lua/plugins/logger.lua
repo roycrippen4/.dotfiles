@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'roycrippen4/buffer-logger.nvim',
   config = function()

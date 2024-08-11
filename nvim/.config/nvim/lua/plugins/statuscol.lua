@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'luukvbaal/statuscol.nvim', -- https://github.com/luukvbaal/statuscol.nvim
   lazy = false,

@@ -1,25 +1,25 @@
 local map = vim.keymap.set
-local comparators = {
-  ---Deprioritize items starting with underscores (private or protected)
-  ---@type fun(lhs: cmp.Entry, rhs: cmp.Entry): boolean|nil
-  deprioritize_underscore = function(lhs, rhs)
-    local l = (lhs.completion_item.label:find('^_+')) and 1 or 0
-    local r = (rhs.completion_item.label:find('^_+')) and 1 or 0
-    if l ~= r then
-      return l < r
-    end
-  end,
+-- local comparators = {
+--   ---Deprioritize items starting with underscores (private or protected)
+--   ---@type fun(lhs: cmp.Entry, rhs: cmp.Entry): boolean|nil
+--   deprioritize_underscore = function(lhs, rhs)
+--     local l = (lhs.completion_item.label:find('^_+')) and 1 or 0
+--     local r = (rhs.completion_item.label:find('^_+')) and 1 or 0
+--     if l ~= r then
+--       return l < r
+--     end
+--   end,
 
-  ---Prioritize items that ends with "= ..." (usually for argument completion).
-  ---@type fun(lhs: cmp.Entry, rhs: cmp.Entry): boolean|nil
-  prioritize_argument = function(lhs, rhs)
-    local l = (lhs.completion_item.label:find('=$')) and 1 or 0
-    local r = (rhs.completion_item.label:find('=$')) and 1 or 0
-    if l ~= r then
-      return l > r
-    end
-  end,
-}
+--   ---Prioritize items that ends with "= ..." (usually for argument completion).
+--   ---@type fun(lhs: cmp.Entry, rhs: cmp.Entry): boolean|nil
+--   prioritize_argument = function(lhs, rhs)
+--     local l = (lhs.completion_item.label:find('=$')) and 1 or 0
+--     local r = (rhs.completion_item.label:find('=$')) and 1 or 0
+--     if l ~= r then
+--       return l > r
+--     end
+--   end,
+-- }
 
 local name_map = {
   inline = 'Fg',
@@ -109,11 +109,9 @@ local function format(entry, vim_item)
     ultisnips = 'CmpItemMenuSnippet',
   })[entry.source.name] -- default is CmpItemMenu
 
-  -- detail information (optional)
   local cmp_item = entry:get_completion_item() --- @type lsp.CompletionItem
 
   if entry.source.name == 'nvim_lsp' then
-    -- Display which LSP servers this item came from.
     local lspserver_name = nil
     pcall(function()
       lspserver_name = entry.source.source.client.name
@@ -154,12 +152,6 @@ local function format(entry, vim_item)
       vim_item.menu = detail
       vim_item.menu_hl_group = 'CmpItemMenuZsh'
       vim_item.kind = '  ' .. 'zsh'
-    end
-  elseif entry.source.name == 'ultisnips' then
-    ---@diagnostic disable-next-line
-    local description = (cmp_item.snippet or {}).description
-    if description then
-      vim_item.menu = truncate(description, 40)
     end
   end
 
@@ -235,6 +227,7 @@ return {
         fields = { 'abbr', 'kind', 'menu' },
       },
       sources = {
+        { name = 'lazydev', group_index = 0 },
         {
           name = 'nvim_lsp',
           trigger_characters = { '.', ':', '@', '-' },
@@ -265,25 +258,27 @@ return {
         },
       },
 
-      ---@diagnostic disable-next-line
-      sorting = {
-        comparators = {
-          cmp.config.compare.offset,
-          cmp.config.compare.exact,
-          cmp.config.compare.score,
-          function(...)
-            return comparators.prioritize_argument(...)
-          end,
-          function(...)
-            return comparators.deprioritize_underscore(...)
-          end,
-          cmp.config.compare.recently_used,
-          cmp.config.compare.kind,
-          cmp.config.compare.sort_text,
-          cmp.config.compare.length,
-          cmp.config.compare.order,
-        },
-      },
+      sorting = require('cmp.config.default')().sorting,
+
+      -- ---@diagnostic disable-next-line
+      -- sorting = {
+      --   comparators = {
+      --     cmp.config.compare.offset,
+      --     cmp.config.compare.exact,
+      --     cmp.config.compare.score,
+      --     function(...)
+      --       return comparators.prioritize_argument(...)
+      --     end,
+      --     function(...)
+      --       return comparators.deprioritize_underscore(...)
+      --     end,
+      --     cmp.config.compare.recently_used,
+      --     cmp.config.compare.kind,
+      --     cmp.config.compare.sort_text,
+      --     cmp.config.compare.length,
+      --     cmp.config.compare.order,
+      --   },
+      -- },,,
 
       snippet = {
         expand = function(args)

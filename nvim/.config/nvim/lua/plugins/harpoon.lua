@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'roycrippen4/harpoon',
   config = function()

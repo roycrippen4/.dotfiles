@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'navarasu/onedark.nvim',
   name = 'onedark',

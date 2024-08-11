@@ -1,3 +1,4 @@
+---@type LazyPluginSpec
 return {
   'nvim-telescope/telescope.nvim',
   lazy = false,
@@ -41,7 +42,8 @@ return {
         { '<leader>ft', '<cmd> TodoTelescope <CR>', desc = '[F]ind [T]odos', icon = '' },
       },
     })
-    local opts = {
+
+    require('telescope').setup({
       defaults = {
         vimgrep_arguments = {
           'rg',
@@ -82,9 +84,8 @@ return {
         buffer_previewer_maker = require('telescope.previewers').buffer_previewer_maker,
         mappings = { n = { ['q'] = require('telescope.actions').close } },
       },
-    }
+    })
 
-    require('telescope').setup(opts)
     require('telescope').load_extension('fzf')
     require('telescope').load_extension('ui-select')
     require('telescope').load_extension('treesitter_info')

@@ -1,4 +1,6 @@
 local devicons = require('core.icons').devicon
+
+---@type LazyPluginSpec
 return {
   'nvim-tree/nvim-web-devicons', -- https://github.com/nvim-tree/nvim-web-devicons
   lazy = false,
