@@ -2,37 +2,10 @@
 
 return {
   s({
-    trig = 'log',
-    name = 'console.log',
+    trig = 'script-ts',
+    name = 'svelte-ts-script',
     dscr = {
-      'console.log(…)',
-    },
-  }, {
-    t('console.log('),
-    i(1),
-    t(')'),
-  }),
-
-  s({
-    trig = 'afn',
-    name = 'Anon func',
-    dscr = {
-      '(…) => { … }',
-    },
-  }, {
-    t('('),
-    i(1),
-    t(') => {'),
-    -- first method argument
-    i(0),
-    t('}'),
-  }),
-
-  s({
-    trig = 'script',
-    name = 'svelte-script',
-    dscr = {
-      '<script>',
+      '<script lang="ts">',
       '  …',
       '</script>',
     },

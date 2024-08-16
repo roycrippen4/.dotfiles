@@ -1,25 +1,4 @@
 local map = vim.keymap.set
--- local comparators = {
---   ---Deprioritize items starting with underscores (private or protected)
---   ---@type fun(lhs: cmp.Entry, rhs: cmp.Entry): boolean|nil
---   deprioritize_underscore = function(lhs, rhs)
---     local l = (lhs.completion_item.label:find('^_+')) and 1 or 0
---     local r = (rhs.completion_item.label:find('^_+')) and 1 or 0
---     if l ~= r then
---       return l < r
---     end
---   end,
-
---   ---Prioritize items that ends with "= ..." (usually for argument completion).
---   ---@type fun(lhs: cmp.Entry, rhs: cmp.Entry): boolean|nil
---   prioritize_argument = function(lhs, rhs)
---     local l = (lhs.completion_item.label:find('=$')) and 1 or 0
---     local r = (rhs.completion_item.label:find('=$')) and 1 or 0
---     if l ~= r then
---       return l > r
---     end
---   end,
--- }
 
 local name_map = {
   inline = 'Fg',
@@ -164,29 +143,23 @@ return {
   'hrsh7th/nvim-cmp',
   event = 'InsertEnter',
   dependencies = {
-    {
+    { ---@type LazyPluginSpec
       'L3MON4D3/LuaSnip',
-      build = (function()
-        return 'make install_jsregexp'
-      end)(),
+      build = 'make install_jsregexp',
       config = function()
-        map('i', '<Tab>', function()
-          return require('luasnip').jumpable(1) and '<Plug>luasnip-jump-next' or '<tab>'
-        end, { expr = true, silent = true })
+        local luasnip = require('luasnip')
 
-        map('s', '<Tab>', function()
-          require('luasnip').jump(1)
-        end, { silent = true })
-
-        map({ 'i', 's' }, '<S-Tab>', function()
-          require('luasnip').jump(-1)
-        end, { silent = true })
+        -- stylua: ignore start
+        map({ 'i', 's' }, '<S-Tab>', function() luasnip.jump(-1) end, { silent = true })
+        map('s', '<Tab>', function() luasnip.jump(1) end, { silent = true })
+        map('i', '<Tab>', function() return luasnip.jumpable(1) and '<Plug>luasnip-jump-next' or '<tab>' end, { expr = true, silent = true })
+        -- stylua: ignore end
 
         vim.api.nvim_create_autocmd('InsertLeave', {
           group = vim.api.nvim_create_augroup('LuaSnip', { clear = true }),
           callback = function()
-            if require('luasnip').session.current_nodes[vim.api.nvim_get_current_buf()] and not require('luasnip').session.jump_active then
-              require('luasnip').unlink_current()
+            if luasnip.session.current_nodes[vim.api.nvim_get_current_buf()] and not luasnip.session.jump_active then
+              luasnip.unlink_current()
             end
           end,
         })
@@ -195,6 +168,11 @@ return {
         {
           'rafamadriz/friendly-snippets',
           config = function()
+            require('luasnip').filetype_extend('svelte', { 'javascript' })
+            require('luasnip').filetype_extend('javascriptreact', { 'javascript' })
+            require('luasnip').filetype_extend('typescriptreact', { 'javascript' })
+            require('luasnip').filetype_extend('typescript', { 'javascript' })
+
             require('luasnip.loaders.from_vscode').lazy_load()
             require('luasnip.loaders.from_vscode').lazy_load({ paths = vim.g.vscode_snippets_path or '' })
 
@@ -215,8 +193,8 @@ return {
   },
   config = function()
     local cmp = require('cmp')
-    local luasnip = require('luasnip')
-    luasnip.config.setup({})
+    -- local luasnip = require('luasnip')
+    -- luasnip.config.setup({})
 
     cmp.setup({
       formatting = {
@@ -231,7 +209,13 @@ return {
         {
           name = 'nvim_lsp',
           trigger_characters = { '.', ':', '@', '-' },
-          entry_filter = function(entry, _) ---@param entry function|cmp.Entry
+
+          ---@param entry function|cmp.Entry
+          entry_filter = function(entry, _)
+            if entry:get_completion_item().label == 'script' and vim.bo.ft == 'svelte' then
+              return false
+            end
+
             return not entry:is_deprecated()
           end,
         },
@@ -257,29 +241,6 @@ return {
           max_width = math.floor(vim.o.columns * 0.4),
         },
       },
-
-      sorting = require('cmp.config.default')().sorting,
-
-      -- ---@diagnostic disable-next-line
-      -- sorting = {
-      --   comparators = {
-      --     cmp.config.compare.offset,
-      --     cmp.config.compare.exact,
-      --     cmp.config.compare.score,
-      --     function(...)
-      --       return comparators.prioritize_argument(...)
-      --     end,
-      --     function(...)
-      --       return comparators.deprioritize_underscore(...)
-      --     end,
-      --     cmp.config.compare.recently_used,
-      --     cmp.config.compare.kind,
-      --     cmp.config.compare.sort_text,
-      --     cmp.config.compare.length,
-      --     cmp.config.compare.order,
-      --   },
-      -- },,,
-
       snippet = {
         expand = function(args)
           require('luasnip').lsp_expand(args.body)
