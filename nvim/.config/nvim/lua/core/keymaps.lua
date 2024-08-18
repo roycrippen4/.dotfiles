@@ -1,180 +1,8 @@
 local map = vim.keymap.set
 local utils = require('core.utils')
-local term = require('local.term')
 local tabline = require('local.tabufline')
 local wk = require('which-key')
 utils.create_harpoon_nav_mappings()
-
--- --- Checks if a "<" is present in the current line
--- ---@return boolean
--- local function has_unmatched_open_tag()
---   local line = vim.fn.getline('.')
-
---   local open_tag_count = 0
---   local i = 1
---   local length = #line
-
---   while i <= length do
---     if line:sub(i, i) == '<' then
---       if line:sub(i + 1, i + 1) ~= '/' then
---         open_tag_count = open_tag_count + 1
---       end
---     elseif line:sub(i, i) == '>' then
---       if open_tag_count > 0 then
---         open_tag_count = open_tag_count - 1
---       end
---     elseif line:sub(i, i + 1) == '/>' then
---       if open_tag_count > 0 then
---         open_tag_count = open_tag_count - 1
---       end
---       i = i + 1
---     end
---     i = i + 1
---   end
-
---   -- print('open_tag_count', open_tag_count)
---   return open_tag_count > 0
--- end
-
--- ---@param with_space boolean
--- local function close_self_closing_tag(with_space)
---   if with_space then
---     vim.api.nvim_put({ ' />' }, '', true, false)
---   else
---     vim.api.nvim_put({ '/>' }, '', true, false)
---   end
---   vim.cmd([[normal! F>]])
--- end
-
--- local function insert_slash()
---   vim.api.nvim_put({ '/' }, 'c', true, true)
---   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes('<Esc>a', true, true, true), 'n', false)
--- end
-
--- ---@param node_type string
--- local function is_valid_node(node_type)
---   return vim
---     .iter({
---       'ERROR',
---       'STag',
---       'element',
---       'jsx_element',
---       'jsx_opening_element',
---       'start_tag',
---       'text_node',
---       'content',
---       'text',
---       'string_fragment',
---     })
---     :any(
---       ---@param valid_node_type string
---       function(valid_node_type)
---         return valid_node_type == node_type
---       end
---     )
--- end
-
--- local function is_invalid_node(node_type)
---   return vim
---     .iter({
---       'expression',
---       'jsx_expression',
---       'svelte_raw_text',
---     })
---     :any(
---       ---@param invalid_node_type string
---       function(invalid_node_type)
---         return invalid_node_type == node_type
---       end
---     )
--- end
-
--- local function is_tag_lang()
---   return vim
---     .iter({
---       'eruby',
---       'handlebars',
---       'html',
---       'javascript',
---       'javascriptreact',
---       'php',
---       'rescript',
---       'svelte',
---       'templ',
---       'typescript',
---       'typescriptreact',
---       'vue',
---       'xml',
---     })
---     :any(
---       ---@param lang string
---       function(lang)
---         return vim.bo.ft == lang
---       end
---     )
--- end
-
--- -- Automatically end a self-closing tag when pressing /
--- vim.keymap.set('i', '/', function()
---   if not is_tag_lang() then
---     insert_slash()
---     return
---   end
-
---   local node = vim.treesitter.get_node()
---   if not node then
---     insert_slash()
---     return
---   end
-
---   local type = node:type()
---   if (is_valid_node(type) and has_unmatched_open_tag()) and not is_invalid_node(type) then
---     local line = vim.fn.getline('.')
---     local char_after_cursor = vim.fn.strcharpart(vim.fn.strpart(line, vim.fn.col('.') - 1), 0, 1) ---@type string
-
---     if char_after_cursor == '>' then
---       insert_slash()
---       return
---     end
-
---     local char_at_cursor = vim.fn.strcharpart(vim.fn.strpart(line, vim.fn.col('.') - 2), 0, 1) ---@type string
---     print(char_at_cursor)
---     local already_have_space = char_at_cursor == ' '
-
---     close_self_closing_tag(not already_have_space)
---     return
---   end
-
---   insert_slash()
--- end, { noremap = true, silent = true })
-
-local function run_current_file()
-  local ft = vim.bo.ft
-
-  if ft == 'lua' then
-    vim.cmd('source')
-    return
-  end
-
-  if ft == 'typescript' or ft == 'javascript' then
-    local file = vim.fn.expand('%')
-    term.send('bun run ' .. file, 'H')
-    return
-  end
-
-  if ft == 'rust' then
-    vim.cmd('RustRun')
-    return
-  end
-
-  if ft == 'zig' then
-    local file = vim.fn.expand('%')
-    term.send('zig run ' .. file, 'H')
-    return
-  end
-
-  vim.notify('Unknown filetype detected! Supported filetypes: lua, typescript, javascript', vim.log.levels.ERROR)
-end
 
 wk.add({
   {
@@ -188,7 +16,7 @@ wk.add({
     { '<Leader>v',        '<C-w>v',                       desc = 'Vertical Split',    icon = '' },
     { '<Leader>h',        '<C-w>s',                       desc = 'Horizontal Split',  icon = '' },
     { '<leader>lf',       vim.diagnostic.open_float,      desc = '[L]SP Show Errors', icon = '' },
-    { '<leader>lr',       run_current_file,               desc = 'Run file',          icon = '' },
+    { '<leader>lr',       --[[ plugins.toggleterm.lua ]]  desc = 'Run file',          icon = '' },
     { '<Leader>x',        utils.close_buf,                desc = 'Close Buffer',      icon = '' },
     { '<leader>pu',       require('package-info').update, desc = '[P]ackage Update',  icon = '󰚰' },
     -- stylua: ignore end
@@ -241,14 +69,10 @@ map({ 'n', 'x' }, 'k', 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = 
 map('x', 'p', 'p:let @+=@0<cr>:let @"=@0<cr>', { desc = 'Dont copy replaced text', silent = true })
 
 -- Terminal
-map('t', '<Esc>', require('core.utils').handle_lazygit_close, { desc = 'NTerminal mode' })
 map('t', '<C-h>', [[<cmd> wincmd h<cr>]], { desc = 'Move focus left' })
 map('t', '<C-j>', [[<cmd> wincmd j<cr>]], { desc = 'Move focus down' })
 map('t', '<C-k>', [[<cmd> wincmd k<cr>]], { desc = 'Move focus up' })
 map('t', '<C-l>', [[<cmd> wincmd l<cr>]], { desc = 'Move focus right' })
-map({ 'n', 't' }, '<A-v>', require('local.term').toggle_vertical, { desc = 'New vertical term' })
-map({ 'n', 't' }, '<A-h>', require('local.term').toggle_horizontal, { desc = 'New horizontal term' })
-map({ 'n', 't' }, '<A-f>', require('local.term').toggle_floating, { desc = 'Toggleable Floating term' })
 
 -- Command line
 map('c', '(', '()<Left>', { desc = 'Insert parenthesis' })
