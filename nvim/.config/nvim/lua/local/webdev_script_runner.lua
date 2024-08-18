@@ -1,6 +1,5 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
-local term = require('local.term')
 
 local M = {}
 
@@ -101,7 +100,8 @@ function M.run_script()
 
   local runner = (has_bun_lock() and 'bun run ') or 'npm run '
   local script = runner .. match_script()
-  term.send(script, 'H')
+
+  vim.cmd('TermExec cmd="' .. script .. '"')
 end
 
 local function set_keymaps()
