@@ -299,14 +299,6 @@ function M.add_missing_commas(diagnostics)
   end
 end
 
-function M.handle_lazygit_close()
-  if vim.bo.ft == 'lazygit' then
-    feed('<Esc>', 'n')
-    return
-  end
-  feed([[<C-\><C-n>]], 'n')
-end
-
 local pairs = { '()', '[]', '{}', "''", '""', '``', '  ' }
 ---@param key string
 ---@param fallback string
