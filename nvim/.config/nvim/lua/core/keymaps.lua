@@ -69,10 +69,11 @@ map({ 'n', 'x' }, 'k', 'v:count || mode(1)[0:1] == "no" ? "k" : "gk"', { desc = 
 map('x', 'p', 'p:let @+=@0<cr>:let @"=@0<cr>', { desc = 'Dont copy replaced text', silent = true })
 
 -- Terminal
-map('t', '<C-h>', [[<cmd> wincmd h<cr>]], { desc = 'Move focus left' })
-map('t', '<C-j>', [[<cmd> wincmd j<cr>]], { desc = 'Move focus down' })
-map('t', '<C-k>', [[<cmd> wincmd k<cr>]], { desc = 'Move focus up' })
-map('t', '<C-l>', [[<cmd> wincmd l<cr>]], { desc = 'Move focus right' })
+map('t', '<C-h>', '<cmd> wincmd h<cr>', { desc = 'Move focus left' })
+map('t', '<C-j>', '<cmd> wincmd j<cr>', { desc = 'Move focus down' })
+map('t', '<C-k>', '<cmd> wincmd k<cr>', { desc = 'Move focus up' })
+map('t', '<C-l>', '<cmd> wincmd l<cr>', { desc = 'Move focus right' })
+map('t', '<Esc>', '<C-\\><C-N>', { desc = 'Enter NTerminal Mode' })
 
 -- Command line
 map('c', '(', '()<Left>', { desc = 'Insert parenthesis' })

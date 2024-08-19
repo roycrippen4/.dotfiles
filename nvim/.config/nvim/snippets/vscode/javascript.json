@@ -1,1 +1,1 @@
-{"console":{"prefix":"console","body":"console.log(${1:items});"}}
+{"console-1":{"prefix":"timer","body":["console.time('${2:timername}', ${1:items});","console.timeEnd(${1:timername});"]},"doc":{"prefix":"doc","body":"\/** ${1:comment} *\/"},"doc (typedef)":{"prefix":"doc (typedef)","body":["\/**"," * @typedef {${1:type}} ${2:type name}"," *\/"]},"console":{"prefix":"console","body":"console.log(${1:items});"}}
