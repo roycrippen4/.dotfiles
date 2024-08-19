@@ -143,48 +143,7 @@ return {
   'hrsh7th/nvim-cmp',
   lazy = false,
   dependencies = {
-    { ---@type LazyPluginSpec
-      'L3MON4D3/LuaSnip',
-      build = 'make install_jsregexp',
-      config = function()
-        local luasnip = require('luasnip')
-
-        -- stylua: ignore start
-        map({ 'i', 's' }, '<S-Tab>', function() luasnip.jump(-1) end, { silent = true })
-        map('s', '<Tab>', function() luasnip.jump(1) end, { silent = true })
-        map('i', '<Tab>', function() return luasnip.jumpable(1) and '<Plug>luasnip-jump-next' or '<tab>' end, { expr = true, silent = true })
-        -- stylua: ignore end
-
-        vim.api.nvim_create_autocmd('InsertLeave', {
-          group = vim.api.nvim_create_augroup('LuaSnip', { clear = true }),
-          callback = function()
-            if luasnip.session.current_nodes[vim.api.nvim_get_current_buf()] and not luasnip.session.jump_active then
-              luasnip.unlink_current()
-            end
-          end,
-        })
-      end,
-      dependencies = {
-        {
-          'rafamadriz/friendly-snippets',
-          config = function()
-            require('luasnip').filetype_extend('svelte', { 'javascript' })
-            require('luasnip').filetype_extend('javascriptreact', { 'javascript' })
-            require('luasnip').filetype_extend('typescriptreact', { 'javascript' })
-            require('luasnip').filetype_extend('typescript', { 'javascript' })
-
-            require('luasnip.loaders.from_vscode').lazy_load()
-            require('luasnip.loaders.from_vscode').lazy_load({ paths = vim.g.vscode_snippets_path or '' })
-
-            require('luasnip.loaders.from_snipmate').load()
-            require('luasnip.loaders.from_snipmate').lazy_load({ paths = vim.g.snipmate_snippets_path or '' })
-
-            require('luasnip.loaders.from_lua').load()
-            require('luasnip.loaders.from_lua').lazy_load({ paths = { './snippets' } })
-          end,
-        },
-      },
-    },
+    'L3MON4D3/LuaSnip',
     'saadparwaiz1/cmp_luasnip', -- https://github.com/saadparwaiz1/cmp_luasnip
     'hrsh7th/cmp-nvim-lsp', -- https://github.com/hrsh7th/cmp-nvim-lsp
     'hrsh7th/cmp-path', -- https://github.com/hrsh7th/cmp-path
@@ -193,8 +152,6 @@ return {
   },
   config = function()
     local cmp = require('cmp')
-    -- local luasnip = require('luasnip')
-    -- luasnip.config.setup({})
 
     cmp.setup({
       formatting = {
