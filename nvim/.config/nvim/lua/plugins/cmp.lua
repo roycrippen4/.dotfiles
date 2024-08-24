@@ -1,5 +1,3 @@
-local map = vim.keymap.set
-
 local name_map = {
   inline = 'Fg',
   foreground = 'Fg',
