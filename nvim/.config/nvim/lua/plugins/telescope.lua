@@ -126,7 +126,7 @@ return {
       'cargo-bins/cargo-binstall', -- https://github.com/cargo-bins/cargo-binstall
       build = "curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash",
     },
-    { 'sharkdp/fd', build = 'cargo binstall fd-find', dependencies = 'cargo-bins/cargo-binstall' },
+    { 'sharkdp/fd', build = 'cargo binstall fd-find -y', dependencies = 'cargo-bins/cargo-binstall' },
     { 'BurntSushi/ripgrep', build = 'cargo binstall ripgrep', dependencies = 'cargo-bins/cargo-binstall' },
     {
       'nvim-telescope/telescope-fzf-native.nvim',
