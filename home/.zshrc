@@ -11,7 +11,7 @@ compinit
 
 # p10k setup
 if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-$USER.zsh" ]]; then
-	source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-$USER.zsh"
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-$USER.zsh"
 fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
@@ -59,10 +59,10 @@ DISABLE_UNTRACKED_FILES_DIRTY="true"
 # ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 
 plugins=(
-	# zsh-vi-mode
-	git
-	zsh-autosuggestions
-	zsh-syntax-highlighting
+  # zsh-vi-mode
+  git
+  zsh-autosuggestions
+  zsh-syntax-highlighting
 )
 
 source "$ZSH"/oh-my-zsh.sh
@@ -70,31 +70,31 @@ alias nvim="$HOME/.dotfiles/home/.bin/nvim.sh"
 alias vim="$HOME/.dotfiles/home/.bin/nvim.sh"
 
 go_to_nvim_config() {
-	c "$HOME/.dotfiles/nvim/.config/nvim/"
+  c "$HOME/.dotfiles/nvim/.config/nvim/"
 }
 
 go_to_home_config() {
-	c "$HOME/.dotfiles/home"
+  c "$HOME/.dotfiles/home"
 }
 
 go_to_kitty_config() {
-	c "$HOME/.dotfiles/kitty/.config/kitty"
+  c "$HOME/.dotfiles/kitty/.config/kitty"
 }
 
 go_to_neodev_config() {
-	c "$HOME/.dotfiles/nvim/.config/nvim/dev"
+  c "$HOME/.dotfiles/nvim/.config/nvim/dev"
 }
 
 go_to_hypr_config() {
-	c "$HOME/.dotfiles/hypr/.config/hypr"
+  c "$HOME/.dotfiles/hypr/.config/hypr"
 }
 
 go_to_wofi_config() {
-	c "$HOME/.dotfiles/wofi/.config/wofi"
+  c "$HOME/.dotfiles/wofi/.config/wofi"
 }
 
 go_to_waybar_config() {
-	c "$HOME/.dotfiles/waybar/.config/waybar"
+  c "$HOME/.dotfiles/waybar/.config/waybar"
 }
 
 alias python="python3"
@@ -111,7 +111,7 @@ alias l='ls -l'
 alias la='ls -a'
 alias lg='lazygit'
 alias lla='ls -la'
-alias lp='echo "${PATH//:/\n}"'
+alias path='echo "${PATH//:/\n}"'
 alias ls='lsd'
 alias lt='ls --tree'
 alias so="$HOME/.dotfiles/home/.bin/source.zsh"
@@ -145,11 +145,11 @@ esac
 
 # auto activate/deactivate python venv when cd into/out of a folder
 python_venv() {
-	MYVENV=./venv
-	# when you cd into a folder that contains $MYVENV
-	[[ -d $MYVENV ]] && source ./venv/bin/activate >/dev/null 2>&1
-	# when you cd into a folder that doesn't
-	[[ ! -d $MYVENV ]] && deactivate >/dev/null 2>&1
+  MYVENV=./venv
+  # when you cd into a folder that contains $MYVENV
+  [[ -d $MYVENV ]] && source ./venv/bin/activate >/dev/null 2>&1
+  # when you cd into a folder that doesn't
+  [[ ! -d $MYVENV ]] && deactivate >/dev/null 2>&1
 }
 autoload -U add-zsh-hook
 add-zsh-hook chpwd python_venv

@@ -17,6 +17,8 @@ gui:
       - blue
     unstagedChangesColor:
       - red
+    defaultFgColor:
+      - default
   showFileTree: true # for rendering changes files in a tree format
   showListFooter: false # for seeing the '5 of 20' message in list panels
   showRandomTip: false
@@ -24,10 +26,15 @@ gui:
   showCommandLog: true
   showIcons: true
   nerdFontsVersion: "3"
+git:
+  paging:
+    colorArg: always
+    pager: delta --dark --paging=never
 disableStartupPopups: true
 notARepository: 'skip' # one of: 'prompt' | 'create' | 'skip'
 os:
-  edit: 'nvim'
+  edit: ~/.local/share/bob/nightly/nvim-linux64/bin/nvim {{filename}}
+  editAtLine: ~/.local/share/bob/nightly/nvim-linux64/bin/nvim {{filename}}
 keybinding:
   universal:
     scrollUpMain: '<c-p>'
