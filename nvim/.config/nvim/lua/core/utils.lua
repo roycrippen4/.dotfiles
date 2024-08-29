@@ -6,6 +6,32 @@ local clear_autocmds = api.nvim_clear_autocmds
 
 local M = {}
 
+local function lsp_definitions()
+  local params = vim.lsp.util.make_position_params()
+  vim.lsp.buf_request(0, 'textDocument/definition', params, function(_, result, ctx)
+    if not result or vim.tbl_isempty(result) then
+      vim.notify('No definitions found', vim.log.levels.INFO)
+      return
+    end
+
+    local client = vim.lsp.get_client_by_id(ctx.client_id)
+    if not client then
+      return
+    end
+
+    local locations = vim.lsp.util.locations_to_items(result, client.offset_encoding)
+    if #locations > 1 then
+      require('telescope.builtin').lsp_definitions({
+        cwd = vim.fn.getcwd(),
+        locations = locations,
+        client_id = ctx.client_id,
+      })
+    else
+      vim.lsp.util.jump_to_location(result[1], client.offset_encoding)
+    end
+  end)
+end
+
 --- Toggles diagnostics
 local function toggle_diagnostics()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
@@ -66,7 +92,8 @@ function M.set_lsp_mappings(additional_keymaps)
     -- stylua: ignore start
     mode = 'n',
     { 'gr', require('telescope.builtin').lsp_references,                      desc = 'Goto References',            icon = '' },
-    { 'gd', require('telescope.builtin').lsp_definitions,                     desc = 'Goto Definition',            icon = '󰼭' },
+    -- { 'gd', require('telescope.builtin').lsp_definitions,                     desc = 'Goto Definition',            icon = '󰼭' },
+    { 'gd', lsp_definitions,                                                  desc = 'Goto Definition',            icon = '󰼭' },
     { 'gi', require('telescope.builtin').lsp_implementations,                 desc = 'Goto Implementation',        icon = '󰡱' },
     { '<leader>lo', '<cmd> TSToolsOrganizeImports <cr>', desc = '[L]SP Organize Imports',     icon = '󰶘' },
     { '<leader>lh', toggle_inlay_hints,                  desc = '[L]SP Inlay Hints',          icon = '󰊠' },
