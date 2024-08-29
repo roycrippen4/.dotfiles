@@ -6,6 +6,22 @@ local clear_autocmds = api.nvim_clear_autocmds
 
 local M = {}
 
+local function organize_imports()
+  local valid_fts = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' }
+
+  if vim.tbl_contains(valid_fts, vim.bo.filetype) then
+    vim.cmd('TSToolsOrganizeImports')
+  else
+    vim.lsp.buf.code_action({
+      apply = true,
+      context = {
+        only = { 'source.organizeImports' },
+        diagnostics = {},
+      },
+    })
+  end
+end
+
 local function lsp_definitions()
   local params = vim.lsp.util.make_position_params()
   vim.lsp.buf_request(0, 'textDocument/definition', params, function(_, result, ctx)
@@ -91,11 +107,11 @@ function M.set_lsp_mappings(additional_keymaps)
   local keymaps = {
     -- stylua: ignore start
     mode = 'n',
-    { 'gr', require('telescope.builtin').lsp_references,                      desc = 'Goto References',            icon = '' },
     -- { 'gd', require('telescope.builtin').lsp_definitions,                     desc = 'Goto Definition',            icon = '󰼭' },
+    -- { '<leader>lo', '<cmd> TSToolsOrganizeImports <cr>', desc = '[L]SP Organize Imports',     icon = '󰶘' },
+    { 'gr', require('telescope.builtin').lsp_references,                      desc = 'Goto References',            icon = '' },
     { 'gd', lsp_definitions,                                                  desc = 'Goto Definition',            icon = '󰼭' },
-    { 'gi', require('telescope.builtin').lsp_implementations,                 desc = 'Goto Implementation',        icon = '󰡱' },
-    { '<leader>lo', '<cmd> TSToolsOrganizeImports <cr>', desc = '[L]SP Organize Imports',     icon = '󰶘' },
+    { '<leader>lo', organize_imports,                    desc = '[L]SP Organize Imports',     icon = '󰶘' },
     { '<leader>lh', toggle_inlay_hints,                  desc = '[L]SP Inlay Hints',          icon = '󰊠' },
     { '<leader>ld', toggle_diagnostics,                  desc = '[L]SP Diagnostics',          icon = '' },
     { '<leader>r',  vim.lsp.buf.rename,                  desc = 'Refactor',                   icon = '' },
