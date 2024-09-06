@@ -154,9 +154,6 @@ M.capabilities.textDocument.completion.completionItem = {
   },
 }
 
-api.nvim_set_hl(0, 'UrlHighlight', { fg = 'gray' })
-local url_ns = api.nvim_create_namespace('UrlHighlight')
-
 local skip_ft = {
   'NvimTree',
   'Trouble',
@@ -203,22 +200,6 @@ function M.set_titlestring(cwd)
       return
     end
     vim.o.titlestring = cwd
-  end
-end
-
-function M.highlight_url()
-  if require('nvim-treesitter.parsers').has_parser() then
-    local node = vim.treesitter.get_node({ lang = 'comment' })
-
-    if not node then
-      return
-    end
-
-    api.nvim_buf_clear_namespace(0, url_ns, 0, -1)
-    if node:type() == 'uri' then
-      local line, col_start, _, col_end = node:range()
-      api.nvim_buf_add_highlight(0, url_ns, 'UrlHighlight', line, col_start, col_end)
-    end
   end
 end
 
@@ -284,53 +265,31 @@ function M.highlight_marked_files(bufnr, ns_id)
   end
 end
 
---- Takes a bufnr. Returns true if bufnr is visible, [false] if not
----@param bufnr integer buffer handle/number
-function M.is_buf_visible(bufnr)
-  local wins = api.nvim_list_wins()
-  local should_skip = vim.tbl_contains(skip_ft, vim.bo[bufnr].ft) or api.nvim_buf_get_name(bufnr) == ''
-
-  for _, win in ipairs(wins) do
-    if api.nvim_win_get_buf(win) == bufnr and not should_skip then
-      return true
-    end
-  end
-  return false
-end
-
 --- Get's a list of absolute paths for all open files. Ignores plugin windows/buffers
 ---@return string[] open_files list of open files
 function M.list_open_files()
   local bufs = api.nvim_list_bufs()
   local visible_bufs = {}
 
+  local function is_buf_visible(bufnr)
+    local wins = api.nvim_list_wins()
+    local should_skip = vim.tbl_contains(skip_ft, vim.bo[bufnr].ft) or api.nvim_buf_get_name(bufnr) == ''
+
+    for _, win in ipairs(wins) do
+      if api.nvim_win_get_buf(win) == bufnr and not should_skip then
+        return true
+      end
+    end
+    return false
+  end
+
   for _, bufnr in ipairs(bufs) do
-    if M.is_buf_visible(bufnr) then
+    if is_buf_visible(bufnr) then
       local name = api.nvim_buf_get_name(bufnr)
       table.insert(visible_bufs, name)
     end
   end
   return visible_bufs
-end
-
----@param opts table
-function M.load_ext(opts)
-  for _, ext in ipairs(opts.extensions_list) do
-    require('telescope').load_extension(ext)
-  end
-end
-
---- Returns true if the currently opened file is marked
----@return boolean|integer
-function M.is_current_file_marked()
-  local current_file = api.nvim_buf_get_name(api.nvim_get_current_buf())
-  local marked_files = M.get_marked_files()
-  for _, file in ipairs(marked_files) do
-    if string.find(current_file, file) then
-      return true
-    end
-  end
-  return false
 end
 
 ---@param diagnostics vim.Diagnostic[]
@@ -340,22 +299,6 @@ function M.add_missing_commas(diagnostics)
       api.nvim_buf_set_text(0, diag.lnum, diag.col, diag.lnum, diag.col, { ',' })
     end
   end
-end
-
-local pairs = { '()', '[]', '{}', "''", '""', '``', '  ' }
----@param key string
----@param fallback string
-function M.handle_cmdline_pair(key, fallback)
-  local pos = fn.getcmdpos()
-  local cmdline = fn.getcmdline()
-
-  for _, pair in ipairs(pairs) do
-    if string.sub(cmdline, pos - 1, pos) == pair then
-      feed(key, 'n')
-      return
-    end
-  end
-  feed(fallback, 'n')
 end
 
 function M.harpoon_add_file()
@@ -393,13 +336,6 @@ function M.send_to_black_hole()
   else
     vim.cmd('normal! dd')
   end
-end
-
----@param win integer
----@param opts table
-function M.win_apply_config(win, opts)
-  opts = vim.tbl_deep_extend('force', api.nvim_win_get_config(win), opts or {})
-  api.nvim_win_set_config(win, opts)
 end
 
 --- Returns true if the file exists

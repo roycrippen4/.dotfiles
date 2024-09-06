@@ -1,3 +1,8 @@
+-- ---@param color string
+-- local function hex_to_rgb(color) end
+
+-- local function rgb_to_hex() end
+
 local colors = {
   baby_pink = '#DE8C92',
   black = '#1e222a',
@@ -175,6 +180,7 @@ local groups = {
 
   ['@type.type_argument'] = { italic = true },
   ['@lsp.type.class.svelte'] = {},
+  ['@variable.parameter.luadoc'] = {},
 }
 
 for group, color in pairs(groups) do

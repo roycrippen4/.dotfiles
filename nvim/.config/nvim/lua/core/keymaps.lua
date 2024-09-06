@@ -1,6 +1,7 @@
+local inspect = require('local.inspect_word_in_buf')
 local map = vim.keymap.set
-local utils = require('core.utils')
 local tabline = require('local.tabufline')
+local utils = require('core.utils')
 local wk = require('which-key')
 utils.create_harpoon_nav_mappings()
 
@@ -8,7 +9,7 @@ wk.add({
   {
     mode = 'n',
     -- stylua: ignore start
-    { '<leader>iw',       '<cmd> Inspect     <cr>',       desc = '[I]nspect Word',    icon = '' },
+    { '<leader>iw',       inspect,                        desc = '[I]nspect Word',    icon = '' },
     { '<leader>it',       '<cmd> InspectTree <cr>',       desc = '[I]nspect AST',     icon = '' },
     { '<leader>q',        '<cmd> EditQuery   <cr>',       desc = 'Edit TS query',     icon = '󱄶' },
     { '<leader>M',        '<cmd> Mason       <cr>',       desc = '[M]ason',           icon = '' },
@@ -16,7 +17,7 @@ wk.add({
     { '<Leader>v',        '<C-w>v',                       desc = 'Vertical Split',    icon = '' },
     { '<Leader>h',        '<C-w>s',                       desc = 'Horizontal Split',  icon = '' },
     { '<leader>lf',       vim.diagnostic.open_float,      desc = '[L]SP Show Errors', icon = '' },
-    { '<leader>lr',       --[[ plugins.toggleterm.lua ]]  desc = 'Run file',          icon = '' },
+    -- { '<leader>lr',       --[[ plugins.toggleterm.lua ]]  desc = 'Run file',          icon = '' },
     { '<Leader>x',        utils.close_buf,                desc = 'Close Buffer',      icon = '' },
     { '<leader>pu',       require('package-info').update, desc = '[P]ackage Update',  icon = '󰚰' },
     -- stylua: ignore end
