@@ -114,6 +114,7 @@ alias lla='ls -la'
 alias path='echo "${PATH//:/\n}"'
 alias ls='lsd'
 alias lt='ls --tree'
+alias mi="mvn clean install -DskipTests"
 alias so="$HOME/.dotfiles/home/.bin/source.zsh"
 alias sync="$HOME/.dotfiles/home/.bin/sync.sh"
 alias hconf=go_to_home_config

@@ -18,9 +18,7 @@ return {
     ---@module 'rustaceanvim'
     ---@type rustaceanvim.Opts
     vim.g.rustaceanvim = {
-      server = {
-        on_attach = require('plugins.lsp.lsp-utils').on_attach,
-      },
+      server = { on_attach = require('core.utils').on_attach },
       tools = { float_win_config = { border = 'rounded' } },
     }
   end,
