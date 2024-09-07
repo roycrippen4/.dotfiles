@@ -1,6 +1,5 @@
 -- ---@param color string
 -- local function hex_to_rgb(color) end
-
 -- local function rgb_to_hex() end
 
 local colors = {

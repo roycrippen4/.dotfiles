@@ -165,11 +165,6 @@ end
 
 vim.g.zig_fmt_parse_errors = 0
 
----@return boolean
-local function has_tailwind_config()
-  return utils.file_exists('tailwind.config.js') or utils.file_exists('tailwind.config.cjs') or utils.file_exists('tailwind.config.ts')
-end
-
 ---@type LazyPluginSpec
 return {
   'neovim/nvim-lspconfig', -- https://github.com/neovim/nvim-lspconfig
@@ -267,12 +262,10 @@ return {
       on_attach = utils.on_attach,
     })
 
-    if has_tailwind_config() then
-      lspconfig['tailwindcss'].setup({
-        capabilities = utils.capabilities,
-        on_attach = utils.on_attach,
-      })
-    end
+    lspconfig['tailwindcss'].setup({
+      capabilities = utils.capabilities,
+      on_attach = utils.on_attach,
+    })
 
     lspconfig['taplo'].setup({
       capabilities = utils.capabilities,

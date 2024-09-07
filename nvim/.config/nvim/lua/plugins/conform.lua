@@ -19,12 +19,13 @@ end, {
   desc = 'Re-enable autoformat-on-save',
 })
 
+---@type LazyPluginSpec
 return {
   'stevearc/conform.nvim',
-  lazy = false,
+  event = 'BufEnter',
   keys = {
     {
-      '<leader>ft',
+      '<leader>tf',
       mode = 'n',
       function()
         if not vim.g.disable_autoformat then
