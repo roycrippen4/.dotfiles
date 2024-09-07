@@ -45,7 +45,7 @@ local colors = {
   yellow = '#e7c787',
 }
 
----@type table<string, vim.api.keyset.highlight>
+--- @type table<string, vim.api.keyset.highlight>
 local groups = {
   Added = { fg = colors.green },
   Changed = { fg = colors.light_blue },
@@ -180,7 +180,7 @@ local groups = {
 
   ['@type.type_argument'] = { italic = true },
   ['@lsp.type.class.svelte'] = {},
-  ['@variable.parameter.luadoc'] = {},
+  ['@lsp.type.type.lua'] = {},
 }
 
 for group, color in pairs(groups) do

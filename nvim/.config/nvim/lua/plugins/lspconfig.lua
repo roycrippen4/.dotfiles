@@ -244,7 +244,7 @@ return {
       settings = {
         Lua = {
           format = { enable = false },
-          semantic = { enable = true },
+          -- semantic = { enable = true },
           diagnostics = { globals = { 'vim' } },
           telemetry = { enable = false },
           hint = { enable = true, arrayIndex = 'Disable' },
