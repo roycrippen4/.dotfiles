@@ -53,10 +53,11 @@ map('n', '<C-a>',            utils.ctrl_a,                { desc = 'Extended inc
 map('n', '<C-x>',            utils.ctrl_x,                { desc = 'Extended decrement' })
 -- stylua: ignore end
 
-map({ 'i', 'c' }, '<C-h>', '<Left>')
-map({ 'i', 'c' }, '<C-l>', '<Right>')
-map('i', '<C-j>', '<Down>')
-map('i', '<C-k>', '<Up>')
+local cursor_moved = '<cmd>lua vim.api.nvim_exec_autocmds("CursorMoved", {})<cr>'
+map({ 'i', 'c' }, '<C-h>', '<Left>' .. cursor_moved)
+map({ 'i', 'c' }, '<C-l>', '<Right>' .. cursor_moved)
+map('i', '<C-j>', '<Down>' .. cursor_moved)
+map('i', '<C-k>', '<Up>' .. cursor_moved)
 map('i', '<C-s>', '<cmd> w <cr>', { desc = 'Save file' })
 map('v', '<M-j>', ":m '>+1<cr>gv=gv", { desc = 'Shift selection up', nowait = true, silent = true })
 map('v', '<M-k>', ":m '<-2<cr>gv=gv", { desc = 'Shift selection down', nowait = true, silent = true })

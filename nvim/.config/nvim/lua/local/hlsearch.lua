@@ -1,19 +1,86 @@
 local autocmd = vim.api.nvim_create_autocmd
 local augroup = vim.api.nvim_create_augroup
 
----@return boolean
-local function should_format_lua_func()
-  local line = vim.api.nvim_get_current_line()
-  local col = vim.fn.getpos('.')[3]
-  local pattern = '%)%s*end'
-  local start_pos, end_pos = line:find(pattern)
-
-  if start_pos then
-    local res = col > start_pos and col <= end_pos
-    return res
+---@param node TSNode?
+---@return TSNode?
+local function get_previous_node(node)
+  if not node then
+    return nil
   end
 
-  return false
+  local previous_node = node:prev_sibling()
+
+  if not previous_node then
+    local parent = node:parent()
+    if not parent then
+      return nil
+    end
+
+    previous_node = parent:prev_sibling()
+    if not previous_node then
+      return nil
+    end
+  end
+
+  return previous_node
+end
+
+---@param node TSNode?
+---@return boolean?
+local function check_svelte_snippet(node)
+  local previous_node = get_previous_node(node)
+  return node and previous_node and node:type() == 'snippet_end' and previous_node:type() == 'snippet_start'
+end
+
+---@param node TSNode?
+---@return boolean?
+local function check_svelte_each(node)
+  local previous_node = get_previous_node(node)
+  return node and previous_node and node:type() == 'each_end' and previous_node:type() == 'each_start'
+end
+
+---@param node TSNode?
+local function check_svelte_await(node)
+  local previous_node = get_previous_node(node)
+  return (node and previous_node)
+    and vim.iter({ 'await_end', 'catch_start', 'then_start' }):any(function(value)
+      return value == node:type()
+    end)
+    and vim.iter({ 'catch_block', 'then_block', 'await_start' }):any(function(value)
+      return value == previous_node:type()
+    end)
+end
+
+---@param node TSNode?
+---@return boolean?
+local function check_svelte_if(node)
+  local previous_node = get_previous_node(node)
+  return (node and previous_node)
+    and vim.iter({ 'else_start', 'else_if_start', 'if_end' }):any(function(value)
+      return value == node:type()
+    end)
+    and vim.iter({ 'if_start', 'else_block', 'else_if_block' }):any(function(value)
+      return value == previous_node:type()
+    end)
+end
+
+local function should_format_svelte_block()
+  local pos = vim.api.nvim_win_get_cursor(0)
+  local current_node = vim.treesitter.get_node({ pos = { pos[1] - 1, pos[2] } })
+  -- stylua: ignore
+  return vim.bo.ft == 'svelte' and (
+      check_svelte_if(current_node)
+      or check_svelte_each(current_node)
+      or check_svelte_snippet(current_node)
+      or check_svelte_await(current_node)
+    )
+end
+
+---@return boolean
+local function should_format_lua_func()
+  local col = vim.fn.getpos('.')[3]
+  local start_pos, end_pos = vim.api.nvim_get_current_line():find('%)%s*end')
+  return vim.bo.ft == 'lua' and (start_pos and col > start_pos and col <= end_pos) or false
 end
 
 local id = nil
@@ -61,7 +128,7 @@ vim.on_key(function(char)
     end)
   end
 
-  if mode == 'i' and vim.bo.ft == 'lua' and should_format_lua_func() and is_cr then
+  if mode == 'i' and is_cr and (should_format_lua_func() or should_format_svelte_block()) then
     feed('<Esc>O', 'n')
     return
   end
