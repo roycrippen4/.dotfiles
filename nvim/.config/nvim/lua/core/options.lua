@@ -40,26 +40,28 @@ opt.clipboard = 'unnamedplus'                         -- Use system clipboard
 opt.cursorline = true                                 -- Enable highlighting of the current line
 opt.hlsearch = true
 opt.swapfile = false
+opt.smoothscroll = true
+--stylua: ignore end
 
 -----------------------------------------------------------
 -- Fold settings
 -----------------------------------------------------------
+-- stylua: ignore start
 opt.foldexpr       = 'nvim_treesitter#foldexpr()' -- Treesitter folding
 opt.foldcolumn     = '1' -- Enable fold column
 opt.foldlevel      = 99  -- This is just a default level, it will be changed by ufo 
 opt.foldlevelstart = 99  -- This is just a default level, it will be changed by ufo
 opt.foldenable     = true
--- opt.foldnestmax    = 0   -- Deepest fold is 20 levels
+--stylua: ignore end
 
 -----------------------------------------------------------
 -- Indent settings
 -----------------------------------------------------------
 opt.expandtab = true
 opt.shiftwidth = 2
-opt.smartindent = false
-opt.autoindent = false
+opt.smartindent = true
+opt.autoindent = true
 opt.tabstop = 2
-opt.softtabstop = 2
 
 opt.fillchars = {
   vert = ' ',
@@ -93,5 +95,4 @@ vim.o.guicursor = 'n-v-c:block-Cursor/lCursor-blinkon1,i:ver25-Cursor/lCursor-bl
 
 vim.env.PATH = vim.fn.stdpath('data') .. '/mason/bin:' .. vim.env.PATH -- add binaries installed by mason.nvim to path
 
--- disable vim's built-in completion
-vim.cmd('set complete=')
+vim.cmd('set complete=') -- disable vim's built-in completion
