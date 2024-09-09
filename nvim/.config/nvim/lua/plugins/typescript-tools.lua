@@ -5,6 +5,7 @@ return {
   dependencies = {
     'nvim-lua/plenary.nvim', -- https://github.com/nvim-lua/plenary.nvim
     'neovim/nvim-lspconfig', -- https://github.com/neovim/nvim-lspconfig
+    { 'dmmulroy/ts-error-translator.nvim', opts = {} }, -- https://github.com/dmmulroy/ts-error-translator.nvim
   },
   opts = {
     on_attach = require('core.utils').on_attach,
@@ -23,12 +24,4 @@ return {
       },
     },
   },
-  config = function(_, opts)
-    local config = vim.tbl_deep_extend(
-      'error',
-      opts,
-      { handlers = { ['textDocument/publishDiagnostics'] = require('typescript-tools.api').filter_diagnostics({ 80001, 80004 }) } }
-    )
-    require('typescript-tools').setup(config)
-  end,
 }
