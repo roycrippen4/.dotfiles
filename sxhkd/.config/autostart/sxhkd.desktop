@@ -1,7 +1,8 @@
 [Desktop Entry]
 Type=Application
-Exec=bash -c 'sxhkd & disown'
+Exec=sxhkd
 Hidden=false
+Terminal=false
 X-GNOME-Autostart-enabled=true
 Name=keybind
 Comment=hotkey daemon
