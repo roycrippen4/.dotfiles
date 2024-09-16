@@ -48,7 +48,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 export NODE_PATH="which node"
 export PATH="$PATH:$HOME/.local/bin"          # kitty
 export PATH="$PATH:$HOME/Opt/julia-1.9.4/bin" # Julia
-export PATH="$HOME/.bin/nvim.sh:$PATH"        # nvim script
+export PATH="$HOME/.bin/vim-cli:$PATH"        # nvim cli wrapper
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL10k_MODE="nerdfont-complete"
@@ -66,8 +66,8 @@ plugins=(
 )
 
 source "$ZSH"/oh-my-zsh.sh
-alias nvim="$HOME/.dotfiles/home/.bin/nvim.sh"
-alias vim="$HOME/.dotfiles/home/.bin/nvim.sh"
+alias nvim="$HOME/.dotfiles/home/.bin/vim-cli"
+alias vim="$HOME/.dotfiles/home/.bin/vim-cli"
 
 go_to_nvim_config() {
   c "$HOME/.dotfiles/nvim/.config/nvim/"

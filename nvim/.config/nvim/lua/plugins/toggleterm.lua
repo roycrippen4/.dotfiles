@@ -24,6 +24,11 @@ local function run_current_file()
     return
   end
 
+  if ft == 'python' then
+    vim.cmd('TermExec direction=horizontal size=16 cmd="python ' .. file .. '"')
+    return
+  end
+
   vim.notify('Unknown filetype detected! Supported filetypes: lua, typescript, javascript', vim.log.levels.ERROR)
 end
 

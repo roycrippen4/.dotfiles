@@ -11,7 +11,6 @@ return {
       { '<leader>lD', '<cmd> RustLsp debuggables  <cr>', desc = "[L]SP Debug Rust" },
       { '<leader>lE', '<cmd> RustLsp externalDocs <cr>', desc = "[L]SP Open External Docs" },
       { '<leader>le', '<cmd> RustLsp explainError <cr>', desc = "[L]SP Explain Error" },
-      { '<leader>lr', '<cmd> RustRun              <cr>', desc = "[L]SP Run File" },
       -- stylua: ignore end
     })
 

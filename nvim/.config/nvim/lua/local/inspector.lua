@@ -1,6 +1,37 @@
 local api = vim.api
+local cmd = vim.cmd
+local fn = vim.fn
+local iter = vim.iter
 
-local ns = api.nvim_create_namespace('inspect_word')
+local autocmd = api.nvim_create_autocmd
+local close_win = api.nvim_win_close
+local create_buf = api.nvim_create_buf
+local create_namespace = api.nvim_create_namespace
+local get_current_win = api.nvim_get_current_win
+local get_cursor = api.nvim_win_get_cursor
+local get_lines = api.nvim_buf_get_lines
+local getmousepos = fn.getmousepos
+local inspect_pos = vim.inspect_pos
+local map = vim.keymap.set
+local open_win = api.nvim_open_win
+local set_current_win = api.nvim_set_current_win
+local set_extmark = api.nvim_buf_set_extmark
+local set_lines = api.nvim_buf_set_lines
+local set_option_value = api.nvim_set_option_value
+local win_get_buf = api.nvim_win_get_buf
+local win_is_valid = api.nvim_win_is_valid
+local win_set_buf = api.nvim_win_set_buf
+local win_set_config = api.nvim_win_set_config
+local win_set_height = api.nvim_win_set_height
+local win_set_width = api.nvim_win_set_width
+
+local ns = create_namespace('inspect_word')
+local width = 34
+local buf = create_buf(false, true)
+local uses_mousemoveevent = vim.o.mousemoveevent
+
+vim.bo[buf].ft = 'inspector'
+local win = nil
 
 ---@param inspect_info InspectInfo
 ---@return FormattedLine[]
@@ -130,8 +161,7 @@ local function format_inspect_info(inspect_info)
 end
 
 ---@param info FormattedLine[]
----@param buf integer
-local function set_lines(info, buf)
+local function put_lines_in_buf(info)
   if #info == 0 then
     return
   end
@@ -145,13 +175,13 @@ local function set_lines(info, buf)
   ---@param idx integer
   ---@param parts FormattedLine
   local insert_lines = function(idx, parts)
-    local it = vim.iter(parts)
-    api.nvim_buf_set_lines(buf, idx - 1, idx, false, { it:fold('', concatenate) })
+    local it = iter(parts)
+    set_lines(buf, idx - 1, idx, false, { it:fold('', concatenate) })
 
     it:each(
       ---@param part FormattedLinePart
       function(part)
-        api.nvim_buf_set_extmark(buf, ns, idx - 1, part.col_start, {
+        set_extmark(buf, ns, idx - 1, part.col_start, {
           end_row = idx - 1,
           end_col = part.col_end + 1,
           hl_group = part.hl_group,
@@ -161,31 +191,133 @@ local function set_lines(info, buf)
     )
   end
 
-  vim.iter(ipairs(info)):each(insert_lines)
+  iter(ipairs(info)):each(insert_lines)
 end
 
-return function()
-  local pos = api.nvim_win_get_cursor(0)
-  local _info = vim.inspect_pos(0, pos[1] - 1, pos[2])
-  local info = format_inspect_info(_info)
+local function inspect_in_split()
+  local pos = get_cursor(0)
+  local info = format_inspect_info(inspect_pos(0, pos[1] - 1, pos[2]))
 
   if #info == 0 then
     vim.notify('No information found', vim.log.levels.WARN)
     return
   end
 
-  local buf = api.nvim_create_buf(false, true)
-  set_lines(info, buf)
-  vim.cmd('botright split')
-  vim.cmd('set nonumber')
-  vim.cmd('set norelativenumber')
-  api.nvim_win_set_buf(0, buf)
-  api.nvim_win_set_height(0, #info)
-  api.nvim_set_option_value('foldcolumn', '0', { win = 0 })
+  put_lines_in_buf(info)
+  cmd('botright split')
+  cmd('set nonumber')
+  cmd('set norelativenumber')
+  win_set_buf(0, buf)
+  win_set_height(0, #info)
+  set_option_value('foldcolumn', '0', { win = 0 })
   local quit = '<cmd>q<cr><c-w>l'
 
   vim.keymap.set('n', 'q', quit, { buffer = buf })
-  api.nvim_buf_set_extmark(buf, ns, #info - 1, 0, {
+  set_extmark(buf, ns, #info - 1, 0, {
     virt_text = { { 'q', '@keyword' }, { ' - Exit the window' } },
   })
 end
+
+---@return integer
+local function find_max_width()
+  local longest = 0
+
+  ---@param line string
+  local function compare_and_set(line)
+    if #line > longest then
+      longest = #line
+    end
+  end
+
+  iter(get_lines(buf, 0, -1, false)):each(compare_and_set)
+
+  return longest
+end
+
+local function inspect_in_float()
+  if not vim.o.mousemoveevent then
+    vim.o.mousemoveevent = true
+  end
+
+  if win and win_is_valid(win) then
+    close_win(win, true)
+    return
+  end
+
+  local current_win = get_current_win()
+  win = open_win(buf, true, {
+    relative = 'cursor',
+    width = 22,
+    height = 1,
+    row = 1,
+    col = 1,
+    style = 'minimal',
+    focusable = false,
+    border = 'rounded',
+  })
+  set_option_value('winblend', 0, { win = win })
+  set_lines(buf, 0, -1, false, { ' No information found ' })
+  win_set_buf(win, buf)
+
+  if get_current_win() == win then
+    set_current_win(current_win)
+  end
+end
+
+local function update_float()
+  vim.schedule(function()
+    --- Early exit if no window, the winid is 0, or the window is invalid
+    if not win or win == 0 or not win_is_valid(win) then
+      return
+    end
+
+    local pos = getmousepos()
+    local info = format_inspect_info(inspect_pos(win_get_buf(pos.winid), pos.line - 1, pos.column - 1))
+
+    if #info == 0 and get_lines(buf, 0, -1, false)[1] ~= ' No information found ' then
+      width = 22
+      set_lines(buf, 0, -1, false, { ' No information found ' })
+      win_set_height(win, 1)
+      win_set_width(win, width)
+      return
+    end
+
+    if #info > 0 then
+      put_lines_in_buf(info)
+      width = find_max_width()
+      win_set_height(win, #info - 2)
+      win_set_width(win, width)
+    end
+
+    local row, col = pos.screenrow, pos.screencol
+    if vim.o.lines - row <= 4 then
+      row = row - 4
+    end
+
+    if vim.o.columns - col - width <= 0 then
+      col = col - width - 2
+    end
+
+    win_set_config(win, { relative = 'editor', row = row, col = col })
+  end)
+
+  return '<MouseMove>'
+end
+
+map({ '', 'i' }, '<MouseMove>', update_float, { expr = true })
+
+autocmd('WinClosed', {
+  pattern = 'inspector',
+  callback = function()
+    win = nil
+    vim.o.mousemoveevent = uses_mousemoveevent
+  end,
+})
+
+require('which-key').add({
+  {
+    mode = 'n',
+    { '<leader>iw', inspect_in_split, desc = '[I]nspect word', icon = '' },
+    { '<leader>if', inspect_in_float, desc = '[I]nspect in float', icon = '' },
+  },
+})

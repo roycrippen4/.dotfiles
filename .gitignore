@@ -7,3 +7,4 @@ fish_variables
 sxhkd/.config/autostart
 fishd.tmp.*
 DEBS_avail
+venv
