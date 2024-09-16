@@ -1,7 +1,6 @@
 ---@type LazyPluginSpec
 return {
-  'folke/which-key.nvim',
-  lazy = false,
+  'folke/which-key.nvim', -- https://github.com/folke/which-key.nvim
   opts = {},
   config = function()
     require('which-key').add({

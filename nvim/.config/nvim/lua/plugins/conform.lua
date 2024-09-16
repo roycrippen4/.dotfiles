@@ -21,8 +21,8 @@ end, {
 
 ---@type LazyPluginSpec
 return {
-  'stevearc/conform.nvim',
-  event = 'BufEnter',
+  'stevearc/conform.nvim', -- https://github.com/stevearc/conform.nvim
+  event = 'BufWritePre',
   keys = {
     {
       '<leader>tf',

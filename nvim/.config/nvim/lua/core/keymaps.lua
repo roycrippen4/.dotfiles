@@ -16,7 +16,7 @@ wk.add({
     { '<Leader>h',        '<C-w>s',                       desc = 'Horizontal Split',  icon = '' },
     { '<leader>lf',       vim.diagnostic.open_float,      desc = '[L]SP Show Errors', icon = '' },
     { '<Leader>x',        utils.close_buf,                desc = 'Close Buffer',      icon = '' },
-    { '<leader>pu',       require('package-info').update, desc = '[P]ackage Update',  icon = '󰚰' },
+    -- { '<leader>pu',       require('package-info').update, desc = '[P]ackage Update',  icon = '󰚰' },
     -- stylua: ignore end
   },
 })

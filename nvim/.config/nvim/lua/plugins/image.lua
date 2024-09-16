@@ -1,7 +1,8 @@
 ---@type LazyPluginSpec
 return {
-  '3rd/image.nvim',
+  '3rd/image.nvim', -- https://github.com/3rd/image.nvim
   dependencies = { 'luarocks.nvim' },
+  event = 'VeryLazy',
   ---@module 'image'
   ---@type Options
   opts = {

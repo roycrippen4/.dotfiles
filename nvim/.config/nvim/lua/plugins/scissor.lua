@@ -3,6 +3,10 @@ return {
   'chrisgrieser/nvim-scissors',
   dependencies = { 'nvim-telescope/telescope.nvim', 'garymjr/nvim-snippets' },
   opts = { snippetDir = vim.fn.stdpath('config') .. '/snippets/vscode' },
+  keys = {
+    { mode = { 'n', 'x' }, '<leader>sa' },
+    { mode = 'n', '<leader>se' },
+  },
   config = function(_, opts)
     local scissors = require('scissors')
     scissors.setup(opts)

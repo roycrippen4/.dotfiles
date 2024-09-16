@@ -9,7 +9,6 @@ return {
         vim.cmd.UndotreeToggle()
       end,
       desc = 'UndoTree',
-      -- icon = '󰕍',
     },
   },
 }

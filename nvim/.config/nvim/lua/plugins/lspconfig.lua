@@ -168,11 +168,14 @@ vim.g.zig_fmt_parse_errors = 0
 ---@type LazyPluginSpec
 return {
   'neovim/nvim-lspconfig', -- https://github.com/neovim/nvim-lspconfig
-  event = 'VimEnter',
+  event = 'BufReadPre',
   dependencies = {
     'williamboman/mason.nvim', -- https://github.com/williamboman/mason.nvim
     'b0o/schemastore.nvim', -- https://github.com/b0o/schemastore.nvim
-    'j-hui/fidget.nvim', -- https://github.com/j-hui/fidget.nvim
+    {
+      'j-hui/fidget.nvim', -- https://github.com/j-hui/fidget.nvim
+      opts = {},
+    },
   },
   config = function()
     local lspconfig = require('lspconfig')
@@ -259,11 +262,6 @@ return {
 
     lspconfig['svelte'].setup({
       capabilities = vim.tbl_deep_extend('force', utils.capabilities, { workspace = { dynamicRegistration = true } }),
-      on_attach = utils.on_attach,
-    })
-
-    lspconfig['tailwindcss'].setup({
-      capabilities = utils.capabilities,
       on_attach = utils.on_attach,
     })
 

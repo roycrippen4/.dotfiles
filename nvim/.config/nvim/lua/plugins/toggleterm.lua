@@ -34,9 +34,8 @@ end
 
 ---@type LazyPluginSpec
 return {
-  'akinsho/toggleterm.nvim',
+  'akinsho/toggleterm.nvim', -- https://github.com/akinsho/toggleterm.nvim
   version = '*',
-  event = 'BufEnter',
   keys = {
     {
       mode = { 'n', 't' },

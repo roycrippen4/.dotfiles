@@ -1,15 +1,17 @@
 ---@type LazyPluginSpec
 return {
+  'roycrippen4/Comment.nvim', -- https://github.com/roycrippen4/Comment.nvim
   event = 'BufEnter',
-  'JoosepAlviste/nvim-ts-context-commentstring', -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
+  dependencies = {
+    {
+      'JoosepAlviste/nvim-ts-context-commentstring', -- https://github.com/JoosepAlviste/nvim-ts-context-commentstring
+      opts = { enable_autocmd = false },
+    },
+  },
   config = function()
-    require('ts_context_commentstring').setup({ enable_autocmd = false })
-    local get_option = vim.filetype.get_option
-
-    ---@diagnostic disable-next-line: duplicate-set-field
-    vim.filetype.get_option = function(filetype, option)
-      return option == 'commentstring' and require('ts_context_commentstring.internal').calculate_commentstring()
-        or get_option(filetype, option)
-    end
+    require('Comment').setup({
+      pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
+      ignore = '^$',
+    })
   end,
 }

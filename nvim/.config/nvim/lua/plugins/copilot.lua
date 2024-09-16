@@ -1,7 +1,9 @@
+---@module "copilot"
 ---@type LazyPluginSpec
 return {
   'zbirenbaum/copilot.lua', -- https://github.com/zbirenbaum/copilot.lua
   event = 'BufReadPost',
+  ---@type copilot_config
   opts = {
     panel = { enabled = false },
     suggestion = { enabled = true, auto_trigger = true, keymap = { accept = '<M-cr>' } },

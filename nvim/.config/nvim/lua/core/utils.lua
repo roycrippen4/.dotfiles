@@ -14,38 +14,9 @@ local function organize_imports()
   else
     vim.lsp.buf.code_action({
       apply = true,
-      context = {
-        only = { 'source.organizeImports' },
-        diagnostics = {},
-      },
+      context = { only = { 'source.organizeImports' }, diagnostics = {} },
     })
   end
-end
-
-local function lsp_definitions()
-  local params = vim.lsp.util.make_position_params()
-  vim.lsp.buf_request(0, 'textDocument/definition', params, function(_, result, ctx)
-    if not result or vim.tbl_isempty(result) then
-      vim.notify('No definitions found', vim.log.levels.INFO)
-      return
-    end
-
-    local client = vim.lsp.get_client_by_id(ctx.client_id)
-    if not client then
-      return
-    end
-
-    local locations = vim.lsp.util.locations_to_items(result, client.offset_encoding)
-    if #locations > 1 then
-      require('telescope.builtin').lsp_definitions({
-        cwd = vim.fn.getcwd(),
-        locations = locations,
-        client_id = ctx.client_id,
-      })
-    else
-      vim.lsp.util.jump_to_location(result[1], client.offset_encoding)
-    end
-  end)
 end
 
 --- Toggles diagnostics
@@ -107,10 +78,6 @@ function M.set_lsp_mappings(additional_keymaps)
   local keymaps = {
     -- stylua: ignore start
     mode = 'n',
-    -- { 'gd', require('telescope.builtin').lsp_definitions,                     desc = 'Goto Definition',            icon = '󰼭' },
-    -- { '<leader>lo', '<cmd> TSToolsOrganizeImports <cr>', desc = '[L]SP Organize Imports',     icon = '󰶘' },
-    { 'gr', require('telescope.builtin').lsp_references,                      desc = 'Goto References',            icon = '' },
-    { 'gd', lsp_definitions,                                                  desc = 'Goto Definition',            icon = '󰼭' },
     { '<leader>lo', organize_imports,                    desc = '[L]SP Organize Imports',     icon = '󰶘' },
     { '<leader>lh', toggle_inlay_hints,                  desc = '[L]SP Inlay Hints',          icon = '󰊠' },
     { '<leader>ld', toggle_diagnostics,                  desc = '[L]SP Diagnostics',          icon = '' },
@@ -409,6 +376,11 @@ function M.ctrl_a()
   if not toggle_text() then
     feed('<C-a>', 'n')
   end
+end
+
+---@param filename string
+function M.has_file(filename)
+  return fn.filereadable(fn.getcwd() .. '/' .. filename) == 1 and true or false
 end
 
 return M

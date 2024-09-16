@@ -1,17 +1,10 @@
-local icon = '│'
-
-local function blame_full()
-  require('gitsigns').blame_line({ full = true })
-end
-
 ---@type LazyPluginSpec
 return {
-  'lewis6991/gitsigns.nvim',
-  event = 'VimEnter',
+  'lewis6991/gitsigns.nvim', -- https://github.com/lewis6991/gitsigns.nvim
   config = function()
     local gitsigns = require('gitsigns')
-    local wk = require('which-key')
 
+    local icon = '│'
     gitsigns.setup({
       signs = {
         add = { text = icon },
@@ -23,7 +16,11 @@ return {
       },
     })
 
-    wk.add({
+    local function blame_full()
+      gitsigns.blame_line({ full = true })
+    end
+
+    require('which-key').add({
       {
         mode = 'n',
         { '<leader>gb', gitsigns.blame_line, desc = '[B]lame line', icon = '󱚝' },

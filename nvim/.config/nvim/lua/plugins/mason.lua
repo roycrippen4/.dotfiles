@@ -1,7 +1,6 @@
 return {
   'williamboman/mason.nvim', -- https://github.com/williamboman/mason.nvim
   cmd = 'Mason',
-  lazy = false,
   opts = {
     ensure_installed = {
       'lua-language-server',

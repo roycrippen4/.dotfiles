@@ -1,7 +1,7 @@
 ---@type LazyPluginSpec
 return {
   'luukvbaal/statuscol.nvim', -- https://github.com/luukvbaal/statuscol.nvim
-  lazy = false,
+  -- event = 'VeryLazy',
   branch = '0.10',
   dependencies = {
     'kevinhwang91/nvim-ufo', -- https://github.com/kevinhwang91/nvim-ufo
@@ -17,14 +17,8 @@ return {
     end,
   },
   config = function()
-    local ok, statuscol = pcall(require, 'statuscol')
     local builtin = require('statuscol.builtin')
-
-    if not ok then
-      return
-    end
-
-    statuscol.setup({
+    require('statuscol').setup({
       bt_ignore = {
         'nofile',
         'prompt',
