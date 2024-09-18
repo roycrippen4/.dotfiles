@@ -1,5 +1,4 @@
 local utils = require('core.utils')
-
 local api = vim.api
 local fn = vim.fn
 local map = vim.keymap.set
@@ -181,6 +180,7 @@ return {
     local lspconfig = require('lspconfig')
 
     lspconfig['clangd'].setup({
+      filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' }, -- exclude "proto".
       capabilities = utils.capabilities,
       on_attach = utils.on_attach,
     })
@@ -285,5 +285,7 @@ return {
       capabilities = utils.capabilities,
       on_attach = utils.on_attach,
     })
+
+    lspconfig['protols'].setup({})
   end,
 }

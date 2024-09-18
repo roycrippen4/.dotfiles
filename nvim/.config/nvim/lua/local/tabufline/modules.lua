@@ -44,23 +44,6 @@ local function get_btns_width() -- close, theme toggle btn etc
   return width
 end
 
--- local function is_buf_marked(bufnr)
---   local path = ''
---   local items = require('harpoon'):list('relative').items
-
---   if vim.api.nvim_buf_is_valid(bufnr) then
---     local name = vim.api.nvim_buf_get_name(bufnr)
---     path = require('plenary.path'):new(name):make_relative()
---   end
-
---   for idx, item in ipairs(items) do
---     if item.value == path then
---       return idx
---     end
---   end
---   return nil
--- end
-
 -- currently running original harpoon. use the above function when you switch back
 ---@param bufnr integer
 ---@return integer

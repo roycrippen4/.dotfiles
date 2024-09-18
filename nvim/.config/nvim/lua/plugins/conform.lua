@@ -23,6 +23,7 @@ end, {
 return {
   'stevearc/conform.nvim', -- https://github.com/stevearc/conform.nvim
   event = 'BufWritePre',
+  cmd = 'ConformInfo',
   keys = {
     {
       '<leader>tf',
@@ -47,19 +48,22 @@ return {
     notify_on_error = false,
     quiet = false,
     formatters_by_ft = {
-      css = { 'prettierd', 'prettier', stop_after_first = true },
-      html = { 'prettierd', 'prettier', stop_after_first = true },
-      javascript = { 'prettierd', 'prettier', stop_after_first = true },
-      javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
-      json = { 'prettierd', 'prettier', stop_after_first = true },
-      markdown = { 'prettierd', 'prettier', stop_after_first = true },
-      svelte = { 'prettierd', 'prettier', stop_after_first = true },
-      typescript = { 'prettierd', 'prettier', stop_after_first = true },
-      typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+      c = { 'clang-format' },
+      cpp = { 'clang-format' },
+      css = { 'prettierd', 'prettier' },
+      html = { 'prettierd', 'prettier' },
+      javascript = { 'prettierd', 'prettier' },
+      javascriptreact = { 'prettierd', 'prettier' },
+      json = { 'prettierd', 'prettier' },
       lua = { 'stylua' },
+      markdown = { 'prettierd', 'prettier', stop_after_first = true },
+      proto = { 'clang-format' },
       python = { 'black' },
       rust = { 'rustfmt' },
       sh = { 'shfmt' },
+      svelte = { 'prettierd', 'prettier' },
+      typescript = { 'prettierd', 'prettier' },
+      typescriptreact = { 'prettierd', 'prettier' },
       yaml = { 'yamlfmt' },
     },
 

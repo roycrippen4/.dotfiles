@@ -1,7 +1,7 @@
 --- @type LazyPluginSpec
 return {
   'OXY2DEV/markview.nvim', -- https://github.com/OXY2DEV/markview.nvim
-  lazy = false,
+  ft = 'markdown',
   dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
   opts = {
     modes = { 'n', 'no', 'c' },

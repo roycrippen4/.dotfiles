@@ -2,7 +2,6 @@ local map = vim.keymap.set
 local tabline = require('local.tabufline')
 local utils = require('core.utils')
 local wk = require('which-key')
-utils.create_harpoon_nav_mappings()
 
 wk.add({
   {
@@ -13,10 +12,9 @@ wk.add({
     { '<leader>M',        '<cmd> Mason       <cr>',       desc = '[M]ason',           icon = '' },
     { '<Leader><Leader>', '<cmd> Lazy        <cr>',       desc = 'Open Lazy',         icon = '' },
     { '<Leader>v',        '<C-w>v',                       desc = 'Vertical Split',    icon = '' },
-    { '<Leader>h',        '<C-w>s',                       desc = 'Horizontal Split',  icon = '' },
+    { '<leader>h',        '<C-w>s',                       desc = 'Horizontal Split',  icon = '' },
     { '<leader>lf',       vim.diagnostic.open_float,      desc = '[L]SP Show Errors', icon = '' },
     { '<Leader>x',        utils.close_buf,                desc = 'Close Buffer',      icon = '' },
-    -- { '<leader>pu',       require('package-info').update, desc = '[P]ackage Update',  icon = '󰚰' },
     -- stylua: ignore end
   },
 })
@@ -42,10 +40,7 @@ map('n', '<M-j>',            ':m .+1<cr>==',              { desc = 'Shift line d
 map('n', '<M-k>',            ':m .-2<cr>==',              { desc = 'Shift line up'                     })
 map('n', 'L',                tabline.tabufline_next,      { desc = 'Go to next tabufline buffer'       })
 map('n', 'H',                tabline.tabufline_prev,      { desc = 'Go to prev tabufline buffer'       })
-map('n', 'B',                utils.set_as_first_mark,     { desc = 'Set current file as first mark'    })
 map('n', 'dd',               utils.send_to_black_hole,    { desc = 'smart delete'                      })
-map('n', '<C-f>',            utils.harpoon_add_file,      { desc = 'Mark file'                         })
-map('n', '<C-e>',            utils.show_harpoon_menu,     { desc = 'Harpoon menu'                      })
 map('n', '<C-a>',            utils.ctrl_a,                { desc = 'Extended increment' })
 map('n', '<C-x>',            utils.ctrl_x,                { desc = 'Extended decrement' })
 -- stylua: ignore end
