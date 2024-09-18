@@ -1,8 +1,32 @@
 ---@type LazyPluginSpec
 return {
   '3rd/image.nvim', -- https://github.com/3rd/image.nvim
-  dependencies = { 'luarocks.nvim' },
-  event = 'VeryLazy',
+  dependencies = {
+    {
+      'vhyrro/luarocks.nvim', -- https://github.com/vhyrro/luarocks.nvim
+      priority = 1001,
+      opts = { rocks = { 'lua-cjson', 'http', 'magick' } },
+    },
+  },
+  ft = {
+    'apng',
+    'avif',
+    'bmp',
+    'cur',
+    'gif',
+    'ico',
+    'jfif',
+    'jpeg',
+    'jpg',
+    'markdown',
+    'pjp',
+    'pjpeg',
+    'png',
+    'svg',
+    'tif',
+    'tiff',
+    'webp',
+  },
   ---@module 'image'
   ---@type Options
   opts = {
