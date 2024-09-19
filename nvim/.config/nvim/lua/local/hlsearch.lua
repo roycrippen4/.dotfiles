@@ -95,7 +95,7 @@ end
 local function draw_virt()
   local count = vim.fn.searchcount()
   clear()
-  if count.current == 0 and count.total == 0 then
+  if not count or (count.current == 0 and count.total == 0) then
     return
   end
   return vim.api.nvim_buf_set_extmark(0, ns, vim.api.nvim_win_get_cursor(0)[1] - 1, 0, {
