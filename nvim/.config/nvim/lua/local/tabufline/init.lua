@@ -26,7 +26,7 @@ M.getBufIndex = function(bufnr)
   end
 end
 
-M.tabufline_next = function()
+M.next = function()
   local bufs = M.bufilter() or {}
   local curbufIndex = M.getBufIndex(api.nvim_get_current_buf())
 
@@ -38,7 +38,7 @@ M.tabufline_next = function()
   vim.cmd(curbufIndex == #bufs and 'b' .. bufs[1] or 'b' .. bufs[curbufIndex + 1])
 end
 
-M.tabufline_prev = function()
+M.prev = function()
   local bufs = M.bufilter() or {}
   local curbufIndex = M.getBufIndex(api.nvim_get_current_buf())
 

@@ -2,25 +2,7 @@
 return {
   '3rd/image.nvim', -- https://github.com/3rd/image.nvim
   dependencies = { 'vhyrro/luarocks.nvim' },
-  ft = {
-    'apng',
-    'avif',
-    'bmp',
-    'cur',
-    'gif',
-    'ico',
-    'jfif',
-    'jpeg',
-    'jpg',
-    'markdown',
-    'pjp',
-    'pjpeg',
-    'png',
-    'svg',
-    'tif',
-    'tiff',
-    'webp',
-  },
+  event = 'VeryLazy',
   ---@module 'image'
   ---@type Options
   opts = {
