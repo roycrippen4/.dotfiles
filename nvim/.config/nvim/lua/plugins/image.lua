@@ -1,13 +1,7 @@
 ---@type LazyPluginSpec
 return {
   '3rd/image.nvim', -- https://github.com/3rd/image.nvim
-  dependencies = {
-    {
-      'vhyrro/luarocks.nvim', -- https://github.com/vhyrro/luarocks.nvim
-      priority = 1001,
-      opts = { rocks = { 'lua-cjson', 'http', 'magick' } },
-    },
-  },
+  dependencies = { 'vhyrro/luarocks.nvim' },
   ft = {
     'apng',
     'avif',
