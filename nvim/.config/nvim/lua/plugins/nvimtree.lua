@@ -32,6 +32,7 @@ return {
         vim.keymap.del('n', '.', { buffer = bufnr })
         vim.keymap.del('n', '-', { buffer = bufnr })
         vim.keymap.del('n', 'g?', { buffer = bufnr })
+        vim.keymap.del('n', 'f', { buffer = bufnr })
 
         vim.keymap.set(
           'n',

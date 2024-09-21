@@ -1,24 +1,50 @@
+local function lsp_definitions()
+  local params = vim.lsp.util.make_position_params()
+  vim.lsp.buf_request(0, 'textDocument/definition', params, function(_, result, ctx)
+    if not result or vim.tbl_isempty(result) then
+      vim.notify('No definitions found', vim.log.levels.INFO)
+      return
+    end
+
+    local client = vim.lsp.get_client_by_id(ctx.client_id)
+    if not client then
+      return
+    end
+
+    local locations = vim.lsp.util.locations_to_items(result, client.offset_encoding)
+    if #locations > 1 then
+      require('telescope.builtin').lsp_definitions({
+        cwd = vim.fn.getcwd(),
+        locations = locations,
+        client_id = ctx.client_id,
+      })
+    else
+      vim.lsp.util.jump_to_location(result[1], client.offset_encoding)
+    end
+  end)
+end
+
 ---@type LazyPluginSpec
 return {
   'nvim-telescope/telescope.nvim', -- https://github.com/nvim-telescope/telescope.nvim
   keys = {
-    '<leader>ff',
-    '<leader>fa',
-    '<leader>fb',
-    '<leader>fc',
-    '<leader>fh',
-    '<leader>fk',
-    '<leader>fl',
-    '<leader>fm',
-    '<leader>fo',
-    '<leader>fr',
-    '<leader>fw',
-    '<leader>fgc',
-    '<leader>fgs',
-    '<leader>fp',
-    '<leader>ft',
-    'gd',
-    'gr',
+    { '<leader>ff', '<cmd> Telescope find_files      <CR>' },
+    { '<leader>fa', '<cmd> Telescope autocommands    <CR>' },
+    { '<leader>fb', '<cmd> Telescope buffers         <CR>' },
+    { '<leader>fc', '<cmd> Telescope commands        <CR>' },
+    { '<leader>fh', '<cmd> Telescope help_tags       <CR>' },
+    { '<leader>fk', '<cmd> Telescope keymaps         <CR>' },
+    { '<leader>fl', '<cmd> Telescope highlights      <CR>' },
+    { '<leader>fm', '<cmd> Telescope marks           <CR>' },
+    { '<leader>fo', '<cmd> Telescope oldfiles        <CR>' },
+    { '<leader>fr', '<cmd> Telescope resume          <CR>' },
+    { '<leader>fw', '<cmd> Telescope live_grep       <CR>' },
+    { '<leader>fgc', '<cmd> Telescope git_commits    <CR>' },
+    { '<leader>fgs', '<cmd> Telescope git_status     <CR>' },
+    { '<leader>fp', '<cmd> Telescope treesitter_info <CR>' },
+    { '<leader>ft', '<cmd> TodoTelescope             <CR>' },
+    { 'gd', lsp_definitions },
+    { 'gr', require('telescope.builtin').lsp_references },
   },
   dependencies = {
     {
@@ -50,32 +76,6 @@ return {
     local is_image_preview = false
     local last_file_path = ''
     local supported_images = { 'svg', 'png', 'jpg', 'jpeg', 'gif', 'webp', 'avif' }
-
-    local function lsp_definitions()
-      local params = vim.lsp.util.make_position_params()
-      vim.lsp.buf_request(0, 'textDocument/definition', params, function(_, result, ctx)
-        if not result or vim.tbl_isempty(result) then
-          vim.notify('No definitions found', vim.log.levels.INFO)
-          return
-        end
-
-        local client = vim.lsp.get_client_by_id(ctx.client_id)
-        if not client then
-          return
-        end
-
-        local locations = vim.lsp.util.locations_to_items(result, client.offset_encoding)
-        if #locations > 1 then
-          builtin.lsp_definitions({
-            cwd = vim.fn.getcwd(),
-            locations = locations,
-            client_id = ctx.client_id,
-          })
-        else
-          vim.lsp.util.jump_to_location(result[1], client.offset_encoding)
-        end
-      end)
-    end
 
     local is_supported_image = function(filepath)
       local split_path = vim.split(filepath:lower(), '.', { plain = true })
