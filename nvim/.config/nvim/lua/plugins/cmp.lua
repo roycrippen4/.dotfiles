@@ -4,6 +4,9 @@ local name_map = {
   background = 'Bg',
 }
 
+---@module "TailwindTools"
+---@module "cmp_lsp_rs"
+
 ---@param red number
 ---@param green number
 ---@param blue number
@@ -147,9 +150,13 @@ return {
     'hrsh7th/cmp-path', -- https://github.com/hrsh7th/cmp-path
     'hrsh7th/cmp-cmdline', -- https://github.com/hrsh7th/cmp-cmdline
     'onsails/lspkind.nvim', -- https://github.com/onsails/lspkind.nvim
+    'zjp-CN/nvim-cmp-lsp-rs', -- https://github.com/zjp-CN/nvim-cmp-lsp-rs
   },
   config = function()
     local cmp = require('cmp')
+    local compare = require('cmp').config.compare
+    local cmp_lsp_rs = require('cmp_lsp_rs')
+    local compare_rs = cmp_lsp_rs.comparators
 
     cmp.setup({
       formatting = {
@@ -179,22 +186,22 @@ return {
         { name = 'crates' },
       },
       preselect = cmp.PreselectMode.None,
+      ---@diagnostic disable-next-line
+      sorting = {
+        comparators = {
+          compare.exact,
+          compare.score,
+          compare_rs.inscope_inherent_import,
+          compare_rs.sort_by_label_but_underscore_last,
+        },
+      },
       completion = {
         completeopt = 'menu,menuone,noselect',
         autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged },
       },
       window = {
-        completion = {
-          winhighlight = 'Normal:NormalFloat,CursorLine:CmpSel,Search:PmenuSel',
-          scrollbar = true,
-          border = 'rounded',
-        },
-        documentation = {
-          border = 'rounded',
-          winhighlight = 'Normal:NormalFloat',
-          max_height = math.floor(vim.o.lines * 0.5),
-          max_width = math.floor(vim.o.columns * 0.4),
-        },
+        completion = cmp.config.window.bordered(),
+        documentation = cmp.config.window.bordered(),
       },
       snippet = {
         expand = function(args)
