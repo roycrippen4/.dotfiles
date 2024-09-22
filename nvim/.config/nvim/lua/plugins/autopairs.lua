@@ -19,8 +19,6 @@ return {
 
     cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
-    -- npairs.add_rule(rule('{#if}'))
-
     -- stylua: ignore
     for _, punct in pairs({ ',', ';' }) do
       npairs.add_rule(rule('', punct)

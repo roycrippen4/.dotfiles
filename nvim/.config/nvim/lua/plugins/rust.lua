@@ -18,7 +18,10 @@ return {
     ---@type rustaceanvim.Opts
     vim.g.rustaceanvim = {
       server = { on_attach = require('core.utils').on_attach },
-      tools = { float_win_config = { border = 'rounded' } },
+      tools = {
+        float_win_config = { border = 'rounded' },
+        executor = 'toggleterm',
+      },
     }
   end,
 }
