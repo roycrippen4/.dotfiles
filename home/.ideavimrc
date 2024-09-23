@@ -1,0 +1,49 @@
+let mapleader = " "
+
+set relativenumber
+set visualbell
+set noerrorbells
+set scrolloff=11
+set incsearch
+
+Plug 'machakann/vim-highlightedyank'
+Plug 'tpope/vim-commentary'
+set surround
+
+set NERDTree
+map <c-n> :NERDTreeToggle <cr>
+
+imap <c-h> <left>
+imap <c-j> <down>
+imap <c-k> <up>
+imap <c-l> <right>
+
+imap jk <Esc>
+imap kj <Esc>
+
+" wins
+map <c-h> <c-w>h
+map <c-l> <c-w>l
+map <c-j> <c-w>j
+map <c-k> <c-w>k
+nmap <leader>v :vsplit <cr>
+nmap <leader>h :hsplit <cr>
+
+" tabs
+map <s-h> :bprev <cr>
+map <s-l> :bnext <cr>
+nmap <leader>x :q <cr>
+
+" Move line up/down
+map <m-j> :m .+1<cr>==
+map <m-k> :m .-1<cr>==
+
+map <Leader>ff <action>(com.mituuz.fuzzier.Fuzzier)
+
+nmap <c-e> :action ShowHarpoon <cr>
+nmap <c-b> :action AddToHarpoon <cr>
+nmap <C-1> :action GotoHarpoon1 <cr>
+nmap <C-2> :action GotoHarpoon2 <cr>
+nmap <C-3> :action GotoHarpoon3 <cr>
+nmap <C-4> :action GotoHarpoon4 <cr>
+nmap <C-5> :action GotoHarpoon5 <cr>
