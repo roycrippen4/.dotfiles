@@ -97,6 +97,7 @@ go_to_waybar_config() {
   c "$HOME/.dotfiles/waybar/.config/waybar"
 }
 
+alias leetcode="nvim leetcode.nvim"
 alias ts="tree-sitter"
 alias tsb="tree-sitter build"
 alias tsg="tree-sitter generate"
