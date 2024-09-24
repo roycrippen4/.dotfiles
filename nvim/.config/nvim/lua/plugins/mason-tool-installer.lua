@@ -5,8 +5,8 @@ return {
   opts = {
     ensure_installed = {
       'black',
-      'clangd',
       'clang-format',
+      'clangd',
       'codelldb',
       'css-lsp',
       'docker-compose-language-service',

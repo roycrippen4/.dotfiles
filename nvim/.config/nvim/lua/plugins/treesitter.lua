@@ -33,6 +33,8 @@ return {
       'json',
       'jsonc',
       'lua',
+      'ocaml',
+      'ocaml_interface',
       'luadoc',
       'luap',
       'markdown',

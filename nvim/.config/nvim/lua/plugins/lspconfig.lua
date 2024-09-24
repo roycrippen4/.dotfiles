@@ -255,6 +255,11 @@ return {
       on_attach = utils.on_attach,
     })
 
+    lspconfig['ocamlls'].setup({
+      capabilities = utils.capabilities,
+      on_attach = utils.on_attach,
+    })
+
     lspconfig['pyright'].setup({
       capabilities = utils.capabilities,
       on_attach = utils.on_attach,
