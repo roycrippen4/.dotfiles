@@ -163,3 +163,6 @@ export PATH="$HOME/dev/personal/miniforge3/bin:$PATH"
 autoload -U add-zsh-hook
 # add-zsh-hook chpwd python_venv
 # python_venv
+
+# ocaml
+[[ ! -r '/home/roy/.opam/opam-init/init.zsh' ]] || source '/home/roy/.opam/opam-init/init.zsh' >/dev/null 2>/dev/null
