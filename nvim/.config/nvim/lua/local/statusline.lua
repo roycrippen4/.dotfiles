@@ -367,7 +367,7 @@ function M.generate_statusline()
     M.file_info(),
     M.git(),
     '%=',
-    -- M.package_info(),
+    M.package_info(),
     '%=',
     M.lsp_diagnostics(),
     M.lsp_status(),
