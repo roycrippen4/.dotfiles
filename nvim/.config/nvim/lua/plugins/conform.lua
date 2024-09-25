@@ -57,6 +57,7 @@ return {
       json = { 'prettierd', 'prettier' },
       lua = { 'stylua' },
       markdown = { 'prettierd', 'prettier', stop_after_first = true },
+      ocaml = { 'ocamlformat' },
       proto = { 'clang-format' },
       python = { 'black' },
       rust = { 'rustfmt' },
