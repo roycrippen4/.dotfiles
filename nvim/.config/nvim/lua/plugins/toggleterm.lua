@@ -1,4 +1,15 @@
-vim.api.nvim_create_autocmd('TermOpen', { command = 'setlocal nonu nornu signcolumn=no foldcolumn=0' })
+-- vim.api.nvim_create_autocmd('TermOpen', {
+--   command = 'setlocal nonu nornu signcolumn=no foldcolumn=0 | startinsert',
+-- })
+
+vim.api.nvim_create_autocmd('VimEnter', {
+  callback = function()
+    if vim.fn.filereadable('.nvmrc') == 1 then
+      vim.cmd('TermExec direction=horizontal size=16 cmd="nvm use" open=0')
+      -- vim.cmd('ToggleTerm direction=horizontal')
+    end
+  end,
+})
 
 local function run_current_file()
   local ft = vim.bo.ft
@@ -36,6 +47,7 @@ end
 return {
   'akinsho/toggleterm.nvim', -- https://github.com/akinsho/toggleterm.nvim
   version = '*',
+  cmd = { 'ToggleTerm', 'TermExec' },
   keys = {
     {
       mode = { 'n', 't' },
@@ -58,11 +70,10 @@ return {
       run_current_file,
     },
   },
-  config = function()
-    require('toggleterm').setup()
-    if vim.fn.filereadable('.nvmrc') == 1 then
-      vim.cmd('TermExec direction=horizontal size=16 cmd="nvm use"')
-      vim.cmd('ToggleTerm direction=horizontal')
-    end
-  end,
+  opts = {
+    on_open = function()
+      vim.cmd('startinsert')
+      vim.cmd('setlocal nonu nornu signcolumn=no foldcolumn=0 | startinsert')
+    end,
+  },
 }
