@@ -242,7 +242,6 @@ return {
       settings = {
         Lua = {
           format = { enable = false },
-          -- semantic = { enable = true },
           diagnostics = { globals = { 'vim' } },
           telemetry = { enable = false },
           hint = { enable = true, arrayIndex = 'Disable' },
@@ -255,7 +254,8 @@ return {
       on_attach = utils.on_attach,
     })
 
-    lspconfig['ocamlls'].setup({
+    lspconfig['ocamllsp'].setup({
+      root_dir = lspconfig.util.root_pattern('*.opam', 'esy.json', 'package.json', '.git', 'dune-project', 'dune-workspace', '*.ml'),
       capabilities = utils.capabilities,
       on_attach = utils.on_attach,
     })
