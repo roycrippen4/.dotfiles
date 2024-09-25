@@ -7,7 +7,7 @@ set scrolloff=11
 set incsearch
 
 Plug 'machakann/vim-highlightedyank'
-Plug 'tpope/vim-commentary'
+set commentary
 set surround
 
 set NERDTree

@@ -146,9 +146,6 @@ case ":$PATH:" in
 *) export PATH="$PNPM_HOME:$PATH" ;;
 esac
 
-# conda
-export PATH="$HOME/dev/personal/miniforge3/bin:$PATH"
-
 # bun completions
 [ -s "/home/roy/.bun/_bun" ] && source "/home/roy/.bun/_bun"
 
