@@ -1,13 +1,24 @@
--- vim.api.nvim_create_autocmd('TermOpen', {
---   command = 'setlocal nonu nornu signcolumn=no foldcolumn=0 | startinsert',
--- })
+local autocmd = vim.api.nvim_create_autocmd
 
-vim.api.nvim_create_autocmd('VimEnter', {
+local function bg_dune_watch()
+  if vim.fn.glob('dune-project') ~= '' or vim.fn.glob('dune') ~= '' then
+    local Terminal = require('toggleterm.terminal').Terminal
+    Terminal:new({
+      hidden = true,
+      cmd = 'opam exec -- dune build -w',
+      id = 5,
+    })
+    print('Starting dune watch')
+  end
+end
+
+autocmd('VimEnter', {
   callback = function()
     if vim.fn.filereadable('.nvmrc') == 1 then
       vim.cmd('TermExec direction=horizontal size=16 cmd="nvm use" open=0')
-      -- vim.cmd('ToggleTerm direction=horizontal')
     end
+
+    bg_dune_watch()
   end,
 })
 
@@ -73,7 +84,7 @@ return {
   opts = {
     on_open = function()
       vim.cmd('startinsert')
-      vim.cmd('setlocal nonu nornu signcolumn=no foldcolumn=0 | startinsert')
+      vim.cmd('setlocal nonu nornu signcolumn=no foldcolumn=0')
     end,
   },
 }
