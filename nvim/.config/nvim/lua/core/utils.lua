@@ -156,22 +156,27 @@ function M.set_as_first_mark()
   local mark = require('harpoon.mark')
   local bufname = api.nvim_buf_get_name(0)
   local path = require('plenary.path'):new(bufname):make_relative(vim.uv.cwd())
-  local marks = require('core.utils').get_marked_files()
+  local marked = {}
+  for idx = 1, require('harpoon.mark').get_length() do
+    table.insert(marked, require('harpoon.mark').get_marked_file_name(idx))
+  end
   ---@type integer|nil
   local file_idx
 
-  if vim.tbl_contains(marks, path) then
+  if vim.tbl_contains(marked, path) then
     file_idx = mark.get_current_index()
   else
     mark.add_file()
     file_idx = mark.get_length()
-    marks = require('core.utils').get_marked_files()
+    for idx = 1, require('harpoon.mark').get_length() do
+      table.insert(marked, require('harpoon.mark').get_marked_file_name(idx))
+    end
   end
 
   ---@type string[]
   local new_marks = {}
   table.insert(new_marks, mark.get_marked_file_name(file_idx))
-  for _, filepath in pairs(marks) do
+  for _, filepath in pairs(marked) do
     if vim.tbl_contains(new_marks, filepath) then
       goto continue
     end
