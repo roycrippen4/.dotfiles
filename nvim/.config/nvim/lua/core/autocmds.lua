@@ -101,7 +101,22 @@ autocmd('VimEnter', {
   pattern = 'NvimTree_1',
   once = true,
   callback = function()
-    require('core.utils').set_titlestring(vim.fn.getcwd())
+    local cwd = vim.fn.getcwd()
+    local env = os.getenv('HOME')
+
+    if cwd == env then
+      vim.o.titlestring = '~/' .. '  '
+      return
+    end
+
+    if cwd and type(env) == 'string' then
+      local match = string.match(cwd, env)
+      if match then
+        vim.o.titlestring = cwd:gsub(match, '~') .. '  '
+        return
+      end
+      vim.o.titlestring = cwd
+    end
   end,
 })
 

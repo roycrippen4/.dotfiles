@@ -151,36 +151,6 @@ function _G.feed(key, mode)
   api.nvim_feedkeys(api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
----@param cwd string|nil
-function M.set_titlestring(cwd)
-  local env = os.getenv('HOME')
-
-  if cwd == env then
-    vim.o.titlestring = '~/' .. '  '
-    return
-  end
-
-  if cwd and type(env) == 'string' then
-    local match = string.match(cwd, env)
-    if match then
-      vim.o.titlestring = cwd:gsub(match, '~') .. '  '
-      return
-    end
-    vim.o.titlestring = cwd
-  end
-end
-
---- Returns a list of all files marked by harpoon
----@return string[]
-function M.get_marked_files()
-  ---@type string[]
-  local marked = {}
-  for idx = 1, require('harpoon.mark').get_length() do
-    table.insert(marked, require('harpoon.mark').get_marked_file_name(idx))
-  end
-  return marked
-end
-
 --- Sets the currently opened file to the first entry in the marks list
 function M.set_as_first_mark()
   local mark = require('harpoon.mark')
@@ -214,27 +184,9 @@ function M.set_as_first_mark()
   vim.cmd('redrawtabline')
 end
 
---- Adds highlighting to any marked files that are currently visible
----@param bufnr integer harpoon.ui buffer handle
----@param ns_id integer namespace identifier
-function M.highlight_marked_files(bufnr, ns_id)
-  local open_files = M.list_open_files()
-  local marked = M.get_marked_files()
-
-  for _, open_file in ipairs(open_files) do
-    for idx = 1, #marked do
-      local marked_file = marked[idx]
-
-      if string.find(open_file, marked_file) then
-        api.nvim_buf_add_highlight(bufnr, ns_id, 'HarpoonOpenMark', idx - 1, 0, -1)
-      end
-    end
-  end
-end
-
 --- Get's a list of absolute paths for all open files. Ignores plugin windows/buffers
 ---@return string[] open_files list of open files
-function M.list_open_files()
+local function list_open_files()
   local bufs = api.nvim_list_bufs()
   local visible_bufs = {}
 
@@ -256,7 +208,31 @@ function M.list_open_files()
       table.insert(visible_bufs, name)
     end
   end
+
   return visible_bufs
+end
+
+--- Adds highlighting to any marked files that are currently visible
+---@param bufnr integer harpoon.ui buffer handle
+---@param ns_id integer namespace identifier
+function M.highlight_marked_files(bufnr, ns_id)
+  local open_files = list_open_files()
+
+  ---@type string[]
+  local marked = {}
+  for idx = 1, require('harpoon.mark').get_length() do
+    table.insert(marked, require('harpoon.mark').get_marked_file_name(idx))
+  end
+
+  for _, open_file in ipairs(open_files) do
+    for idx = 1, #marked do
+      local marked_file = marked[idx]
+
+      if string.find(open_file, marked_file) then
+        api.nvim_buf_add_highlight(bufnr, ns_id, 'HarpoonOpenMark', idx - 1, 0, -1)
+      end
+    end
+  end
 end
 
 ---@param diagnostics vim.Diagnostic[]
@@ -265,26 +241,6 @@ function M.add_missing_commas(diagnostics)
     if diag.message == 'Miss symbol `,` or `;` .' or diag.message == 'Missed symbol `,`.' then
       api.nvim_buf_set_text(0, diag.lnum, diag.col, diag.lnum, diag.col, { ',' })
     end
-  end
-end
-
-function M.harpoon_add_file()
-  require('harpoon.mark').add_file()
-  vim.cmd('redrawtabline')
-end
-
-function M.show_harpoon_menu()
-  require('harpoon.ui').toggle_quick_menu()
-  vim.wo.cursorline = true
-end
-
-function M.create_harpoon_nav_mappings()
-  for i = 1, 10, 1 do
-    local n = i ~= 10 and i or 0
-    local str = ('<C-' .. n .. '>')
-    vim.keymap.set('n', str, function()
-      require('harpoon.ui').nav_file(n)
-    end, { desc = 'Mark file' })
   end
 end
 
@@ -303,20 +259,6 @@ function M.send_to_black_hole()
   else
     vim.cmd('normal! dd')
   end
-end
-
---- Returns true if the file exists
----@param filename string
----@return boolean
-function M.file_exists(filename)
-  local file = io.open(filename, 'r')
-
-  if file ~= nil then
-    io.close(file)
-    return true
-  end
-
-  return false
 end
 
 --- @return boolean
