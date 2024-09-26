@@ -1,5 +1,6 @@
 let mapleader = " "
 
+set clipboard += unnamedplus
 set relativenumber
 set visualbell
 set noerrorbells
