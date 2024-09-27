@@ -1,4 +1,7 @@
+local api = vim.api
+local autocmd = vim.api.nvim_create_autocmd
 local map = vim.keymap.set
+local augroup = vim.api.nvim_create_augroup
 
 local function load_snippets()
   require('luasnip').filetype_extend('svelte', { 'javascript' })
@@ -46,10 +49,10 @@ return {
     map('s', '<Tab>', jump_forward, { silent = true })
     map('i', '<Tab>', jump__backward, { expr = true, silent = true })
 
-    vim.api.nvim_create_autocmd('InsertLeave', {
-      group = vim.api.nvim_create_augroup('LuaSnip', { clear = true }),
+    autocmd('InsertLeave', {
+      group = augroup('LuaSnip', { clear = true }),
       callback = function()
-        if luasnip.session.current_nodes[vim.api.nvim_get_current_buf()] and not luasnip.session.jump_active then
+        if luasnip.session.current_nodes[api.nvim_get_current_buf()] and not luasnip.session.jump_active then
           luasnip.unlink_current()
         end
       end,

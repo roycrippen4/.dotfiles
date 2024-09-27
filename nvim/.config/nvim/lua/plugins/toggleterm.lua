@@ -1,24 +1,15 @@
 local autocmd = vim.api.nvim_create_autocmd
 
-local function bg_dune_watch()
-  if vim.fn.glob('dune-project') ~= '' or vim.fn.glob('dune') ~= '' then
-    local Terminal = require('toggleterm.terminal').Terminal
-    Terminal:new({
-      hidden = true,
-      cmd = 'opam exec -- dune build -w',
-      id = 5,
-    })
-    print('Starting dune watch')
-  end
-end
-
 autocmd('VimEnter', {
   callback = function()
     if vim.fn.filereadable('.nvmrc') == 1 then
       vim.cmd('TermExec direction=horizontal size=16 cmd="nvm use" open=0')
     end
 
-    bg_dune_watch()
+    if vim.fn.glob('dune-project') ~= '' or vim.fn.glob('dune') ~= '' then
+      local Terminal = require('toggleterm.terminal').Terminal
+      Terminal:new({ hidden = true, cmd = 'opam exec -- dune build -w', id = 5 })
+    end
   end,
 })
 
@@ -60,26 +51,10 @@ return {
   version = '*',
   cmd = { 'ToggleTerm', 'TermExec' },
   keys = {
-    {
-      mode = { 'n', 't' },
-      '<M-h>',
-      '<cmd> ToggleTerm direction=horizontal size=16 <cr>',
-    },
-    {
-      mode = { 'n', 't' },
-      '<M-v>',
-      '<cmd> ToggleTerm direction=vertical size=80 <cr>',
-    },
-    {
-      mode = { 'n', 't' },
-      '<M-f>',
-      '<cmd> ToggleTerm direction=float size=80 <cr>',
-    },
-    {
-      mode = 'n',
-      '<leader>lr',
-      run_current_file,
-    },
+    { mode = { 'n', 't' }, '<M-h>', '<cmd> ToggleTerm direction=horizontal size=16 <cr>' },
+    { mode = { 'n', 't' }, '<M-v>', '<cmd> ToggleTerm direction=vertical size=80 <cr>' },
+    { mode = { 'n', 't' }, '<M-f>', '<cmd> ToggleTerm direction=float size=80 <cr>' },
+    { mode = 'n', '<leader>lr', run_current_file },
   },
   opts = {
     on_open = function()

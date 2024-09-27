@@ -1,9 +1,11 @@
-local utils = require('core.utils')
 local api = vim.api
+local diagnostic = vim.diagnostic
 local fn = vim.fn
+local lsp = vim.lsp
 local map = vim.keymap.set
-local ms = vim.lsp.protocol.Methods
 local md_namespace = api.nvim_create_namespace('lsp_float')
+local ms = vim.lsp.protocol.Methods
+local utils = require('core.utils')
 
 --- Returns the height of the buffer in the window
 ---@param winnr integer
@@ -19,7 +21,7 @@ local function win_buf_height(winnr)
   local lines = api.nvim_buf_get_lines(buf, 0, -1, false)
   local height = 0
   for _, l in ipairs(lines) do
-    height = height + math.max(1, (math.ceil(vim.fn.strwidth(l) / width)))
+    height = height + math.max(1, (math.ceil(fn.strwidth(l) / width)))
   end
   return height
 end
@@ -28,7 +30,7 @@ end
 ---@param winnr integer
 ---@param delta integer
 local function scroll(winnr, delta)
-  local info = vim.fn.getwininfo(winnr)[1] or {}
+  local info = fn.getwininfo(winnr)[1] or {}
   local top = info.topline or 1
   local buf = api.nvim_win_get_buf(winnr)
   top = top + delta
@@ -71,11 +73,11 @@ local function add_inline_highlights(buf)
   end
 end
 
-local show_handler = vim.diagnostic.handlers.virtual_text.show
+local show_handler = diagnostic.handlers.virtual_text.show
 assert(show_handler)
-local hide_handler = vim.diagnostic.handlers.virtual_text.hide
+local hide_handler = diagnostic.handlers.virtual_text.hide
 
-vim.diagnostic.handlers.virtual_text = {
+diagnostic.handlers.virtual_text = {
   show = function(ns, bufnr, diagnostics, opts)
     table.sort(diagnostics, function(diag1, diag2)
       return diag1.severity > diag2.severity
@@ -141,17 +143,17 @@ local function enhanced_float_handler(handler, focusable)
   end
 end
 
-vim.lsp.handlers[ms.textDocument_hover] = enhanced_float_handler(vim.lsp.handlers.hover, true)
-vim.lsp.handlers[ms.textDocument_signatureHelp] = enhanced_float_handler(vim.lsp.handlers.signature_help, false)
+lsp.handlers[ms.textDocument_hover] = enhanced_float_handler(lsp.handlers.hover, true)
+lsp.handlers[ms.textDocument_signatureHelp] = enhanced_float_handler(lsp.handlers.signature_help, false)
 
 ---@param bufnr integer
 ---@param contents string[]
 ---@param opts table
 ---@return string[]
 ---@diagnostic disable-next-line: duplicate-set-field
-vim.lsp.util.stylize_markdown = function(bufnr, contents, opts)
-  contents = vim.lsp.util._normalize_markdown(contents, {
-    width = vim.lsp.util._make_floating_popup_size(contents, opts),
+lsp.util.stylize_markdown = function(bufnr, contents, opts)
+  contents = lsp.util._normalize_markdown(contents, {
+    width = lsp.util._make_floating_popup_size(contents, opts),
   })
   vim.bo[bufnr].filetype = 'markdown'
   vim.treesitter.start(bufnr)

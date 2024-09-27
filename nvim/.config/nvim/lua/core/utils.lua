@@ -151,44 +151,6 @@ function _G.feed(key, mode)
   api.nvim_feedkeys(api.nvim_replace_termcodes(key, true, true, true), mode, true)
 end
 
---- Sets the currently opened file to the first entry in the marks list
-function M.set_as_first_mark()
-  local mark = require('harpoon.mark')
-  local bufname = api.nvim_buf_get_name(0)
-  local path = require('plenary.path'):new(bufname):make_relative(vim.uv.cwd())
-
-  ---@type string[]
-  local marked = {}
-  for idx = 1, require('harpoon.mark').get_length() do
-    table.insert(marked, require('harpoon.mark').get_marked_file_name(idx))
-  end
-
-  ---@type integer|nil
-  local file_idx
-
-  if vim.tbl_contains(marked, path) then
-    file_idx = mark.get_current_index()
-  else
-    mark.add_file()
-    file_idx = mark.get_length()
-  end
-
-  ---@type string[]
-  local new_marks = {}
-  table.insert(new_marks, mark.get_marked_file_name(file_idx))
-  for _, filepath in pairs(marked) do
-    if vim.tbl_contains(new_marks, filepath) then
-      goto continue
-    end
-
-    table.insert(new_marks, filepath)
-
-    ::continue::
-  end
-  mark.set_mark_list(new_marks)
-  vim.cmd('redrawtabline')
-end
-
 --- Get's a list of absolute paths for all open files. Ignores plugin windows/buffers
 ---@return string[] open_files list of open files
 local function list_open_files()
