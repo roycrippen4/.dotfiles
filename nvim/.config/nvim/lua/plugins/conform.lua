@@ -1,11 +1,15 @@
+local api = vim.api
+local b = vim.b
+local cmd = vim.cmd
+local g = vim.g
 local user_command = vim.api.nvim_create_user_command
 
 ---@param args { bang: boolean }
 user_command('FormatDisable', function(args)
   if args.bang then
-    vim.b.disable_autoformat = true
+    b.disable_autoformat = true
   else
-    vim.g.disable_autoformat = true
+    g.disable_autoformat = true
   end
 end, {
   desc = 'Disable autoformat-on-save',
@@ -13,8 +17,8 @@ end, {
 })
 
 user_command('FormatEnable', function()
-  vim.b.disable_autoformat = false
-  vim.g.disable_autoformat = false
+  b.disable_autoformat = false
+  g.disable_autoformat = false
 end, {
   desc = 'Re-enable autoformat-on-save',
 })
@@ -29,13 +33,13 @@ return {
       '<leader>tf',
       mode = 'n',
       function()
-        if not vim.g.disable_autoformat then
-          vim.cmd('FormatDisable')
-          vim.g.disable_autoformat = true
+        if not g.disable_autoformat then
+          cmd.FormatDisable()
+          g.disable_autoformat = true
           print('Autoformat disabled')
         else
-          vim.cmd('FormatEnable')
-          vim.g.disable_autoformat = false
+          cmd.FormatEnable()
+          g.disable_autoformat = false
           print('Autoformat enabled')
         end
       end,
@@ -75,11 +79,11 @@ return {
         return
       end
 
-      if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
+      if g.disable_autoformat or b[bufnr].disable_autoformat then
         return
       end
 
-      local bufname = vim.api.nvim_buf_get_name(bufnr)
+      local bufname = api.nvim_buf_get_name(bufnr)
       if bufname:match('/node_modules/') then
         return
       end

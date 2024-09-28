@@ -36,6 +36,7 @@ local win = nil
 ---@param inspect_info InspectInfo
 ---@return FormattedLine[]
 local function format_inspect_info(inspect_info)
+  print('called')
   ---@type FormattedLine[]
   local result = {}
   local idx = 1
@@ -162,6 +163,7 @@ end
 
 ---@param info FormattedLine[]
 local function put_lines_in_buf(info)
+  print('called')
   if #info == 0 then
     return
   end
@@ -195,6 +197,7 @@ local function put_lines_in_buf(info)
 end
 
 local function inspect_in_split()
+  print('called')
   local pos = get_cursor(0)
   local info = format_inspect_info(inspect_pos(0, pos[1] - 1, pos[2]))
 
@@ -220,6 +223,7 @@ end
 
 ---@return integer
 local function find_max_width()
+  print('called')
   local longest = 0
 
   ---@param line string
@@ -235,6 +239,7 @@ local function find_max_width()
 end
 
 local function inspect_in_float()
+  print('called')
   if not vim.o.mousemoveevent then
     vim.o.mousemoveevent = true
   end
@@ -265,6 +270,7 @@ local function inspect_in_float()
 end
 
 local function update_float()
+  print('called')
   vim.schedule(function()
     --- Early exit if no window, the winid is 0, or the window is invalid
     if not win or win == 0 or not win_is_valid(win) then

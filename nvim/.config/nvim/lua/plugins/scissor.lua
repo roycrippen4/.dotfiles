@@ -1,26 +1,17 @@
+local add_new_snippet = function()
+  require('scissors').addNewSnippet()
+end
+local edit_snippet = function()
+  require('scissors').editSnippet()
+end
+
 ---@type LazyPluginSpec
 return {
   'chrisgrieser/nvim-scissors',
   dependencies = { 'nvim-telescope/telescope.nvim', 'garymjr/nvim-snippets' },
   opts = { snippetDir = vim.fn.stdpath('config') .. '/snippets/vscode' },
   keys = {
-    { mode = { 'n', 'x' }, '<leader>sa' },
-    { mode = 'n', '<leader>se' },
+    { mode = { 'n', 'x' }, '<leader>sa', add_new_snippet, desc = '[S]cissors [a]dd new snippet' },
+    { '<leader>se', edit_snippet, desc = '[S]cissors [e]dit snippet' },
   },
-  config = function(_, opts)
-    local scissors = require('scissors')
-    scissors.setup(opts)
-
-    local wk = require('which-key')
-    wk.add({
-      {
-        mode = { 'n', 'x' },
-        { '<leader>sa', scissors.addNewSnippet, desc = '[S]cissors add new snippet', icon = '' },
-      },
-      {
-        mode = 'n',
-        { '<leader>se', scissors.editSnippet, desc = '[S]cissors edit snippet', icon = '' },
-      },
-    })
-  end,
 }

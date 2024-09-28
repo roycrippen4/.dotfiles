@@ -1,10 +1,12 @@
-return { ---@type LazyPluginSpec
+---@type LazyPluginSpec
+return {
   'folke/lazydev.nvim', -- https://github.com/folke/lazydev.nvim
   ft = 'lua',
   dependencies = {
     { 'Bilal2453/luvit-meta', lazy = true }, -- optional `vim.uv` typings
   },
-  opts = { ---@type lazydev.Config
+  ---@type lazydev.Config
+  opts = {
     library = {
       'lazy.nvim',
       'lazydev.nvim',

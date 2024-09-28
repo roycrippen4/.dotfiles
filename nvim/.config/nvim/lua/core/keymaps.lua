@@ -9,12 +9,12 @@ wk.add({
     -- stylua: ignore start
     { '<leader>it',       '<cmd> InspectTree <cr>',       desc = '[I]nspect AST',     icon = '' },
     { '<leader>q',        '<cmd> EditQuery   <cr>',       desc = 'Edit TS query',     icon = '󱄶' },
-    { '<leader>M',        '<cmd> Mason       <cr>',       desc = '[M]ason',           icon = '' },
-    { '<Leader><Leader>', '<cmd> Lazy        <cr>',       desc = 'Open Lazy',         icon = '' },
-    { '<Leader>v',        '<C-w>v',                       desc = 'Vertical Split',    icon = '' },
+    { '<leader>m',        '<cmd> Mason       <cr>',       desc = '[M]ason',           icon = '' },
+    { '<leader><Leader>', '<cmd> Lazy        <cr>',       desc = 'Open Lazy',         icon = '' },
+    { '<leader>v',        '<C-w>v',                       desc = 'Vertical Split',    icon = '' },
     { '<leader>h',        '<C-w>s',                       desc = 'Horizontal Split',  icon = '' },
     { '<leader>lf',       vim.diagnostic.open_float,      desc = '[L]SP Show Errors', icon = '' },
-    { '<Leader>x',        utils.close_buf,                desc = 'Close Buffer',      icon = '' },
+    { '<leader>x',        utils.close_buf,                desc = 'Close Buffer',      icon = '' },
     -- stylua: ignore end
   },
 })
@@ -50,6 +50,10 @@ map({ 'i', 'c' }, '<C-h>', '<Left>' .. cursor_moved)
 map({ 'i', 'c' }, '<C-l>', '<Right>' .. cursor_moved)
 map('i', '<C-j>', '<Down>' .. cursor_moved)
 map('i', '<C-k>', '<Up>' .. cursor_moved)
+map('i', '<C-w>', '<C-o>w' .. cursor_moved)
+map('i', '<C-e>', '<C-o>e' .. cursor_moved)
+map('i', '<C-b>', '<C-o>b' .. cursor_moved)
+
 map('i', '<C-s>', '<cmd> w <cr>', { desc = 'Save file' })
 map('v', '<M-j>', ":m '>+1<cr>gv=gv", { desc = 'Shift selection up', nowait = true, silent = true })
 map('v', '<M-k>', ":m '<-2<cr>gv=gv", { desc = 'Shift selection down', nowait = true, silent = true })

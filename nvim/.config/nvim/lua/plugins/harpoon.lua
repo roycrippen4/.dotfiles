@@ -8,13 +8,51 @@ local function show_menu()
   vim.wo.cursorline = true
 end
 
+--- Sets the currently opened file to the first entry in the marks list
+local function set_as_first_mark()
+  local mark = require('harpoon.mark')
+  local bufname = vim.api.nvim_buf_get_name(0)
+  local path = require('plenary.path'):new(bufname):make_relative(vim.uv.cwd())
+
+  ---@type string[]
+  local marked = {}
+  for idx = 1, require('harpoon.mark').get_length() do
+    table.insert(marked, require('harpoon.mark').get_marked_file_name(idx))
+  end
+
+  ---@type integer|nil
+  local file_idx
+
+  if vim.tbl_contains(marked, path) then
+    file_idx = mark.get_current_index()
+  else
+    mark.add_file()
+    file_idx = mark.get_length()
+  end
+
+  ---@type string[]
+  local new_marks = {}
+  table.insert(new_marks, mark.get_marked_file_name(file_idx))
+  for _, filepath in pairs(marked) do
+    if vim.tbl_contains(new_marks, filepath) then
+      goto continue
+    end
+
+    table.insert(new_marks, filepath)
+
+    ::continue::
+  end
+  mark.set_mark_list(new_marks)
+  vim.cmd('redrawtabline')
+end
+
 ---@type LazyPluginSpec
 return {
   'roycrippen4/harpoon',
   keys = {
     { '<c-f>', add_file },
     { '<c-e>', show_menu },
-    { 'B', require('core.utils').set_as_first_mark },
+    { 'B', set_as_first_mark },
     -- stylua: ignore start
     { '<c-0>', function() require('harpoon.ui').nav_file(0) end },
     { '<c-1>', function() require('harpoon.ui').nav_file(1) end },
