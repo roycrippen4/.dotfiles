@@ -149,17 +149,7 @@ esac
 # bun completions
 [ -s "/home/roy/.bun/_bun" ] && source "/home/roy/.bun/_bun"
 
-# auto activate/deactivate python venv when cd into/out of a folder
-# python_venv() {
-#   MYVENV=./venv
-#   # when you cd into a folder that contains $MYVENV
-#   [[ -d $MYVENV ]] && source ./venv/bin/activate >/dev/null 2>&1
-#   # when you cd into a folder that doesn't
-#   [[ ! -d $MYVENV ]] && deactivate >/dev/null 2>&1
-# }
 autoload -U add-zsh-hook
-# add-zsh-hook chpwd python_venv
-# python_venv
 
 # ocaml
 [[ ! -r '/home/roy/.opam/opam-init/init.zsh' ]] || source '/home/roy/.opam/opam-init/init.zsh' >/dev/null 2>/dev/null

@@ -47,12 +47,12 @@ opt.smoothscroll = true
 -- Fold settings
 -----------------------------------------------------------
 -- stylua: ignore start
-opt.foldexpr       = 'v:lua.vim.treesitter.foldexpr()' -- Treesitter folding
-opt.foldmethod     = 'expr' -- Treesitter folding
-opt.foldcolumn     = '1' -- Enable fold column
-opt.foldlevel      = 99  -- This is just a default level, it will be changed by ufo 
-opt.foldlevelstart = 99  -- This is just a default level, it will be changed by ufo
-opt.foldenable     = true
+-- opt.foldexpr       = 'v:lua.vim.treesitter.foldexpr()' -- Treesitter folding
+-- opt.foldmethod     = 'expr' -- Treesitter folding
+-- opt.foldcolumn     = '1' -- Enable fold column
+-- opt.foldlevel      = 99  -- This is just a default level, it will be changed by ufo 
+-- opt.foldlevelstart = 99  -- This is just a default level, it will be changed by ufo
+opt.foldenable     = false
 --stylua: ignore end
 
 -----------------------------------------------------------

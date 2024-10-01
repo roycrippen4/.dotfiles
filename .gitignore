@@ -8,3 +8,4 @@ sxhkd/.config/autostart
 fishd.tmp.*
 DEBS_avail
 venv
+~/.dotfiles/home/.oh-my-zsh/cache/.zsh-update

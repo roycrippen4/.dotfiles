@@ -48,8 +48,8 @@ return {
         { sign = { name = { 'todo' }, maxwidth = 1, auto = true } },
         { text = { require('statuscol.builtin').lnumfunc, auto = false } },
         { text = { ' ' } },
-        { text = { require('statuscol.builtin').foldfunc }, click = 'v:lua.ScFa' },
-        { text = { ' ' } },
+        -- { text = { require('statuscol.builtin').foldfunc }, click = 'v:lua.ScFa' },
+        -- { text = { ' ' } },
         { sign = { namespace = { 'gitsigns' }, maxwidth = 1, auto = false, wrap = false } },
       },
     })
