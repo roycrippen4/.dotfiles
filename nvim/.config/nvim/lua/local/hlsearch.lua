@@ -128,6 +128,10 @@ vim.on_key(function(char)
     end)
   end
 
+  if vim.bo.ft ~= 'lua' or vim.bo.ft ~= 'svelte' then
+    return
+  end
+
   if mode == 'i' and is_cr and (should_format_lua_func() or should_format_svelte_block()) then
     feed('<Esc>O', 'n')
     return
