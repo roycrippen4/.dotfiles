@@ -33,15 +33,13 @@ local function set_as_first_mark()
   ---@type string[]
   local new_marks = {}
   table.insert(new_marks, mark.get_marked_file_name(file_idx))
+
   for _, filepath in pairs(marked) do
-    if vim.tbl_contains(new_marks, filepath) then
-      goto continue
+    if not vim.tbl_contains(new_marks, filepath) then
+      table.insert(new_marks, filepath)
     end
-
-    table.insert(new_marks, filepath)
-
-    ::continue::
   end
+
   mark.set_mark_list(new_marks)
   vim.cmd('redrawtabline')
 end
