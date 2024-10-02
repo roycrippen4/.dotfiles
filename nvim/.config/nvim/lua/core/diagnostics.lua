@@ -7,7 +7,7 @@ local dap_signs = {
 }
 
 for _, sign in ipairs(dap_signs) do
-  vim.fn.sign_define(sign.name, { text = sign.opts.text, texthl = sign.opts.texthl, linehl = sign.opts.linehl, numhl = sign.opts.numhl })
+  vim.fn.sign_define(sign.name, sign.opts)
 end
 
 vim.diagnostic.config({
