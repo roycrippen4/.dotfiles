@@ -36,10 +36,11 @@ local win = nil
 ---@param inspect_info InspectInfo
 ---@return FormattedLine[]
 local function format_inspect_info(inspect_info)
-  print('called')
   ---@type FormattedLine[]
   local result = {}
   local idx = 1
+  local has_ts = false
+  local has_lsp = false
 
   ---@param ... FormattedLinePart
   local function insert(...)
@@ -57,6 +58,7 @@ local function format_inspect_info(inspect_info)
   end
 
   if #vim.tbl_keys(inspect_info.treesitter) > 0 then
+    has_ts = true
     insert({ text = 'Treesitter', col_start = 0, col_end = 9, hl_group = '@function.call.lua' })
 
     for _, entry in ipairs(inspect_info.treesitter) do
@@ -92,7 +94,11 @@ local function format_inspect_info(inspect_info)
   end
 
   if #vim.tbl_keys(inspect_info.semantic_tokens) > 0 then
-    newline()
+    has_lsp = true
+    if has_ts then
+      newline()
+    end
+
     insert({ text = 'Semantic Tokens', col_start = 0, col_end = 15, hl_group = '@function.lua' })
 
     for _, entry in ipairs(inspect_info.semantic_tokens) do
@@ -129,7 +135,9 @@ local function format_inspect_info(inspect_info)
   end
 
   if #vim.tbl_keys(inspect_info.extmarks) > 0 then
-    newline()
+    if has_ts or has_lsp then
+      newline()
+    end
     insert({ text = 'Extmarks', col_start = 0, col_end = 8, hl_group = '@function.lua' })
 
     for _, entry in ipairs(inspect_info.extmarks) do
@@ -163,7 +171,6 @@ end
 
 ---@param info FormattedLine[]
 local function put_lines_in_buf(info)
-  print('called')
   if #info == 0 then
     return
   end
@@ -197,7 +204,6 @@ local function put_lines_in_buf(info)
 end
 
 local function inspect_in_split()
-  print('called')
   local pos = get_cursor(0)
   local info = format_inspect_info(inspect_pos(0, pos[1] - 1, pos[2]))
 
@@ -223,7 +229,6 @@ end
 
 ---@return integer
 local function find_max_width()
-  print('called')
   local longest = 0
 
   ---@param line string
@@ -239,7 +244,6 @@ local function find_max_width()
 end
 
 local function inspect_in_float()
-  print('called')
   if not vim.o.mousemoveevent then
     vim.o.mousemoveevent = true
   end
@@ -259,6 +263,7 @@ local function inspect_in_float()
     style = 'minimal',
     focusable = false,
     border = 'rounded',
+    zindex = 1000,
   })
   set_option_value('winblend', 0, { win = win })
   set_lines(buf, 0, -1, false, { ' No information found ' })
@@ -270,7 +275,6 @@ local function inspect_in_float()
 end
 
 local function update_float()
-  print('called')
   vim.schedule(function()
     --- Early exit if no window, the winid is 0, or the window is invalid
     if not win or win == 0 or not win_is_valid(win) then
