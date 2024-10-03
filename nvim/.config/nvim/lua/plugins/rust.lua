@@ -12,6 +12,13 @@ return {
       { '<leader>lE', '<cmd> RustLsp externalDocs <cr>', desc = "[L]SP Open External Docs" },
       { '<leader>le', '<cmd> RustLsp explainError <cr>', desc = "[L]SP Explain Error" },
       -- stylua: ignore end
+      {
+        '<leader>lt',
+        function()
+          vim.cmd.RustLsp({ 'testables', bang = true })
+        end,
+        desc = '[L]sp Rerun Last Test',
+      },
     })
 
     ---@module 'rustaceanvim'
