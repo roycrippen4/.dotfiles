@@ -113,6 +113,7 @@ local function format(entry, vim_item)
 
         if _r then
           local r, g, b = tonumber(_r, base), tonumber(_g, base), tonumber(_b, base)
+          ---@diagnostic disable-next-line
           vim_item.kind_hl_group = set_hl_from(r, g, b, 'foreground')
         end
       end

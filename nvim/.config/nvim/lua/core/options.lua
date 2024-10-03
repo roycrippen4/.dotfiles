@@ -17,7 +17,6 @@ g.loaded_netrwPlugin = 1
 -----------------------------------------------------------
 -- stylua: ignore start
 opt.completeopt   = { 'menu', 'menuone', 'noselect' } -- Sets the completion options
-opt.mouse         = 'a'                               -- Enables mouse support
 opt.scrolloff     = 14                                -- Show x lines above and below the cursor
 opt.signcolumn    = 'yes'                             -- Show signs in the signcolumn
 opt.ignorecase    = true                              -- Ignores case in search
@@ -25,8 +24,6 @@ opt.smartcase     = true                              -- Override the 'ignorecas
 opt.splitbelow    = true                              -- Split below instead of above
 opt.splitright    = true                              -- Split right instead of left
 opt.termguicolors = true                              -- Enable true color support
-opt.timeout       = true                              -- Faster wait time
-opt.timeoutlen    = 300                               -- Timeout wait time
 opt.undofile      = true                              -- Save undo history to file
 opt.updatetime    = 250                               -- interval for writing swap file to disk, also used by gitsigns
 opt.cmdheight     = 1                                 -- Height of the command bar
@@ -94,6 +91,15 @@ opt.shortmess:append('qWcCsIS')
 
 vim.o.guicursor = 'n-v-c:block-Cursor/lCursor-blinkon1,i:ver25-Cursor/lCursor-blinkon1,r-cr:hor20-Cursor/lCursor-blinkon1'
 vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
+
+-- Enables mouse support
+vim.o.mouse = 'a'
+-- Dont horizontal scroll with mouse
+vim.o.mousescroll = 'ver:3,hor:0'
+
+vim.o.timeout = true -- Faster wait time
+vim.o.timeoutlen = 500 -- Timeout wait time
+vim.o.ttimeoutlen = 10 -- Timeout wait time
 
 vim.env.PATH = vim.fn.stdpath('data') .. '/mason/bin:' .. vim.env.PATH -- add binaries installed by mason.nvim to path
 
