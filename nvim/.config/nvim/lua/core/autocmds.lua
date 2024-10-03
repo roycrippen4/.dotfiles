@@ -120,14 +120,24 @@ autocmd('VimEnter', {
   end,
 })
 
--- Autocommand to restore the cursor position when the buffer is read
+-- -- Autocommand to restore the cursor position when the buffer is read
+-- autocmd('BufReadPost', {
+--   callback = function(args)
+--     local valid_line = vim.fn.line([['"]]) >= 1 and vim.fn.line([['"]]) < vim.fn.line('$')
+--     local not_commit = vim.b[args.buf].filetype ~= 'commit'
+
+--     if valid_line and not_commit then
+--       vim.cmd([[normal! g`"]])
+--     end
+--   end,
+-- })
+
 autocmd('BufReadPost', {
   callback = function(args)
-    local valid_line = vim.fn.line([['"]]) >= 1 and vim.fn.line([['"]]) < vim.fn.line('$')
-    local not_commit = vim.b[args.buf].filetype ~= 'commit'
-
-    if valid_line and not_commit then
-      vim.cmd([[normal! g`"]])
+    local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
+    local line_count = vim.api.nvim_buf_line_count(args.buf)
+    if mark[1] > 0 and mark[1] <= line_count then
+      vim.cmd('normal! g`"zz')
     end
   end,
 })
