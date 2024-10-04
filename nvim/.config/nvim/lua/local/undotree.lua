@@ -149,3 +149,20 @@ local function gettime(time)
     end
   end
 end
+
+local counter = 0
+local function get_unique_id()
+  counter = counter + 1
+end
+
+---@class Panel
+---@field bufname string
+local Panel = {}
+
+function Panel:init()
+  self.bufname = 'invalid'
+end
+
+function Panel:set_focus()
+  local winnr = vim.fn.bufwinnr(self.bufname)
+end
