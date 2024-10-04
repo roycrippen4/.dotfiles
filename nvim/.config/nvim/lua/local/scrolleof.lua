@@ -68,7 +68,7 @@ local skip_ft = {
 
 local function scroll()
   local scrollEOF_group = vim.api.nvim_create_augroup('ScrollEOF', { clear = true })
-  vim.api.nvim_create_autocmd({ 'CursorMoved', 'WinScrolled' }, {
+  vim.api.nvim_create_autocmd({ E.CursorMoved, E.WinScrolled }, {
     group = scrollEOF_group,
     pattern = '*',
     callback = function()

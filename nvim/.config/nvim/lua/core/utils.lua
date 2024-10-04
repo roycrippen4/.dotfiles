@@ -48,7 +48,7 @@ local function setup_signature_helper(bufnr, client)
     local group = augroup('LspSignature', { clear = false })
     clear_autocmds({ group = group, buffer = bufnr })
 
-    autocmd({ 'TextChangedI', 'TextChangedP', 'InsertEnter' }, {
+    autocmd({ E.TextChangedI, E.TextChangedP, E.InsertEnter }, {
       group = group,
       buffer = bufnr,
       callback = function()
@@ -63,7 +63,7 @@ end
 ---@param client vim.lsp.Client
 local function svelte_change_check(client)
   if client.name == 'svelte' then
-    autocmd('BufWritePost', {
+    autocmd(E.BufWritePost, {
       group = augroup('svelte_ondidchangetsorjsfile', { clear = true }),
       pattern = { '*.js', '*.ts' },
       callback = function(ctx)

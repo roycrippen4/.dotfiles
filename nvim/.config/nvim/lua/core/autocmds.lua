@@ -4,7 +4,7 @@ local namespace = vim.api.nvim_create_namespace
 local pattern = { 'DressingInput', 'help', 'logger', 'man', 'qf', 'query', 'scratch', 'undotree', 'telescope', 'TelescopePrompt' }
 local general = augroup('general', { clear = true })
 
-autocmd('TextYankPost', {
+autocmd(E.TextYankPost, {
   desc = 'Highlight when yanking (copying) text',
   group = augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
@@ -12,7 +12,7 @@ autocmd('TextYankPost', {
   end,
 })
 
-autocmd('InsertEnter', {
+autocmd(E.InsertEnter, {
   desc = 'Disable cursorline in insert mode',
   group = general,
   callback = function(args)
@@ -22,7 +22,7 @@ autocmd('InsertEnter', {
   end,
 })
 
-autocmd('InsertLeave', {
+autocmd(E.InsertLeave, {
   desc = 'Enable cursorline after leaving insert mode',
   group = general,
   callback = function(args)
@@ -32,7 +32,7 @@ autocmd('InsertLeave', {
   end,
 })
 
-autocmd('BufWritePost', {
+autocmd(E.BufWritePost, {
   desc = 'Reload kitty config on save',
   pattern = 'kitty.conf',
   callback = function()
@@ -41,29 +41,29 @@ autocmd('BufWritePost', {
 })
 
 -- don't list quickfix buffers
-autocmd('FileType', {
+autocmd(E.FileType, {
   pattern = 'qf',
   callback = function()
     vim.opt_local.buflisted = false
   end,
 })
 
-autocmd('FileType', {
+autocmd(E.FileType, {
   group = general,
   pattern = 'hypr',
-  callback = function(event)
-    vim.bo[event.buf].commentstring = '# %s'
+  callback = function(args)
+    vim.bo[args.buf].commentstring = '# %s'
   end,
 })
 
-autocmd('ExitPre', {
+autocmd(E.ExitPre, {
   group = augroup('StopDaemons', { clear = true }),
   callback = function()
     vim.fn.jobstart(vim.fn.expand('$HOME') .. '/.bin/stop-nvim-daemons.sh', { detach = true })
   end,
 })
 
-autocmd('FileType', {
+autocmd(E.FileType, {
   group = general,
   pattern = 'harpoon',
   callback = function()
@@ -74,7 +74,7 @@ autocmd('FileType', {
 })
 
 -- Forces help pages to be in a vertical split
-autocmd('FileType', {
+autocmd(E.FileType, {
   pattern = 'help',
   group = general,
   callback = function()
@@ -87,7 +87,7 @@ autocmd('FileType', {
 })
 
 -- Sets many plugin windows to close on `q`
-autocmd('FileType', {
+autocmd(E.FileType, {
   group = general,
   pattern = pattern,
   callback = function(args)
@@ -96,7 +96,7 @@ autocmd('FileType', {
 })
 
 -- Sets terminal titlestring to the current working directory
-autocmd('VimEnter', {
+autocmd(E.VimEnter, {
   group = general,
   pattern = 'NvimTree_1',
   once = true,
@@ -132,7 +132,7 @@ autocmd('VimEnter', {
 --   end,
 -- })
 
-autocmd('BufReadPost', {
+autocmd(E.BufReadPost, {
   callback = function(args)
     local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
     local line_count = vim.api.nvim_buf_line_count(args.buf)
@@ -143,7 +143,7 @@ autocmd('BufReadPost', {
 })
 
 -- Disable diagnostics in node_modules (0 is current buffer only)
-autocmd({ 'BufRead', 'BufNewFile' }, {
+autocmd({ E.BufRead, E.BufNewFile }, {
   group = general,
   pattern = '*/node_modules/*',
   callback = function()
@@ -152,7 +152,7 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
 })
 
 -- Adds missing commas to lua files
-autocmd('BufWritePre', {
+autocmd(E.BufWritePre, {
   group = general,
   pattern = '*',
   callback = function()
@@ -163,7 +163,7 @@ autocmd('BufWritePre', {
   end,
 })
 
-autocmd('CmdWinEnter', {
+autocmd(E.CmdwinEnter, {
   group = augroup('_fix_ts_cmdwin', { clear = false }),
   callback = function()
     vim.cmd('setfiletype python')
@@ -173,7 +173,7 @@ autocmd('CmdWinEnter', {
   end,
 })
 
-autocmd('FileType', {
+autocmd(E.FileType, {
   group = general,
   pattern = 'gitcommit',
   callback = function()

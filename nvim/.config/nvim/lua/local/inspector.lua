@@ -316,7 +316,7 @@ end
 
 map({ '', 'i' }, '<MouseMove>', update_float, { expr = true })
 
-autocmd('WinClosed', {
+autocmd(E.WinClosed, {
   pattern = 'inspector',
   callback = function()
     win = nil

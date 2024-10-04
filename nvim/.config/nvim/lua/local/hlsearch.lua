@@ -138,7 +138,7 @@ vim.on_key(function(char)
   end
 end, ns)
 
-autocmd({ 'BufLeave', 'BufEnter' }, {
+autocmd({ E.BufLeave, E.BufEnter }, {
   group = augroup('HL_Search', { clear = true }),
   pattern = '*',
   callback = function()

@@ -20,7 +20,7 @@ t.bufs = listed_bufs
 
 -- autocmds for tabufline -> store bufnrs on bufadd, bufenter events
 -- thx to https://github.com/ii14 & stores buffer per tab -> table
-autocmd({ 'BufAdd', 'BufEnter', 'tabnew' }, {
+autocmd({ E.BufAdd, E.BufEnter, E.TabNew }, {
   callback = function(args)
     local bufs = t.bufs
 
@@ -52,7 +52,7 @@ autocmd({ 'BufAdd', 'BufEnter', 'tabnew' }, {
   end,
 })
 
-autocmd('BufDelete', {
+autocmd(E.BufDelete, {
   callback = function(args)
     for _, tab in ipairs(api.nvim_list_tabpages()) do
       local bufs = t[tab].bufs
@@ -69,7 +69,7 @@ autocmd('BufDelete', {
   end,
 })
 
-autocmd({ 'BufNew', 'BufNewFile', 'BufRead', 'TabEnter', 'TermOpen' }, {
+autocmd({ E.BufNew, E.BufNewFile, E.BufRead, E.TabEnter, E.TermOpen }, {
   pattern = '*',
   group = augroup('TabuflineLazyLoad', {}),
   callback = function()

@@ -49,7 +49,7 @@ return {
     map('s', '<Tab>', jump_forward, { silent = true })
     map('i', '<Tab>', jump__backward, { expr = true, silent = true })
 
-    autocmd('InsertLeave', {
+    autocmd(E.InsertLeave, {
       group = augroup('LuaSnip', { clear = true }),
       callback = function()
         if luasnip.session.current_nodes[api.nvim_get_current_buf()] and not luasnip.session.jump_active then

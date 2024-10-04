@@ -336,7 +336,7 @@ M.package_info = function()
 end
 
 -- Dynamically changes the highlight group of the statusline mode segment based on the current mode
-autocmd('ModeChanged', {
+autocmd(E.ModeChanged, {
   group = vim.api.nvim_create_augroup('StatusLineMode', { clear = true }),
   callback = function()
     local m = vim.api.nvim_get_mode().mode
@@ -347,7 +347,7 @@ autocmd('ModeChanged', {
 })
 
 -- Dynamically changes the highlight group of the statusline filetype icon based on the current file
-autocmd('BufEnter', {
+autocmd(E.BufEnter, {
   group = vim.api.nvim_create_augroup('StatusLineFiletype', { clear = true }),
   callback = function()
     local _, hl_group = require('nvim-web-devicons').get_icon(vim.fn.expand('%:e'))

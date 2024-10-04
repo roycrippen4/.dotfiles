@@ -34,14 +34,14 @@ end
 
 local macrohl = augroup('MacroHL', { clear = true })
 -- Toggles highlight group for the statusline macro segment
-autocmd('RecordingEnter', {
+autocmd(E.RecordingEnter, {
   group = macrohl,
   callback = function()
     M.start_record_highlight()
   end,
 })
 -- Stops toggling the highlight group for the statusline macro segment
-autocmd('RecordingLeave', {
+autocmd(E.RecordingLeave, {
   group = macrohl,
   callback = function()
     M.stop_timer()
