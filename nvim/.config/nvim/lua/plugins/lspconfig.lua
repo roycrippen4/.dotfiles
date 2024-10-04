@@ -177,13 +177,49 @@ return {
       'j-hui/fidget.nvim', -- https://github.com/j-hui/fidget.nvim
       opts = {},
     },
+    {
+      'p00f/clangd_extensions.nvim',
+      opts = {},
+      ft = { 'c', 'cpp' },
+    },
+    {
+      'Civitasv/cmake-tools.nvim',
+      opts = {},
+      ft = { 'c', 'cpp' },
+    },
   },
   config = function()
     local lspconfig = require('lspconfig')
 
     lspconfig['clangd'].setup({
-      filetypes = { 'c', 'cpp', 'objc', 'objcpp', 'cuda' }, -- exclude "proto".
-      capabilities = utils.capabilities,
+      root_dir = function(fname)
+        return require('lspconfig.util').root_pattern(
+          'Makefile',
+          'configure.ac',
+          'configure.in',
+          'config.h.in',
+          'meson.build',
+          'meson_options.txt',
+          'build.ninja'
+        )(fname) or require('lspconfig.util').root_pattern('compile_commands.json', 'compile_flags.txt')(fname) or require(
+          'lspconfig.util'
+        ).find_git_ancestor(fname)
+      end,
+      cmd = {
+        'clangd',
+        '--background-index',
+        '--clang-tidy',
+        '--header-insertion=iwyu',
+        '--completion-style=detailed',
+        '--function-arg-placeholders',
+        '--fallback-style=llvm',
+      },
+      init_options = {
+        usePlaceholders = true,
+        completeUnimported = true,
+        clangdFileStatus = true,
+      },
+      capabilities = vim.tbl_deep_extend('force', utils.capabilities, { offsetEncoding = { 'utf-16' } }),
       on_attach = utils.on_attach,
     })
 

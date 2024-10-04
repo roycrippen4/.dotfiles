@@ -73,6 +73,14 @@ local function svelte_change_check(client)
   end
 end
 
+---@param client vim.lsp.Client
+local function cpp_setup(client)
+  if client.name == 'clangd' then
+    require('clangd_extensions.inlay_hints').setup_autocmd()
+    require('clangd_extensions.inlay_hints').set_inlay_hints()
+  end
+end
+
 ---@param additional_keymaps? wk.Mapping[]
 function M.set_lsp_mappings(additional_keymaps)
   local keymaps = {
@@ -100,6 +108,7 @@ function M.on_attach(client, bufnr)
   M.set_lsp_mappings()
   svelte_change_check(client)
   setup_signature_helper(bufnr, client)
+  cpp_setup(client)
 end
 
 M.capabilities = vim.lsp.protocol.make_client_capabilities()
