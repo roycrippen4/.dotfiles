@@ -66,8 +66,8 @@ plugins=(
 )
 
 source "$ZSH"/oh-my-zsh.sh
-# alias nvim="$HOME/.dotfiles/home/.bin/vim-cli"
-# alias vim="$HOME/.dotfiles/home/.bin/vim-cli"
+alias nvim="$HOME/.dotfiles/home/.bin/vim-cli"
+alias vim="$HOME/.dotfiles/home/.bin/vim-cli"
 
 go_to_nvim_config() {
   c "$HOME/.dotfiles/nvim/.config/nvim/"
