@@ -138,8 +138,6 @@ local function lsp_definitions()
   end)
 end
 
--- vim.api.nvim_create_autocmd(E.VimEnter, {})
-
 ---@type LazyPluginSpec
 return {
   'nvim-telescope/telescope.nvim', -- https://github.com/nvim-telescope/telescope.nvim
