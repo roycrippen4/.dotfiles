@@ -3,26 +3,30 @@ SAVEHIST=999
 HISTSIZE=1000
 setopt HIST_EXPIRE_DUPS_FIRST
 
+# p10k
+source $HOME/.dotfiles/home/zsh-plugins/powerlevel10k/powerlevel10k.zsh-theme
+if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh" ]]; then
+  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-${(%):-%n}.zsh"
+fi
+source $HOME/.dotfiles/home/.p10k.zsh
+
+# zsh-autosuggestions
+source $HOME/.dotfiles/home/zsh-plugins/zsh-autosuggestions/zsh-autosuggestions.zsh
+
 # setopt autocd
 bindkey -v
 zstyle :compinstall filename "$HOME/.zshrc"
 autoload -Uz compinit
 compinit
 
-# p10k setup
-if [[ -r "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-$USER.zsh" ]]; then
-  source "${XDG_CACHE_HOME:-$HOME/.cache}/p10k-instant-prompt-$USER.zsh"
-fi
-[[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
-
-# go
-export GOPATH="$HOME/go"
-export PATH="$GOPATH/bin:$PATH"
-
 # Editor settings
 export VISUAL=nvim
 export EDITOR="$VISUAL"
 export MANPAGER='nvim +Man!'
+
+# go
+export GOPATH="$HOME/go"
+export PATH="$GOPATH/bin:$PATH"
 
 # emacs
 export PATH="$HOME/.emacs.d/bin:$PATH"
@@ -31,8 +35,6 @@ export PATH="$HOME/.emacs.d/bin:$PATH"
 export BUN_INSTALL="$HOME/.bun"
 export PATH="$BUN_INSTALL/bin:$PATH"
 [ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
-
-export ZSH="$HOME/.dotfiles/home/.oh-my-zsh" # Path to oh-my-zsh
 
 # bob exec/bob zsh completions
 export PATH="$HOME/.local/share/bob/nvim-bin:$PATH"
@@ -48,7 +50,7 @@ export MANPATH="/usr/local/man:$MANPATH"
 export NODE_PATH="which node"
 export PATH="$PATH:$HOME/.local/bin"          # kitty
 export PATH="$PATH:$HOME/Opt/julia-1.9.4/bin" # Julia
-# export PATH="$HOME/.bin/vim-cli:$PATH"        # nvim cli wrapper
+export PATH="$HOME/.bin/vim-cli:$PATH"        # nvim cli wrapper
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL10k_MODE="nerdfont-complete"
@@ -56,16 +58,7 @@ POWERLEVEL10k_MODE="nerdfont-complete"
 DISABLE_AUTO_TITLE="true"
 ZLE_RPROMPT_INDENT=0
 DISABLE_UNTRACKED_FILES_DIRTY="true"
-# ZVM_VI_INSERT_ESCAPE_BINDKEY=jk
 
-plugins=(
-  # zsh-vi-mode
-  git
-  zsh-autosuggestions
-  zsh-syntax-highlighting
-)
-
-source "$ZSH"/oh-my-zsh.sh
 alias nvim="$HOME/.dotfiles/home/.bin/vim-cli"
 alias vim="$HOME/.dotfiles/home/.bin/vim-cli"
 
@@ -147,9 +140,11 @@ case ":$PATH:" in
 esac
 
 # bun completions
-[ -s "/home/roy/.bun/_bun" ] && source "/home/roy/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 autoload -U add-zsh-hook
 
 # ocaml
-[[ ! -r '/home/roy/.opam/opam-init/init.zsh' ]] || source '/home/roy/.opam/opam-init/init.zsh' >/dev/null 2>/dev/null
+[[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source '$HOME/.opam/opam-init/init.zsh' >/dev/null 2>/dev/null
+
+source $HOME/.dotfiles/home/zsh-plugins/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
