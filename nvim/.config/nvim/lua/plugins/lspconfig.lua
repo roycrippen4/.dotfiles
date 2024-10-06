@@ -219,7 +219,6 @@ return {
         completeUnimported = true,
         clangdFileStatus = true,
       },
-      filetypes = { 'c', 'cpp' },
       capabilities = vim.tbl_deep_extend('force', utils.capabilities, { offsetEncoding = { 'utf-16' } }),
       on_attach = utils.on_attach,
     })
