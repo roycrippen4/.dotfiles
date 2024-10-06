@@ -312,6 +312,13 @@ return {
     lspconfig['taplo'].setup({
       capabilities = utils.capabilities,
       on_attach = utils.on_attach,
+      settings = {
+        taplo = {
+          configFile = { enabled = true },
+          catalogs = { 'https://www.schemastore.org/api/json/catalog.json' },
+          cache = { memoryExpiration = 60, diskExpiration = 600 },
+        },
+      },
     })
 
     lspconfig['yamlls'].setup({
