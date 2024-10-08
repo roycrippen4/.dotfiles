@@ -48,7 +48,6 @@ export MANPATH="/usr/local/man:$MANPATH"
 export NODE_PATH="which node"
 export PATH="$PATH:$HOME/.local/bin"          # kitty
 export PATH="$PATH:$HOME/Opt/julia-1.9.4/bin" # Julia
-# export PATH="$HOME/.bin/vim-cli:$PATH"        # nvim cli wrapper
 
 ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL10k_MODE="nerdfont-complete"
@@ -147,9 +146,9 @@ case ":$PATH:" in
 esac
 
 # bun completions
-[ -s "/home/roy/.bun/_bun" ] && source "/home/roy/.bun/_bun"
+[ -s "$HOME/.bun/_bun" ] && source "$HOME/.bun/_bun"
 
 autoload -U add-zsh-hook
 
 # ocaml
-[[ ! -r '/home/roy/.opam/opam-init/init.zsh' ]] || source '/home/roy/.opam/opam-init/init.zsh' >/dev/null 2>/dev/null
+[[ ! -r '$HOME/.opam/opam-init/init.zsh' ]] || source '$HOME/.opam/opam-init/init.zsh' >/dev/null 2>/dev/null
