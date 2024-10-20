@@ -171,6 +171,7 @@ end
 --- runs the tabline components
 --- @return string
 function M.run()
+  -- print('running')
   local modules = {
     M.nvimtree_overlay(),
     M.bufferlist(),
