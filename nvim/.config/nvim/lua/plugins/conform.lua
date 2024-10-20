@@ -54,22 +54,35 @@ return {
     formatters_by_ft = {
       c = { 'clang-format' },
       cpp = { 'clang-format' },
-      css = { 'prettierd', 'prettier' },
-      html = { 'prettierd', 'prettier' },
-      javascript = { 'prettierd', 'prettier' },
-      javascriptreact = { 'prettierd', 'prettier' },
-      json = { 'prettierd', 'prettier' },
+      css = { 'prettierd', 'prettier', 'biome' },
+      html = { 'prettierd', 'prettier', 'biome' },
+      javascript = { 'prettierd', 'prettier', 'biome' },
+      javascriptreact = { 'prettierd', 'prettier', 'biome' },
+      json = { 'prettierd', 'prettier', 'biome' },
       lua = { 'stylua' },
-      markdown = { 'prettierd', 'prettier', stop_after_first = true },
+      markdown = { 'prettierd', 'prettier', 'biome' },
       ocaml = { 'ocamlformat' },
       proto = { 'clang-format' },
       python = { 'black' },
       rust = { 'rustfmt' },
       sh = { 'shfmt' },
-      svelte = { 'prettierd', 'prettier' },
-      typescript = { 'prettierd', 'prettier' },
-      typescriptreact = { 'prettierd', 'prettier' },
+      svelte = { 'prettierd', 'prettier', 'biome' },
+      typescript = { 'prettierd', 'prettier', 'biome' },
+      typescriptreact = { 'prettierd', 'prettier', 'biome' },
       yaml = { 'yamlfmt' },
+    },
+
+    formatters = {
+      biome = {
+        condition = function()
+          return require('core.utils').has_file('biome.json')
+        end,
+      },
+      prettier = {
+        condition = function()
+          return not require('core.utils').has_file('biome.json')
+        end,
+      },
     },
 
     ---@param bufnr integer

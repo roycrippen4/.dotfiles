@@ -1,16 +1,22 @@
 --- @type LazyPluginSpec
 return {
-  'OXY2DEV/markview.nvim', -- https://github.com/OXY2DEV/markview.nvim
+  'iamcco/markdown-preview.nvim',
+  keys = { { '<f7>', '<cmd> MarkdownPreviewToggle <CR>' } },
+  cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
   ft = 'markdown',
-  dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
-  opts = {
-    modes = { 'n', 'no', 'c' },
-    hybrid_modes = { 'n' },
-    callbacks = {
-      on_enable = function(_, win)
-        vim.wo[win].conceallevel = 2
-        vim.wo[win].concealcursor = 'c'
-      end,
-    },
-  },
+  build = 'cd app && npm install',
+  config = function()
+    vim.api.nvim_exec2(
+      [[
+        function MkdpBrowserFn(url)
+          execute 'silent ! kitty @ launch --dont-take-focus --bias 40 awrit ' . a:url
+        endfunction
+      ]],
+      {}
+    )
+
+    vim.g.mkdp_theme = 'dark'
+    vim.g.mkdp_filetypes = { 'markdown' }
+    vim.g.mkdp_browserfunc = 'MkdpBrowserFn'
+  end,
 }

@@ -2,7 +2,7 @@
 return {
   'williamboman/mason.nvim', -- https://github.com/williamboman/mason.nvim
   keys = {
-    { '<leader>m', '<cmd> Mason <cr>' },
+    { '<leader>M', '<cmd> Mason <cr>' },
   },
   cmd = 'Mason',
   opts = {
