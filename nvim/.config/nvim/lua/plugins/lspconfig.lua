@@ -321,6 +321,13 @@ return {
       },
     })
 
+    if require('core.utils').has_file('biome.json') then
+      lspconfig['biome'].setup({
+        capabilities = utils.capabilities,
+        on_attach = utils.on_attach,
+      })
+    end
+
     lspconfig['yamlls'].setup({
       capabilities = utils.capabilities,
       on_attach = utils.on_attach,

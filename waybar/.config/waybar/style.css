@@ -12,6 +12,7 @@ window#waybar {
 }
 
 tooltip {
+  color: #181926;
   background: #2a2d47;
   margin-left: 3px;
   margin-right: 3px;
@@ -25,16 +26,16 @@ tooltip {
   margin-top: 3px;
   margin-bottom: 3px;
   margin-left: 0px;
+  margin-right: 0px;
   padding-left: 3px;
   padding-right: 3px;
-  margin-right: 0px;
   color: #dce0e8;
   animation: ws_normal 20s ease-in-out 1;
 }
 
 #workspaces button.active {
-  background: #5c5f77;
-  color: #dce0e8;
+  color: #e7c787;
+  background: #3e4055;
   margin-left: 3px;
   padding-left: 12px;
   padding-right: 12px;
@@ -44,11 +45,19 @@ tooltip {
 }
 
 #workspaces button:hover {
-  background: #dc8a78;
-  color: #dce0e8;
+  background: #4c4f69;
+  color: #e7c787;
   animation: ws_hover 20s ease-in-out 1;
   transition: all 0.3s cubic-bezier(0.55, -0.68, 0.48, 1.682);
 }
+
+/* active_tab_foreground   #181926 */
+/* active_tab_background   #C6A0F6 */
+
+/* inactive_tab_foreground #CAD3F5 */
+/* inactive_tab_background #1E2030 */
+
+/* tab_bar_background      #181926 */
 
 #clock,
 #custom-cpuinfo,
@@ -59,8 +68,8 @@ tooltip {
 #tray,
 #window,
 #workspaces {
-  color: #aaaaaa;
-  background: #4c4f69;
+  color: #cad3f5;
+  background: #191b29;
   opacity: 1;
   margin-left: 3px;
   margin-right: 3px;
@@ -72,8 +81,8 @@ tooltip {
 }
 
 #custom-paper {
-  color: #aaaaaa;
-  background: #4c4f69;
+  color: #cad3f5;
+  background: #191b29;
   opacity: 1;
   margin-left: 3px;
   margin-right: 3px;
@@ -85,8 +94,8 @@ tooltip {
 
 #custom-gpt,
 #custom-discord {
-  color: #aaaaaa;
-  background: #4c4f69;
+  color: #cad3f5;
+  background: #191b29;
   opacity: 1;
   margin-left: 3px;
   margin-right: 3px;
@@ -97,8 +106,8 @@ tooltip {
 }
 
 #custom-power {
-  color: #aaaaaa;
-  background: #4c4f69;
+  color: #cad3f5;
+  background: #141624;
   opacity: 1;
   margin-left: 3px;
   margin-right: 3px;
@@ -107,7 +116,6 @@ tooltip {
   border-radius: 10px;
   margin-top: 2px;
 }
-
 #clock:hover,
 #custom-cpuinfo:hover,
 #custom-discord:hover,
@@ -119,8 +127,8 @@ tooltip {
 #pulseaudio:hover,
 #tray:hover,
 #window:hover {
-  background: #dc8a78;
-  color: #dce0e8;
+  background: #4c4f69;
+  color: #e7c787;
   transition: all 0.2s cubic-bezier(0.55, -0.68, 0.48, 1.682);
 }
 

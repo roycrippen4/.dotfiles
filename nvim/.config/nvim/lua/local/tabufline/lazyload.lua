@@ -71,12 +71,10 @@ autocmd(E.BufDelete, {
 
 autocmd({ E.BufNew, E.BufNewFile, E.BufRead, E.TabEnter, E.TermOpen }, {
   pattern = '*',
-  group = augroup('TabuflineLazyLoad', {}),
   callback = function()
     if #vim.fn.getbufinfo({ buflisted = 1 }) >= 2 or #api.nvim_list_tabpages() >= 2 then
       vim.opt.showtabline = 2
       vim.opt.tabline = "%!v:lua.require('local.tabufline.modules').run()"
-      api.nvim_del_augroup_by_name('TabuflineLazyLoad')
     end
   end,
 })
