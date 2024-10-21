@@ -42,6 +42,28 @@ local function run_current_file()
     return
   end
 
+  if ft == 'sh' then
+    local absolute_path = vim.api.nvim_buf_get_name(0)
+    if string.find(vim.api.nvim_exec2('!file ' .. file, { output = true }).output, 'executable', 0, true) then
+      vim.cmd('TermExec direction=horizontal size=16 cmd="' .. absolute_path .. '"')
+    else
+      vim.ui.select(
+        { 'yes', 'no' },
+        { prompt = 'Make file executable?' },
+        ---@param choice 'yes'|'no'
+        function(choice)
+          if choice == 'yes' then
+            vim.fn.system('chmod +x ' .. file)
+            vim.cmd('TermExec direction=horizontal size=16 cmd="bash ' .. file .. '"')
+          else
+            vim.notify('File is not executable.', vim.log.levels.INFO)
+          end
+        end
+      )
+    end
+    return
+  end
+
   vim.notify('Unknown filetype detected! Supported filetypes: lua, typescript, javascript', vim.log.levels.ERROR)
 end
 
