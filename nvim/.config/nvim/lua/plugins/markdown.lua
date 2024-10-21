@@ -4,7 +4,7 @@ return {
   keys = { { '<f7>', '<cmd> MarkdownPreviewToggle <CR>' } },
   cmd = { 'MarkdownPreviewToggle', 'MarkdownPreview', 'MarkdownPreviewStop' },
   ft = 'markdown',
-  build = 'cd app && npm install',
+  build = '~/.bin/install_awrit.sh && cd app && npm install',
   config = function()
     vim.api.nvim_exec2(
       [[
@@ -12,7 +12,7 @@ return {
           execute 'silent ! kitty @ launch --dont-take-focus --bias 40 awrit ' . a:url
         endfunction
       ]],
-      {}
+      { output = true }
     )
 
     vim.g.mkdp_theme = 'dark'
