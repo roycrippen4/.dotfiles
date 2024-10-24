@@ -227,6 +227,12 @@ return {
     lspconfig['cssls'].setup({
       capabilities = utils.capabilities,
       on_attach = utils.on_attach,
+      settings = {
+        css = {
+          validate = true,
+          lint = { unknownAtRules = 'ignore' },
+        },
+      },
     })
 
     lspconfig['docker_compose_language_service'].setup({

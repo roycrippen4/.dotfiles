@@ -1,3 +1,5 @@
+---@module "tailwind-tools"
+
 ---@type LazyPluginSpec
 return {
   'luckasRanarison/tailwind-tools.nvim', -- https://github.com/luckasRanarison/tailwind-tools.nvim
@@ -8,8 +10,11 @@ return {
     'nvim-telescope/telescope.nvim', -- https://github.com/nvim-telescope/telescope.nvim
     'neovim/nvim-lspconfig', -- https://github.com/neovim/nvim-lspconfig
   },
-  cond = function()
-    return require('core.utils').has_file('tailwind.config.js') or require('core.utils').has_file('tailwind.config.ts')
-  end,
-  opts = {},
+  ---@type TailwindTools.Option
+  opts = {
+    ---@type TailwindTools.ServerOption
+    server = {
+      settings = { lint = { invalidApply = false } },
+    },
+  },
 }
