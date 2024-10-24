@@ -10,6 +10,33 @@ return {
     local _, cond = pcall(require, 'nvim-autopairs.conds')
     npairs.setup({})
 
+    -- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
+    cmp.event:on('confirm_done', function(args)
+      local pos = vim.api.nvim_win_get_cursor(0)
+      local current_node = vim.treesitter.get_node({ pos = { pos[1] - 1, pos[2] } })
+
+      if not current_node then
+        cmp_autopairs.on_confirm_done(args)
+        return
+      end
+
+      local skip = vim.iter({ 'use_list', 'use_declaration', 'token_tree' }):any(
+        ---@param node_name string
+        function(node_name)
+          return current_node:type() == node_name
+        end
+      )
+
+      log('should skip?', skip)
+
+      if skip then
+        log('skip')
+        return
+      end
+
+      cmp_autopairs.on_confirm_done(args)
+    end)
+
     -- stylua: ignore
     npairs.add_rule(
       rule('<', '>', { '-html', '-javascriptreact', '-typescriptreact', '-svelte' })
@@ -17,7 +44,6 @@ return {
         :with_move(function(opts) return opts.char == '>' end)
     )
 
-    cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
 
     -- stylua: ignore
     for _, punct in pairs({ ',', ';' }) do
