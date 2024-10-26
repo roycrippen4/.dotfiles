@@ -1,6 +1,5 @@
 local api = vim.api
 local autocmd = api.nvim_create_autocmd
-local augroup = api.nvim_create_augroup
 local get_buf = api.nvim_get_current_buf
 local valid_buf = api.nvim_buf_is_valid
 local get_name = api.nvim_buf_get_name
@@ -30,9 +29,10 @@ autocmd({ E.BufAdd, E.BufEnter, E.TabNew }, {
       -- check for duplicates
       if
         not vim.tbl_contains(bufs, args.buf)
-        and (args.event == 'BufEnter' or vim.bo[args.buf].buflisted or args.buf ~= get_buf())
+        and (args.event == E.BufEnter or vim.bo[args.buf].buflisted or args.buf ~= get_buf())
         and valid_buf(args.buf)
         and vim.bo[args.buf].buflisted
+        and vim.bo.ft ~= 'undotree' -- This was a super annoying bug
       then
         table.insert(bufs, args.buf)
         t.bufs = bufs
