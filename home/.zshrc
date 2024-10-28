@@ -1,3 +1,6 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":/home/roy/.zsh/completions:"* ]]; then export FPATH="/home/roy/.zsh/completions:$FPATH"; fi
+
 HISTFILE=~/.histfile
 SAVEHIST=999
 HISTSIZE=1000
