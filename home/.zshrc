@@ -1,3 +1,6 @@
+# Add deno completions to search path
+if [[ ":$FPATH:" != *":$HOME/.zsh/completions:"* ]]; then export FPATH="$HOME/.zsh/completions:$FPATH"; fi
+
 HISTFILE=~/.histfile
 SAVEHIST=999
 HISTSIZE=1000
@@ -152,5 +155,4 @@ autoload -U add-zsh-hook
 
 # ocaml
 [[ ! -r '$HOME/.opam/opam-init/init.zsh' ]] || source '$HOME/.opam/opam-init/init.zsh' >/dev/null 2>/dev/null
-. "/home/roy/.deno/env"
-
+. "$HOME/.deno/env"
