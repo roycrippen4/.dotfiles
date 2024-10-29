@@ -13,6 +13,18 @@ autocmd(E.VimEnter, {
   end,
 })
 
+local function test_current_file()
+  local ft = vim.bo.ft
+  local file = vim.fn.expand('%')
+
+  if ft == 'zig' then
+    vim.cmd('TermExec direction=float size=80 cmd="zig test ' .. file .. '"')
+    return
+  end
+
+  vim.notify('Unknown filetype detected! Supported filetypes: zig', vim.log.levels.ERROR)
+end
+
 local function run_current_file()
   local ft = vim.bo.ft
   local file = vim.fn.expand('%')
@@ -77,6 +89,7 @@ return {
     { mode = { 'n', 't' }, '<M-v>', '<cmd> ToggleTerm direction=vertical size=80 <cr>' },
     { mode = { 'n', 't' }, '<M-f>', '<cmd> ToggleTerm direction=float size=80 <cr>' },
     { mode = 'n', '<leader>lr', run_current_file },
+    { mode = 'n', '<leader>lt', test_current_file },
   },
   opts = {
     on_open = function()
