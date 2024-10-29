@@ -31,7 +31,7 @@ return {
         return
       end
 
-      cmp_autopairs.on_confirm_done(args)
+      cmp_autopairs.on_confirm_done()(args)
     end)
 
     -- stylua: ignore

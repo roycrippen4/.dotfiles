@@ -152,9 +152,9 @@ return {
   },
   config = function()
     local cmp = require('cmp')
-    -- local compare = require('cmp').config.compare
-    -- local cmp_lsp_rs = require('cmp_lsp_rs')
-    -- local compare_rs = cmp_lsp_rs.comparators
+    local compare = require('cmp').config.compare
+    local cmp_lsp_rs = require('cmp_lsp_rs')
+    local compare_rs = cmp_lsp_rs.comparators
 
     cmp.setup({
       formatting = {
@@ -168,16 +168,14 @@ return {
         { name = 'lazydev', group_index = 0 },
         {
           name = 'nvim_lsp',
-          -- trigger_characters = { '.', ':', '@', '-' },
+          ---@param entry function|cmp.Entry
+          entry_filter = function(entry, _)
+            if entry.completion_item.label == 'script' and vim.bo.ft == 'svelte' then
+              return false
+            end
 
-          -- ---@param entry function|cmp.Entry
-          -- entry_filter = function(entry, _)
-          --   if entry.completion_item.label == 'script' and vim.bo.ft == 'svelte' then
-          --     return false
-          --   end
-
-          --   return not entry:is_deprecated()
-          -- end,
+            return not entry:is_deprecated()
+          end,
         },
         { name = 'luasnip' },
         { name = 'path' },
@@ -185,18 +183,16 @@ return {
       },
       preselect = cmp.PreselectMode.None,
       ---@diagnostic disable-next-line
-      -- sorting = {
-      -- comparators = {
-      --   compare.exact,
-      --   compare.score,
-      --   compare_rs.inscope_inherent_import,
-      --   compare_rs.sort_by_label_but_underscore_last,
-      -- },
-      -- },
-      completion = {
-        completeopt = 'menu,menuone,noselect',
-        autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged },
+      sorting = {
+        comparators = {
+          compare.exact,
+          compare.score,
+          compare.length,
+          compare_rs.inscope_inherent_import,
+          compare_rs.sort_by_label_but_underscore_last,
+        },
       },
+      completion = { completeopt = 'menu,menuone' },
       window = {
         completion = cmp.config.window.bordered(),
         documentation = cmp.config.window.bordered(),
@@ -208,24 +204,12 @@ return {
       },
 
       mapping = {
-        ['<ESC>'] = cmp.mapping(function(fallback)
-          if cmp.visible() then
-            cmp.abort()
-          else
-            fallback()
-          end
-        end, { 'i', 's', 'c' }),
-        ['<C-p>'] = cmp.mapping(cmp.mapping.select_prev_item(), { 'i', 'c' }),
-        ['<C-n>'] = cmp.mapping(cmp.mapping.select_next_item(), { 'i', 'c' }),
-        ['<C-S-N>'] = cmp.mapping(cmp.mapping.scroll_docs(4), { 'i', 'c' }),
-        ['<C-S-P>'] = cmp.mapping(cmp.mapping.scroll_docs(-4), { 'i', 'c' }),
-        ['<CR>'] = cmp.mapping(
-          cmp.mapping.confirm({
-            behavior = cmp.ConfirmBehavior.Insert,
-            select = true,
-          }),
-          { 'i' }
-        ),
+        ['<ESC>'] = cmp.mapping.close(),
+        ['<C-p>'] = cmp.mapping.select_prev_item({ behavior = cmp.SelectBehavior.Select }),
+        ['<C-n>'] = cmp.mapping.select_next_item({ behavior = cmp.SelectBehavior.Select }),
+        ['<C-S-N>'] = cmp.mapping.scroll_docs(4),
+        ['<C-S-P>'] = cmp.mapping.scroll_docs(-4),
+        ['<CR>'] = cmp.mapping.confirm({ behavior = cmp.ConfirmBehavior.Insert, select = true }),
       },
     })
 

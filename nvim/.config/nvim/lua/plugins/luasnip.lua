@@ -23,14 +23,10 @@ end
 return {
   'L3MON4D3/LuaSnip', -- https://github.com/L3MON4D3/LuaSnip
   build = 'make install_jsregexp',
-  dependencies = {
-    { 'rafamadriz/friendly-snippets', config = load_snippets },
-  },
+  dependencies = { { 'rafamadriz/friendly-snippets', config = load_snippets } },
   keys = {
-    { mode = 'i', '<Tab>' },
-    { mode = 'i', '<S-Tab>' },
-    { mode = 's', '<Tab>' },
-    { mode = 's', '<S-Tab>' },
+    { mode = { 'i', 's' }, '<Tab>' },
+    { mode = { 'i', 's' }, '<S-Tab>' },
   },
   config = function()
     local luasnip = require('luasnip')

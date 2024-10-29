@@ -16,7 +16,7 @@ g.loaded_netrwPlugin = 1
 -- General
 -----------------------------------------------------------
 -- stylua: ignore start
-opt.completeopt   = { 'menu', 'menuone', 'noselect' } -- Sets the completion options
+-- opt.completeopt   = { 'menu', 'menuone', 'noselect' } -- Sets the completion options
 opt.scrolloff     = 14                                -- Show x lines above and below the cursor
 opt.signcolumn    = 'yes'                             -- Show signs in the signcolumn
 opt.ignorecase    = true                              -- Ignores case in search
