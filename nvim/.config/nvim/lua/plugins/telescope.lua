@@ -11,7 +11,8 @@ local function lsp_definitions()
       return
     end
 
-    local locations = vim.lsp.util.locations_to_items(result, client.offset_encoding)
+    --- why tf does this work?
+    local locations = vim.bo.ft == 'lua' and {} or vim.lsp.util.locations_to_items(result, client.offset_encoding)
     if #locations > 1 then
       require('telescope.builtin').lsp_definitions({
         cwd = vim.fn.getcwd(),

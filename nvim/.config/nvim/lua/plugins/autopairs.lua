@@ -27,10 +27,7 @@ return {
         end
       )
 
-      log('should skip?', skip)
-
       if skip then
-        log('skip')
         return
       end
 

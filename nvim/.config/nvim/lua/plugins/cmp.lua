@@ -4,9 +4,6 @@ local name_map = {
   background = 'Bg',
 }
 
----@module "TailwindTools"
----@module "cmp_lsp_rs"
-
 ---@param red number
 ---@param green number
 ---@param blue number
@@ -89,7 +86,7 @@ local function format(entry, vim_item)
     ultisnips = 'CmpItemMenuSnippet',
   })[entry.source.name] -- default is CmpItemMenu
 
-  local cmp_item = entry:get_completion_item() --- @type lsp.CompletionItem
+  local cmp_item = entry.completion_item --- @type lsp.CompletionItem
 
   if entry.source.name == 'nvim_lsp' then
     local lspserver_name = nil
@@ -155,9 +152,9 @@ return {
   },
   config = function()
     local cmp = require('cmp')
-    local compare = require('cmp').config.compare
-    local cmp_lsp_rs = require('cmp_lsp_rs')
-    local compare_rs = cmp_lsp_rs.comparators
+    -- local compare = require('cmp').config.compare
+    -- local cmp_lsp_rs = require('cmp_lsp_rs')
+    -- local compare_rs = cmp_lsp_rs.comparators
 
     cmp.setup({
       formatting = {
