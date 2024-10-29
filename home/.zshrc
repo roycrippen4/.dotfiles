@@ -103,7 +103,7 @@ alias tsg="tree-sitter generate"
 alias tsp="tree-sitter parse"
 alias tst="tree-sitter test"
 alias python="python3"
-alias cc="cd .."
+alias cc="c -"
 alias x="exit"
 alias emacs="emacsclient -c -a 'emacs'"
 alias claer="clear"
@@ -153,3 +153,4 @@ autoload -U add-zsh-hook
 # ocaml
 [[ ! -r '$HOME/.opam/opam-init/init.zsh' ]] || source '$HOME/.opam/opam-init/init.zsh' >/dev/null 2>/dev/null
 . "/home/roy/.deno/env"
+

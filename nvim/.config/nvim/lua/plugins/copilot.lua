@@ -11,6 +11,7 @@ return {
     filetypes = {
       ocaml = false,
       rust = false,
+      zig = false,
     },
   },
 }

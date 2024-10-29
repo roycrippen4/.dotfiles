@@ -65,22 +65,27 @@ local function check_svelte_if(node)
 end
 
 local function should_format_svelte_block()
+  if vim.bo.ft ~= 'svelte' then
+    return false
+  end
+
   local pos = vim.api.nvim_win_get_cursor(0)
   local current_node = vim.treesitter.get_node({ pos = { pos[1] - 1, pos[2] } })
-  -- stylua: ignore
-  return vim.bo.ft == 'svelte' and (
-      check_svelte_if(current_node)
-      or check_svelte_each(current_node)
-      or check_svelte_snippet(current_node)
-      or check_svelte_await(current_node)
-    )
+  return check_svelte_if(current_node)
+    or check_svelte_each(current_node)
+    or check_svelte_snippet(current_node)
+    or check_svelte_await(current_node)
 end
 
----@return boolean
+---@return boolean|nil
 local function should_format_lua_func()
+  if vim.bo.ft ~= 'lua' then
+    return false
+  end
+
   local col = vim.fn.getpos('.')[3]
   local start_pos, end_pos = vim.api.nvim_get_current_line():find('%)%s*end')
-  return vim.bo.ft == 'lua' and (start_pos and col > start_pos and col <= end_pos) or false
+  return start_pos and col > start_pos and col <= end_pos
 end
 
 local id = nil
@@ -128,12 +133,11 @@ vim.on_key(function(char)
     end)
   end
 
-  -- TODO: wtf is going on
-  if vim.bo.ft ~= 'lua' or vim.bo.ft ~= 'svelte' then
+  if mode ~= 'i' or not is_cr then
     return
   end
 
-  if mode == 'i' and is_cr and (should_format_lua_func() or should_format_svelte_block()) then
+  if should_format_lua_func() or should_format_svelte_block() then
     feed('<Esc>O', 'n')
     return
   end

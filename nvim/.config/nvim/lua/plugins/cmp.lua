@@ -171,16 +171,16 @@ return {
         { name = 'lazydev', group_index = 0 },
         {
           name = 'nvim_lsp',
-          trigger_characters = { '.', ':', '@', '-' },
+          -- trigger_characters = { '.', ':', '@', '-' },
 
-          ---@param entry function|cmp.Entry
-          entry_filter = function(entry, _)
-            if entry:get_completion_item().label == 'script' and vim.bo.ft == 'svelte' then
-              return false
-            end
+          -- ---@param entry function|cmp.Entry
+          -- entry_filter = function(entry, _)
+          --   if entry.completion_item.label == 'script' and vim.bo.ft == 'svelte' then
+          --     return false
+          --   end
 
-            return not entry:is_deprecated()
-          end,
+          --   return not entry:is_deprecated()
+          -- end,
         },
         { name = 'luasnip' },
         { name = 'path' },
@@ -188,14 +188,14 @@ return {
       },
       preselect = cmp.PreselectMode.None,
       ---@diagnostic disable-next-line
-      sorting = {
-        comparators = {
-          compare.exact,
-          compare.score,
-          compare_rs.inscope_inherent_import,
-          compare_rs.sort_by_label_but_underscore_last,
-        },
-      },
+      -- sorting = {
+      -- comparators = {
+      --   compare.exact,
+      --   compare.score,
+      --   compare_rs.inscope_inherent_import,
+      --   compare_rs.sort_by_label_but_underscore_last,
+      -- },
+      -- },
       completion = {
         completeopt = 'menu,menuone,noselect',
         autocomplete = { require('cmp.types').cmp.TriggerEvent.TextChanged },

@@ -164,8 +164,6 @@ lsp.util.stylize_markdown = function(bufnr, contents, opts)
   return contents
 end
 
-vim.g.zig_fmt_parse_errors = 0
-
 ---@type LazyPluginSpec
 return {
   'neovim/nvim-lspconfig', -- https://github.com/neovim/nvim-lspconfig
@@ -345,9 +343,18 @@ return {
       },
     })
 
+    vim.g.zig_fmt_parse_errors = 0
     lspconfig['zls'].setup({
       capabilities = utils.capabilities,
       on_attach = utils.on_attach,
+      root_dir = lspconfig.util.root_pattern('.git', 'build.zig', 'zls.json'),
+      settings = {
+        zls = {
+          enable_inlay_hints = true,
+          enable_snippets = true,
+          warn_style = true,
+        },
+      },
     })
 
     lspconfig['protols'].setup({})
