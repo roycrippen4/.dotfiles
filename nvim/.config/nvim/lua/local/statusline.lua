@@ -288,11 +288,6 @@ autocmd('BufEnter', {
   group = augroup('StatusLineFiletype', { clear = true }),
   callback = function()
     local _, hl_group = require('nvim-web-devicons').get_icon(expand('%:e'))
-
-    -- if hl_group == nil then
-    --   return
-    -- end
-
     set_hl(0, 'St_FtIcon', { fg = get_hl(0, { name = hl_group }).fg, bg = '#21252b' })
   end,
 })
