@@ -177,9 +177,13 @@ local groups = {
   WhichKeyNormal = { bg = colors.black3 },
   HelpNormal = { bg = colors.black3 },
 
+  ['@lsp.type.namespace'] = {},
   ['@type.type_argument'] = { italic = true },
+  ['@type.argument.rust'] = { italic = true },
   ['@lsp.type.class.svelte'] = {},
   ['@lsp.type.type.lua'] = {},
+  ['@boolean.zig'] = { link = '@boolean' },
+  ['@variable.std.zig'] = { link = '@lsp.type.namespace.zig' },
 }
 
 for group, color in pairs(groups) do
