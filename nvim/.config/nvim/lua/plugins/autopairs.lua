@@ -36,7 +36,7 @@ return {
 
     -- stylua: ignore
     npairs.add_rule(
-      rule('<', '>', { '-html', '-javascriptreact', '-typescriptreact', '-svelte' })
+      rule('<', '>', { '-html', '-javascriptreact', '-typescriptreact', '-svelte', '-lua' })
         :with_pair(cond.before_regex('%a+:?:?$', 3))
         :with_move(function(opts) return opts.char == '>' end)
     )

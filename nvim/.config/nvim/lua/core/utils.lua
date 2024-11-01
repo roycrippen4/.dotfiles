@@ -82,12 +82,6 @@ local function cpp_setup(client)
   end
 end
 
-local function zig_setup()
-  if vim.bo.ft == 'zig' then
-    vim.lsp.inlay_hint.enable(true)
-  end
-end
-
 ---@param additional_keymaps? wk.Mapping[]
 function M.set_lsp_mappings(additional_keymaps)
   local keymaps = {
@@ -116,7 +110,6 @@ function M.on_attach(client, bufnr)
   svelte_change_check(client)
   setup_signature_helper(bufnr, client)
   cpp_setup(client)
-  zig_setup()
 end
 
 M.capabilities =

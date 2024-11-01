@@ -184,6 +184,8 @@ local groups = {
   ['@lsp.type.type.lua'] = {},
   ['@boolean.zig'] = { link = '@boolean' },
   ['@variable.std.zig'] = { link = '@lsp.type.namespace.zig' },
+  ['@test.zig'] = { fg = colors.sun },
+  ['@fix_error_union_type.zig'] = { link = '@function' },
 }
 
 for group, color in pairs(groups) do
