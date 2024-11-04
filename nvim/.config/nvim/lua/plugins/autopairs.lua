@@ -3,36 +3,36 @@ return {
   'windwp/nvim-autopairs', -- https://github.com/windwp/nvim-autopairs
   event = 'InsertEnter',
   config = function()
-    local _, cmp = pcall(require, 'cmp')
-    local _, cmp_autopairs = pcall(require, 'nvim-autopairs.completion.cmp')
+    -- local _, cmp = pcall(require, 'cmp')
+    -- local _, cmp_autopairs = pcall(require, 'nvim-autopairs.completion.cmp')
     local _, npairs = pcall(require, 'nvim-autopairs')
     local _, rule = pcall(require, 'nvim-autopairs.rule')
     local _, cond = pcall(require, 'nvim-autopairs.conds')
     npairs.setup({})
 
     -- cmp.event:on('confirm_done', cmp_autopairs.on_confirm_done())
-    cmp.event:on('confirm_done', function(args)
-      local pos = vim.api.nvim_win_get_cursor(0)
-      local current_node = vim.treesitter.get_node({ pos = { pos[1] - 1, pos[2] } })
+    -- cmp.event:on('confirm_done', function(args)
+    --   local pos = vim.api.nvim_win_get_cursor(0)
+    --   local current_node = vim.treesitter.get_node({ pos = { pos[1] - 1, pos[2] } })
 
-      if not current_node then
-        cmp_autopairs.on_confirm_done(args)
-        return
-      end
+    --   if not current_node then
+    --     cmp_autopairs.on_confirm_done(args)
+    --     return
+    --   end
 
-      local skip = vim.iter({ 'use_list', 'use_declaration', 'token_tree' }):any(
-        ---@param node_name string
-        function(node_name)
-          return current_node:type() == node_name
-        end
-      )
+    --   local skip = vim.iter({ 'use_list', 'use_declaration', 'token_tree' }):any(
+    --     ---@param node_name string
+    --     function(node_name)
+    --       return current_node:type() == node_name
+    --     end
+    --   )
 
-      if skip then
-        return
-      end
+    --   if skip then
+    --     return
+    --   end
 
-      cmp_autopairs.on_confirm_done()(args)
-    end)
+    --   cmp_autopairs.on_confirm_done()(args)
+    -- end)
 
     -- stylua: ignore
     npairs.add_rule(
