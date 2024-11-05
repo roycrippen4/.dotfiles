@@ -223,6 +223,90 @@
 --   end,
 -- }
 
+-- ---@param entry cmp.Entry
+-- ---@param vim_item vim.CompletedItem
+-- local function format(entry, vim_item)
+--   vim_item.abbr = truncate(vim_item.abbr, 80)
+--   pcall(function() -- protect the call against potential API breakage (lspkind GH-45).
+--     local lspkind = require('lspkind')
+--     ---@diagnostic disable-next-line
+--     vim_item.kind_symbol = (lspkind.symbolic or lspkind.get_symbol)(vim_item.kind)
+--     vim_item.kind = ' ' .. vim_item.kind_symbol .. ' ' .. vim_item.kind
+--   end)
+
+--   -- The 'menu' section: source, detail information (lsp, snippet), etc.
+--   -- set a name for each source (see the sources section below)
+--   vim_item.menu = ({
+--     buffer = 'Buffer',
+--     nvim_lsp = 'LSP',
+--     ultisnips = '',
+--     nvim_lua = 'Lua',
+--     latex_symbols = 'Latex',
+--   })[entry.source.name] or string.format('%s', entry.source.name)
+
+--   -- highlight groups for item.menu
+--   vim_item.menu_hl_group = ({
+--     buffer = 'CmpItemMenuBuffer',
+--     nvim_lsp = 'CmpItemMenuLSP',
+--     path = 'CmpItemMenuPath',
+--     ultisnips = 'CmpItemMenuSnippet',
+--   })[entry.source.name] -- default is CmpItemMenu
+
+--   local cmp_item = entry.completion_item --- @type lsp.CompletionItem
+
+--   if entry.source.name == 'nvim_lsp' then
+--     local lspserver_name = nil
+--     pcall(function()
+--       lspserver_name = entry.source.source.client.name
+--       vim_item.menu = lspserver_name
+--     end)
+
+--     if lspserver_name == 'tailwindcss' then
+--       local doc = entry.completion_item.documentation
+
+--       if vim_item.kind:match('Color') and doc then
+--         vim_item.kind = ' '
+--         local content = type(doc) == 'string' and doc or doc.value
+
+--         local base, _, _, _r, _g, _b = 10, content:find('rgba?%((%d+), (%d+), (%d+)')
+
+--         if not _r then
+--           base, _, _, _r, _g, _b = 16, content:find('#(%x%x)(%x%x)(%x%x)')
+--         end
+
+--         if _r then
+--           local r, g, b = tonumber(_r, base), tonumber(_g, base), tonumber(_b, base)
+--           ---@diagnostic disable-next-line
+--           vim_item.kind_hl_group = set_hl_from(r, g, b, 'foreground')
+--         end
+--       end
+
+--       return vim_item
+--     end
+
+--     local detail_txt = get_lsp_detail_txt(cmp_item, lspserver_name)
+
+--     if detail_txt then
+--       vim_item.menu = detail_txt
+--       vim_item.menu_hl_group = 'CmpItemMenuDetail'
+--     end
+--   elseif entry.source.name == 'zsh' then
+--     local detail = tostring(cmp_item.documentation)
+--     if detail then
+--       vim_item.menu = detail
+--       vim_item.menu_hl_group = 'CmpItemMenuZsh'
+--       vim_item.kind = '  ' .. 'zsh'
+--     end
+--   end
+
+--   -- Add a little bit more padding
+--   vim_item.menu = ' ' .. vim_item.menu
+--   return vim_item
+-- end
+
+-- ---@type fun(ctx: blink.cmp.CompletionRenderContext):blink.cmp.Component[])
+-- local function draw(ctx) end
+
 return {
   'saghen/blink.cmp',
   lazy = false,
@@ -241,7 +325,6 @@ return {
       ['<C-S-P>'] = { 'scroll_documentation_up', 'fallback' },
       ['<esc>'] = { 'hide', 'fallback' },
     },
-    highlight = { use_nvim_cmp_default = true },
     nerd_font_variant = 'mono',
     accept = { auto_brackets = { enabled = true } },
     sources = {
@@ -254,7 +337,26 @@ return {
       },
     },
     windows = {
-      autocomplete = { border = 'rounded' },
+      autocomplete = {
+        border = 'rounded',
+        draw = function(ctx)
+          local source, client = ctx.item.source_id, ctx.item.client_id
+          if client and vim.lsp.get_client_by_id(client).name == 'emmet_language_server' then
+            source = 'emmet'
+          end
+
+          local sourceIcons = { snippets = '󰩫', buffer = '󰦨', emmet = '' }
+          local icon = sourceIcons[source] or ctx.kind_icon
+
+          return {
+            {
+              ' ' .. ctx.item.label .. ' ',
+              hl_group = ctx.deprecated and 'CmpItemDeprecated' or 'BlinkCmpLabel',
+            },
+            { icon .. ' ', hl_group = 'BlinkCmpKind' .. ctx.kind },
+          }
+        end,
+      },
       documentation = {
         border = 'rounded',
         auto_show = true,

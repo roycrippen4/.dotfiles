@@ -10,10 +10,7 @@ return {
       hover = true,
     },
     popup = { border = 'rounded' },
-    completion = {
-      cmp = { enabled = true },
-      crates = { enabled = true },
-    },
+    completion = { crates = { enabled = true } },
   },
   config = function(_, opts)
     local wk = require('which-key')
