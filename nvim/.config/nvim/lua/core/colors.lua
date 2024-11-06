@@ -45,14 +45,26 @@ local colors = {
 
 --- @type table<string, vim.api.keyset.highlight>
 local groups = {
-  Added = { fg = colors.green },
-  -- Pmenu = { bg = colors.one_bg },
-  -- PmenuSel = { link = 'CursorLine' },
+  BlinkCmpKindClass = { link = '@type.builtin' },
+  BlinkCmpKindEnum = { link = '@lsp.type.enum' },
+  BlinkCmpKindEnumMember = { link = '@lsp.type.enumMember' },
+  BlinkCmpKindEvent = { link = '@lsp.type.event' },
+  BlinkCmpKindField = { link = '@field' },
+  BlinkCmpKindFunction = { link = '@function.call' },
+  BlinkCmpKindInterface = { link = '@lsp.type.struct' },
+  BlinkCmpKindKeyword = { link = '@keyword' },
+  BlinkCmpKindSnippet = { fg = colors.red },
+  BlinkCmpKindStruct = { link = '@lsp.type.struct' },
+  BlinkCmpKindText = { link = '@text.literal' },
+
+  BlinkCmpSource = { fg = colors.light_grey },
+
   BlinkCmpMenu = { link = 'NormalFloat' },
   BlinkCmpMenuBorder = { link = 'FloatBorder' },
   BlinkCmpMenuSelection = { link = 'CursorLine' },
   BlinkCmpLabel = { fg = colors.white },
-  BlinkCmpLabelMatch = { fg = colors.green, bg = colors.green },
+
+  Added = { fg = colors.green },
   Changed = { fg = colors.light_blue },
   DapBreakpoint = { fg = colors.red },
   DapBreakpointCondition = { fg = colors.dark_orange },
@@ -185,7 +197,7 @@ local groups = {
   ['@type.type_argument'] = { italic = true },
   ['@type.argument.rust'] = { italic = true },
   ['@lsp.type.class.svelte'] = {},
-  ['@lsp.type.type.lua'] = {},
+  -- ['@lsp.type.type.lua'] = {},
   ['@boolean.zig'] = { link = '@boolean' },
   ['@variable.std.zig'] = { link = '@lsp.type.namespace.zig' },
   ['@test.zig'] = { fg = colors.sun },
