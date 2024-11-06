@@ -2,7 +2,7 @@
 return {
   'mrcjkb/rustaceanvim', -- https://github.com/mrcjkb/rustaceanvim
   version = '^5',
-  ft = { 'rust' },
+  lazy = false,
   config = function()
     require('core.utils').set_lsp_mappings({
       -- stylua: ignore start
