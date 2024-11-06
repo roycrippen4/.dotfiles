@@ -1,0 +1,17 @@
+{
+  "child": {
+    "body": [
+      "{#if ${1:child}}",
+      "  {@render $1()}",
+      "{:else}",
+      "  ${2:fallback}",
+      "{/if}"
+    ],
+    "prefix": "child"
+  },
+  "snippet": {
+    "body": ["{#snippet ${1:name}()}", "  ${2:content}", "{/snippet}"],
+    "prefix": "snippet"
+  }
+}
+
