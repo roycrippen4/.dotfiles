@@ -193,7 +193,7 @@ local groups = {
   WhichKeyNormal = { bg = colors.black3 },
   HelpNormal = { bg = colors.black3 },
 
-  ['@lsp.type.namespace'] = {},
+  -- ['@lsp.type.namespace'] = {},
   ['@type.type_argument'] = { italic = true },
   ['@type.argument.rust'] = { italic = true },
   ['@lsp.type.class.svelte'] = {},
