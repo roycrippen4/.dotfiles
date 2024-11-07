@@ -47,6 +47,7 @@ end
 ---@type LazyPluginSpec
 return {
   'roycrippen4/harpoon',
+  -- dev = true,
   keys = {
     { '<c-f>', add_file },
     { '<c-e>', show_menu },
