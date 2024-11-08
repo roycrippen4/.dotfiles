@@ -78,7 +78,6 @@ autocmd(E.FileType, {
   pattern = 'help',
   group = general,
   callback = function()
-    print('help')
     vim.api.nvim_set_option_value('bufhidden', 'unload', { scope = 'local' })
     vim.cmd('wincmd L')
     vim.api.nvim_win_set_width(0, 100)
@@ -166,10 +165,7 @@ autocmd(E.BufWritePre, {
 autocmd(E.CmdwinEnter, {
   group = augroup('_fix_ts_cmdwin', { clear = false }),
   callback = function()
-    vim.cmd('setfiletype python')
-    vim.schedule(function()
-      vim.cmd('setfiletype vim')
-    end)
+    vim.cmd('setfiletype vim')
   end,
 })
 
