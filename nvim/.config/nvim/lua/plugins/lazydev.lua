@@ -9,6 +9,7 @@ return {
   opts = {
     library = {
       'lazy.nvim',
+      'snacks.nvim',
       'lazydev.nvim',
       'tailwind-tools.nvim',
       { path = 'luvit-meta/library', words = { 'vim%.uv' } },
