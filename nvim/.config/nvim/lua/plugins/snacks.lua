@@ -19,6 +19,7 @@ return {
           Snacks.debug.backtrace()
         end
         vim.print = _G.log
+        print = _G.log
       end,
     })
   end,

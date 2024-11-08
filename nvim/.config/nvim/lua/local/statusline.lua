@@ -141,10 +141,6 @@ local function file_info()
   local path = buf_get_name(win_get_buf(0))
   local name = (path == '' and 'Empty ') or path:match('([^/\\]+)[/\\]*$')
 
-  if name == 'fish' then
-    return ' %#St_Fish#󰈺 SHELL %#St_FileSep#'
-  end
-
   if name == '[Command Line]' then
     return '  CmdHistory '
   end
@@ -154,17 +150,14 @@ local function file_info()
   end
 
   if name ~= 'Empty ' then
-    local ft_icon, _ = require('nvim-web-devicons').get_icon(name)
+    local _, f_ext = name:match('(.*)%.(.*)')
+    local ft_icon, _ = require('nvim-web-devicons').get_icon(name, f_ext)
     icon = ((ft_icon ~= nil) and ' %#St_FtIcon#' .. ft_icon) or icon
 
     name = ' ' .. name .. ' '
   end
 
   local filetypes = {
-    Colors = {
-      icon = '%#St_Colors1#  ',
-      label = '%#St_Colors2#C' .. '%#St_Colors3#O' .. '%#St_Colors4#L' .. '%#St_Colors5#O' .. '%#St_Colors6#R' .. '%#St_Colors7#S',
-    },
     DressingInput = { icon = '  ', label = 'INPUT BOX' },
     harpoon = { icon = '  ', label = 'HARPOON' },
     lspinfo = { icon = '  ', label = 'LSP INFO' },
@@ -287,7 +280,7 @@ autocmd('ModeChanged', {
 autocmd('BufEnter', {
   group = augroup('StatusLineFiletype', { clear = true }),
   callback = function()
-    local _, hl_group = require('nvim-web-devicons').get_icon(expand('%:e'))
+    local _, hl_group = require('nvim-web-devicons').get_icon(expand('%:t'))
     set_hl(0, 'St_FtIcon', { fg = get_hl(0, { name = hl_group }).fg, bg = '#21252b' })
   end,
 })
