@@ -22,6 +22,10 @@ local function test_current_file()
     return
   end
 
+  if ft == 'rust' then
+    vim.cmd.RustLsp({ 'testables', bang = true })
+  end
+
   vim.notify('Unknown filetype detected! Supported filetypes: zig', vim.log.levels.ERROR)
 end
 
