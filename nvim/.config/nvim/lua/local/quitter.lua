@@ -33,7 +33,7 @@ local function quit_vim()
 end
 
 -- autoquit vim if only plugin windows are open
-vim.api.nvim_create_autocmd(E.QuitPre, {
+vim.api.nvim_create_autocmd('QuitPre', {
   callback = function()
     vim.defer_fn(quit_vim, 100)
   end,

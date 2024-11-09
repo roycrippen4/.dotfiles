@@ -3,7 +3,7 @@ local augroup = vim.api.nvim_create_augroup
 
 local M = {
   toggle = 0,
-  hl_timer = vim.loop.new_timer(),
+  hl_timer = vim.uv.new_timer(),
 }
 
 function M.toggle_recording_hl()
@@ -34,14 +34,14 @@ end
 
 local macrohl = augroup('MacroHL', { clear = true })
 -- Toggles highlight group for the statusline macro segment
-autocmd(E.RecordingEnter, {
+autocmd('RecordingEnter', {
   group = macrohl,
   callback = function()
     M.start_record_highlight()
   end,
 })
 -- Stops toggling the highlight group for the statusline macro segment
-autocmd(E.RecordingLeave, {
+autocmd('RecordingLeave', {
   group = macrohl,
   callback = function()
     M.stop_timer()

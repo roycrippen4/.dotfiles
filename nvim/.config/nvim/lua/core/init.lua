@@ -1,4 +1,4 @@
-require('core.types')
+-- require('core.types')
 require('core.options')
 require('core.lazy')
 require('core.keymaps')

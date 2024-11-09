@@ -19,7 +19,7 @@ t.bufs = listed_bufs
 
 -- autocmds for tabufline -> store bufnrs on bufadd, bufenter events
 -- thx to https://github.com/ii14 & stores buffer per tab -> table
-autocmd({ E.BufAdd, E.BufEnter, E.TabNew }, {
+autocmd({ 'BufAdd', 'BufEnter', 'TabNew' }, {
   callback = function(args)
     local bufs = t.bufs
 
@@ -29,7 +29,7 @@ autocmd({ E.BufAdd, E.BufEnter, E.TabNew }, {
       -- check for duplicates
       if
         not vim.tbl_contains(bufs, args.buf)
-        and (args.event == E.BufEnter or vim.bo[args.buf].buflisted or args.buf ~= get_buf())
+        and (args.event == 'BufEnter' or vim.bo[args.buf].buflisted or args.buf ~= get_buf())
         and valid_buf(args.buf)
         and vim.bo[args.buf].buflisted
         and vim.bo.ft ~= 'undotree' -- This was a super annoying bug
@@ -52,7 +52,7 @@ autocmd({ E.BufAdd, E.BufEnter, E.TabNew }, {
   end,
 })
 
-autocmd(E.BufDelete, {
+autocmd('BufDelete', {
   callback = function(args)
     for _, tab in ipairs(api.nvim_list_tabpages()) do
       local bufs = t[tab].bufs
@@ -69,7 +69,7 @@ autocmd(E.BufDelete, {
   end,
 })
 
-autocmd({ E.BufNew, E.BufNewFile, E.BufRead, E.TabEnter, E.TermOpen }, {
+autocmd({ 'BufNew', 'BufNewFile', 'BufRead', 'TabEnter', 'TermOpen' }, {
   pattern = '*',
   callback = function()
     if #vim.fn.getbufinfo({ buflisted = 1 }) >= 2 or #api.nvim_list_tabpages() >= 2 then

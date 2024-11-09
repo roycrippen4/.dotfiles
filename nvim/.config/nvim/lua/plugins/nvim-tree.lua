@@ -1,6 +1,3 @@
-local del = vim.keymap.del
-local map = vim.keymap.set
-
 local prev = { new_name = '', old_name = '' } -- Prevents duplicate events
 vim.api.nvim_create_autocmd('User', {
   pattern = 'NvimTreeSetup',
@@ -24,17 +21,18 @@ return {
       local api = require('nvim-tree.api')
       api.config.mappings.default_on_attach(bufnr)
 
-      del('n', '<C-]>', { buffer = bufnr })
-      del('n', '<C-t>', { buffer = bufnr })
-      del('n', '<C-e>', { buffer = bufnr })
-      del('n', '.', { buffer = bufnr })
-      del('n', '-', { buffer = bufnr })
-      del('n', 'g?', { buffer = bufnr })
-      del('n', 'f', { buffer = bufnr })
+      vim.keymap.del('n', '<C-]>', { buffer = bufnr })
+      vim.keymap.del('n', '<C-t>', { buffer = bufnr })
+      vim.keymap.del('n', '<C-e>', { buffer = bufnr })
+      vim.keymap.del('n', '.', { buffer = bufnr })
+      vim.keymap.del('n', '-', { buffer = bufnr })
+      vim.keymap.del('n', 'g?', { buffer = bufnr })
+      vim.keymap.del('n', 'f', { buffer = bufnr })
 
       local opts = { buffer = bufnr, noremap = true, silent = true, nowait = true }
-      map('n', '.', api.tree.change_root_to_node, opts)
-      map('n', '?', api.tree.toggle_help, opts)
+      vim.keymap.set('n', '.', api.tree.change_root_to_node, opts)
+      vim.keymap.set('n', '?', api.tree.toggle_help, opts)
+      vim.keymap.set('n', 'K', api.node.show_info_popup, opts)
     end,
     filters = { dotfiles = false, exclude = { vim.fn.stdpath('config') .. '/lua/custom' } },
     disable_netrw = true,
@@ -52,7 +50,15 @@ return {
     },
     git = { enable = true, ignore = true },
     filesystem_watchers = { enable = true },
-    actions = { open_file = { resize_window = true, eject = true } },
+    actions = {
+      open_file = { resize_window = true, eject = true },
+      file_popup = {
+        ---@type vim.api.keyset.win_config
+        open_win_config = {
+          border = 'rounded',
+        },
+      },
+    },
     renderer = {
       root_folder_label = function(path) ---@param path string
         return './' .. vim.fn.fnamemodify(path, ':t')
