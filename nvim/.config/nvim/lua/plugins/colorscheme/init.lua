@@ -172,7 +172,7 @@ return {
       BlinkCmpKindEnum = { link = '@lsp.type.enum' },
       BlinkCmpKindEnumMember = { link = '@lsp.type.enumMember' },
       BlinkCmpKindEvent = { link = '@lsp.type.event' },
-      BlinkCmpKindField = { link = '@field' },
+      BlinkCmpKindField = { link = '@property' },
       BlinkCmpKindFunction = { link = '@function.call' },
       BlinkCmpKindInterface = { link = '@lsp.type.struct' },
       BlinkCmpKindKeyword = { link = '@keyword' },
