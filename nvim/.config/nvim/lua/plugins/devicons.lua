@@ -119,7 +119,7 @@ return {
         ts = {
           icon = devicons.ts,
           name = 'ts',
-          color = require('core.colors').light_blue,
+          color = require('onedark.colors').blue_light,
         },
 
         ttf = {

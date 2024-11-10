@@ -323,10 +323,12 @@ function M.create_backdrop(bufnr, backdrop_name)
   vim.wo[winnr].winblend = 50
   vim.bo[backdrop_bufnr].buftype = 'nofile'
 
+  vim.api.nvim_set_hl(0, 'MsgArea', { bg = '#101215' })
   vim.api.nvim_create_autocmd({ 'WinClosed', 'BufLeave' }, {
     once = true,
     buffer = bufnr,
     callback = function()
+      vim.api.nvim_set_hl(0, 'MsgArea', { bg = require('plugins.colorscheme.palette').black3 })
       if vim.api.nvim_win_is_valid(winnr) then
         vim.api.nvim_win_close(winnr, true)
       end

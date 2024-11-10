@@ -12,6 +12,7 @@ require('lazy').setup({ { import = 'plugins' } }, {
   dev = { path = '~/.dotfiles/nvim/.config/nvim/dev/' },
   install = { colorscheme = { 'onedark' } },
   ui = {
+    backdrop = 100,
     icons = vim.g.have_nerd_font and {} or {
       cmd = '⌘',
       config = '🛠',

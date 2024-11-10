@@ -24,7 +24,7 @@ local augroup = api.nvim_create_augroup
 local abs = math.abs
 local floor = math.floor
 
----@type nil | uv_timer_t
+---@type nil|uv_timer_t
 local timer = nil
 
 local function time()
@@ -34,7 +34,7 @@ local function time()
 
   timer:start(1000, 1000, schedule(vim.cmd.redrawstatus))
 
-  return '%#St_Time# ' .. os.date('%I:%M:%S %p ', os.time())
+  return '%#StatusLineTime# ' .. os.date('%I:%M:%S %p ', os.time())
 end
 
 local command_icon = '  '
@@ -48,72 +48,72 @@ local confirm_icon = '❔ '
 ---@type { [string]: { text: string, hl: string, icon: string } }
 local modes = {
   -- Normal
-  ['n'] = { text = 'NORMAL', hl = 'St_NormalMode', icon = normal_icon },
-  ['no'] = { text = 'NORMAL (no)', hl = 'St_NormalMode', icon = normal_icon },
-  ['nov'] = { text = 'NORMAL (nov)', hl = 'St_NormalMode', icon = normal_icon },
-  ['noV'] = { text = 'NORMAL (noV)', hl = 'St_NormalMode', icon = normal_icon },
-  ['noCTRL-V'] = { text = 'NORMAL', hl = 'St_NormalMode', icon = normal_icon },
-  ['niI'] = { text = 'NORMAL i', hl = 'St_NormalMode', icon = normal_icon },
-  ['niR'] = { text = 'NORMAL r', hl = 'St_NormalMode', icon = normal_icon },
-  ['niV'] = { text = 'NORMAL v', hl = 'St_NormalMode', icon = normal_icon },
-  ['nt'] = { text = 'NTERMINAL', hl = 'St_NTerminalMode', icon = normal_icon },
-  ['ntT'] = { text = 'NTERMINAL (ntT)', hl = 'St_NTerminalMode', icon = normal_icon },
+  ['n'] = { text = 'NORMAL', hl = 'StatusLineNormalMode', icon = normal_icon },
+  ['no'] = { text = 'NORMAL (no)', hl = 'StatusLineNormalMode', icon = normal_icon },
+  ['nov'] = { text = 'NORMAL (nov)', hl = 'StatusLineNormalMode', icon = normal_icon },
+  ['noV'] = { text = 'NORMAL (noV)', hl = 'StatusLineNormalMode', icon = normal_icon },
+  ['noCTRL-V'] = { text = 'NORMAL', hl = 'StatusLineNormalMode', icon = normal_icon },
+  ['niI'] = { text = 'NORMAL i', hl = 'StatusLineNormalMode', icon = normal_icon },
+  ['niR'] = { text = 'NORMAL r', hl = 'StatusLineNormalMode', icon = normal_icon },
+  ['niV'] = { text = 'NORMAL v', hl = 'StatusLineNormalMode', icon = normal_icon },
 
   -- Visual
-  ['v'] = { text = 'VISUAL', hl = 'St_VisualMode', icon = '  ' },
-  ['vs'] = { text = 'V-CHAR (Ctrl O)', hl = 'St_VisualMode', icon = ' 󱡠 ' },
-  ['V'] = { text = 'V-LINE', hl = 'St_VisualMode', icon = '  ' },
-  ['Vs'] = { text = 'V-LINE', hl = 'St_VisualMode', icon = '  ' },
-  [''] = { text = 'V-BLOCK', hl = 'St_VisualMode', icon = ' 󰣟 ' },
+  ['v'] = { text = 'VISUAL', hl = 'StatusLineVisualMode', icon = '  ' },
+  ['vs'] = { text = 'V-CHAR (Ctrl O)', hl = 'StatusLineVisualMode', icon = ' 󱡠 ' },
+  ['V'] = { text = 'V-LINE', hl = 'StatusLineVisualMode', icon = '  ' },
+  ['Vs'] = { text = 'V-LINE', hl = 'StatusLineVisualMode', icon = '  ' },
+  [''] = { text = 'V-BLOCK', hl = 'StatusLineVisualMode', icon = ' 󰣟 ' },
 
   -- Insert
-  ['i'] = { text = 'INSERT', hl = 'St_InsertMode', icon = insert_icon },
-  ['ic'] = { text = 'INSERT (completion)', hl = 'St_InsertMode', icon = insert_icon },
-  ['ix'] = { text = 'INSERT completion', hl = 'St_InsertMode', icon = insert_icon },
+  ['i'] = { text = 'INSERT', hl = 'StatusLineInsertMode', icon = insert_icon },
+  ['ic'] = { text = 'INSERT (completion)', hl = 'StatusLineInsertMode', icon = insert_icon },
+  ['ix'] = { text = 'INSERT completion', hl = 'StatusLineInsertMode', icon = insert_icon },
 
   -- Terminal   
-  ['t'] = { text = 'TERMINAL', hl = 'St_TerminalMode', icon = '  ' },
+  ['t'] = { text = 'TERMINAL', hl = 'StatusLineTerminalMode', icon = '  ' },
+  ['nt'] = { text = 'NTERMINAL', hl = 'StatusLineTerminalMode', icon = normal_icon },
+  ['ntT'] = { text = 'NTERMINAL (ntT)', hl = 'StatusLineTerminalMode', icon = normal_icon },
 
   -- Replace
-  ['R'] = { text = 'REPLACE', hl = 'St_ReplaceMode', icon = replace_icon },
-  ['Rc'] = { text = 'REPLACE (Rc)', hl = 'St_ReplaceMode', icon = replace_icon },
-  ['Rx'] = { text = 'REPLACEa (Rx)', hl = 'St_ReplaceMode', icon = replace_icon },
-  ['Rv'] = { text = 'V-REPLACE', hl = 'St_ReplaceMode', icon = replace_icon },
-  ['Rvc'] = { text = 'V-REPLACE (Rvc)', hl = 'St_ReplaceMode', icon = replace_icon },
-  ['Rvx'] = { text = 'V-REPLACE (Rvx)', hl = 'St_ReplaceMode', icon = replace_icon },
+  ['R'] = { text = 'REPLACE', hl = 'StatusLineReplaceMode', icon = replace_icon },
+  ['Rc'] = { text = 'REPLACE (Rc)', hl = 'StatusLineReplaceMode', icon = replace_icon },
+  ['Rx'] = { text = 'REPLACEa (Rx)', hl = 'StatusLineReplaceMode', icon = replace_icon },
+  ['Rv'] = { text = 'V-REPLACE', hl = 'StatusLineReplaceMode', icon = replace_icon },
+  ['Rvc'] = { text = 'V-REPLACE (Rvc)', hl = 'StatusLineReplaceMode', icon = replace_icon },
+  ['Rvx'] = { text = 'V-REPLACE (Rvx)', hl = 'StatusLineReplaceMode', icon = replace_icon },
 
   -- Select
-  ['s'] = { text = 'SELECT', hl = 'St_SelectMode', icon = select_icon },
-  ['S'] = { text = 'S-LINE', hl = 'St_SelectMode', icon = select_icon },
-  [''] = { text = 'S-BLOCK', hl = 'St_SelectMode', icon = select_icon },
+  ['s'] = { text = 'SELECT', hl = 'StatusLineSelectMode', icon = select_icon },
+  ['S'] = { text = 'S-LINE', hl = 'StatusLineSelectMode', icon = select_icon },
+  [''] = { text = 'S-BLOCK', hl = 'StatusLineSelectMode', icon = select_icon },
 
   -- Command
-  ['c'] = { text = 'COMMAND', hl = 'St_CommandMode', icon = command_icon },
-  ['cv'] = { text = 'COMMAND', hl = 'St_CommandMode', icon = command_icon },
-  ['ce'] = { text = 'COMMAND', hl = 'St_CommandMode', icon = command_icon },
+  ['c'] = { text = 'COMMAND', hl = 'StatusLineCommandMode', icon = command_icon },
+  ['cv'] = { text = 'COMMAND', hl = 'StatusLineCommandMode', icon = command_icon },
+  ['ce'] = { text = 'COMMAND', hl = 'StatusLineCommandMode', icon = command_icon },
 
   -- Confirm
-  ['r'] = { text = 'PROMPT', hl = 'St_ConfirmMode', icon = confirm_icon },
-  ['rm'] = { text = 'MORE', hl = 'St_ConfirmMode', icon = confirm_icon },
-  ['r?'] = { text = 'CONFIRM', hl = 'St_ConfirmMode', icon = confirm_icon },
-  ['x'] = { text = 'CONFIRM', hl = 'St_ConfirmMode', icon = confirm_icon },
+  ['r'] = { text = 'PROMPT', hl = 'StatusLineConfirmMode', icon = confirm_icon },
+  ['rm'] = { text = 'MORE', hl = 'StatusLineConfirmMode', icon = confirm_icon },
+  ['r?'] = { text = 'CONFIRM', hl = 'StatusLineConfirmMode', icon = confirm_icon },
+  ['x'] = { text = 'CONFIRM', hl = 'StatusLineConfirmMode', icon = confirm_icon },
 
   -- Shell
-  ['!'] = { text = 'SHELL', hl = 'St_TerminalMode', icon = '  ' },
+  ['!'] = { text = 'SHELL', hl = 'StatusLineTerminalMode', icon = '  ' },
 }
 
 local function st_mode()
   local entry = modes[get_mode().mode]
-  local current_mode = '%#' .. entry.hl .. '#' .. (entry.icon or '  ') .. entry.text .. ' '
-  local mode_sep1 = '%#' .. entry.hl .. 'Sep#'
+  local entry_hl = '%#' .. entry.hl .. '#'
+  local current_mode = entry_hl .. entry.icon .. entry.text .. ' ' .. entry_hl .. ''
 
   local recording_register = fn.reg_recording()
 
   if recording_register == '' then
-    return current_mode .. mode_sep1
+    return current_mode
   end
 
-  return '%#ST_Macro# 󰑊 MACRO ' .. recording_register .. '%#ST_MacroSep# '
+  return '%#StatusLineMacro# 󰑊 MACRO ' .. recording_register .. ' '
 end
 
 local function truncate_filename(filename)
@@ -152,7 +152,7 @@ local function file_info()
   if name ~= 'Empty ' then
     local _, f_ext = name:match('(.*)%.(.*)')
     local ft_icon, _ = require('nvim-web-devicons').get_icon(name, f_ext)
-    icon = ((ft_icon ~= nil) and ' %#St_FtIcon#' .. ft_icon) or icon
+    icon = ((ft_icon ~= nil) and ' %#StatusLineFtIcon#' .. ft_icon) or icon
 
     name = ' ' .. name .. ' '
   end
@@ -161,12 +161,11 @@ local function file_info()
     DressingInput = { icon = '  ', label = 'INPUT BOX' },
     harpoon = { icon = '  ', label = 'HARPOON' },
     lspinfo = { icon = '  ', label = 'LSP INFO' },
-    mason = { icon = '%#St_Mason# 󱌣 ', label = 'MASON' },
+    mason = { icon = '%#StatusLineMason# 󱌣 ', label = 'MASON' },
     undotree = { icon = '  ', label = 'UNDOTREE' },
-    NvimTree = { icon = '%#St_NvimTree#  ', label = 'NVIMTREE' },
-    lazygit = { icon = '%#St_Lazygit#  ', label = 'LAZYGIT' },
-    lazy = { icon = '%#St_Lazy# 💤 ', label = 'LAZY' },
-    Trouble = { icon = '%#St_Trouble#  ', label = 'TROUBLE' },
+    NvimTree = { icon = '%#StatusLineNvimTree#  ', label = 'NVIMTREE' },
+    lazy = { icon = '%#StatusLineLazy# 💤 ', label = 'LAZY' },
+    Trouble = { icon = '%#StatusLineTrouble#  ', label = 'TROUBLE' },
     TelescopePrompt = { icon = '  ', label = 'TELESCOPE' },
   }
 
@@ -176,23 +175,23 @@ local function file_info()
     end
   end
 
-  return icon .. '%#St_FileInfo#' .. name .. '%#St_FileSep#' .. ''
+  return icon .. '%#StatusLineFileInfo#' .. name .. '%#StatusLineDefaultSep#' .. ''
 end
 
 local function git()
   local bufnr = win_get_buf(0)
   if not vim.b[bufnr].gitsigns_head or vim.b[bufnr].gitsigns_git_status then
-    return '%#St_EmptySpace#'
+    return '%#StatusLineEmptySpace#'
   end
 
   local git_status = vim.b[bufnr].gitsigns_status_dict
 
-  local added = (git_status.added and git_status.added ~= 0) and ('%#St_GitAdd#  ' .. git_status.added) or ''
-  local changed = (git_status.changed and git_status.changed ~= 0) and ('%#St_GitChange#  ' .. git_status.changed) or ''
-  local removed = (git_status.removed and git_status.removed ~= 0) and ('%#St_GitRemove#  ' .. git_status.removed) or ''
-  local branch_name = '%#St_GitBranch#  ' .. git_status.head
+  local added = (git_status.added and git_status.added ~= 0) and ('%#StatusLineGitAdd#  ' .. git_status.added) or ''
+  local changed = (git_status.changed and git_status.changed ~= 0) and ('%#StatusLineGitChange#  ' .. git_status.changed) or ''
+  local removed = (git_status.removed and git_status.removed ~= 0) and ('%#StatusLineGitRemove#  ' .. git_status.removed) or ''
+  local branch_name = '%#StatusLineGitBranch#  ' .. git_status.head
 
-  return branch_name .. added .. changed .. removed .. '%#St_FileSep#  '
+  return branch_name .. added .. changed .. removed .. '%#StatusLineDefaultSep#  '
 end
 
 local function lsp_diagnostics()
@@ -206,10 +205,10 @@ local function lsp_diagnostics()
   local hints = count[3]
   local info = count[4]
 
-  errors = (errors and errors > 0) and ('%#St_Lsp_Error#󰅚 ' .. errors .. ' ') or ''
-  warnings = (warnings and warnings > 0) and ('%#St_LspWarning# ' .. warnings .. ' ') or ''
-  hints = (hints and hints > 0) and ('%#St_LspHints#󱡴 ' .. hints .. ' ') or ''
-  info = (info and info > 0) and ('%#St_LspInfo# ' .. info .. ' ') or ''
+  errors = (errors and errors > 0) and ('%#StatusLineLspError#󰅚 ' .. errors .. ' ') or ''
+  warnings = (warnings and warnings > 0) and ('%#StatusLineLspWarning# ' .. warnings .. ' ') or ''
+  hints = (hints and hints > 0) and ('%#StatusLineLspHints#󱡴 ' .. hints .. ' ') or ''
+  info = (info and info > 0) and ('%#StatusLineLspInfo# ' .. info .. ' ') or ''
 
   return vim.o.columns > 140 and errors .. warnings .. hints .. info or ''
 end
@@ -218,7 +217,7 @@ local function lsp_status()
   if rawget(vim, 'lsp') then
     for _, client in ipairs(get_clients()) do
       if client.attached_buffers[win_get_buf(0)] then
-        return (vim.o.columns > 100 and '%#St_LspStatus#' .. '   LSP [' .. client.name .. '] ') or '   LSP '
+        return (vim.o.columns > 100 and '%#StatusLineLspStatus#' .. '   LSP [' .. client.name .. '] ') or '   LSP '
       end
     end
   end
@@ -232,7 +231,7 @@ local function cursor_position()
   local cur_line, cur_col = get_line('.'), get_col('.')
 
   if current_mode == '' then
-    return '%#St_VisualMode#' .. '' .. ' Ln ' .. abs(v_line - cur_line) + 1 .. ', Col ' .. abs(v_col - cur_col) + 1 .. ' '
+    return '%#StatusLineVisualMode#' .. '' .. ' Ln ' .. abs(v_line - cur_line) + 1 .. ', Col ' .. abs(v_col - cur_col) + 1 .. ' '
   end
 
   local total_lines = abs(v_line - cur_line) + 1
@@ -240,25 +239,25 @@ local function cursor_position()
     local cur_line_is_bigger = v_line and cur_line and v_line < cur_line
 
     if cur_line_is_bigger then
-      return '%#St_VisualMode#' .. ' Ln ' .. v_line .. ' - Ln %l ⎸ ' .. total_lines
+      return '%#StatusLineVisualMode#' .. ' Ln ' .. v_line .. ' - Ln %l ⎸ ' .. total_lines
     else
-      return '%#St_VisualMode#' .. ' Ln %l - Ln ' .. v_line .. ' ⎸ ' .. total_lines
+      return '%#StatusLineVisualMode#' .. ' Ln %l - Ln ' .. v_line .. ' ⎸ ' .. total_lines
     end
   end
 
   if current_mode == 'v' then
     if v_line == cur_line then
-      return '%#St_VisualMode#' .. ' Col ' .. abs(v_col - cur_col) + 1 .. ' '
+      return '%#StatusLineVisualMode#' .. ' Col ' .. abs(v_col - cur_col) + 1 .. ' '
     else
-      return '%#St_VisualMode#' .. ' Ln ' .. total_lines .. ' '
+      return '%#StatusLineVisualMode#' .. ' Ln ' .. total_lines .. ' '
     end
   end
 
-  return vim.o.columns > 140 and '%#St_PosSep#' .. '' .. '%#St_PosText# Ln %l, Col %c ' or ''
+  return vim.o.columns > 140 and '%#StatusLinePos# Ln %l, Col %c ' or ''
 end
 
 local function cwd()
-  local dir_name = '%#St_CwdSep#' .. '' .. ' 󰉖 ' .. fnamemodify(getcwd(), ':t') .. ' '
+  local dir_name = '%#StatusLineCwd#' .. '' .. ' 󰉖 ' .. fnamemodify(getcwd(), ':t') .. ' '
   return (vim.o.columns > 85 and dir_name) or ''
 end
 
@@ -266,22 +265,22 @@ local function package_info()
   return expand('%:t') == 'package.json' and require('package-info').get_status() or ''
 end
 
--- Dynamically changes the highlight group of the statusline mode segment based on the current mode
 autocmd('ModeChanged', {
+  desc = 'Dynamically changes the highlight group of the statusline mode segment based on the current mode',
   group = augroup('StatusLineMode', { clear = true }),
   callback = function()
     local hl = get_hl(0, { name = modes[get_mode().mode].hl })
-    set_hl(0, 'St_NvimTree', { fg = hl.fg, bg = hl.bg, italic = true })
-    set_hl(0, 'St_Harpoon', { fg = hl.fg, bg = hl.bg, italic = true })
+    set_hl(0, 'StatusLineNvimTree', { fg = hl.fg, bg = hl.bg, italic = true })
+    set_hl(0, 'StatusLineHarpoon', { fg = hl.fg, bg = hl.bg, italic = true })
   end,
 })
 
--- Dynamically changes the highlight group of the statusline filetype icon based on the current file
 autocmd('BufEnter', {
+  desc = 'Dynamically changes the highlight group of the statusline filetype icon based on the current file',
   group = augroup('StatusLineFiletype', { clear = true }),
   callback = function()
     local _, hl_group = require('nvim-web-devicons').get_icon(expand('%:t'))
-    set_hl(0, 'St_FtIcon', { fg = get_hl(0, { name = hl_group }).fg, bg = '#21252b' })
+    set_hl(0, 'StatusLineFtIcon', { fg = get_hl(0, { name = hl_group }).fg, bg = '#21252b' })
   end,
 })
 

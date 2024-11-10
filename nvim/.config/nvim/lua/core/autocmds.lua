@@ -178,15 +178,15 @@ autocmd('FileType', {
 })
 
 vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'TelescopePrompt',
+  pattern = { 'TelescopePrompt', 'mason', 'lazy' },
   callback = function(ctx)
     require('core.utils').create_backdrop(ctx.buf, 'TelescopeBackdrop')
   end,
 })
 
-vim.api.nvim_create_autocmd('FileType', {
-  pattern = 'mason',
-  callback = function(ctx)
-    require('core.utils').create_backdrop(ctx.buf, 'MasonBackdrop')
-  end,
-})
+-- vim.api.nvim_create_autocmd('FileType', {
+--   pattern = 'mason',
+--   callback = function(ctx)
+--     require('core.utils').create_backdrop(ctx.buf, 'MasonBackdrop')
+--   end,
+-- })

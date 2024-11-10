@@ -173,18 +173,10 @@ return {
     'b0o/schemastore.nvim', -- https://github.com/b0o/schemastore.nvim
     {
       'j-hui/fidget.nvim', -- https://github.com/j-hui/fidget.nvim
-      opts = {},
+      opts = { notification = { window = { winblend = 0 } } },
     },
-    {
-      'p00f/clangd_extensions.nvim',
-      opts = {},
-      ft = { 'c', 'cpp' },
-    },
-    {
-      'Civitasv/cmake-tools.nvim',
-      opts = {},
-      ft = { 'c', 'cpp' },
-    },
+    { 'p00f/clangd_extensions.nvim', opts = {}, ft = { 'c', 'cpp' } },
+    { 'Civitasv/cmake-tools.nvim', opts = {}, ft = { 'c', 'cpp' } },
   },
   config = function()
     local lspconfig = require('lspconfig')
