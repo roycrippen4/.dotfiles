@@ -168,6 +168,7 @@ return {
     },
 
     blink = {
+      BlinkCmpLabelMatch = { fg = colors.blue },
       BlinkCmpKindClass = { link = '@type.builtin' },
       BlinkCmpKindEnum = { link = '@lsp.type.enum' },
       BlinkCmpKindEnumMember = { link = '@lsp.type.enumMember' },

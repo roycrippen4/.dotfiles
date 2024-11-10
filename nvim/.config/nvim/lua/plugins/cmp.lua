@@ -1,45 +1,46 @@
----@param ctx blink.cmp.CompletionRenderContext
----@return blink.cmp.Component[]
-local function draw(ctx)
-  local source, client_id = ctx.item.source_name, ctx.item.client_id
+-- ---@param ctx blink.cmp.CompletionRenderContext
+-- ---@return blink.cmp.Component[]
+-- local function draw(ctx)
+--   local source, client_id = ctx.item.source_name, ctx.item.client_id
 
-  if source == 'LSP' and client_id then
-    local client = vim.lsp.get_client_by_id(client_id)
+--   if source == 'LSP' and client_id then
+--     local client = vim.lsp.get_client_by_id(client_id)
 
-    if client then
-      source = client.name
-    end
-  end
+--     if client then
+--       source = client.name
+--     end
+--   end
 
-  if source == 'Snippets' then
-    source = 'Snippet'
-  end
+--   if source == 'Snippets' then
+--     source = 'Snippet'
+--   end
 
-  return {
-    {
-      ' ' .. ctx.item.label,
-      hl_group = ctx.deprecated and 'CmpItemDeprecated' or 'BlinkCmpLabel',
-      fill = true,
-    },
-    {
-      ' ' .. ctx.kind_icon,
-      hl_group = 'BlinkCmpKind' .. ctx.kind,
-      fill = true,
-    },
-    {
-      ' ' .. source .. ' ',
-      hl_group = 'BlinkCmpSource',
-      fill = true,
-    },
-  }
-end
+--   return {
+--     {
+--       ' ' .. ctx.item.label,
+--       hl_group = ctx.deprecated and 'CmpItemDeprecated' or 'BlinkCmpLabel',
+--       fill = true,
+--     },
+--     {
+--       ' ' .. ctx.kind_icon,
+--       hl_group = 'BlinkCmpKind' .. ctx.kind,
+--       fill = true,
+--     },
+--     {
+--       ' ' .. source .. ' ',
+--       hl_group = 'BlinkCmpSource',
+--       fill = true,
+--     },
+--   }
+-- end
 
 return {
   'saghen/blink.cmp',
   lazy = false,
-  version = 'v0.*',
+  build = 'cargo build --release',
+
   ---@module 'blink.cmp'
-  ---@type blink.cmp.Config
+  ---@type blink.cmp.Config,
   opts = {
     keymap = {
       ['<cr>'] = { 'accept', 'fallback' },
@@ -66,7 +67,7 @@ return {
     windows = {
       autocomplete = {
         border = 'rounded',
-        draw = draw,
+        -- draw = draw,
       },
       documentation = {
         border = 'rounded',
