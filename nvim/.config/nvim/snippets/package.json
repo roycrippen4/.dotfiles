@@ -1,5 +1,5 @@
 {
-  "name": "snippets",
+  "name": "personal-snippets",
   "contributes": {
     "snippets": [
       {
@@ -44,4 +44,3 @@
     ]
   }
 }
-

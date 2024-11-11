@@ -142,7 +142,6 @@ return {
       SpecialKey = { fg = colors.grey },
       Pmenu = { fg = colors.white, bg = colors.bg1 },
       PmenuSbar = { fg = colors.none, bg = colors.bg1 },
-      PmenuSel = { fg = colors.one_bg, bg = colors.bg_blue },
       WildMenu = { fg = colors.one_bg, bg = colors.blue },
       PmenuThumb = { fg = colors.none, bg = colors.grey },
       Question = { fg = colors.yellow },
@@ -364,8 +363,8 @@ return {
     },
 
     trouble = {
-      TroubleNormal = { bg = colors.black_darker },
-      TroubleNormalNC = { bg = colors.black_darker },
+      TroubleNormal = { bg = colors.black3 },
+      TroubleNormalNC = { bg = colors.black3 },
     },
 
     whichkey = {

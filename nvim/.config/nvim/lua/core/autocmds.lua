@@ -57,24 +57,26 @@ autocmd('FileType', {
 })
 
 autocmd('ExitPre', {
+  desc = 'Stops all lsp daemons when exiting neovim',
   group = augroup('StopDaemons', { clear = true }),
   callback = function()
     vim.fn.jobstart(vim.fn.expand('$HOME') .. '/.bin/stop-nvim-daemons.sh', { detach = true })
   end,
 })
 
+local harpoon_ns = namespace('Harpoon"tmarks"')
 autocmd('FileType', {
   group = general,
   pattern = 'harpoon',
   callback = function()
     local bufnr = vim.api.nvim_get_current_buf()
-    require('core.utils').highlight_marked_files(bufnr, namespace('Harpoon"tmarks"'))
-    vim.keymap.set('n', 'K', '', { silent = true, buffer = bufnr })
+    require('core.utils').highlight_marked_files(bufnr, harpoon_ns)
+    vim.keymap.set('n', 'K', '', { silent = true, buffer = bufnr, desc = 'Disable `K` keymap in harpoon win' })
   end,
 })
 
--- Forces help pages to be in a vertical split
 autocmd('FileType', {
+  desc = 'Forces help pages to be in a vertical split',
   pattern = 'help',
   group = general,
   callback = function()
@@ -85,8 +87,8 @@ autocmd('FileType', {
   end,
 })
 
--- Sets many plugin windows to close on `q`
 autocmd('FileType', {
+  desc = 'Sets many plugin windows to close on `q`',
   group = general,
   pattern = pattern,
   callback = function(args)
@@ -94,8 +96,9 @@ autocmd('FileType', {
   end,
 })
 
--- Sets terminal titlestring to the current working directory
+--
 autocmd('VimEnter', {
+  desc = 'Sets terminal titlestring to the current working directory',
   group = general,
   pattern = 'NvimTree_1',
   once = true,
@@ -119,8 +122,8 @@ autocmd('VimEnter', {
   end,
 })
 
--- Autocommand to restore the cursor position when the buffer is read
 autocmd('BufReadPost', {
+  desc = 'Restore the cursor position when the buffer is read',
   callback = function(args)
     local valid_line = vim.fn.line([['"]]) >= 1 and vim.fn.line([['"]]) < vim.fn.line('$')
     local not_commit = vim.b[args.buf].filetype ~= 'commit'
@@ -131,18 +134,8 @@ autocmd('BufReadPost', {
   end,
 })
 
-autocmd('BufReadPost', {
-  callback = function(args)
-    local mark = vim.api.nvim_buf_get_mark(args.buf, '"')
-    local line_count = vim.api.nvim_buf_line_count(args.buf)
-    if mark[1] > 0 and mark[1] <= line_count then
-      vim.cmd('normal! g`"zz')
-    end
-  end,
-})
-
--- Disable diagnostics in node_modules (0 is current buffer only)
 autocmd({ 'BufRead', 'BufNewFile' }, {
+  desc = 'Disable diagnostics in node_modules (0 is current buffer only)',
   group = general,
   pattern = '*/node_modules/*',
   callback = function()
@@ -150,8 +143,8 @@ autocmd({ 'BufRead', 'BufNewFile' }, {
   end,
 })
 
--- Adds missing commas to lua files
 autocmd('BufWritePre', {
+  desc = 'Adds missing commas to lua files',
   group = general,
   pattern = '*',
   callback = function()
@@ -162,12 +155,7 @@ autocmd('BufWritePre', {
   end,
 })
 
-autocmd('CmdwinEnter', {
-  group = augroup('_fix_ts_cmdwin', { clear = false }),
-  callback = function()
-    vim.cmd('setfiletype vim')
-  end,
-})
+autocmd('CmdwinEnter', { command = 'setfiletype vim', desc = 'Fixes highlighting in the cmdwin' })
 
 autocmd('FileType', {
   group = general,
@@ -177,16 +165,8 @@ autocmd('FileType', {
   end,
 })
 
-vim.api.nvim_create_autocmd('FileType', {
+autocmd('FileType', {
+  desc = 'Creates a backdrop effect for large windows',
   pattern = { 'TelescopePrompt', 'mason', 'lazy' },
-  callback = function(ctx)
-    require('core.utils').create_backdrop(ctx.buf, 'TelescopeBackdrop')
-  end,
+  callback = require('core.utils').create_backdrop,
 })
-
--- vim.api.nvim_create_autocmd('FileType', {
---   pattern = 'mason',
---   callback = function(ctx)
---     require('core.utils').create_backdrop(ctx.buf, 'MasonBackdrop')
---   end,
--- })

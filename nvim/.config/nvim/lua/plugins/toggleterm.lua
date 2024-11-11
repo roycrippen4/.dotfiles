@@ -96,9 +96,18 @@ return {
     { mode = 'n', '<leader>lt', test_current_file },
   },
   opts = {
-    on_open = function()
+    ---@param term Terminal
+    on_open = function(term)
       vim.cmd('startinsert')
       vim.cmd('setlocal nonu nornu signcolumn=no foldcolumn=0')
+      if term:is_float() then
+        require('core.utils').create_backdrop(term.bufnr)
+      end
     end,
+    highlights = {
+      Normal = { link = 'NvimTreeNormal' },
+      NormalFloat = { link = 'TelescopeNormal' },
+    },
+    float_opts = { border = 'none' },
   },
 }

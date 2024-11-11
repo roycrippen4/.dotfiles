@@ -303,9 +303,8 @@ function M.has_file(filename)
   return fn.filereadable(fn.getcwd() .. '/' .. filename) == 1 and true or false
 end
 
----@param bufnr integer
----@param backdrop_name string
-function M.create_backdrop(bufnr, backdrop_name)
+---@type fun(ctx: {buf: integer, event: string, file: string, id: integer, match: string}): nil
+function M.create_backdrop(ctx)
   local backdrop_bufnr = vim.api.nvim_create_buf(false, true)
   local winnr = vim.api.nvim_open_win(backdrop_bufnr, false, {
     relative = 'editor',
@@ -315,18 +314,18 @@ function M.create_backdrop(bufnr, backdrop_name)
     height = vim.o.columns,
     focusable = false,
     style = 'minimal',
-    zindex = 1,
+    zindex = 46,
   })
 
-  vim.api.nvim_set_hl(0, backdrop_name, { bg = '#000000', default = true })
-  vim.wo[winnr].winhighlight = 'Normal:' .. backdrop_name
+  vim.api.nvim_set_hl(0, 'Backdrop', { bg = '#000000', default = true })
+  vim.wo[winnr].winhighlight = 'Normal:Backdrop'
   vim.wo[winnr].winblend = 50
   vim.bo[backdrop_bufnr].buftype = 'nofile'
 
   vim.api.nvim_set_hl(0, 'MsgArea', { bg = '#101215' })
   vim.api.nvim_create_autocmd({ 'WinClosed', 'BufLeave' }, {
     once = true,
-    buffer = bufnr,
+    buffer = ctx.buf,
     callback = function()
       vim.api.nvim_set_hl(0, 'MsgArea', { bg = require('plugins.colorscheme.palette').black3 })
       if vim.api.nvim_win_is_valid(winnr) then

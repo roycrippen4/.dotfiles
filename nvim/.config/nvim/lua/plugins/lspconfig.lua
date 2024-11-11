@@ -32,6 +32,11 @@ end
 local function scroll(winnr, delta)
   local info = fn.getwininfo(winnr)[1] or {}
   local top = info.topline or 1
+
+  if not vim.api.nvim_win_is_valid(winnr) then
+    return
+  end
+
   local buf = api.nvim_win_get_buf(winnr)
   top = top + delta
   top = math.max(top, 1)
@@ -171,10 +176,7 @@ return {
   dependencies = {
     'williamboman/mason.nvim', -- https://github.com/williamboman/mason.nvim
     'b0o/schemastore.nvim', -- https://github.com/b0o/schemastore.nvim
-    {
-      'j-hui/fidget.nvim', -- https://github.com/j-hui/fidget.nvim
-      opts = { notification = { window = { winblend = 0 } } },
-    },
+    { 'j-hui/fidget.nvim', opts = {} }, -- https://github.com/j-hui/fidget.nvim
     { 'p00f/clangd_extensions.nvim', opts = {}, ft = { 'c', 'cpp' } },
     { 'Civitasv/cmake-tools.nvim', opts = {}, ft = { 'c', 'cpp' } },
   },

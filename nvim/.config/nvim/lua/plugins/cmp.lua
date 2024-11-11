@@ -1,47 +1,11 @@
--- ---@param ctx blink.cmp.CompletionRenderContext
--- ---@return blink.cmp.Component[]
--- local function draw(ctx)
---   local source, client_id = ctx.item.source_name, ctx.item.client_id
-
---   if source == 'LSP' and client_id then
---     local client = vim.lsp.get_client_by_id(client_id)
-
---     if client then
---       source = client.name
---     end
---   end
-
---   if source == 'Snippets' then
---     source = 'Snippet'
---   end
-
---   return {
---     {
---       ' ' .. ctx.item.label,
---       hl_group = ctx.deprecated and 'CmpItemDeprecated' or 'BlinkCmpLabel',
---       fill = true,
---     },
---     {
---       ' ' .. ctx.kind_icon,
---       hl_group = 'BlinkCmpKind' .. ctx.kind,
---       fill = true,
---     },
---     {
---       ' ' .. source .. ' ',
---       hl_group = 'BlinkCmpSource',
---       fill = true,
---     },
---   }
--- end
-
+---@module 'blink.cmp'
+---@type LazyPluginSpec
 return {
   'saghen/blink.cmp',
   lazy = false,
   build = 'cargo build --release',
-
-  ---@module 'blink.cmp'
-  ---@type blink.cmp.Config,
-  opts = {
+  dependencies = 'rafamadriz/friendly-snippets',
+  opts = { ---@type blink.cmp.Config
     keymap = {
       ['<cr>'] = { 'accept', 'fallback' },
       ['<tab>'] = { 'snippet_forward', 'fallback' },
@@ -67,7 +31,39 @@ return {
     windows = {
       autocomplete = {
         border = 'rounded',
-        -- draw = draw,
+        ---@diagnostic disable-next-line
+        draw = {
+          columns = {
+            { 'label', 'label_description', gap = 1 },
+            { 'kind_icon' },
+            { 'source', gap = 1 },
+          },
+          components = {
+            source = {
+              text = function(ctx)
+                local source, client_id = ctx.item.source_name, ctx.item.client_id
+
+                if source == 'LSP' and client_id then
+                  local client = vim.lsp.get_client_by_id(client_id)
+
+                  if client then
+                    source = client.name
+                  end
+                end
+
+                if source == 'Snippets' then
+                  source = 'Snippet'
+                end
+
+                return source
+              end,
+
+              highlight = function()
+                return 'BlinkCmpSource'
+              end,
+            },
+          },
+        },
       },
       documentation = {
         border = 'rounded',
