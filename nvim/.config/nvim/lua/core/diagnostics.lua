@@ -1,14 +1,13 @@
+---@type table<string, vim.fn.sign_define.dict>
 local dap_signs = {
-  { name = 'DapBreakpoint', opts = { text = '', texthl = 'DapBreakpoint', linehl = '', numhl = '' } },
-  { name = 'DapBreakpointCondition', opts = { text = '', texthl = 'DapBreakpointCondition', linehl = '', numhl = '' } },
-  { name = 'DapLogPoint', opts = { text = '', texthl = 'DapLogPoint', linehl = '', numhl = '' } },
-  { name = 'DapStopped', opts = { text = '', texthl = 'DapStopped', linehl = '', numhl = '' } },
-  { name = 'DapBreakpointRejected', opts = { text = '', texthl = 'DapBreakpointRejected', linehl = '', numhl = '' } },
+  DapBreakpoint = { text = '', texthl = 'DapBreakpoint', linehl = '', numhl = '' },
+  DapBreakpointCondition = { text = '', texthl = 'DapBreakpointCondition', linehl = '', numhl = '' },
+  DapLogPoint = { text = '', texthl = 'DapLogPoint', linehl = '', numhl = '' },
+  DapStopped = { text = '', texthl = 'DapStopped', linehl = '', numhl = '' },
+  DapBreakpointRejected = { text = '', texthl = 'DapBreakpointRejected', linehl = '', numhl = '' },
 }
 
-for _, sign in ipairs(dap_signs) do
-  vim.fn.sign_define(sign.name, sign.opts)
-end
+vim.iter(dap_signs):each(vim.fn.sign_define)
 
 vim.diagnostic.config({
   signs = {

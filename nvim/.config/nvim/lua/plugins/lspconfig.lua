@@ -20,9 +20,9 @@ local function win_buf_height(winnr)
   local width = api.nvim_win_get_width(winnr)
   local lines = api.nvim_buf_get_lines(buf, 0, -1, false)
   local height = 0
-  for _, l in ipairs(lines) do
+  vim.iter(lines):each(function(l)
     height = height + math.max(1, (math.ceil(fn.strwidth(l) / width)))
-  end
+  end)
   return height
 end
 
@@ -53,7 +53,9 @@ end
 --- Adds extra inline highlights to the given buffer.
 ---@param buf integer
 local function add_inline_highlights(buf)
-  for l, line in ipairs(api.nvim_buf_get_lines(buf, 0, -1, false)) do
+  local lines = api.nvim_buf_get_lines(buf, 0, -1, false)
+
+  for i, line in ipairs(lines) do
     for pattern, hl_group in pairs({
       ['@%S+'] = '@parameter',
       ['^%s*(Parameters:)'] = '@text.title',
@@ -67,7 +69,7 @@ local function add_inline_highlights(buf)
         local to
         from, to = line:find(pattern, from)
         if from then
-          api.nvim_buf_set_extmark(buf, md_namespace, l - 1, from - 1, {
+          api.nvim_buf_set_extmark(buf, md_namespace, i - 1, from - 1, {
             end_col = to,
             hl_group = hl_group,
           })

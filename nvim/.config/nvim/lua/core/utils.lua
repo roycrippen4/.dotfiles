@@ -6,6 +6,65 @@ local clear_autocmds = api.nvim_clear_autocmds
 
 local M = {}
 
+---Generates an array of numbers from start to stop with step n
+---Table is end-inclusive
+---@param start integer Starting point
+---@param stop integer Stopping point
+---@param step integer? Step size
+---@return integer[]
+function M.range(start, stop, step)
+  if start == stop then
+    return { start }
+  end
+
+  if start < stop and not step then
+    step = 1
+  end
+
+  if start > stop and not step then
+    step = -1
+  end
+
+  if start < stop and step < 0 then
+    Snacks.notify.error({
+      '```lua',
+      'utils.range(' .. start .. ', ' .. stop .. ', ' .. step .. ')',
+      '            ───┬  ┬',
+      '               │  ╰─ Should be positive',
+      '               ╰─ Or swap these',
+      '```',
+    }, { title = 'Invalid Parameters' })
+  end
+
+  if start > stop and step > 0 then
+    Snacks.notify.error({
+      '```lua',
+      'utils.range(' .. start .. ', ' .. stop .. ', ' .. step .. ')',
+      '            ───┬  ┬',
+      '               │  ╰─ Should be negative',
+      '               ╰─ Or swap these',
+      '```',
+    }, { title = 'Invalid Parameters' })
+  end
+
+  ---@type integer[]
+  local res = {}
+  for i = start, stop, step do
+    table.insert(res, i)
+  end
+  return res
+end
+
+---Creates an iterator from an array from start to stop with step n
+---Table is end-inclusive
+---@param start integer Starting point
+---@param stop integer Stopping point
+---@param step integer? Step size
+---@return Iter
+function M.range_iter(start, stop, step)
+  return vim.iter(M.range(start, stop, step))
+end
+
 local function organize_imports()
   local valid_fts = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' }
 
@@ -34,12 +93,9 @@ end
 local function check_trigger_chars(chars)
   local cur_line = api.nvim_get_current_line()
   local pos = api.nvim_win_get_cursor(0)[2]
-
-  for _, char in ipairs(chars) do
-    if cur_line:sub(pos, pos) == char or cur_line:sub(pos - 1, pos) == ', ' then
-      return true
-    end
-  end
+  return vim.iter(chars):any(function(char)
+    return cur_line:sub(pos, pos) == char or cur_line:sub(pos - 1, pos) == ', '
+  end)
 end
 
 ---@param bufnr integer
@@ -168,24 +224,22 @@ local function list_open_files()
   local bufs = api.nvim_list_bufs()
   local visible_bufs = {}
 
+  ---@param bufnr integer
+  ---@return boolean
   local function is_buf_visible(bufnr)
     local wins = api.nvim_list_wins()
     local should_skip = vim.tbl_contains(skip_ft, vim.bo[bufnr].ft) or api.nvim_buf_get_name(bufnr) == ''
 
-    for _, win in ipairs(wins) do
-      if api.nvim_win_get_buf(win) == bufnr and not should_skip then
-        return true
-      end
-    end
-    return false
+    return vim.iter(wins):any(function(win)
+      return api.nvim_win_get_buf(win) == bufnr and not should_skip
+    end)
   end
 
-  for _, bufnr in ipairs(bufs) do
-    if is_buf_visible(bufnr) then
-      local name = api.nvim_buf_get_name(bufnr)
-      table.insert(visible_bufs, name)
+  vim.iter(bufs):each(function(buf)
+    if is_buf_visible(buf) then
+      table.insert(visible_bufs, api.nvim_buf_get_name(buf))
     end
-  end
+  end)
 
   return visible_bufs
 end
@@ -202,6 +256,10 @@ function M.highlight_marked_files(bufnr, ns_id)
     table.insert(marked, require('harpoon.mark').get_marked_file_name(idx))
   end
 
+  -- vim.iter(open_files):each(function(file)
+  -- vim.iter()
+  -- end)
+
   for _, open_file in ipairs(open_files) do
     for idx = 1, #marked do
       local marked_file = marked[idx]
@@ -215,11 +273,11 @@ end
 
 ---@param diagnostics vim.Diagnostic[]
 function M.add_missing_commas(diagnostics)
-  for _, diag in pairs(diagnostics) do
+  vim.iter(diagnostics):each(function(diag)
     if diag.message == 'Miss symbol `,` or `;` .' or diag.message == 'Missed symbol `,`.' then
       api.nvim_buf_set_text(0, diag.lnum, diag.col, diag.lnum, diag.col, { ',' })
     end
-  end
+  end)
 end
 
 function M.close_buf()
@@ -303,7 +361,7 @@ function M.has_file(filename)
   return fn.filereadable(fn.getcwd() .. '/' .. filename) == 1 and true or false
 end
 
----@type fun(ctx: {buf: integer, event: string, file: string, id: integer, match: string}): nil
+---@type fun(ctx: {buf: integer, event?: string, file?: string, id?: integer, match?: string}): nil
 function M.create_backdrop(ctx)
   local backdrop_bufnr = vim.api.nvim_create_buf(false, true)
   local winnr = vim.api.nvim_open_win(backdrop_bufnr, false, {

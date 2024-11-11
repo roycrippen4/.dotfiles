@@ -40,8 +40,8 @@ autocmd('BufWritePost', {
   end,
 })
 
--- don't list quickfix buffers
 autocmd('FileType', {
+  desc = "don't list quickfix buffers",
   pattern = 'qf',
   callback = function()
     vim.opt_local.buflisted = false
@@ -167,6 +167,6 @@ autocmd('FileType', {
 
 autocmd('FileType', {
   desc = 'Creates a backdrop effect for large windows',
-  pattern = { 'TelescopePrompt', 'mason', 'lazy' },
+  pattern = { 'TelescopePrompt', 'mason', 'lazy', 'harpoon' },
   callback = require('core.utils').create_backdrop,
 })

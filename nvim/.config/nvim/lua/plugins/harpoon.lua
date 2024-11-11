@@ -16,38 +16,41 @@ local function set_as_first_mark()
 
   ---@type string[]
   local marked = {}
-  for idx = 1, require('harpoon.mark').get_length() do
-    table.insert(marked, require('harpoon.mark').get_marked_file_name(idx))
-  end
+  require('core.utils').range_iter(1, mark.get_length()):each(function(i)
+    marked[i] = require('harpoon.mark').get_marked_file_name(i)
+  end)
+  -- for idx = 1, require('harpoon.mark').get_length() do
+  --   marked[idx] = require('harpoon.mark').get_marked_file_name(idx)
+  -- end
 
-  ---@type integer|nil
-  local file_idx
+  ---@type integer?
+  local idx
 
   if vim.tbl_contains(marked, path) then
-    file_idx = mark.get_current_index()
+    idx = mark.get_current_index()
   else
     mark.add_file()
-    file_idx = mark.get_length()
+    idx = mark.get_length()
   end
 
   ---@type string[]
   local new_marks = {}
-  table.insert(new_marks, mark.get_marked_file_name(file_idx))
+  table.insert(new_marks, mark.get_marked_file_name(idx))
 
-  for _, filepath in pairs(marked) do
+  vim.iter(marked):each(function(filepath)
     if not vim.tbl_contains(new_marks, filepath) then
       table.insert(new_marks, filepath)
     end
-  end
+  end)
 
   mark.set_mark_list(new_marks)
-  vim.cmd('redrawtabline')
+  vim.cmd.redrawtabline()
 end
 
 ---@type LazyPluginSpec
 return {
   'roycrippen4/harpoon',
-  -- dev = true,
+  dev = true,
   keys = {
     { '<c-f>', add_file },
     { '<c-e>', show_menu },
@@ -64,5 +67,7 @@ return {
     { '<c-9>', function() require('harpoon.ui').nav_file(9) vim.cmd('redrawtabline') end },
     -- stylua: ignore end
   },
-  opts = { menu = { width = 80 } },
+  opts = {
+    menu = { width = 80 },
+  },
 }

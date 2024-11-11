@@ -243,10 +243,12 @@ return {
     },
 
     harpoon = {
-      HarpoonBorder = { fg = colors.blue, bg = colors.one_bg },
+      HarpoonBorder = {
+        fg = colors.blue --[[ , bg = colors.black3 ]],
+      },
       HarpoonOpenMark = { fg = colors.pink },
       HarpoonTitle = { fg = colors.one_bg, bg = colors.blue, italic = true },
-      HarpoonWindow = { bg = colors.one_bg },
+      HarpoonNormal = { bg = colors.black3 },
     },
 
     lazy = {
