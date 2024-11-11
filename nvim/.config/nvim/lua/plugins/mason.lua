@@ -3,23 +3,10 @@ return {
   {
     'williamboman/mason.nvim', -- https://github.com/williamboman/mason.nvim
     keys = {
-      { '<leader>M', '<cmd> Mason <cr>' },
+      { '<leader>m', '<cmd> Mason <cr>' },
     },
     cmd = 'Mason',
     opts = {
-      ensure_installed = {
-        'lua-language-server',
-        'stylua',
-        'css-lsp',
-        'html-lsp',
-        'json-language-server',
-        'prettier',
-        'prettierd',
-        'rust-analyzer',
-        'typescript-language-server',
-        'clangd',
-        'clang-format',
-      },
       PATH = 'skip',
       ui = {
         icons = { package_pending = ' ', package_installed = '󰄳 ', package_uninstalled = ' 󰚌' },
@@ -64,7 +51,7 @@ return {
         'rust-analyzer',
         'shfmt',
         'stylua',
-        'svelte-language-server',
+        -- 'svelte-language-server',
         'tailwindcss-language-server',
         'taplo',
         'typescript-language-server',

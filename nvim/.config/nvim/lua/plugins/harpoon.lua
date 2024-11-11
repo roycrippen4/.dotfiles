@@ -19,9 +19,6 @@ local function set_as_first_mark()
   require('core.utils').range_iter(1, mark.get_length()):each(function(i)
     marked[i] = require('harpoon.mark').get_marked_file_name(i)
   end)
-  -- for idx = 1, require('harpoon.mark').get_length() do
-  --   marked[idx] = require('harpoon.mark').get_marked_file_name(idx)
-  -- end
 
   ---@type integer?
   local idx
@@ -50,7 +47,7 @@ end
 ---@type LazyPluginSpec
 return {
   'roycrippen4/harpoon',
-  dev = true,
+  dev = false,
   keys = {
     { '<c-f>', add_file },
     { '<c-e>', show_menu },

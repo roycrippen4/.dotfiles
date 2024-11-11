@@ -372,7 +372,7 @@ function M.create_backdrop(ctx)
     height = vim.o.columns,
     focusable = false,
     style = 'minimal',
-    zindex = 46,
+    zindex = 10,
   })
 
   vim.api.nvim_set_hl(0, 'Backdrop', { bg = '#000000', default = true })
