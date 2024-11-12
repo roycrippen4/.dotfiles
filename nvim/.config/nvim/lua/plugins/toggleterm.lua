@@ -24,6 +24,7 @@ local function test_current_file()
 
   if ft == 'rust' then
     vim.cmd.RustLsp({ 'testables', bang = true })
+    return
   end
 
   vim.notify('Unknown filetype detected! Supported filetypes: zig', vim.log.levels.ERROR)
@@ -104,10 +105,7 @@ return {
         require('core.utils').create_backdrop({ buf = term.bufnr })
       end
     end,
-    highlights = {
-      Normal = { link = 'NvimTreeNormal' },
-      NormalFloat = { link = 'TelescopeNormal' },
-    },
+    highlights = { NormalFloat = { link = 'TelescopeNormal' } },
     float_opts = { border = 'none' },
   },
 }
