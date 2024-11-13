@@ -9,14 +9,14 @@
 ---@field priority integer
 ---@field right_gravity boolean
 
----@class TSInspectionTable
+---@class TreesitterTable
 ---@field capture string
 ---@field hl_group string
 ---@field hl_group_link string
 ---@field lang string
 ---@field metadata table
 
----@class InspectionTable
+---@class LspExtTable
 ---@field col integer
 ---@field end_col integer
 ---@field end_row integer
@@ -29,11 +29,15 @@
 ---@class InspectInfo
 ---@field buffer integer
 ---@field col integer
----@field extmarks InspectionTable[]
+---@field extmarks LspExtTable[]
 ---@field row integer
----@field semantic_tokens InspectionTable[]
----@field syntax table
----@field treesitter TSInspectionTable[]
+---@field semantic_tokens LspExtTable[]
+---@field syntax SyntaxTable[]
+---@field treesitter TreesitterTable[]
+
+---@class SyntaxTable
+---@field hl_group string
+---@field hl_group_link string
 
 ---@class FormattedLinePart
 ---@field text string The text to display
@@ -84,8 +88,10 @@ local function format_inspect_info(inspect_info)
   ---@type FormattedLine[]
   local result = {}
   local idx = 1
-  local has_ts = false
-  local has_lsp = false
+  local has_ts = #vim.tbl_keys(inspect_info.treesitter) and #inspect_info.treesitter > 0 or false
+  local has_lsp = #vim.tbl_keys(inspect_info.semantic_tokens) and #inspect_info.semantic_tokens > 0 or false
+  local has_extmarks = #vim.tbl_keys(inspect_info.extmarks) and #inspect_info.extmarks > 0 or false
+  local has_syntax = #vim.tbl_keys(inspect_info.syntax) and #inspect_info.syntax > 0 or false
 
   ---@param ... FormattedLinePart
   local function insert(...)
@@ -102,11 +108,9 @@ local function format_inspect_info(inspect_info)
     idx = idx + 1
   end
 
-  if #vim.tbl_keys(inspect_info.treesitter) > 0 then
-    has_ts = true
+  if has_ts then
     insert({ text = 'Treesitter', col_start = 0, col_end = 9, hl_group = '@function.call.lua' })
-
-    for _, entry in ipairs(inspect_info.treesitter) do
+    vim.iter(inspect_info.treesitter):each(function(entry) ---@param entry TreesitterTable
       newline()
       local hl_group = {
         text = '  - ' .. entry.hl_group,
@@ -133,20 +137,16 @@ local function format_inspect_info(inspect_info)
         hl_group = '@comment',
       }
       insert(hl_group, links_to, hl_link, lang)
-    end
-
+    end)
     newline()
   end
 
-  if #vim.tbl_keys(inspect_info.semantic_tokens) > 0 then
-    has_lsp = true
+  if has_lsp then
     if has_ts then
       newline()
     end
-
     insert({ text = 'Semantic Tokens', col_start = 0, col_end = 15, hl_group = '@function.lua' })
-
-    for _, entry in ipairs(inspect_info.semantic_tokens) do
+    vim.iter(inspect_info.semantic_tokens):each(function(entry) ---@param entry LspExtTable
       newline()
       local hl_group = {
         text = '  - ' .. entry.opts.hl_group,
@@ -174,18 +174,16 @@ local function format_inspect_info(inspect_info)
         hl_group = '@comment',
       }
       insert(hl_group, links_to, hl_link, priority)
-    end
-
+    end)
     newline()
   end
 
-  if #vim.tbl_keys(inspect_info.extmarks) > 0 then
+  if has_extmarks then
     if has_ts or has_lsp then
       newline()
     end
     insert({ text = 'Extmarks', col_start = 0, col_end = 8, hl_group = '@function.lua' })
-
-    for _, entry in ipairs(inspect_info.extmarks) do
+    vim.iter(inspect_info.extmarks):each(function(entry) ---@param entry LspExtTable
       newline()
       insert({
         text = '  - ' .. entry.opts.hl_group,
@@ -193,7 +191,6 @@ local function format_inspect_info(inspect_info)
         col_end = #entry.opts.hl_group + 4,
         hl_group = entry.opts.hl_group,
       })
-
       if #entry.ns ~= 0 then
         insert({
           text = ' ' .. entry.ns,
@@ -202,8 +199,37 @@ local function format_inspect_info(inspect_info)
           hl_group = '@comment',
         })
       end
-    end
+    end)
+    newline()
+  end
 
+  if has_syntax then
+    if has_ts or has_lsp or has_extmarks then
+      newline()
+    end
+    insert({ text = 'Syntax', col_start = 0, col_end = 6, hl_group = '@function.lua' })
+    vim.iter(inspect_info.syntax):each(function(entry) --- @param entry SyntaxTable
+      newline()
+      local hl_group = {
+        text = '  - ' .. entry.hl_group,
+        col_start = 4,
+        col_end = #entry.hl_group + 4,
+        hl_group = entry.hl_group,
+      }
+      local links_to = {
+        text = ' links to ',
+        col_start = hl_group.col_end,
+        col_end = hl_group.col_end + #' links to ',
+        hl_group = '@function.call.lua',
+      }
+      local hl_link = {
+        text = entry.hl_group_link,
+        col_start = links_to.col_end,
+        col_end = #entry.hl_group_link + links_to.col_end,
+        hl_group = entry.hl_group_link,
+      }
+      insert(hl_group, links_to, hl_link)
+    end)
     newline()
   end
 
