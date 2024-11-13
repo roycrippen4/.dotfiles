@@ -1,5 +1,4 @@
 ---@module "snacks"
-
 ---@type LazyPluginSpec
 return {
   'folke/snacks.nvim',
@@ -11,6 +10,7 @@ return {
     notifier = { timeout = 5000 },
     statuscolumn = { enabled = false },
     words = { enabled = false },
+    styles = { notification = { wo = { wrap = true } } },
   },
   init = function()
     vim.api.nvim_create_autocmd('VimEnter', {

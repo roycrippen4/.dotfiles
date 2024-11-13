@@ -51,7 +51,7 @@ return {
         'rust-analyzer',
         'shfmt',
         'stylua',
-        -- 'svelte-language-server',
+        'svelte-language-server',
         'tailwindcss-language-server',
         'taplo',
         'typescript-language-server',

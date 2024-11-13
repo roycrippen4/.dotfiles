@@ -16,6 +16,14 @@ return {
       ['<C-S-P>'] = { 'scroll_documentation_up', 'fallback' },
       ['<esc>'] = { 'hide', 'fallback' },
     },
+    trigger = {
+      completion = {
+        blocked_trigger_characters = { ' ', '\n', '\t', '>', '/' },
+        show_on_accept_on_trigger_character = false,
+        show_on_insert_on_trigger_character = false,
+        show_in_snippet = true,
+      },
+    },
     nerd_font_variant = 'mono',
     accept = { auto_brackets = { enabled = true } },
     sources = {

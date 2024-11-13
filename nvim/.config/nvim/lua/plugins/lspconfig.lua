@@ -102,6 +102,7 @@ diagnostic.handlers.virtual_text = {
 local function enhanced_float_handler(handler, focusable)
   local limit = vim.o.lines * 0.3
   return function(err, result, ctx, config)
+    config = config or { silent = true }
     local bufnr, winnr = handler(
       err,
       result,

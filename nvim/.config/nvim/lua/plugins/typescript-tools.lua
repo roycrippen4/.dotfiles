@@ -1,7 +1,7 @@
 ---@type LazyPluginSpec
 return {
   'pmizio/typescript-tools.nvim', -- https://github.com/pmizio/typescript-tools.nvim
-  ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact', 'svelte' },
+  ft = { 'typescript', 'javascript', 'typescriptreact', 'javascriptreact' },
   dependencies = {
     'nvim-lua/plenary.nvim', -- https://github.com/nvim-lua/plenary.nvim
     'neovim/nvim-lspconfig', -- https://github.com/neovim/nvim-lspconfig
