@@ -88,6 +88,7 @@ local treesitter = {
   ['@markup.heading.6.marker.markdown'] = { fg = colors.orange, bold = true },
 }
 
+---@module "onedark"
 ---@type LazyPluginSpec
 return {
   'roycrippen4/onedark',
@@ -163,6 +164,7 @@ return {
       Debug = { fg = colors.yellow },
       debugPC = { fg = colors.one_bg, bg = colors.green },
       debugBreakpoint = { fg = colors.one_bg, bg = colors.red },
+      helpCommand = { link = '@function' },
       ToolbarButton = { fg = colors.one_bg, bg = colors.bg_blue },
     },
 
