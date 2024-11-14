@@ -165,7 +165,7 @@ function M.bufferlist()
     end
   end
 
-  return table.concat(buffers) .. '%#TblineFill#' .. '%=' -- buffers + empty space
+  return table.concat(buffers) .. '%#TbLineFill#' .. '%=' -- buffers + empty space
 end
 
 --- runs the tabline components
