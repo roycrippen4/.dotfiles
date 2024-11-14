@@ -35,7 +35,8 @@ local function lsp_definitions()
     end
 
     --- why tf does this work?
-    local locations = vim.bo.ft == 'lua' and {} or vim.lsp.util.locations_to_items(result, client.offset_encoding)
+    local locations = (vim.bo.ft == 'lua' or vim.bo.ft == 'svelte') and {}
+      or vim.lsp.util.locations_to_items(result, client.offset_encoding)
     if #locations > 1 then
       require('telescope.builtin').lsp_definitions({
         cwd = vim.fn.getcwd(),
