@@ -56,6 +56,7 @@ return {
         'tailwindcss-language-server',
         'taplo',
         'typescript-language-server',
+        'vtsls',
         'yaml-language-server',
         'yamlfmt',
         -- 'zls',
