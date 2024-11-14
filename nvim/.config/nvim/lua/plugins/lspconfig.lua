@@ -151,27 +151,88 @@ local function hover_cb(bufnr, winnr, config)
   end
 end
 
-local hover = vim.lsp.buf.hover
----@diagnostic disable-next-line: duplicate-set-field
-vim.lsp.buf.hover = function()
-  return hover({
-    border = 'rounded',
-    max_height = math.floor(vim.o.lines * 0.3),
-    max_width = math.floor(vim.o.columns * 0.5),
-    focusable = true,
-  }, hover_cb)
+--- LSP handler that adds extra inline highlights, keymaps, and window options.
+--- Code inspired from `noice`.
+---@param handler fun(err: any, result: any, ctx: any, config: any): integer?, integer?
+---@param focusable boolean
+---@return fun(err: any, result: any, ctx: any, config: any)
+local function enhanced_float_handler(handler, focusable)
+  local limit = vim.o.lines * 0.3
+  return function(err, result, ctx, config)
+    config = config or { silent = true }
+    local bufnr, winnr = handler(
+      err,
+      result,
+      ctx,
+      vim.tbl_deep_extend('force', config or {}, {
+        border = 'rounded',
+        focusable = focusable,
+        max_height = math.floor(limit),
+        max_width = math.floor(vim.o.columns * 0.4),
+      })
+    )
+    if not bufnr or not winnr then
+      return
+    end
+    add_inline_highlights(bufnr)
+    vim.wo[winnr].concealcursor = 'n'
+    vim.wo[winnr].scrolloff = 0
+    -- stylua: ignore start
+    vim.keymap.set({ 'n', 'i' }, '<C-S-N>', function() scroll(winnr, 4) end, { buffer = true })
+    vim.keymap.set({ 'n', 'i' }, '<C-S-P>', function() scroll(winnr, -4) end, { buffer = true })
+    -- stylua: ignore end
+    if focusable and not vim.b[bufnr].markdown_keys then
+      vim.keymap.set('n', 'K', function()
+        local url = (vim.fn.expand('<cWORD>') --[[@as string]]):match('|(%S-)|')
+        if url then
+          return vim.cmd.help(url)
+        end
+        local col = vim.api.nvim_win_get_cursor(0)[2] + 1
+        local from, to
+        from, to, url = vim.api.nvim_get_current_line():find('%[.-%]%((%S-)%)')
+        if from and col >= from and col <= to then
+          vim.system({ 'xdg-open', url }, nil, function(res)
+            if res.code ~= 0 then
+              vim.notify('Failed to open URL' .. url, vim.log.levels.ERROR)
+            end
+          end)
+        end
+      end, { buffer = bufnr, silent = true })
+      vim.b[bufnr].markdown_keys = true
+    end
+  end
 end
 
-local signature_help = vim.lsp.buf.signature_help
----@diagnostic disable-next-line: duplicate-set-field
-vim.lsp.buf.signature_help = function()
-  return signature_help({
-    border = 'rounded',
-    max_height = math.floor(vim.o.lines * 0.3),
-    max_width = math.floor(vim.o.columns * 0.5),
-    focusable = false,
-    title = '',
-  }, hover_cb)
+if vim.fn.has('nvim-0.11') == 1 then
+  local hover = vim.lsp.buf.hover
+  ---@diagnostic disable-next-line: duplicate-set-field
+  vim.lsp.buf.hover = function()
+    ---@diagnostic disable-next-line
+    return hover({
+      border = 'rounded',
+      max_height = math.floor(vim.o.lines * 0.3),
+      max_width = math.floor(vim.o.columns * 0.5),
+      focusable = true,
+      ---@diagnostic disable-next-line
+    }, hover_cb)
+  end
+
+  local signature_help = vim.lsp.buf.signature_help
+  ---@diagnostic disable-next-line: duplicate-set-field
+  vim.lsp.buf.signature_help = function()
+    ---@diagnostic disable-next-line
+    return signature_help({
+      border = 'rounded',
+      max_height = math.floor(vim.o.lines * 0.3),
+      max_width = math.floor(vim.o.columns * 0.5),
+      focusable = false,
+      title = '',
+      ---@diagnostic disable-next-line
+    }, hover_cb)
+  end
+else
+  vim.lsp.handlers[vim.lsp.protocol.Methods.textDocument_hover] = enhanced_float_handler(vim.lsp.handlers.hover, true)
+  vim.lsp.handlers[vim.lsp.protocol.Methods.textDocument_signatureHelp] = enhanced_float_handler(vim.lsp.handlers.signature_help, false)
 end
 
 ---@param bufnr integer
