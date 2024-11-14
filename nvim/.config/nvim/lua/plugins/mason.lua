@@ -42,6 +42,7 @@ return {
         'html-lsp',
         'htmx-lsp',
         'hyprls',
+        'js-debug-adapter',
         'json-lsp',
         'lua-language-server',
         'marksman',
