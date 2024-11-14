@@ -1,49 +1,45 @@
--- local fn = vim.fn
--- local map = vim.keymap.set
--- local ms = vim.lsp.protocol.Methods
+--- Returns the height of the buffer in the window
+---@param winnr integer
+---@return integer
+local function win_buf_height(winnr)
+  local buf = vim.api.nvim_win_get_buf(winnr)
 
--- --- Returns the height of the buffer in the window
--- ---@param winnr integer
--- ---@return integer
--- local function win_buf_height(winnr)
---   local buf = api.nvim_win_get_buf(winnr)
+  if not vim.wo[winnr].wrap then
+    return vim.api.nvim_buf_line_count(buf)
+  end
 
---   if not vim.wo[winnr].wrap then
---     return api.nvim_buf_line_count(buf)
---   end
+  local width = vim.api.nvim_win_get_width(winnr)
+  local lines = vim.api.nvim_buf_get_lines(buf, 0, -1, false)
+  local height = 0
+  vim.iter(lines):each(function(l)
+    height = height + math.max(1, (math.ceil(vim.fn.strwidth(l) / width)))
+  end)
+  return height
+end
 
---   local width = api.nvim_win_get_width(winnr)
---   local lines = api.nvim_buf_get_lines(buf, 0, -1, false)
---   local height = 0
---   vim.iter(lines):each(function(l)
---     height = height + math.max(1, (math.ceil(fn.strwidth(l) / width)))
---   end)
---   return height
--- end
+--- Scrolls the window by delta lines
+---@param winnr integer
+---@param delta integer
+local function scroll(winnr, delta)
+  local info = vim.fn.getwininfo(winnr)[1] or {}
+  local top = info.topline or 1
 
--- --- Scrolls the window by delta lines
--- ---@param winnr integer
--- ---@param delta integer
--- local function scroll(winnr, delta)
---   local info = fn.getwininfo(winnr)[1] or {}
---   local top = info.topline or 1
+  if not vim.api.nvim_win_is_valid(winnr) then
+    return
+  end
 
---   if not vim.api.nvim_win_is_valid(winnr) then
---     return
---   end
+  local buf = vim.api.nvim_win_get_buf(winnr)
+  top = top + delta
+  top = math.max(top, 1)
+  top = math.min(top, win_buf_height(winnr) - info.height + 1)
 
---   local buf = api.nvim_win_get_buf(winnr)
---   top = top + delta
---   top = math.max(top, 1)
---   top = math.min(top, win_buf_height(winnr) - info.height + 1)
-
---   vim.defer_fn(function()
---     api.nvim_buf_call(buf, function()
---       api.nvim_command('noautocmd silent! normal! ' .. top .. 'zt')
---       api.nvim_exec_autocmds('WinScrolled', { modeline = false })
---     end)
---   end, 0)
--- end
+  vim.defer_fn(function()
+    vim.api.nvim_buf_call(buf, function()
+      vim.api.nvim_command('noautocmd silent! normal! ' .. top .. 'zt')
+      vim.api.nvim_exec_autocmds('WinScrolled', { modeline = false })
+    end)
+  end, 0)
+end
 
 -- Override the virtual text diagnostic handler so that the most severe diagnostic is shown first.
 local show_handler = vim.diagnostic.handlers.virtual_text.show
@@ -61,31 +57,97 @@ vim.diagnostic.handlers.virtual_text = {
 
 local md_namespace = vim.api.nvim_create_namespace('lsp_float')
 
---- Adds extra inline highlights to the given buffer.
+--- Adds extra inline highlights to the given buffer with specific processing for parameter-type matches.
 ---@param buf integer
 local function add_inline_highlights(buf)
   for l, line in ipairs(vim.api.nvim_buf_get_lines(buf, 0, -1, false)) do
     for pattern, hl_group in pairs({
-      ['@%S+'] = '@parameter',
+      ['@%S+'] = '@variable.parameter',
       ['^%s*(Parameters:)'] = '@text.title',
       ['^%s*(Return:)'] = '@text.title',
       ['^%s*(See also:)'] = '@text.title',
       ['{%S-}'] = '@parameter',
       ['|%S-|'] = '@text.reference',
+      ['%f[%w][%a_]+:%s*[%w_%.]+%??'] = '@parameter.type',
     }) do
       local from = 1 ---@type integer?
       while from do
         local to
         from, to = line:find(pattern, from)
         if from then
-          vim.api.nvim_buf_set_extmark(buf, md_namespace, l - 1, from - 1, {
-            end_col = to,
-            hl_group = hl_group,
-          })
+          if hl_group == '@parameter.type' then
+            -- Handle `param: type` format specifically
+            local param_type_text = line:sub(from, to)
+            local param_name, param_type = param_type_text:match('([%a_]+):%s*([%w_%.]+%??)')
+            if param_name and param_type then
+              -- Calculate positions for param_name and param_type
+              local param_start = from - 1
+              local param_end = param_start + #param_name
+              local type_start = param_end + 1 + #': ' -- offset for `: ` separator
+              local type_end = type_start + #param_type
+
+              -- Set extmark for param_name
+              vim.api.nvim_buf_set_extmark(buf, md_namespace, l - 1, param_start, {
+                end_col = param_end,
+                hl_group = '@lsp.type.parameter',
+                priority = 150,
+              })
+
+              -- Set extmark for param_type
+              vim.api.nvim_buf_set_extmark(buf, md_namespace, l - 1, type_start - 1, {
+                end_col = type_end - 1,
+                hl_group = '@type',
+                priority = 150,
+              })
+            end
+          else
+            -- Regular highlighting for other patterns
+            vim.api.nvim_buf_set_extmark(buf, md_namespace, l - 1, from - 1, {
+              end_col = to,
+              hl_group = hl_group,
+              priority = 150,
+            })
+          end
         end
         from = to and to + 1 or nil
       end
     end
+  end
+end
+
+--- Callback function that runs when floating preview windows open
+---@param bufnr integer
+---@param winnr integer
+---@param config vim.lsp.buf.hover.Opts
+local function hover_cb(bufnr, winnr, config)
+  add_inline_highlights(bufnr)
+  vim.wo[winnr].concealcursor = 'n'
+  vim.wo[winnr].scrolloff = 0
+
+    -- stylua: ignore start
+    vim.keymap.set({ 'n', 'i' }, '<C-S-N>', function() scroll(winnr, 4) end, { buffer = true })
+    vim.keymap.set({ 'n', 'i' }, '<C-S-P>', function() scroll(winnr, -4) end, { buffer = true })
+  -- stylua: ignore end
+
+  if config.focusable and not vim.b[bufnr].markdown_keys then
+    vim.keymap.set('n', 'K', function()
+      local url = (vim.fn.expand('<cWORD>') --[[@as string]]):match('|(%S-)|')
+      if url then
+        return vim.cmd.help(url)
+      end
+
+      local col = vim.api.nvim_win_get_cursor(0)[2] + 1
+      local from, to
+      from, to, url = vim.api.nvim_get_current_line():find('%[.-%]%((%S-)%)')
+      if from and col >= from and col <= to then
+        vim.system({ 'xdg-open', url }, nil, function(res)
+          if res.code ~= 0 then
+            vim.notify('Failed to open URL' .. url, vim.log.levels.ERROR)
+          end
+        end)
+      end
+    end, { buffer = bufnr, silent = true })
+    vim.b[bufnr].markdown_keys = true
   end
 end
 
@@ -95,8 +157,9 @@ vim.lsp.buf.hover = function()
   return hover({
     border = 'rounded',
     max_height = math.floor(vim.o.lines * 0.3),
-    max_width = math.floor(vim.o.columns * 0.4),
-  })
+    max_width = math.floor(vim.o.columns * 0.5),
+    focusable = true,
+  }, hover_cb)
 end
 
 local signature_help = vim.lsp.buf.signature_help
@@ -105,69 +168,11 @@ vim.lsp.buf.signature_help = function()
   return signature_help({
     border = 'rounded',
     max_height = math.floor(vim.o.lines * 0.3),
-    max_width = math.floor(vim.o.columns * 0.4),
-  })
+    max_width = math.floor(vim.o.columns * 0.5),
+    focusable = false,
+    title = '',
+  }, hover_cb)
 end
-
--- --- LSP handler that adds extra inline highlights, keymaps, and window options.
--- --- Code inspired from `noice`.
--- ---@param handler fun(err: any, result: any, ctx: any, config: any): integer?, integer?
--- ---@param focusable boolean
--- ---@return fun(err: any, result: any, ctx: any, config: any)
--- local function enhanced_float_handler(handler, focusable)
---   local limit = vim.o.lines * 0.3
---   return function(err, result, ctx, config)
---     config = config or { silent = true }
---     local bufnr, winnr = handler(
---       err,
---       result,
---       ctx,
---       vim.tbl_deep_extend('force', config or {}, {
---         border = 'rounded',
---         focusable = focusable,
---         max_height = math.floor(limit),
---         max_width = math.floor(vim.o.columns * 0.4),
---       })
---     )
-
---     if not bufnr or not winnr then
---       return
---     end
-
---     add_inline_highlights(bufnr)
---     vim.wo[winnr].concealcursor = 'n'
---     vim.wo[winnr].scrolloff = 0
-
---     -- stylua: ignore start
---     map({ 'n', 'i' }, '<C-S-N>', function() scroll(winnr, 4) end, { buffer = true })
---     map({ 'n', 'i' }, '<C-S-P>', function() scroll(winnr, -4) end, { buffer = true })
---     -- stylua: ignore end
-
---     if focusable and not vim.b[bufnr].markdown_keys then
---       map('n', 'K', function()
---         local url = (fn.expand('<cWORD>') --[[@as string]]):match('|(%S-)|')
---         if url then
---           return vim.cmd.help(url)
---         end
-
---         local col = api.nvim_win_get_cursor(0)[2] + 1
---         local from, to
---         from, to, url = api.nvim_get_current_line():find('%[.-%]%((%S-)%)')
---         if from and col >= from and col <= to then
---           vim.system({ 'xdg-open', url }, nil, function(res)
---             if res.code ~= 0 then
---               vim.notify('Failed to open URL' .. url, vim.log.levels.ERROR)
---             end
---           end)
---         end
---       end, { buffer = bufnr, silent = true })
---       vim.b[bufnr].markdown_keys = true
---     end
---   end
--- end
-
--- lsp.handlers[ms.textDocument_hover] = enhanced_float_handler(lsp.handlers.hover, true)
--- lsp.handlers[ms.textDocument_signatureHelp] = enhanced_float_handler(lsp.handlers.signature_help, false)
 
 ---@param bufnr integer
 ---@param contents string[]
