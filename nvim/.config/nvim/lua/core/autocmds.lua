@@ -70,7 +70,7 @@ autocmd('FileType', {
   pattern = 'harpoon',
   callback = function()
     local bufnr = vim.api.nvim_get_current_buf()
-    require('core.utils').highlight_marked_files(bufnr, harpoon_ns)
+    U.highlight_marked_files(bufnr, harpoon_ns)
     vim.keymap.set('n', 'K', '', { silent = true, buffer = bufnr, desc = 'Disable `K` keymap in harpoon win' })
   end,
 })
@@ -150,7 +150,7 @@ autocmd('BufWritePre', {
   callback = function()
     local diagnostics = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
     if #diagnostics > 0 then
-      require('core.utils').add_missing_commas(diagnostics)
+      U.add_missing_commas(diagnostics)
     end
   end,
 })
@@ -168,5 +168,5 @@ autocmd('FileType', {
 autocmd('FileType', {
   desc = 'Creates a backdrop effect for large windows',
   pattern = { 'TelescopePrompt', 'mason', 'lazy', 'harpoon' },
-  callback = require('core.utils').create_backdrop,
+  callback = U.create_backdrop,
 })

@@ -4,7 +4,7 @@ local augroup = api.nvim_create_augroup
 local autocmd = api.nvim_create_autocmd
 local clear_autocmds = api.nvim_clear_autocmds
 
-local M = {}
+_G.U = {}
 
 ---Generates an array of numbers from start to stop with step n
 ---Table is end-inclusive
@@ -12,7 +12,7 @@ local M = {}
 ---@param stop integer Stopping point
 ---@param step integer? Step size
 ---@return integer[]
-function M.range(start, stop, step)
+function U.range(start, stop, step)
   if start == stop then
     return { start }
   end
@@ -61,21 +61,19 @@ end
 ---@param stop integer Stopping point
 ---@param step integer? Step size
 ---@return Iter
-function M.range_iter(start, stop, step)
-  return vim.iter(M.range(start, stop, step))
+function U.range_iter(start, stop, step)
+  return vim.iter(U.range(start, stop, step))
 end
 
 local function organize_imports()
-  local valid_fts = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' }
+  -- local valid_fts = { 'typescript', 'typescriptreact', 'javascript', 'javascriptreact' }
 
-  if vim.tbl_contains(valid_fts, vim.bo.filetype) then
-    vim.cmd('TSToolsOrganizeImports')
-  else
-    vim.lsp.buf.code_action({
-      apply = true,
-      context = { only = { 'source.organizeImports' }, diagnostics = {} },
-    })
-  end
+  -- if vim.tbl_contains(valid_fts, vim.bo.filetype) then
+  vim.lsp.buf.code_action({
+    apply = true,
+    context = { only = { 'source.organizeImports' }, diagnostics = {} },
+  })
+  -- else
 end
 
 --- Toggles diagnostics
@@ -118,7 +116,7 @@ local function setup_signature_helper(bufnr, client)
 end
 
 ---@param client vim.lsp.Client
-local function svelte_change_check(client)
+local function svelte(client)
   if client.name == 'svelte' then
     autocmd('BufWritePost', {
       group = augroup('svelte_ondidchangetsorjsfile', { clear = true }),
@@ -131,6 +129,79 @@ local function svelte_change_check(client)
 end
 
 ---@param client vim.lsp.Client
+local function ts(client, _)
+  if client.name ~= 'vtsls' then
+    return
+  end
+
+  --- this fixes a strange vtsls warning message
+  client.commands['_typescript.didOrganizeImports'] = function() end
+
+  client.handlers['workspace/executeCommand'] = function(err, _, result, _)
+    if err and err.message:match('_typescript.didOrganizeImports') then
+      return nil
+    end
+    return vim.lsp.handlers['workspace/executeCommand'](err, _, result, _)
+  end
+
+  client.commands['_typescript.moveToFileRefactoring'] = function(command, _)
+    ---@type string, string, lsp.Range
+    ---@diagnostic disable-next-line
+    local action, uri, range = unpack(command.arguments)
+
+    local function move(newf)
+      log('move')
+      client.request('workspace/executeCommand', {
+        command = command.command,
+        arguments = { action, uri, range, newf },
+      })
+    end
+
+    ---@diagnostic disable-next-line
+    local fname = vim.uri_to_fname(uri)
+    client.request('workspace/executeCommand', {
+      command = 'typescript.tsserverRequest',
+      arguments = {
+        'getMoveToRefactoringFileSuggestions',
+        {
+          file = fname,
+          ---@diagnostic disable-next-line
+          startLine = range.start.line + 1,
+          ---@diagnostic disable-next-line
+          startOffset = range.start.character + 1,
+          ---@diagnostic disable-next-line
+          endLine = range['end'].line + 1,
+          ---@diagnostic disable-next-line
+          endOffset = range['end'].character + 1,
+        },
+      },
+    }, function(_, result)
+      ---@type string[]
+      local files = result.body.files
+      table.insert(files, 1, 'Enter new path...')
+      vim.ui.select(files, {
+        prompt = 'Select move destination:',
+        format_item = function(f)
+          return vim.fn.fnamemodify(f, ':~:.')
+        end,
+      }, function(f)
+        if f and f:find('^Enter new path') then
+          vim.ui.input({
+            prompt = 'Enter move destination:',
+            default = vim.fn.fnamemodify(fname, ':h') .. '/',
+            completion = 'file',
+          }, function(newf)
+            return newf and move(newf)
+          end)
+        elseif f then
+          move(f)
+        end
+      end)
+    end)
+  end
+end
+
+---@param client vim.lsp.Client
 local function cpp_setup(client)
   if client.name == 'clangd' then
     require('clangd_extensions.inlay_hints').setup_autocmd()
@@ -139,38 +210,34 @@ local function cpp_setup(client)
 end
 
 ---@param additional_keymaps? wk.Mapping[]
-function M.set_lsp_mappings(additional_keymaps)
-  local keymaps = {
-    -- stylua: ignore start
-    mode = 'n',
-    { '<leader>lo', organize_imports,                    desc = '[L]SP Organize Imports',     icon = '󰶘' },
-    { '<leader>lh', toggle_inlay_hints,                  desc = '[L]SP Inlay Hints',          icon = '󰊠' },
-    { '<leader>ld', toggle_diagnostics,                  desc = '[L]SP Diagnostics',          icon = '' },
-    { '<leader>r',  vim.lsp.buf.rename,                  desc = 'Refactor',                   icon = '' },
-    { '<leader>la', vim.lsp.buf.code_action,             desc = '[L]SP Code Action',          icon = '' },
-    { '<leader>lf', vim.diagnostic.open_float,           desc = '[L]SP Floating Diagnostics', icon = '󰉪' },
-    { '<leader>li', '<cmd> LspInfo <cr>',                desc = '[L]SP Server Info',          icon = '' },
-    { '<leader>lR', '<cmd> LspRestart <cr>',             desc = '[L]SP Restart Servers',      icon = '' },
-    -- stylua: ignore end
-  }
-
-  keymaps = vim.tbl_deep_extend('force', keymaps, additional_keymaps or {})
-
-  require('which-key').add({ keymaps })
+function U.set_lsp_mappings(additional_keymaps)
+  require('which-key').add({
+    vim.tbl_deep_extend('force', {
+      mode = 'n',
+      { '<leader>lo', organize_imports, desc = '[L]SP Organize Imports', icon = '󰶘' },
+      { '<leader>lh', toggle_inlay_hints, desc = '[L]SP Inlay Hints', icon = '󰊠' },
+      { '<leader>ld', toggle_diagnostics, desc = '[L]SP Diagnostics', icon = '' },
+      { '<leader>r', vim.lsp.buf.rename, desc = 'Refactor', icon = '' },
+      { '<leader>la', vim.lsp.buf.code_action, desc = '[L]SP Code Action', icon = '' },
+      { '<leader>lf', vim.diagnostic.open_float, desc = '[L]SP Floating Diagnostics', icon = '󰉪' },
+      { '<leader>li', '<cmd> LspInfo <cr>', desc = '[L]SP Server Info', icon = '' },
+      { '<leader>lR', '<cmd> LspRestart <cr>', desc = '[L]SP Restart Servers', icon = '' },
+    }, additional_keymaps or {}),
+  })
 end
 
 ---@param client vim.lsp.Client
----@param bufnr integer
-function M.on_attach(client, bufnr)
-  M.set_lsp_mappings()
-  svelte_change_check(client)
+---@param bufnr integer,
+function U.on_attach(client, bufnr)
+  U.set_lsp_mappings()
+  svelte(client)
+  ts(client, bufnr)
   setup_signature_helper(bufnr, client)
   cpp_setup(client)
 end
 
-M.capabilities = vim.lsp.protocol.make_client_capabilities()
--- vim.tbl_deep_extend('force', {}, vim.lsp.protocol.make_client_capabilities(), require('cmp_nvim_lsp').default_capabilities())
-M.capabilities.textDocument.completion.completionItem = {
+U.capabilities = vim.lsp.protocol.make_client_capabilities()
+U.capabilities.textDocument.completion.completionItem = {
   documentationFormat = { 'markdown', 'plaintext' },
   snippetSupport = true,
   preselectSupport = true,
@@ -247,7 +314,7 @@ end
 --- Adds highlighting to any marked files that are currently visible
 ---@param bufnr integer harpoon.ui buffer handle
 ---@param ns_id integer namespace identifier
-function M.highlight_marked_files(bufnr, ns_id)
+function U.highlight_marked_files(bufnr, ns_id)
   local open_files = list_open_files()
 
   ---@type string[]
@@ -272,7 +339,7 @@ function M.highlight_marked_files(bufnr, ns_id)
 end
 
 ---@param diagnostics vim.Diagnostic[]
-function M.add_missing_commas(diagnostics)
+function U.add_missing_commas(diagnostics)
   vim.iter(diagnostics):each(function(diag)
     if diag.message == 'Miss symbol `,` or `;` .' or diag.message == 'Missed symbol `,`.' then
       api.nvim_buf_set_text(0, diag.lnum, diag.col, diag.lnum, diag.col, { ',' })
@@ -280,7 +347,7 @@ function M.add_missing_commas(diagnostics)
   end)
 end
 
-function M.close_buf()
+function U.close_buf()
   if #api.nvim_list_wins() == 1 and string.sub(api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
     vim.cmd([[ q ]])
   else
@@ -288,7 +355,7 @@ function M.close_buf()
   end
 end
 
-function M.send_to_black_hole()
+function U.send_to_black_hole()
   local line_content = fn.line('.')
   if type(line_content) == 'string' and string.match(line_content, '^%s*$') then
     vim.cmd('normal! "_dd')
@@ -344,25 +411,25 @@ local function toggle_text()
   return false
 end
 
-function M.ctrl_x()
+function U.ctrl_x()
   if not toggle_text() then
     feed('<C-x>', 'n')
   end
 end
 
-function M.ctrl_a()
+function U.ctrl_a()
   if not toggle_text() then
     feed('<C-a>', 'n')
   end
 end
 
 ---@param filename string
-function M.has_file(filename)
+function U.has_file(filename)
   return fn.filereadable(fn.getcwd() .. '/' .. filename) == 1 and true or false
 end
 
 ---@type fun(ctx: {buf: integer, event?: string, file?: string, id?: integer, match?: string}): nil
-function M.create_backdrop(ctx)
+function U.create_backdrop(ctx)
   local backdrop_bufnr = vim.api.nvim_create_buf(false, true)
   local winnr = vim.api.nvim_open_win(backdrop_bufnr, false, {
     relative = 'editor',
@@ -396,4 +463,23 @@ function M.create_backdrop(ctx)
   })
 end
 
-return M
+--- Gets a path to a package in the Mason registry.
+--- Prefer this to `get_package`, since the package might not always be
+--- available yet and trigger errors.
+---@param pkg string
+---@param path? string
+---@param opts? { warn?: boolean }
+function U.get_pkg_path(pkg, path, opts)
+  pcall(require, 'mason')
+  local root = vim.env.MASON or (vim.fn.stdpath('data') .. '/mason')
+  opts = opts or {}
+  opts.warn = opts.warn == nil and true or opts.warn
+  path = path or ''
+  local ret = root .. '/packages/' .. pkg .. '/' .. path
+  if opts.warn and not vim.uv.fs_stat(ret) then
+    Snacks.notify.warn(('Mason package path not found for **%s**:\n- `%s`\nYou may need to force update the package.'):format(pkg, path))
+  end
+  return ret
+end
+
+return U

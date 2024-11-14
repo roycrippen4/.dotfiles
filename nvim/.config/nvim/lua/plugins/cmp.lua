@@ -84,6 +84,6 @@ return {
   },
   config = function(_, opts)
     require('blink.cmp').setup(opts)
-    require('blink.cmp').get_lsp_capabilities(require('core.utils').capabilities)
+    require('blink.cmp').get_lsp_capabilities(U.capabilities)
   end,
 }

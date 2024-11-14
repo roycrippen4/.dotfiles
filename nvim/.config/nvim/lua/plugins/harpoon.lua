@@ -16,7 +16,7 @@ local function set_as_first_mark()
 
   ---@type string[]
   local marked = {}
-  require('core.utils').range_iter(1, mark.get_length()):each(function(i)
+  U.range_iter(1, mark.get_length()):each(function(i)
     marked[i] = require('harpoon.mark').get_marked_file_name(i)
   end)
 

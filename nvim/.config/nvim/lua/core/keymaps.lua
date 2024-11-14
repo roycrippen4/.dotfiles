@@ -1,6 +1,5 @@
 local map = vim.keymap.set
 local tabline = require('local.tabufline')
-local utils = require('core.utils')
 local wk = require('which-key')
 
 wk.add({
@@ -14,7 +13,7 @@ wk.add({
     { '<leader>v',        '<C-w>v',                       desc = 'Vertical Split',    icon = '' },
     { '<leader>h',        '<C-w>s',                       desc = 'Horizontal Split',  icon = '' },
     { '<leader>lf',       vim.diagnostic.open_float,      desc = '[L]SP Show Errors', icon = '' },
-    { '<leader>x',        utils.close_buf,                desc = 'Close Buffer',      icon = '' },
+    { '<leader>x',        U.close_buf,                    desc = 'Close Buffer',      icon = '' },
     -- stylua: ignore end
   },
 })
@@ -40,9 +39,9 @@ map('n', '<M-j>',   ':m .+1<cr>==',              { desc = 'Shift line down'     
 map('n', '<M-k>',   ':m .-2<cr>==',              { desc = 'Shift line up'                     })
 map('n', 'L',       tabline.next,                { desc = 'Go to next tabufline buffer'       })
 map('n', 'H',       tabline.prev,                { desc = 'Go to prev tabufline buffer'       })
-map('n', 'dd',      utils.send_to_black_hole,    { desc = 'smart delete'                      })
-map('n', '<C-a>',   utils.ctrl_a,                { desc = 'Extended increment'                })
-map('n', '<C-x>',   utils.ctrl_x,                { desc = 'Extended decrement'                })
+map('n', 'dd',      U.send_to_black_hole,        { desc = 'smart delete'                      })
+map('n', '<C-a>',   U.ctrl_a,                    { desc = 'Extended increment'                })
+map('n', '<C-x>',   U.ctrl_x,                    { desc = 'Extended decrement'                })
 -- stylua: ignore end
 
 local cursor_moved = '<cmd>lua vim.api.nvim_exec_autocmds("CursorMoved", {})<cr>'

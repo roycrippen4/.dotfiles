@@ -75,12 +75,12 @@ return {
     formatters = {
       biome = {
         condition = function()
-          return require('core.utils').has_file('biome.json')
+          return U.has_file('biome.json')
         end,
       },
       prettier = {
         condition = function()
-          return not require('core.utils').has_file('biome.json')
+          return not U.has_file('biome.json')
         end,
       },
     },
@@ -101,7 +101,7 @@ return {
         return
       end
 
-      return { timeout_ms = 500, lsp_fallback = true }
+      return { timeout_ms = 1000, lsp_fallback = true }
     end,
   },
 }
