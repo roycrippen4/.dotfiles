@@ -7,9 +7,8 @@ return {
   lazy = false,
   ---@type snacks.Config
   opts = {
-    notifier = { timeout = 5000 },
-    statuscolumn = { enabled = false },
-    words = { enabled = false },
+    notifier = { timeout = 5000, enabled = true },
+    bigfile = { enabled = true },
     styles = { notification = { wo = { wrap = true } } },
   },
   init = function()
