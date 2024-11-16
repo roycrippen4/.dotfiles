@@ -62,54 +62,30 @@ local md_namespace = vim.api.nvim_create_namespace('lsp_float')
 local function add_inline_highlights(buf)
   for l, line in ipairs(vim.api.nvim_buf_get_lines(buf, 0, -1, false)) do
     for pattern, hl_group in pairs({
+      ["'%S-'"] = '@string',
+      ['"%S-"'] = '@string',
       ['@%S+'] = '@variable.parameter',
       ['^%s*(Parameters:)'] = '@text.title',
       ['^%s*(Return:)'] = '@text.title',
       ['^%s*(See also:)'] = '@text.title',
-      ['{%S-}'] = '@parameter',
-      ['|%S-|'] = '@text.reference',
-      ['%f[%w][%a_]+:%s*[%w_%.]+%??'] = '@parameter.type',
+      ['{%S-}'] = '@variable.parameter',
+      ['|%S-|'] = '@markup.link',
     }) do
       local from = 1 ---@type integer?
       while from do
         local to
         from, to = line:find(pattern, from)
         if from then
-          if hl_group == '@parameter.type' then
-            -- Handle `param: type` format specifically
-            local param_type_text = line:sub(from, to)
-            local param_name, param_type = param_type_text:match('([%a_]+):%s*([%w_%.]+%??)')
-            if param_name and param_type then
-              -- Calculate positions for param_name and param_type
-              local param_start = from - 1
-              local param_end = param_start + #param_name
-              local type_start = param_end + 1 + #': ' -- offset for `: ` separator
-              local type_end = type_start + #param_type
-
-              -- Set extmark for param_name
-              vim.api.nvim_buf_set_extmark(buf, md_namespace, l - 1, param_start, {
-                end_col = param_end,
-                hl_group = '@lsp.type.parameter',
-                priority = 150,
-              })
-
-              -- Set extmark for param_type
-              vim.api.nvim_buf_set_extmark(buf, md_namespace, l - 1, type_start - 1, {
-                end_col = type_end - 1,
-                hl_group = '@type',
-                priority = 150,
-              })
-            end
-          else
-            -- Regular highlighting for other patterns
+          if hl_group == 'CONCEAL' then
             vim.api.nvim_buf_set_extmark(buf, md_namespace, l - 1, from - 1, {
               end_col = to,
               hl_group = hl_group,
               priority = 150,
+              virt_text = { { ' ', 'Comment' } },
             })
           end
+          from = to and to + 1 or nil
         end
-        from = to and to + 1 or nil
       end
     end
   end
@@ -231,7 +207,9 @@ if vim.fn.has('nvim-0.11') == 1 then
     }, hover_cb)
   end
 else
+  ---@diagnostic disable-next-line
   vim.lsp.handlers[vim.lsp.protocol.Methods.textDocument_hover] = enhanced_float_handler(vim.lsp.handlers.hover, true)
+  ---@diagnostic disable-next-line
   vim.lsp.handlers[vim.lsp.protocol.Methods.textDocument_signatureHelp] = enhanced_float_handler(vim.lsp.handlers.signature_help, false)
 end
 
@@ -247,9 +225,7 @@ vim.lsp.util.stylize_markdown = function(bufnr, contents, opts)
   vim.bo[bufnr].filetype = 'markdown'
   vim.treesitter.start(bufnr)
   vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, contents)
-
   add_inline_highlights(bufnr)
-
   return contents
 end
 

@@ -137,10 +137,13 @@ local function ts(client, _)
   --- this fixes a strange vtsls warning message
   client.commands['_typescript.didOrganizeImports'] = function() end
 
+  ---@diagnostic disable-next-line
   client.handlers['workspace/executeCommand'] = function(err, _, result, _)
     if err and err.message:match('_typescript.didOrganizeImports') then
       return nil
     end
+
+    ---@diagnostic disable-next-line
     return vim.lsp.handlers['workspace/executeCommand'](err, _, result, _)
   end
 
@@ -255,87 +258,10 @@ U.capabilities.textDocument.completion.completionItem = {
   },
 }
 
-local skip_ft = {
-  'NvimTree',
-  'Trouble',
-  'alpha',
-  'dap-repl',
-  'dapui_breakpoints',
-  'dapui_console',
-  'dapui_scopes',
-  'dapui_stacks',
-  'dapui_watches',
-  'dashboard',
-  'fidget',
-  'help',
-  'harpoon',
-  'lazy',
-  'logger',
-  'noice',
-  'nvcheatsheet',
-  'nvdash',
-  'terminal',
-  'toggleterm',
-  'vim',
-}
-
 ---@param key string
 ---@param mode string
 function _G.feed(key, mode)
   api.nvim_feedkeys(api.nvim_replace_termcodes(key, true, true, true), mode, true)
-end
-
---- Get's a list of absolute paths for all open files. Ignores plugin windows/buffers
----@return string[] open_files list of open files
-local function list_open_files()
-  local bufs = api.nvim_list_bufs()
-  local visible_bufs = {}
-
-  ---@param bufnr integer
-  ---@return boolean
-  local function is_buf_visible(bufnr)
-    local wins = api.nvim_list_wins()
-    local should_skip = vim.tbl_contains(skip_ft, vim.bo[bufnr].ft) or api.nvim_buf_get_name(bufnr) == ''
-
-    return vim.iter(wins):any(function(win)
-      return api.nvim_win_get_buf(win) == bufnr and not should_skip
-    end)
-  end
-
-  vim.iter(bufs):each(function(buf)
-    if is_buf_visible(buf) then
-      table.insert(visible_bufs, api.nvim_buf_get_name(buf))
-    end
-  end)
-
-  return visible_bufs
-end
-
---- Adds highlighting to any marked files that are currently visible
----@param bufnr integer harpoon.ui buffer handle
----@param ns_id integer namespace identifier
-function U.highlight_marked_files(bufnr, ns_id)
-  local open_files = list_open_files()
-
-  ---@type string[]
-  local marked = {}
-  for idx = 1, require('harpoon.mark').get_length() do
-    table.insert(marked, require('harpoon.mark').get_marked_file_name(idx))
-  end
-
-  -- vim.iter(open_files):each(function(file)
-  -- vim.iter()
-  -- end)
-
-  for _, open_file in ipairs(open_files) do
-    for idx = 1, #marked do
-      local marked_file = marked[idx]
-
-      if string.find(open_file, marked_file) then
-        api.nvim_buf_add_highlight(bufnr, ns_id, 'HarpoonOpenMark', idx - 1, 0, -1)
-      end
-    end
-  end
 end
 
 ---@param diagnostics vim.Diagnostic[]
