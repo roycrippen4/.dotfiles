@@ -1,6 +1,5 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
-local namespace = vim.api.nvim_create_namespace
 local pattern = { 'DressingInput', 'help', 'logger', 'man', 'qf', 'query', 'scratch', 'undotree', 'telescope', 'TelescopePrompt' }
 local general = augroup('general', { clear = true })
 
@@ -61,17 +60,6 @@ autocmd('ExitPre', {
   group = augroup('StopDaemons', { clear = true }),
   callback = function()
     vim.fn.jobstart(vim.fn.expand('$HOME') .. '/.bin/stop-nvim-daemons.sh', { detach = true })
-  end,
-})
-
-local harpoon_ns = namespace('Harpoon"tmarks"')
-autocmd('FileType', {
-  group = general,
-  pattern = 'harpoon',
-  callback = function()
-    local bufnr = vim.api.nvim_get_current_buf()
-    U.highlight_marked_files(bufnr, harpoon_ns)
-    vim.keymap.set('n', 'K', '', { silent = true, buffer = bufnr, desc = 'Disable `K` keymap in harpoon win' })
   end,
 })
 
@@ -167,6 +155,6 @@ autocmd('FileType', {
 
 autocmd('FileType', {
   desc = 'Creates a backdrop effect for large windows',
-  pattern = { 'TelescopePrompt', 'mason', 'lazy', 'harpoon' },
+  pattern = { 'TelescopePrompt', 'mason', 'lazy' },
   callback = U.create_backdrop,
 })

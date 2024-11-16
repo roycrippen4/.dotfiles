@@ -2,7 +2,7 @@ local blacklist = {
   'NvimTree',
   'Trouble',
   'TelescopePrompt',
-  'harpoon',
+  'poon',
   'toggleterm',
   'logger',
 }
@@ -55,7 +55,7 @@ local skip_ft = {
   'dashboard',
   'fidget',
   'help',
-  'harpoon',
+  'poon',
   'lazy',
   'logger',
   'noice',

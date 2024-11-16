@@ -159,7 +159,7 @@ local function file_info()
 
   local filetypes = {
     DressingInput = { icon = '  ', label = 'INPUT BOX' },
-    harpoon = { icon = '  ', label = 'HARPOON' },
+    poon = { icon = '  ', label = 'POON' },
     lspinfo = { icon = '  ', label = 'LSP INFO' },
     mason = { icon = '%#StatusLineMason# 󱌣 ', label = 'MASON' },
     undotree = { icon = '  ', label = 'UNDOTREE' },
@@ -271,7 +271,7 @@ autocmd('ModeChanged', {
   callback = function()
     local hl = get_hl(0, { name = modes[get_mode().mode].hl })
     set_hl(0, 'StatusLineNvimTree', { fg = hl.fg, bg = hl.bg, italic = true })
-    set_hl(0, 'StatusLineHarpoon', { fg = hl.fg, bg = hl.bg, italic = true })
+    set_hl(0, 'StatusLinePoon', { fg = hl.fg, bg = hl.bg, italic = true })
   end,
 })
 

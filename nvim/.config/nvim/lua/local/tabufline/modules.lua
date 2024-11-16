@@ -44,13 +44,6 @@ local function get_btns_width() -- close, theme toggle btn etc
   return width
 end
 
--- currently running original harpoon. use the above function when you switch back
----@param bufnr integer
----@return integer
-local function is_buf_marked(bufnr)
-  return tonumber(string.sub(require('harpoon.mark').status(bufnr), 2, 2)) --[[@as integer]]
-end
-
 --- adds file info to the buffer tab
 ---@param name string
 ---@param bufnr integer
@@ -96,7 +89,13 @@ local function add_file_info(name, bufnr)
     local l_pad = pad - r_pad
     local maxname_len = 16
 
-    local idx = is_buf_marked(bufnr)
+    local idx
+    if require('poon').mark.is_marked(bufnr) then
+      local full_path = vim.api.nvim_buf_get_name(bufnr)
+      local relative_path = vim.fn.fnamemodify(full_path, ':.')
+      idx = require('poon').mark.get_index(relative_path)
+    end
+
     local marked_on = '%#TbLineMarkedBufOn# ' .. '󰫈 '
     local marked_off = '%#TbLineMarkedBufOff# ' .. '󰋙 '
 
@@ -104,8 +103,8 @@ local function add_file_info(name, bufnr)
     name = (api.nvim_get_current_buf() == bufnr and '%#TbLineBufOn# ' .. name) or ('%#TbLineBufOff# ' .. name)
 
     if idx ~= nil then
-      local harpoon_icon = (api.nvim_get_current_buf() == bufnr and '%#TbLineMarkedBufOn#' .. idx .. marked_on) or idx .. marked_off
-      return string.rep(' ', l_pad) .. (harpoon_icon .. name) .. string.rep(' ', r_pad)
+      local poon_icon = (api.nvim_get_current_buf() == bufnr and '%#TbLineMarkedBufOn#' .. idx .. marked_on) or idx .. marked_off
+      return string.rep(' ', l_pad) .. (poon_icon .. name) .. string.rep(' ', r_pad)
     end
 
     return string.rep(' ', l_pad) .. name .. string.rep(' ', r_pad)
