@@ -10,9 +10,13 @@ local hl_mapping = {
     if value.bg then
       table.insert(out, ('#%06x'):format(value.bg))
     end
+
+    ---@diagnostic disable-next-line
     if value.link then
+      ---@diagnostic disable-next-line
       table.insert(out, 'link: ' .. value.link)
     end
+
     if #out > 0 then
       local to_copy = table.concat(out, '\n')
       vim.fn.setreg('+', to_copy)
@@ -44,7 +48,12 @@ local function lsp_definitions()
         client_id = ctx.client_id,
       })
     else
-      vim.lsp.util.jump_to_location(result[1], client.offset_encoding)
+      if vim.fn.has('nvim-0.11') == 1 then
+        vim.lsp.util.show_document(result[1], client.offset_encoding, { focus = true })
+      else
+        ---@diagnostic disable-next-line
+        vim.lsp.util.jump_to_location(result[1], client.offset_encoding)
+      end
     end
   end)
 end
