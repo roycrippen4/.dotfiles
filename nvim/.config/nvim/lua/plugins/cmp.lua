@@ -31,9 +31,9 @@ return {
         enabled_providers = { 'lsp', 'path', 'snippets', 'lazydev' },
       },
       providers = {
-        lsp = { fallback_for = { 'lazydev' } },
+        lsp = { name = 'LSP', fallback_for = { 'lazydev' } },
         lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink' },
-        snippets = { score_offset = -4 },
+        snippets = { name = 'Snippets', score_offset = -4 },
       },
     },
     windows = {
