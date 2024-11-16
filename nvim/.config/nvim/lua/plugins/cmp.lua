@@ -18,7 +18,7 @@ return {
     },
     trigger = {
       completion = {
-        blocked_trigger_characters = { ' ', '\n', '\t', '>', '/' },
+        blocked_trigger_characters = { ' ', '\n', '\t', '>' },
         show_on_accept_on_trigger_character = false,
         show_on_insert_on_trigger_character = false,
         show_in_snippet = true,
