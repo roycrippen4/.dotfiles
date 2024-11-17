@@ -22,10 +22,5 @@ return {
     -- stylua: ignore end
   },
   ---@type poon.Config
-  opts = {
-    restore = {
-      on_startup = true,
-      integrations = { nvim_tree = true },
-    },
-  },
+  opts = { restore_on_startup = true },
 }
