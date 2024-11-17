@@ -274,11 +274,11 @@ function U.add_missing_commas(diagnostics)
 end
 
 function U.close_buf()
-  if #api.nvim_list_wins() == 1 and string.sub(api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
-    vim.cmd([[ q ]])
-  else
-    require('local.tabufline').close_buffer()
-  end
+  -- if #api.nvim_list_wins() == 1 and string.sub(api.nvim_buf_get_name(0), -10) == 'NvimTree_1' then
+  --   vim.cmd([[ q ]])
+  -- else
+  require('local.tabufline').close_buffer()
+  -- end
 end
 
 function U.send_to_black_hole()
