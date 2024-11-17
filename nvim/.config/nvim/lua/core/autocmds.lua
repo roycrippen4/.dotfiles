@@ -143,7 +143,13 @@ autocmd('BufWritePre', {
   end,
 })
 
-autocmd('CmdwinEnter', { command = 'setfiletype vim', desc = 'Fixes highlighting in the cmdwin' })
+autocmd('CmdwinEnter', {
+  desc = 'Fixes highlighting in the cmdwin',
+  callback = function()
+    vim.bo.ft = 'python'
+    vim.bo.ft = 'vim'
+  end,
+})
 
 autocmd('FileType', {
   group = general,
