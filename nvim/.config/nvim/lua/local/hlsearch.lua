@@ -77,7 +77,7 @@ local function should_format_svelte_block()
     or check_svelte_await(current_node)
 end
 
----@return boolean|nil
+---@return boolean?
 local function should_format_lua_func()
   if vim.bo.ft ~= 'lua' then
     return false

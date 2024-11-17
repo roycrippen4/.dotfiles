@@ -86,7 +86,7 @@ return {
     },
 
     ---@param bufnr integer
-    ---@return { timeout_ms: number, lsp_fallback: boolean }|nil
+    ---@return { timeout_ms: number, lsp_fallback: boolean }?
     format_on_save = function(bufnr)
       if vim.tbl_contains({ 'sql', 'java' }, vim.bo[bufnr].filetype) then
         return

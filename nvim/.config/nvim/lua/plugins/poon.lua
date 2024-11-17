@@ -2,11 +2,10 @@
 ---@type LazyPluginSpec
 return {
   'roycrippen4/poon.nvim',
-  dev = false,
+  dev = true,
   lazy = false,
   keys = {
     -- stylua: ignore start
-    { '<C-S-D>', function() require('poon').mark.remove()    end },
     { '<c-f>',   function() require('poon').mark.set()       end },
     { 'B',       function() require('poon').mark.set_first() end },
     { '<c-e>',   function() require('poon').menu.toggle()    end },
@@ -21,6 +20,5 @@ return {
     { '<c-9>',   function() require('poon').mark.jump(9)     end },
     -- stylua: ignore end
   },
-  ---@type poon.Config
-  opts = { restore_on_startup = true },
+  opts = {},
 }

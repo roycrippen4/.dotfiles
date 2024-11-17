@@ -1,38 +1,15 @@
-local new_timer = vim.uv.new_timer
-local schedule = vim.schedule_wrap
+local autocmd = vim.api.nvim_create_autocmd
+local augroup = vim.api.nvim_create_augroup
 
-local lsp = vim.lsp
-local get_clients = lsp.get_clients
-
-local fn = vim.fn
-local get_line = fn.line
-local get_col = fn.col
-local mode = fn.mode
-local fnamemodify = fn.fnamemodify
-local getcwd = fn.getcwd
-local expand = fn.expand
-
-local api = vim.api
-local autocmd = api.nvim_create_autocmd
-local get_mode = api.nvim_get_mode
-local set_hl = api.nvim_set_hl
-local get_hl = api.nvim_get_hl
-local win_get_buf = api.nvim_win_get_buf
-local buf_get_name = api.nvim_buf_get_name
-local augroup = api.nvim_create_augroup
-
-local abs = math.abs
-local floor = math.floor
-
----@type nil|uv_timer_t
+---@type uv_timer_t?
 local timer = nil
 
 local function time()
   if not timer then
-    timer = new_timer()
+    timer = vim.uv.new_timer()
   end
 
-  timer:start(1000, 1000, schedule(vim.cmd.redrawstatus))
+  timer:start(1000, 1000, vim.schedule_wrap(vim.cmd.redrawstatus))
 
   return '%#StatusLineTime# ' .. os.date('%I:%M:%S %p ', os.time())
 end
@@ -102,12 +79,12 @@ local modes = {
   ['!'] = { text = 'SHELL', hl = 'StatusLineTerminalMode', icon = '  ' },
 }
 
-local function st_mode()
-  local entry = modes[get_mode().mode]
+local function mode()
+  local entry = modes[vim.api.nvim_get_mode().mode]
   local entry_hl = '%#' .. entry.hl .. '#'
   local current_mode = entry_hl .. entry.icon .. entry.text .. ' ' .. entry_hl .. ''
 
-  local recording_register = fn.reg_recording()
+  local recording_register = vim.fn.reg_recording()
 
   if recording_register == '' then
     return current_mode
@@ -131,14 +108,15 @@ local function truncate_filename(filename)
   end
 
   local base_len = max_len - #extension - 1
-  local partial_len = floor(base_len / 2)
+  local partial_len = math.floor(base_len / 2)
 
   return base_name:sub(1, partial_len) .. '…' .. base_name:sub(-partial_len) .. '.' .. extension
 end
 
 local function file_info()
   local icon = ' 󰈚 '
-  local path = buf_get_name(win_get_buf(0))
+  local buf = vim.api.nvim_win_get_buf(0)
+  local path = vim.api.nvim_buf_get_name(buf)
   local name = (path == '' and 'Empty ') or path:match('([^/\\]+)[/\\]*$')
 
   if name == '[Command Line]' then
@@ -179,7 +157,7 @@ local function file_info()
 end
 
 local function git()
-  local bufnr = win_get_buf(0)
+  local bufnr = vim.api.nvim_win_get_buf(0)
   if not vim.b[bufnr].gitsigns_head or vim.b[bufnr].gitsigns_git_status then
     return '%#StatusLineEmptySpace#'
   end
@@ -215,8 +193,9 @@ end
 
 local function lsp_status()
   if rawget(vim, 'lsp') then
-    for _, client in ipairs(get_clients()) do
-      if client.attached_buffers[win_get_buf(0)] then
+    for _, client in ipairs(vim.lsp.get_clients()) do
+      local buf = vim.api.nvim_win_get_buf(0)
+      if client.attached_buffers[buf] then
         return (vim.o.columns > 100 and '%#StatusLineLspStatus#' .. '   LSP [' .. client.name .. '] ') or '   LSP '
       end
     end
@@ -226,15 +205,21 @@ local function lsp_status()
 end
 
 local function cursor_position()
-  local current_mode = mode(true)
-  local v_line, v_col = get_line('v'), get_col('v')
-  local cur_line, cur_col = get_line('.'), get_col('.')
+  local current_mode = vim.fn.mode(true)
+  local v_line, v_col = vim.fn.line('v'), vim.fn.col('v')
+  local cur_line, cur_col = vim.fn.line('.'), vim.fn.col('.')
 
   if current_mode == '' then
-    return '%#StatusLineVisualMode#' .. '' .. ' Ln ' .. abs(v_line - cur_line) + 1 .. ', Col ' .. abs(v_col - cur_col) + 1 .. ' '
+    return '%#StatusLineVisualMode#'
+      .. ''
+      .. ' Ln '
+      .. math.abs(v_line - cur_line) + 1
+      .. ', Col '
+      .. math.abs(v_col - cur_col) + 1
+      .. ' '
   end
 
-  local total_lines = abs(v_line - cur_line) + 1
+  local total_lines = math.abs(v_line - cur_line) + 1
   if current_mode == 'V' then
     local cur_line_is_bigger = v_line and cur_line and v_line < cur_line
 
@@ -247,7 +232,7 @@ local function cursor_position()
 
   if current_mode == 'v' then
     if v_line == cur_line then
-      return '%#StatusLineVisualMode#' .. ' Col ' .. abs(v_col - cur_col) + 1 .. ' '
+      return '%#StatusLineVisualMode#' .. ' Col ' .. math.abs(v_col - cur_col) + 1 .. ' '
     else
       return '%#StatusLineVisualMode#' .. ' Ln ' .. total_lines .. ' '
     end
@@ -257,21 +242,21 @@ local function cursor_position()
 end
 
 local function cwd()
-  local dir_name = '%#StatusLineCwd#' .. '' .. ' 󰉖 ' .. fnamemodify(getcwd(), ':t') .. ' '
+  local dir_name = '%#StatusLineCwd#' .. '' .. ' 󰉖 ' .. vim.fn.fnamemodify(vim.fn.getcwd(), ':t') .. ' '
   return (vim.o.columns > 85 and dir_name) or ''
 end
 
 local function package_info()
-  return expand('%:t') == 'package.json' and require('package-info').get_status() or ''
+  return vim.fn.expand('%:t') == 'package.json' and require('package-info').get_status() or ''
 end
 
 autocmd('ModeChanged', {
   desc = 'Dynamically changes the highlight group of the statusline mode segment based on the current mode',
   group = augroup('StatusLineMode', { clear = true }),
   callback = function()
-    local hl = get_hl(0, { name = modes[get_mode().mode].hl })
-    set_hl(0, 'StatusLineNvimTree', { fg = hl.fg, bg = hl.bg, italic = true })
-    set_hl(0, 'StatusLinePoon', { fg = hl.fg, bg = hl.bg, italic = true })
+    local hl = vim.api.nvim_get_hl(0, { name = modes[vim.api.nvim_get_mode().mode].hl })
+    vim.api.nvim_set_hl(0, 'StatusLineNvimTree', { fg = hl.fg, bg = hl.bg, italic = true })
+    vim.api.nvim_set_hl(0, 'StatusLinePoon', { fg = hl.fg, bg = hl.bg, italic = true })
   end,
 })
 
@@ -279,8 +264,8 @@ autocmd('BufEnter', {
   desc = 'Dynamically changes the highlight group of the statusline filetype icon based on the current file',
   group = augroup('StatusLineFiletype', { clear = true }),
   callback = function()
-    local _, hl_group = require('nvim-web-devicons').get_icon(expand('%:t'))
-    set_hl(0, 'StatusLineFtIcon', { fg = get_hl(0, { name = hl_group }).fg, bg = '#21252b' })
+    local _, hl_group = require('nvim-web-devicons').get_icon(vim.fn.expand('%:t'))
+    vim.api.nvim_set_hl(0, 'StatusLineFtIcon', { fg = vim.api.nvim_get_hl(0, { name = hl_group }).fg, bg = '#21252b' })
   end,
 })
 
@@ -288,7 +273,7 @@ vim.opt.statusline = "%!v:lua.require('local.statusline')()"
 
 return function()
   return table.concat({
-    st_mode(),
+    mode(),
     file_info(),
     git(),
     '%=',

@@ -88,7 +88,6 @@ autocmd('FileType', {
 autocmd('VimEnter', {
   desc = 'Sets terminal titlestring to the current working directory',
   group = general,
-  pattern = 'NvimTree_1',
   once = true,
   callback = function()
     local cwd = vim.fn.getcwd()

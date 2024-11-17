@@ -47,7 +47,7 @@ end
 --- adds file info to the buffer tab
 ---@param name string
 ---@param bufnr integer
----@return string | nil
+---@return string?
 local function add_file_info(name, bufnr)
   if name ~= ' No Name ' then
     for _, value in ipairs(vim.t.bufs) do
@@ -135,12 +135,6 @@ end
 ---------------------------------------------------------- components ------------------------------------------------------------
 local M = {}
 
---- sets the overlay above the nvim-tree window
---- @return string
-function M.nvimtree_overlay()
-  return '%#NvimTreeNormal#' .. string.rep(' ', get_nvim_tree_width() - 1)
-end
-
 --- sets the buffer list on the tabline
 --- @return string
 function M.bufferlist()
@@ -171,7 +165,7 @@ end
 --- @return string
 function M.run()
   local modules = {
-    M.nvimtree_overlay(),
+    '%#NvimTreeNormal#' .. string.rep(' ', get_nvim_tree_width() - 1),
     M.bufferlist(),
   }
 
