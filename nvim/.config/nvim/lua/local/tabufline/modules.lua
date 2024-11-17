@@ -165,7 +165,7 @@ end
 --- @return string
 function M.run()
   local modules = {
-    '%#NvimTreeNormal#' .. string.rep(' ', get_nvim_tree_width() - 1),
+    '%#TbLineFill#' .. string.rep(' ', get_nvim_tree_width() - 1),
     M.bufferlist(),
   }
 
