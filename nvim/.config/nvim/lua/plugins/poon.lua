@@ -2,8 +2,8 @@
 ---@type LazyPluginSpec
 return {
   'roycrippen4/poon.nvim',
-  dev = true,
-  lazy = false,
+  dev = false,
+  lazy = true,
   keys = {
     -- stylua: ignore start
     { '<c-f>',   function() require('poon').mark.set()       end },

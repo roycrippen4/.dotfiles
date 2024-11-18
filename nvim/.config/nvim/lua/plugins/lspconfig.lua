@@ -449,9 +449,9 @@ return {
 
     lspconfig['protols'].setup({})
 
-    lspconfig['denols'].setup({
-      on_attach = U.on_attach,
-      capabilities = U.capabilities,
-    })
+    -- lspconfig['denols'].setup({
+    --   on_attach = U.on_attach,
+    --   capabilities = U.capabilities,
+    -- })
   end,
 }

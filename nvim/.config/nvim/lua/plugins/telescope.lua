@@ -92,10 +92,14 @@ return {
       build = 'make',
     },
     'nvim-lua/plenary.nvim',
+    'folke/which-key.nvim',
     'nvim-tree/nvim-web-devicons',
     'nvim-telescope/telescope-ui-select.nvim',
     'roycrippen4/telescope-treesitter-info.nvim',
-    'folke/which-key.nvim',
+    {
+      'debugloop/telescope-undo.nvim',
+      keys = { { '<leader>u', '<cmd>Telescope undo<cr>' } },
+    },
   },
   config = function()
     local builtin = require('telescope.builtin')
@@ -154,6 +158,14 @@ return {
         qflist_previewer = previewers.vim_buffer_qflist.new,
         mappings = { n = { ['q'] = require('telescope.actions').close } },
       },
+      extensions = {
+        undo = {
+          mappings = {
+            n = { ['<cr>'] = require('telescope-undo.actions').restore },
+            i = { ['<cr>'] = require('telescope-undo.actions').restore },
+          },
+        },
+      },
       pickers = {
         highlights = { mappings = { i = hl_mapping, n = hl_mapping } },
       },
@@ -162,5 +174,6 @@ return {
     telescope.load_extension('fzf')
     telescope.load_extension('ui-select')
     telescope.load_extension('treesitter_info')
+    telescope.load_extension('undo')
   end,
 }

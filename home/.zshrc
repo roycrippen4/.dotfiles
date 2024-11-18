@@ -71,14 +71,14 @@ source "$ZSH"/oh-my-zsh.sh
 alias nvim="$HOME/.dotfiles/home/.bin/vim-cli"
 alias vim="$HOME/.dotfiles/home/.bin/vim-cli"
 
-# y() {
-#   local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
-#   yazi "$@" --cwd-file="$tmp"
-#   if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
-#     builtin cd -- "$cwd"
-#   fi
-#   rm -f -- "$tmp"
-# }
+y() {
+  local tmp="$(mktemp -t "yazi-cwd.XXXXXX")" cwd
+  yazi "$@" --cwd-file="$tmp"
+  if cwd="$(command cat -- "$tmp")" && [ -n "$cwd" ] && [ "$cwd" != "$PWD" ]; then
+    builtin cd -- "$cwd"
+  fi
+  rm -f -- "$tmp"
+}
 
 go_to_nvim_config() {
   c "$HOME/.dotfiles/nvim/.config/nvim/"
@@ -141,7 +141,6 @@ alias nconf=go_to_nvim_config
 alias ndev=go_to_neodev_config
 alias wconf=go_to_wofi_config
 alias bconf=go_to_waybar_config
-alias y=yazi
 
 alias dcb="sudo docker compose build"
 alias dcu="sudo docker compose up"
