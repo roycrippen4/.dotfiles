@@ -7,7 +7,11 @@ autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = augroup('kickstart-highlight-yank', { clear = true }),
   callback = function()
-    vim.hl.on_yank()
+    if vim.fn.has('nvim-0.11') == 1 then
+      vim.hl.on_yank()
+    else
+      vim.highlight.on_yank()
+    end
   end,
 })
 
