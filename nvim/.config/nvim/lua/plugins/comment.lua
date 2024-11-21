@@ -1,6 +1,6 @@
 ---@type LazyPluginSpec
 return {
-  'roycrippen4/Comment.nvim', -- https://github.com/roycrippen4/Comment.nvim
+  'numToStr/Comment.nvim', -- https://github.com/roycrippen4/Comment.nvim
   event = 'BufEnter',
   dependencies = {
     {
@@ -9,6 +9,7 @@ return {
     },
   },
   config = function()
+    ---@diagnostic disable-next-line
     require('Comment').setup({
       pre_hook = require('ts_context_commentstring.integrations.comment_nvim').create_pre_hook(),
       ignore = '^$',
