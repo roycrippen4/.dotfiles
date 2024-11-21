@@ -19,8 +19,9 @@ fi
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 # go
-export GOPATH="$HOME/go"
-export PATH="$GOPATH/bin:$PATH"
+export PATH="$PATH:/usr/local/go/bin"
+# export GOPATH="$HOME/go"
+# export PATH="$GOPATH/bin:$PATH"
 
 # Editor settings
 export VISUAL=nvim
