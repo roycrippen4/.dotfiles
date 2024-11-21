@@ -87,6 +87,7 @@ return {
     },
     { 'sharkdp/fd', build = 'cargo binstall fd-find -y', dependencies = 'cargo-bins/cargo-binstall' },
     { 'BurntSushi/ripgrep', build = 'cargo binstall ripgrep', dependencies = 'cargo-bins/cargo-binstall' },
+    { 'dandavison/delta', build = 'cargo binstall git-delta', dependencies = 'cargo-bins/cargo-binstall' },
     {
       'nvim-telescope/telescope-fzf-native.nvim', -- https://github.com/nvim-telescope/telescope-fzf-native.nvim
       build = 'make',
