@@ -250,6 +250,7 @@ return {
     lazy = {
       LazyNormal = { bg = colors.black },
       LazyProp = { fg = colors.sun, bg = colors.black },
+      LazyTaskOutput = { link = 'LazyNormal' },
     },
 
     mason = {
