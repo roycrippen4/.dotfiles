@@ -1,15 +1,12 @@
-local api = vim.api
-local b = vim.b
-local cmd = vim.cmd
-local g = vim.g
+local autocmd = vim.api.nvim_create_autocmd
 local user_command = vim.api.nvim_create_user_command
 
 ---@param args { bang: boolean }
 user_command('FormatDisable', function(args)
   if args.bang then
-    b.disable_autoformat = true
+    vim.b.disable_autoformat = true
   else
-    g.disable_autoformat = true
+    vim.g.disable_autoformat = true
   end
 end, {
   desc = 'Disable autoformat-on-save',
@@ -17,12 +14,13 @@ end, {
 })
 
 user_command('FormatEnable', function()
-  b.disable_autoformat = false
-  g.disable_autoformat = false
+  vim.b.disable_autoformat = false
+  vim.g.disable_autoformat = false
 end, {
   desc = 'Re-enable autoformat-on-save',
 })
 
+---@module "conform"
 ---@type LazyPluginSpec
 return {
   'stevearc/conform.nvim', -- https://github.com/stevearc/conform.nvim
@@ -33,75 +31,50 @@ return {
       '<leader>tf',
       mode = 'n',
       function()
-        if not g.disable_autoformat then
-          cmd.FormatDisable()
-          g.disable_autoformat = true
+        if not vim.g.disable_autoformat then
+          vim.cmd.FormatDisable()
+          vim.g.disable_autoformat = true
           print('Autoformat disabled')
         else
-          cmd.FormatEnable()
-          g.disable_autoformat = false
+          vim.cmd.FormatEnable()
+          vim.g.disable_autoformat = false
           print('Autoformat enabled')
         end
       end,
       desc = '  Toggle autoformat-on-save',
     },
   },
-  ---@module "conform"
-  --- @type conform.setupOpts
+  ---@type conform.setupOpts
   opts = {
-    notify_on_error = false,
-    quiet = false,
+    log_level = vim.log.levels.DEBUG,
     formatters_by_ft = {
       c = { 'clang-format' },
       cpp = { 'clang-format' },
-      css = { 'prettier', 'biome' },
-      html = { 'prettier', 'biome' },
-      javascript = { 'prettier', 'biome' },
-      javascriptreact = { 'prettier', 'biome' },
-      json = { 'prettier', 'biome' },
+      css = { 'prettierd', 'prettier', stop_after_first = true },
+      html = { 'prettierd', 'prettier', stop_after_first = true },
+      javascript = { 'prettierd', 'prettier', stop_after_first = true },
+      javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
+      json = { 'prettierd', 'prettier', stop_after_first = true },
       lua = { 'stylua' },
-      markdown = { 'prettier', 'biome' },
+      markdown = { 'prettierd', 'prettier', stop_after_first = true },
       ocaml = { 'ocamlformat' },
       proto = { 'clang-format' },
       python = { 'black' },
       rust = { 'rustfmt' },
       sh = { 'shfmt' },
-      svelte = { 'prettier', 'biome' },
-      typescript = { 'prettier', 'biome' },
-      typescriptreact = { 'prettier', 'biome' },
+      svelte = { 'prettierd', 'prettier', stop_after_first = true },
+      typescript = { 'prettierd', 'prettier', stop_after_first = true },
+      typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       yaml = { 'yamlfmt' },
     },
-
-    formatters = {
-      biome = {
-        condition = function()
-          return U.has_file('biome.json')
-        end,
-      },
-      prettier = {
-        condition = function()
-          return not U.has_file('biome.json')
-        end,
-      },
-    },
-
-    ---@param bufnr integer
-    ---@return { timeout_ms: number, lsp_fallback: boolean }?
-    format_on_save = function(bufnr)
-      if vim.tbl_contains({ 'sql', 'java' }, vim.bo[bufnr].filetype) then
-        return
-      end
-
-      if g.disable_autoformat or b[bufnr].disable_autoformat then
-        return
-      end
-
-      local bufname = api.nvim_buf_get_name(bufnr)
-      if bufname:match('/node_modules/') then
-        return
-      end
-
-      return { timeout_ms = 1000, lsp_fallback = true }
-    end,
   },
+  config = function(_, opts)
+    require('conform').setup(opts)
+    autocmd('BufWritePre', {
+      pattern = '*',
+      callback = function(args)
+        require('conform').format({ bufnr = args.buf })
+      end,
+    })
+  end,
 }

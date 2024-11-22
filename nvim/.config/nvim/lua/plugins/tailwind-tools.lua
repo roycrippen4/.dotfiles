@@ -14,7 +14,29 @@ return {
   opts = {
     ---@type TailwindTools.ServerOption
     server = {
-      settings = { lint = { invalidApply = false } },
+      settings = {
+        lint = {
+          cssConflict = 'warning',
+          invalidApply = 'error',
+          invalidConfigPath = 'error',
+          invalidScreen = 'error',
+          invalidTailwindDirective = 'error',
+          invalidVariant = 'error',
+        },
+        experimental = {
+          classRegex = {
+            'tw`([^`]*)',
+            'tw="([^"]*)',
+            'tw={"([^"}]*)',
+            'tw\\.\\w+`([^`]*)',
+            'tw\\(.*?\\)`([^`]*)',
+            { 'clsx\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+            { 'classnames\\(([^)]*)\\)', "'([^']*)'" },
+            { 'cva\\(([^)]*)\\)', '["\'`]([^"\'`]*).*?["\'`]' },
+            { 'cn\\(([^)]*)\\)', "(?:'|\"|`)([^']*)(?:'|\"|`)" },
+          },
+        },
+      },
     },
   },
 }
