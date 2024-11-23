@@ -27,6 +27,11 @@ local function test_current_file()
     return
   end
 
+  if ft == 'lua' then
+    vim.cmd('TermExec direction=vertical size=80 cmd="./scripts/test"')
+    return
+  end
+
   vim.notify('Unknown filetype detected! Supported filetypes: zig', vim.log.levels.ERROR)
 end
 
