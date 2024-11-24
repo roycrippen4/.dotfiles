@@ -4,12 +4,33 @@ return {
   'saghen/blink.cmp',
   lazy = false,
   build = 'cargo build --release',
-  dependencies = 'rafamadriz/friendly-snippets',
+  dependencies = {
+    { 'saghen/blink.compat', opts = { impersonate_nvim_cmp = true } },
+    'saadparwaiz1/cmp_luasnip',
+    {
+      'L3MON4D3/LuaSnip',
+      version = 'v2.*',
+      build = 'make install_jsregexp',
+      dependencies = {
+        {
+          'rafamadriz/friendly-snippets',
+          config = function()
+            require('luasnip.loaders.from_vscode').lazy_load()
+            require('luasnip.loaders.from_vscode').load({ paths = { vim.fn.expand('~/.config/nvim/snippets') } })
+          end,
+        },
+      },
+      -- stylua: ignore
+      keys = {
+        { mode = { 'i', 's' }, '<s-tab>', function() require('luasnip').jump(-1) end, { silent = true } },
+        { mode = 's', '<tab>', function() require('luasnip').jump(1) end, { silent = true } },
+        { mode = 'i', '<tab>', function() return require('luasnip').jumpable(1) and '<Plug>luasnip-jump-next' or '<tab>' end, { expr = true, silent = true } },
+      },
+    },
+  },
   opts = { ---@type blink.cmp.Config
     keymap = {
       ['<cr>'] = { 'accept', 'fallback' },
-      ['<tab>'] = { 'snippet_forward', 'fallback' },
-      ['<s-tab>'] = { 'snippet_backward', 'fallback' },
       ['<c-n>'] = { 'select_next', 'fallback' },
       ['<c-p>'] = { 'select_prev', 'fallback' },
       ['<C-S-N>'] = { 'scroll_documentation_down', 'fallback' },
@@ -25,15 +46,25 @@ return {
       },
     },
     nerd_font_variant = 'mono',
-    accept = { auto_brackets = { enabled = true } },
+    accept = {
+      auto_brackets = { enabled = true },
+      expand_snippet = function(...)
+        require('luasnip').lsp_expand(...)
+      end,
+    },
     sources = {
       completion = {
-        enabled_providers = { 'lsp', 'path', 'snippets', 'lazydev' },
+        enabled_providers = { 'lsp', 'path', 'luasnip', 'lazydev' },
       },
       providers = {
         lsp = { name = 'LSP', fallback_for = { 'lazydev' } },
         lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink' },
-        snippets = { name = 'Snippets', score_offset = -4 },
+        luasnip = {
+          name = 'luasnip',
+          module = 'blink.compat.source',
+          score_offset = -3,
+          opts = { use_show_condition = false, show_autosnippets = true },
+        },
       },
     },
     windows = {
