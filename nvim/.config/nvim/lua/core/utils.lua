@@ -408,4 +408,20 @@ function U.get_pkg_path(pkg, path, opts)
   return ret
 end
 
+--- Recursively gets a given node's anscestor of a given type
+---@param types string[] will return the first node that matches one of these types
+---@param node TSNode? current node
+---@return TSNode?
+function U.find_node_ancestor(types, node)
+  if not node then
+    return nil
+  end
+
+  if vim.tbl_contains(types, node:type()) then
+    return node
+  end
+
+  return U.find_node_ancestor(types, node:parent())
+end
+
 return U
