@@ -11,22 +11,6 @@ require('nvim-surround').buffer_setup({
   },
 })
 
--- TODO: Fix this to work properly
-vim.keymap.set('i', '<BS>', function()
-  if vim.bo.ft ~= 'lua' then
-    return '<BS>'
-  end
-
-  local pos = vim.api.nvim_win_get_cursor(0)
-  local type = vim.treesitter.get_node({ pos = { pos[1] - 1, pos[2] } }):type()
-
-  if type ~= 'string_content' and type ~= 'string' then
-    return '<BS>'
-  end
-
-  return '<BS>'
-end, { desc = 'Delete both `<` and `>` in strings when `<cursor>`', expr = true })
-
 vim.keymap.set('i', '<', function()
   if vim.bo.ft ~= 'lua' then
     return '<'
