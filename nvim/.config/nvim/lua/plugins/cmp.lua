@@ -5,7 +5,6 @@ return {
   lazy = false,
   build = 'cargo build --release',
   dependencies = {
-    { 'saghen/blink.compat', opts = { impersonate_nvim_cmp = true } },
     'saadparwaiz1/cmp_luasnip',
     {
       'L3MON4D3/LuaSnip',
@@ -20,13 +19,19 @@ return {
           end,
         },
       },
-      -- stylua: ignore
       keys = {
-        { mode = { 'i', 's' }, '<s-tab>', function() require('luasnip').jump(-1) end, { silent = true } },
-        { mode = 's', '<tab>', function() require('luasnip').jump(1) end, { silent = true } },
-        { mode = 'i', '<tab>', function() return require('luasnip').jumpable(1) and '<Plug>luasnip-jump-next' or '<tab>' end, { expr = true, silent = true } },
+        { mode = { 'i', 's' }, '<tab>' },
+        { mode = { 'i', 's' }, '<s-tab>' },
       },
+      config = function()
+        -- stylua: ignore start
+        vim.keymap.set({ 'i', 's' }, '<s-tab>', function() require('luasnip').jump(-1) end, { silent = true })
+        vim.keymap.set('s', '<tab>', function() require('luasnip').jump(1) end, { silent = true })
+        vim.keymap.set('i', '<tab>', function() return require('luasnip').jumpable(1) and '<Plug>luasnip-jump-next' or "<tab>" end, { expr = true, silent = true })
+        -- stylua: ignore end
+      end,
     },
+    { 'saghen/blink.compat', opts = { impersonate_nvim_cmp = true, debug = true } },
   },
   opts = { ---@type blink.cmp.Config
     keymap = {
