@@ -6,7 +6,7 @@ return {
     lsp = {
       enabled = true,
       actions = true,
-      completion = false,
+      completion = true,
       hover = true,
     },
     popup = { border = 'rounded' },
