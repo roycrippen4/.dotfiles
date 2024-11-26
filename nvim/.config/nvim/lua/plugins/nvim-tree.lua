@@ -29,13 +29,24 @@ return {
       vim.keymap.del('n', '-', { buffer = bufnr })
       vim.keymap.del('n', 'g?', { buffer = bufnr })
       vim.keymap.del('n', 'f', { buffer = bufnr })
+      vim.keymap.del('n', 'I', { buffer = bufnr })
 
-      local opts = { buffer = bufnr, noremap = true, silent = true, nowait = true }
-      vim.keymap.set('n', '.', api.tree.change_root_to_node, opts)
-      vim.keymap.set('n', '?', api.tree.toggle_help, opts)
-      vim.keymap.set('n', 'K', api.node.show_info_popup, opts)
+      ---@param desc string keymap description
+      ---@return vim.keymap.set.Opts
+      local opts = function(desc)
+        return { buffer = bufnr, noremap = true, silent = true, nowait = true, desc = desc }
+      end
+
+      vim.keymap.set('n', '.', api.tree.change_root_to_node, opts('Change root to node'))
+      vim.keymap.set('n', '?', api.tree.toggle_help, opts('Toggle help'))
+      vim.keymap.set('n', 'K', api.node.show_info_popup, opts('Show info popup'))
+      vim.keymap.set('n', 'I', api.tree.toggle_enable_filters, opts('Toggle gitignore and custom filters'))
     end,
-    filters = { dotfiles = false, exclude = { vim.fn.stdpath('config') .. '/lua/custom' } },
+    filters = {
+      dotfiles = false,
+      exclude = { vim.fn.stdpath('config') .. '/lua/custom' },
+      custom = { '.git' },
+    },
     disable_netrw = true,
     hijack_netrw = true,
     hijack_cursor = true,
