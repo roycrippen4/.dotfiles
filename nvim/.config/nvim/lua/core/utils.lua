@@ -153,7 +153,6 @@ local function ts(client, _)
     local action, uri, range = unpack(command.arguments)
 
     local function move(newf)
-      log('move')
       client.request('workspace/executeCommand', {
         command = command.command,
         arguments = { action, uri, range, newf },
