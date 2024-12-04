@@ -5,7 +5,6 @@ return {
   lazy = false,
   build = 'cargo build --release',
   dependencies = {
-    'saadparwaiz1/cmp_luasnip',
     {
       'L3MON4D3/LuaSnip',
       version = 'v2.*',
@@ -31,7 +30,7 @@ return {
         -- stylua: ignore end
       end,
     },
-    { 'saghen/blink.compat', opts = { impersonate_nvim_cmp = true } },
+    -- { 'saghen/blink.compat', opts = { impersonate_nvim_cmp = true } },
   },
   opts = { ---@type blink.cmp.Config
     keymap = {
@@ -56,7 +55,6 @@ return {
         require('luasnip').jump(direction)
       end,
     },
-    blocked_filetypes = {},
     completion = {
       keyword = {
         range = 'prefix',
@@ -240,12 +238,12 @@ return {
       providers = {
         lsp = { name = 'LSP', fallback_for = { 'lazydev' } },
         lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink' },
-        luasnip = {
-          name = 'luasnip',
-          module = 'blink.compat.source',
-          score_offset = -3,
-          opts = { use_show_condition = false, show_autosnippets = true },
-        },
+        -- luasnip = {
+        --   name = 'luasnip',
+        --   module = 'blink.compat.source',
+        --   score_offset = -3,
+        --   opts = { use_show_condition = false, show_autosnippets = true },
+        -- },
       },
     },
   },
