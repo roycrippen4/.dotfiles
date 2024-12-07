@@ -1,3 +1,5 @@
+---@diagnostic disable: missing-fields
+
 ---@module 'blink.cmp'
 ---@type LazyPluginSpec
 return {
@@ -56,58 +58,13 @@ return {
       end,
     },
     completion = {
-      keyword = {
-        range = 'prefix',
-        regex = '[%w_\\-]',
-        exclude_from_prefix_regex = '[\\-]',
-      },
-      trigger = {
-        show_in_snippet = true,
-        show_on_keyword = true,
-        show_on_trigger_character = true,
-        show_on_blocked_trigger_characters = { ' ', '\n', '\t', '>' },
-        show_on_accept_on_trigger_character = true,
-        show_on_insert_on_trigger_character = true,
-        show_on_x_blocked_trigger_characters = { "'", '"', '(' },
-      },
-      list = {
-        max_items = 200,
-        selection = 'preselect',
-        cycle = {
-          from_bottom = true,
-          from_top = true,
-        },
-      },
-      accept = {
-        create_undo_point = true,
-        ---@diagnostic disable-next-line
-        auto_brackets = {
-          enabled = true,
-          semantic_token_resolution = { enabled = true, blocked_filetypes = {}, timeout_ms = 400 },
-          default_brackets = { '(', ')' },
-          override_brackets_for_filetypes = {},
-          kind_resolution = { enabled = true, blocked_filetypes = { 'typescriptreact', 'javascriptreact', 'vue', 'svelte' } },
-        },
-      },
-
-      ---@diagnostic disable-next-line
+      trigger = { show_on_blocked_trigger_characters = { ' ', '\n', '\t', '>' } },
+      accept = { auto_brackets = { enabled = true } },
       menu = {
-        enabled = true,
-        min_width = 15,
-        max_height = 10,
         border = 'rounded',
-        winblend = 0,
-        winhighlight = 'Normal:BlinkCmpMenu,FloatBorder:BlinkCmpMenuBorder,CursorLine:BlinkCmpMenuSelection,Search:None',
-        scrolloff = 2,
-        scrollbar = true,
-        direction_priority = { 's', 'n' },
         draw = {
-          align_to_component = 'label',
-          padding = 1,
-          gap = 1,
           columns = { { 'label', 'label_description', gap = 1 }, { 'kind_icon' }, { 'source_name', gap = 1 } },
           components = {
-
             kind_icons = {
               ellipsis = false,
               text = function(ctx)
@@ -117,7 +74,6 @@ return {
                 return require('blink.cmp.completion.windows.render.tailwind').get_hl(ctx) or ('BlinkCmpKind' .. ctx.kind)
               end,
             },
-
             kind = {
               ellipsis = false,
               width = { fill = true },
@@ -128,7 +84,6 @@ return {
                 return require('blink.cmp.completion.windows.render.tailwind').get_hl(ctx) or ('BlinkCmpKind' .. ctx.kind)
               end,
             },
-
             label = {
               width = { fill = true, max = 60 },
               highlight = function(ctx)
@@ -148,7 +103,6 @@ return {
                 return highlights
               end,
             },
-
             label_description = {
               width = { max = 30 },
               text = function(ctx)
@@ -156,7 +110,6 @@ return {
               end,
               highlight = 'BlinkCmpLabelDescription',
             },
-
             source_name = {
               width = { max = 30 },
               text = function(ctx)
@@ -186,50 +139,13 @@ return {
         auto_show = true,
         auto_show_delay_ms = 250,
         update_delay_ms = 25,
-        treesitter_highlighting = true,
-        ---@diagnostic disable-next-line
         window = {
           min_width = 20,
           max_width = 80,
           max_height = 20,
           border = 'rounded',
-          winblend = 0,
-          winhighlight = 'Normal:BlinkCmpDoc,FloatBorder:BlinkCmpDocBorder,CursorLine:BlinkCmpDocCursorLine,Search:None',
-          scrollbar = true,
-          direction_priority = {
-            menu_north = { 'e', 'w', 'n', 's' },
-            menu_south = { 'e', 'w', 's', 'n' },
-          },
         },
       },
-      ghost_text = { enabled = false },
-    },
-    signature = {
-      enabled = false,
-      trigger = {
-        blocked_trigger_characters = {},
-        blocked_retrigger_characters = {},
-        show_on_insert_on_trigger_character = true,
-      },
-      window = {
-        min_width = 1,
-        max_width = 100,
-        max_height = 10,
-        border = 'padded',
-        winblend = 0,
-        winhighlight = 'Normal:BlinkCmpSignatureHelp,FloatBorder:BlinkCmpSignatureHelpBorder',
-        scrollbar = false, -- Note that the gutter will be disabled when border ~= 'none'
-        direction_priority = { 'n', 's' },
-        treesitter_highlighting = true,
-      },
-    },
-    fuzzy = {
-      use_typo_resistance = true,
-      use_frecency = true,
-      use_proximity = true,
-      max_items = 200,
-      sorts = { 'label', 'kind', 'score' },
-      prebuilt_binaries = { download = true, force_version = nil, force_system_triple = nil },
     },
     sources = {
       completion = {
@@ -238,12 +154,6 @@ return {
       providers = {
         lsp = { name = 'LSP', fallback_for = { 'lazydev' } },
         lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink' },
-        -- luasnip = {
-        --   name = 'luasnip',
-        --   module = 'blink.compat.source',
-        --   score_offset = -3,
-        --   opts = { use_show_condition = false, show_autosnippets = true },
-        -- },
       },
     },
   },
