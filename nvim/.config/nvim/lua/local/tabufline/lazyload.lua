@@ -14,12 +14,12 @@ autocmd({ 'BufAdd', 'BufEnter', 'TabNew' }, {
     local bufs = t.bufs
 
     if t.bufs == nil then
-      t.bufs = vim.api.nvim_get_buf() == args.buf and {} or { args.buf }
+      t.bufs = vim.api.nvim_get_current_buf() == args.buf and {} or { args.buf }
     else
       -- check for duplicates
       if
         not vim.tbl_contains(bufs, args.buf)
-        and (args.event == 'BufEnter' or vim.bo[args.buf].buflisted or args.buf ~= vim.api.nvim_get_buf())
+        and (args.event == 'BufEnter' or vim.bo[args.buf].buflisted or args.buf ~= vim.api.nvim_get_current_buf())
         and vim.api.nvim_buf_is_valid(args.buf)
         and vim.bo[args.buf].buflisted
         and vim.bo.ft ~= 'undotree' -- This was a super annoying bug
