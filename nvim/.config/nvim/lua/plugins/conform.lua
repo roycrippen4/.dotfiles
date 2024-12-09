@@ -63,7 +63,7 @@ return {
       rust = { 'rustfmt' },
       sh = { 'shfmt' },
       svelte = { 'prettier', 'prettierd', stop_after_first = true },
-      taplo = { 'taplo' },
+      toml = { 'taplo' },
       typescript = { 'prettier', 'prettierd', stop_after_first = true },
       typescriptreact = { 'prettier', 'prettierd', stop_after_first = true },
       yaml = { 'yamlfmt' },
