@@ -148,13 +148,11 @@ return {
       },
     },
     sources = {
-      completion = {
-        enabled_providers = { 'lsp', 'path', 'luasnip', 'lazydev' },
-      },
+      default = { 'lsp', 'path', 'luasnip', 'lazydev' },
       providers = {
-        lsp = { name = 'LSP', fallback_for = { 'lazydev' } },
-        lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink' },
+        lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', fallbacks = { 'lsp' } },
       },
+      cmdline = {},
     },
   },
   config = function(_, opts)
