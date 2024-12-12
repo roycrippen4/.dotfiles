@@ -1,3 +1,5 @@
+-- TODO: This whole file needs to be reworked in 0.11
+
 --- Returns the height of the buffer in the window
 ---@param winnr integer
 ---@return integer
@@ -211,6 +213,16 @@ else
   vim.lsp.handlers[vim.lsp.protocol.Methods.textDocument_hover] = enhanced_float_handler(vim.lsp.handlers.hover, true)
   ---@diagnostic disable-next-line
   vim.lsp.handlers[vim.lsp.protocol.Methods.textDocument_signatureHelp] = enhanced_float_handler(vim.lsp.handlers.signature_help, false)
+end
+
+for _, method in ipairs({ 'textDocument/diagnostic', 'workspace/diagnostic' }) do
+  local default_diagnostic_handler = vim.lsp.handlers[method]
+  vim.lsp.handlers[method] = function(err, result, context, config)
+    if err ~= nil and err.code == -32802 then
+      return
+    end
+    return default_diagnostic_handler(err, result, context, config)
+  end
 end
 
 ---@param bufnr integer
