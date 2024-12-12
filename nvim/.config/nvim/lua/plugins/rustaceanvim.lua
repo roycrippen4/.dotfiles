@@ -12,6 +12,7 @@ return {
       tools = {
         float_win_config = { border = 'rounded' },
         executor = 'toggleterm',
+        test_executor = 'toggleterm',
       },
     }
 
@@ -28,7 +29,18 @@ return {
         end,
         desc = '[L]sp Rerun Last Test',
       },
-      { 'K', '<cmd>RustLsp hover actions<cr>', buffer = true },
+      {
+        'K',
+        function()
+          if vim.bo.ft == 'rust' then
+            vim.cmd.RustLsp({ 'hover', bang = true })
+          else
+            vim.lsp.buf.hover()
+          end
+          -- '<cmd>RustLsp hover actions<cr>'
+        end,
+        buffer = true,
+      },
     })
   end,
 }
