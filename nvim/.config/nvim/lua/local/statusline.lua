@@ -246,9 +246,9 @@ local function cwd()
   return (vim.o.columns > 85 and dir_name) or ''
 end
 
-local function package_info()
-  return vim.fn.expand('%:t') == 'package.json' and require('package-info').get_status() or ''
-end
+-- local function package_info()
+--   return vim.fn.expand('%:t') == 'package.json' and require('package-info').get_status() or ''
+-- end
 
 autocmd('ModeChanged', {
   desc = 'Dynamically changes the highlight group of the statusline mode segment based on the current mode',
@@ -276,8 +276,8 @@ return function()
     mode(),
     file_info(),
     git(),
-    '%=',
-    package_info(),
+    -- '%=',
+    -- package_info(),
     '%=',
     lsp_diagnostics(),
     lsp_status(),
