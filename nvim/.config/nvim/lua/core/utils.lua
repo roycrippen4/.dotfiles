@@ -188,11 +188,13 @@ local function ts(client, _)
         end,
       }, function(f)
         if f and f:find('^Enter new path') then
+          ---@diagnostic disable-next-line: missing-fields
           vim.ui.input({
             prompt = 'Enter move destination:',
             default = vim.fn.fnamemodify(fname, ':h') .. '/',
             completion = 'file',
           }, function(newf)
+            ---@diagnostic disable-next-line: redundant-return-value
             return newf and move(newf)
           end)
         elseif f then
@@ -200,14 +202,6 @@ local function ts(client, _)
         end
       end)
     end)
-  end
-end
-
----@param client vim.lsp.Client
-local function cpp_setup(client)
-  if client.name == 'clangd' then
-    require('clangd_extensions.inlay_hints').setup_autocmd()
-    require('clangd_extensions.inlay_hints').set_inlay_hints()
   end
 end
 
@@ -235,7 +229,7 @@ function U.on_attach(client, bufnr)
   svelte(client)
   ts(client, bufnr)
   setup_signature_helper(bufnr, client)
-  cpp_setup(client)
+  -- cpp_setup(client)
 end
 
 U.capabilities = vim.lsp.protocol.make_client_capabilities()

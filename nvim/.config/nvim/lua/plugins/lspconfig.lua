@@ -237,44 +237,9 @@ return {
     'williamboman/mason.nvim', -- https://github.com/williamboman/mason.nvim
     'b0o/schemastore.nvim', -- https://github.com/b0o/schemastore.nvim
     { 'j-hui/fidget.nvim', opts = {} }, -- https://github.com/j-hui/fidget.nvim
-    { 'p00f/clangd_extensions.nvim', opts = {}, ft = { 'c', 'cpp' } },
-    { 'Civitasv/cmake-tools.nvim', opts = {}, ft = { 'c', 'cpp' } },
   },
   config = function()
     local lspconfig = require('lspconfig')
-
-    lspconfig['clangd'].setup({
-      root_dir = function(fname)
-        return require('lspconfig.util').root_pattern(
-          'Makefile',
-          'configure.ac',
-          'configure.in',
-          'config.h.in',
-          'meson.build',
-          'meson_options.txt',
-          'build.ninja'
-        )(fname) or require('lspconfig.util').root_pattern('compile_commands.json', 'compile_flags.txt')(fname) or require(
-          'lspconfig.util'
-        ).find_git_ancestor(fname)
-      end,
-      cmd = {
-        'clangd',
-        '--background-index',
-        '--clang-tidy',
-        '--header-insertion=iwyu',
-        '--completion-style=detailed',
-        '--function-arg-placeholders',
-        '--fallback-style=llvm',
-      },
-      init_options = {
-        usePlaceholders = true,
-        completeUnimported = true,
-        clangdFileStatus = true,
-      },
-      filetypes = { 'c', 'cpp' },
-      capabilities = vim.tbl_deep_extend('force', U.capabilities, { offsetEncoding = { 'utf-16' } }),
-      on_attach = U.on_attach,
-    })
 
     lspconfig['cssls'].setup({
       capabilities = U.capabilities,

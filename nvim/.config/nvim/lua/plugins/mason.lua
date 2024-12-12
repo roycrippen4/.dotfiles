@@ -32,7 +32,6 @@ return {
       ensure_installed = {
         'black',
         'clang-format',
-        'clangd',
         'codelldb',
         'css-lsp',
         'docker-compose-language-service',
