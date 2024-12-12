@@ -43,23 +43,21 @@ return {
       ['<C-S-P>'] = { 'scroll_documentation_up', 'fallback' },
       ['<esc>'] = { 'hide', 'fallback' },
     },
+    enabled = function()
+      local disabled = { 'DressingInput', 'TelescopePrompt' }
+      return not vim.tbl_contains(disabled, vim.bo.ft) and vim.bo.buftype ~= 'prompt' and vim.api.nvim_get_mode().mode ~= 'c'
+    end,
+      -- stylua: ignore
     snippets = {
-      expand = function(snippet)
-        require('luasnip').lsp_expand(snippet)
-      end,
+      expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
       active = function(filter)
-        if filter and filter.direction then
-          return require('luasnip').jumpable(filter.direction)
-        end
+        if filter and filter.direction then return require('luasnip').jumpable(filter.direction) end
         return require('luasnip').in_snippet()
       end,
-      jump = function(direction)
-        require('luasnip').jump(direction)
-      end,
+      jump = function(direction) require('luasnip').jump(direction) end,
     },
     completion = {
       trigger = { show_on_blocked_trigger_characters = { ' ', '\n', '\t', '>' } },
-      accept = { auto_brackets = { enabled = true } },
       menu = {
         border = 'rounded',
         draw = {
