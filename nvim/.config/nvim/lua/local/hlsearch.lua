@@ -24,18 +24,20 @@ local function draw_virt()
 end
 
 vim.on_key(function(char)
-  if vim.fn.mode() == 'n' then
-    vim.schedule(function()
-      local new_hlsearch = vim.tbl_contains({ 'n', 'N', '*', '#', '?', '/' }, char)
-      vim.opt.hlsearch = new_hlsearch
-      clear()
-
-      if new_hlsearch then
-        id = draw_virt()
-        return
-      end
-    end)
+  if vim.fn.mode() ~= 'n' then
+    return
   end
+
+  vim.schedule(function()
+    local new_search = char == 'n' or char == 'N' or char == '*' or char == '#' or char == '/' or char == '?'
+    vim.opt.hlsearch = new_search
+
+    if new_search then
+      id = draw_virt()
+    else
+      clear()
+    end
+  end)
 end, ns)
 
 autocmd({ 'BufLeave', 'BufEnter' }, {
