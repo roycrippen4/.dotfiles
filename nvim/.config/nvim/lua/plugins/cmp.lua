@@ -32,7 +32,6 @@ return {
         -- stylua: ignore end
       end,
     },
-    -- { 'saghen/blink.compat', opts = { impersonate_nvim_cmp = true } },
   },
   opts = { ---@type blink.cmp.Config
     keymap = {

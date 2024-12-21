@@ -20,17 +20,24 @@ return {
         end,
         desc = '[L]sp Rerun Last Test',
       },
-      {
-        'K',
-        function()
-          if vim.bo.ft == 'rust' then
-            vim.cmd('RustLsp! hover actions')
-          else
-            vim.lsp.buf.hover()
-          end
-        end,
-        buffer = true,
-      },
+      -- {
+      --   'K',
+      --   function()
+      --     if vim.bo.ft == 'rust' then
+      --       vim.cmd('RustLsp! hover actions')
+      --     else
+      --       vim.lsp.buf.hover()
+      --     end
+      --   end,
+      --   buffer = true,
+      -- },
+      -- stylua: ignore
+      -- {
+      --   '<leader>lD',
+      --   function() vim.cmd('RustLsp! debuggables') end,
+      --   desc = 'Rerun last debug',
+      --   icon = '',
+      -- },
     })
   end,
 }
