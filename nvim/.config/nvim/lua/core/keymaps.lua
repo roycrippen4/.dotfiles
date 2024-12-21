@@ -6,14 +6,14 @@ wk.add({
   {
     mode = 'n',
     -- stylua: ignore start
-    { '<leader>it',       '<cmd> InspectTree <cr>',       desc = '[I]nspect AST',     icon = '' },
-    { '<leader>q',        '<cmd> EditQuery   <cr>',       desc = 'Edit TS query',     icon = '󱄶' },
-    { '<leader>m',        '<cmd> Mason       <cr>',       desc = '[M]ason',           icon = '' },
-    { '<leader><Leader>', '<cmd> Lazy        <cr>',       desc = 'Open Lazy',         icon = '' },
-    { '<leader>v',        '<C-w>v',                       desc = 'Vertical Split',    icon = '' },
-    { '<leader>h',        '<C-w>s',                       desc = 'Horizontal Split',  icon = '' },
-    { '<leader>lf',       vim.diagnostic.open_float,      desc = '[L]SP Show Errors', icon = '' },
-    { '<leader>x',        U.close_buf,                    desc = 'Close Buffer',      icon = '' },
+    { '<leader>it',       '<cmd> InspectTree <cr>',                desc = '[I]nspect AST',     icon = '' },
+    { '<leader>q',        '<cmd> EditQuery   <cr>',                desc = 'Edit TS query',     icon = '󱄶' },
+    { '<leader>m',        '<cmd> Mason       <cr>',                desc = '[M]ason',           icon = '' },
+    { '<leader><Leader>', '<cmd> Lazy        <cr>',                desc = 'Open Lazy',         icon = '' },
+    { '<leader>v',        '<C-w>v',                                desc = 'Vertical Split',    icon = '' },
+    { '<leader>h',        '<C-w>s',                                desc = 'Horizontal Split',  icon = '' },
+    { '<leader>lf',       vim.diagnostic.open_float,               desc = '[L]SP Show Errors', icon = '' },
+    { '<leader>x',        require('local.tabufline').close_buffer, desc = 'Close Buffer',      icon = '' },
     -- stylua: ignore end
   },
 })
