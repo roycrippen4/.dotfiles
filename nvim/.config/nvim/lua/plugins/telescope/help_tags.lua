@@ -22,6 +22,7 @@ local help_tag_mapping = {
       ['conform.nvim'] = 'conform',
       ['crates.nvim'] = 'crates',
       ['nvim-scissors'] = 'scissors',
+      ['lazy.nvim'] = 'lazy',
     }
     if plugin_to_load then
       plugin_to_load = map[plugin_to_load] or plugin_to_load
