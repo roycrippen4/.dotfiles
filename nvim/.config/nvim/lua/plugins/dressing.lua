@@ -2,8 +2,8 @@
 return {
   'stevearc/dressing.nvim', -- https://github.com/stevearc/dressing.nvim
   event = 'VimEnter',
-  commit = '1b7921eecc65af1baf8ac1dc06f0794934cbcfb2',
   opts = {
+    select = { telescope = {} },
     input = {
       get_config = function(opts)
         if opts.prompt == 'Create file ' then
