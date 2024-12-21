@@ -1,5 +1,4 @@
 ---@module "tailwind-tools"
-
 ---@type LazyPluginSpec
 return {
   'luckasRanarison/tailwind-tools.nvim', -- https://github.com/luckasRanarison/tailwind-tools.nvim
