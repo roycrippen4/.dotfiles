@@ -1,6 +1,4 @@
-local autocmd = vim.api.nvim_create_autocmd
-
-autocmd('VimEnter', {
+vim.api.nvim_create_autocmd('VimEnter', {
   callback = function()
     if vim.fn.filereadable('.nvmrc') == 1 then
       vim.cmd('TermExec direction=horizontal size=16 cmd="nvm use" open=0')
