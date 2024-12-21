@@ -12,14 +12,12 @@ return {
     { 'debugloop/telescope-undo.nvim', keys = { { '<leader>u', '<cmd>Telescope undo<cr>' } } },
     'nvim-lua/plenary.nvim',
     'nvim-tree/nvim-web-devicons',
-    'nvim-telescope/telescope-ui-select.nvim',
     'roycrippen4/telescope-treesitter-info.nvim',
   },
   config = function()
     local config = require('plugins.telescope.config')
     require('telescope').setup(config)
     require('telescope').load_extension('fzf')
-    require('telescope').load_extension('ui-select')
     require('telescope').load_extension('treesitter_info')
     require('telescope').load_extension('undo')
     require('plugins.telescope.keymaps').setup()
