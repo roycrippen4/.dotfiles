@@ -86,24 +86,24 @@ local function check_trigger_chars(chars)
   end)
 end
 
----@param bufnr integer
----@param client vim.lsp.Client
-local function setup_signature_helper(bufnr, client)
-  if client.server_capabilities.signatureHelpProvider then
-    local group = vim.api.nvim_create_augroup('LspSignature', { clear = false })
-    vim.api.nvim_clear_autocmds({ group = group, buffer = bufnr })
+-- ---@param bufnr integer
+-- ---@param client vim.lsp.Client
+-- local function setup_signature_helper(bufnr, client)
+--   if client.server_capabilities.signatureHelpProvider then
+--     local group = vim.api.nvim_create_augroup('LspSignature', { clear = false })
+--     vim.api.nvim_clear_autocmds({ group = group, buffer = bufnr })
 
-    vim.api.nvim_create_autocmd({ 'TextChangedI', 'TextChangedP', 'InsertEnter' }, {
-      group = group,
-      buffer = bufnr,
-      callback = function()
-        if check_trigger_chars(client.server_capabilities.signatureHelpProvider.triggerCharacters) then
-          vim.lsp.buf.signature_help()
-        end
-      end,
-    })
-  end
-end
+--     vim.api.nvim_create_autocmd({ 'TextChangedI', 'TextChangedP', 'InsertEnter' }, {
+--       group = group,
+--       buffer = bufnr,
+--       callback = function()
+--         if check_trigger_chars(client.server_capabilities.signatureHelpProvider.triggerCharacters) then
+--           vim.lsp.buf.signature_help()
+--         end
+--       end,
+--     })
+--   end
+-- end
 
 ---@param client vim.lsp.Client
 local function svelte(client)
@@ -195,6 +195,30 @@ local function ts(client, _)
   end
 end
 
+function U.scroll_signature_up()
+  local signature = require('blink.cmp.signature.window')
+  if not signature.win:is_open() then
+    return
+  end
+
+  vim.schedule(function()
+    signature.scroll_up(4)
+  end)
+  return true
+end
+
+function U.scroll_signature_down()
+  local signature = require('blink.cmp.signature.window')
+  if not signature.win:is_open() then
+    return
+  end
+
+  vim.schedule(function()
+    signature.scroll_down(4)
+  end)
+  return true
+end
+
 ---@param additional_keymaps? wk.Mapping[]
 function U.set_lsp_mappings(additional_keymaps)
   require('which-key').add({
@@ -218,7 +242,7 @@ function U.on_attach(client, bufnr)
   U.set_lsp_mappings()
   svelte(client)
   ts(client, bufnr)
-  setup_signature_helper(bufnr, client)
+  -- setup_signature_helper(bufnr, client)
   -- cpp_setup(client)
 end
 

@@ -43,10 +43,22 @@ return {
   opts = {
     keymap = {
       ['<cr>'] = { 'accept', 'fallback' },
-      ['<c-n>'] = { 'select_next', 'fallback' },
-      ['<c-p>'] = { 'select_prev', 'fallback' },
-      ['<C-S-N>'] = { 'scroll_documentation_down', 'fallback' },
-      ['<C-S-P>'] = { 'scroll_documentation_up', 'fallback' },
+      ['<C-S-N>'] = {
+        function(cmp)
+          if not U.scroll_signature_down() then
+            cmp.scroll_documentation_down()
+          end
+        end,
+        'fallback',
+      },
+      ['<C-S-P>'] = {
+        function(cmp)
+          if not U.scroll_signature_up() then
+            cmp.scroll_documentation_up()
+          end
+        end,
+        'fallback',
+      },
       ['<esc>'] = { 'hide', 'fallback' },
     },
     enabled = function()
@@ -55,6 +67,10 @@ return {
         and vim.api.nvim_get_mode().mode ~= 'c'
     end,
     snippets = { preset = 'luasnip' },
+    signature = {
+      enabled = true,
+      window = { border = 'rounded', min_width = 20, max_width = 80, max_height = 20 },
+    },
     completion = {
       trigger = { show_on_blocked_trigger_characters = { ' ', '\n', '\t', '>' } },
       menu = {
@@ -68,12 +84,7 @@ return {
         auto_show = true,
         auto_show_delay_ms = 250,
         update_delay_ms = 25,
-        window = {
-          min_width = 20,
-          max_width = 80,
-          max_height = 20,
-          border = 'rounded',
-        },
+        window = { min_width = 20, max_width = 80, max_height = 20, border = 'rounded' },
       },
     },
     sources = {

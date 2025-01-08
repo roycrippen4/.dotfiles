@@ -155,10 +155,43 @@ local function enhanced_float_handler(handler, focusable)
     add_inline_highlights(bufnr)
     vim.wo[winnr].concealcursor = 'n'
     vim.wo[winnr].scrolloff = 0
-    -- stylua: ignore start
-    vim.keymap.set({ 'n', 'i' }, '<C-S-N>', function() scroll(winnr, 4) end, { buffer = true })
-    vim.keymap.set({ 'n', 'i' }, '<C-S-P>', function() scroll(winnr, -4) end, { buffer = true })
-    -- stylua: ignore end
+
+    vim.keymap.set({ 'n', 'i' }, '<C-S-N>', function()
+      local signature = require('blink.cmp.signature.window')
+      local documentation = require('blink.cmp.completion.windows.documentation')
+      if signature.win:is_open() then
+        vim.schedule(function()
+          signature.scroll_down(4)
+        end)
+      else
+        if documentation.win:is_open() then
+          vim.schedule(function()
+            documentation.scroll_down(4)
+          end)
+        else
+          scroll(winnr, 4)
+        end
+      end
+    end, { buffer = true })
+
+    vim.keymap.set({ 'n', 'i' }, '<C-S-P>', function()
+      local signature = require('blink.cmp.signature.window')
+      local documentation = require('blink.cmp.completion.windows.documentation')
+      if signature.win:is_open() then
+        vim.schedule(function()
+          signature.scroll_up(4)
+        end)
+      else
+        if documentation.win:is_open() then
+          vim.schedule(function()
+            documentation.scroll_up(4)
+          end)
+        else
+          scroll(winnr, -4)
+        end
+      end
+    end, { buffer = true })
+
     if focusable and not vim.b[bufnr].markdown_keys then
       vim.keymap.set('n', 'K', function()
         local url = (vim.fn.expand('<cWORD>') --[[@as string]]):match('|(%S-)|')

@@ -181,6 +181,7 @@ return {
       BlinkCmpLabel = { fg = colors.white },
       BlinkCmpMenu = { link = 'NormalFloat' },
       BlinkCmpMenuBorder = { link = 'FloatBorder' },
+      BlinkCmpSignatureHelpBorder = { link = 'FloatBorder' },
       BlinkCmpDocBorder = { link = 'FloatBorder' },
       BlinkCmpMenuSelection = { link = 'CursorLine' },
       BlinkCmpSource = { fg = colors.grey_light },
