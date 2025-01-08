@@ -105,6 +105,10 @@ go_to_wofi_config() {
   c "$HOME/.dotfiles/wofi/.config/wofi"
 }
 
+go_to_ghostty_config() {
+  c "$HOME/.dotfiles/ghostty/.config/ghostty"
+}
+
 go_to_waybar_config() {
   c "$HOME/.dotfiles/waybar/.config/waybar"
 }
@@ -136,6 +140,7 @@ alias lt='ls --tree'
 alias mi="mvn clean install -DskipTests"
 alias so="$HOME/.dotfiles/home/.bin/source.zsh"
 alias sync="$HOME/.dotfiles/home/.bin/sync.sh"
+alias gconf=go_to_ghostty_config
 alias hconf=go_to_home_config
 alias hyconf=go_to_hypr_config
 alias kconf=go_to_kitty_config
