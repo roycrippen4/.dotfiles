@@ -1,3 +1,22 @@
+---Gets the lsp's name
+---@param ctx blink.cmp.DrawItemContext
+---@return string
+local function source_name(ctx)
+  local source, client_id = ctx.item.source_name, ctx.item.client_id
+  if source == 'LSP' and client_id then
+    local client = vim.lsp.get_client_by_id(client_id)
+    if client then
+      source = client.name
+    end
+  end
+
+  if source == 'Snippets' then
+    source = 'Snippet'
+  end
+
+  return source
+end
+
 ---@module 'blink.cmp'
 ---@type LazyPluginSpec
 return {
@@ -20,7 +39,6 @@ return {
       },
     },
   },
-
   ---@type blink.cmp.Config
   opts = {
     keymap = {
@@ -32,8 +50,9 @@ return {
       ['<esc>'] = { 'hide', 'fallback' },
     },
     enabled = function()
-      local disabled = { 'DressingInput', 'TelescopePrompt' }
-      return not vim.tbl_contains(disabled, vim.bo.ft) and vim.bo.buftype ~= 'prompt' and vim.api.nvim_get_mode().mode ~= 'c'
+      return not vim.tbl_contains({ 'DressingInput', 'TelescopePrompt' }, vim.bo.ft)
+        and vim.bo.buftype ~= 'prompt'
+        and vim.api.nvim_get_mode().mode ~= 'c'
     end,
     snippets = { preset = 'luasnip' },
     completion = {
@@ -42,75 +61,7 @@ return {
         border = 'rounded',
         draw = {
           columns = { { 'label', 'label_description', gap = 1 }, { 'kind_icon' }, { 'source_name', gap = 1 } },
-          components = {
-            kind_icons = {
-              ellipsis = false,
-              text = function(ctx)
-                return ctx.kind_icon .. ctx.icon_gap
-              end,
-              highlight = function(ctx)
-                return require('blink.cmp.completion.windows.render.tailwind').get_hl(ctx) or ('BlinkCmpKind' .. ctx.kind)
-              end,
-            },
-            kind = {
-              ellipsis = false,
-              width = { fill = true },
-              text = function(ctx)
-                return ctx.kind
-              end,
-              highlight = function(ctx)
-                return require('blink.cmp.completion.windows.render.tailwind').get_hl(ctx) or ('BlinkCmpKind' .. ctx.kind)
-              end,
-            },
-            label = {
-              width = { fill = true, max = 60 },
-              highlight = function(ctx)
-                -- label and label details
-                local highlights = {
-                  { 0, #ctx.label, group = ctx.deprecated and 'BlinkCmpLabelDeprecated' or 'BlinkCmpLabel' },
-                }
-                if ctx.label_detail then
-                  table.insert(highlights, { #ctx.label, #ctx.label + #ctx.label_detail, group = 'BlinkCmpLabelDetail' })
-                end
-
-                -- characters matched on the label by the fuzzy matcher
-                for _, idx in ipairs(ctx.label_matched_indices) do
-                  table.insert(highlights, { idx, idx + 1, group = 'BlinkCmpLabelMatch' })
-                end
-
-                return highlights
-              end,
-            },
-            label_description = {
-              width = { max = 30 },
-              text = function(ctx)
-                return ctx.label_description
-              end,
-              highlight = 'BlinkCmpLabelDescription',
-            },
-            source_name = {
-              width = { max = 30 },
-              text = function(ctx)
-                local source, client_id = ctx.item.source_name, ctx.item.client_id
-
-                if source == 'LSP' and client_id then
-                  local client = vim.lsp.get_client_by_id(client_id)
-                  if client then
-                    source = client.name
-                  end
-                end
-
-                if source == 'Snippets' then
-                  source = 'Snippet'
-                end
-
-                return source
-              end,
-              highlight = function()
-                return 'BlinkCmpSource'
-              end,
-            },
-          },
+          components = { source_name = { text = source_name } },
         },
       },
       documentation = {
@@ -126,7 +77,7 @@ return {
       },
     },
     sources = {
-      default = { 'lazydev', 'lsp', 'path', 'snippets' },
+      default = { 'lazydev', 'lsp', 'snippets', 'path' },
       providers = {
         lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', score_offset = 100 },
       },
