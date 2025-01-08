@@ -1,5 +1,3 @@
----@diagnostic disable: missing-fields
-
 ---@module 'blink.cmp'
 ---@type LazyPluginSpec
 return {
@@ -20,20 +18,11 @@ return {
           end,
         },
       },
-      keys = {
-        { mode = { 'i', 's' }, '<tab>' },
-        { mode = { 'i', 's' }, '<s-tab>' },
-      },
-      config = function()
-        -- stylua: ignore start
-        vim.keymap.set({ 'i', 's' }, '<s-tab>', function() require('luasnip').jump(-1) end, { silent = true })
-        vim.keymap.set('s', '<tab>', function() require('luasnip').jump(1) end, { silent = true })
-        vim.keymap.set('i', '<tab>', function() return require('luasnip').jumpable(1) and '<Plug>luasnip-jump-next' or "<tab>" end, { expr = true, silent = true })
-        -- stylua: ignore end
-      end,
     },
   },
-  opts = { ---@type blink.cmp.Config
+
+  ---@type blink.cmp.Config
+  opts = {
     keymap = {
       ['<cr>'] = { 'accept', 'fallback' },
       ['<c-n>'] = { 'select_next', 'fallback' },
@@ -46,15 +35,7 @@ return {
       local disabled = { 'DressingInput', 'TelescopePrompt' }
       return not vim.tbl_contains(disabled, vim.bo.ft) and vim.bo.buftype ~= 'prompt' and vim.api.nvim_get_mode().mode ~= 'c'
     end,
-      -- stylua: ignore
-    snippets = {
-      expand = function(snippet) require('luasnip').lsp_expand(snippet) end,
-      active = function(filter)
-        if filter and filter.direction then return require('luasnip').jumpable(filter.direction) end
-        return require('luasnip').in_snippet()
-      end,
-      jump = function(direction) require('luasnip').jump(direction) end,
-    },
+    snippets = { preset = 'luasnip' },
     completion = {
       trigger = { show_on_blocked_trigger_characters = { ' ', '\n', '\t', '>' } },
       menu = {
@@ -145,9 +126,9 @@ return {
       },
     },
     sources = {
-      default = { 'lsp', 'path', 'luasnip', 'lazydev' },
+      default = { 'lazydev', 'lsp', 'path', 'snippets' },
       providers = {
-        lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', fallbacks = { 'lsp' } },
+        lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', score_offset = 100 },
       },
       cmdline = {},
     },

@@ -348,7 +348,10 @@ return {
       settings = {
         Lua = {
           format = { enable = false },
-          diagnostics = { globals = { 'vim' } },
+          diagnostics = {
+            globals = { 'vim' },
+            disable = { 'missing-fields' },
+          },
           telemetry = { enable = false },
           hint = { enable = true, arrayIndex = 'Disable' },
         },
@@ -425,10 +428,5 @@ return {
     })
 
     lspconfig['protols'].setup({})
-
-    -- lspconfig['denols'].setup({
-    --   on_attach = U.on_attach,
-    --   capabilities = U.capabilities,
-    -- })
   end,
 }
