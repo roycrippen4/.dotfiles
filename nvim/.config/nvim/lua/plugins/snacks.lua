@@ -2,7 +2,6 @@
 ---@type LazyPluginSpec
 return {
   'folke/snacks.nvim',
-  dev = false,
   priority = 1000,
   lazy = false,
   ---@type snacks.Config
