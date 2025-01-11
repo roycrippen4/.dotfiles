@@ -10,6 +10,7 @@ local map = {
   ['dressing.nvim'] = 'dressing',
   ['mason.nvim'] = 'mason',
 }
+local plugins = require('lazy').plugins()
 
 local help_tag_mapping = {
   ['<CR>'] = function(prompt_bufnr)
@@ -28,7 +29,7 @@ local help_tag_mapping = {
     end
 
     local plugin_to_load = nil
-    for _, p in pairs(require('lazy').plugins()) do
+    for _, p in pairs(plugins) do
       if doc_path:find(p.dir, 1, true) then
         plugin_to_load = p.name
         break
