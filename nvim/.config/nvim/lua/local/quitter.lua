@@ -11,6 +11,7 @@ local plug_types = {
   toggleterm = true,
   fidget = true,
   notify = true,
+  snacks_notif = true,
 }
 
 local function quit_vim()
