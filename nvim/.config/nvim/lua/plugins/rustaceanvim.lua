@@ -3,13 +3,37 @@
 return {
   'mrcjkb/rustaceanvim', -- https://github.com/mrcjkb/rustaceanvim
   version = '^5',
-  lazy = true,
+  lazy = false,
   ft = 'rust',
   config = function()
     ---@type rustaceanvim.Opts
     vim.g.rustaceanvim = {
-      server = { on_attach = require('core.utils').on_attach },
-      tools = { float_win_config = { border = 'rounded' } },
+      server = {
+        on_attach = require('core.utils').on_attach,
+        default_settings = {
+          ['rust-analyzer'] = {
+            inlayHints = { renderColons = false },
+            cargo = {
+              allFeatures = true,
+              loadOutDirsFromCheck = true,
+            },
+            procMacro = {
+              ignored = {
+                ['async-trait'] = { 'async_trait' },
+                ['napi-derive'] = { 'napi' },
+                ['async-recursion'] = { 'async_recursion' },
+              },
+            },
+          },
+        },
+      },
+      tools = {
+        float_win_config = { border = 'rounded' },
+        on_initialized = function()
+          vim.lsp.codelens.refresh()
+          vim.lsp.inlay_hint.enable(true)
+        end,
+      },
     }
 
     require('which-key').add({
@@ -20,24 +44,6 @@ return {
         end,
         desc = '[L]sp Rerun Last Test',
       },
-      -- {
-      --   'K',
-      --   function()
-      --     if vim.bo.ft == 'rust' then
-      --       vim.cmd('RustLsp! hover actions')
-      --     else
-      --       vim.lsp.buf.hover()
-      --     end
-      --   end,
-      --   buffer = true,
-      -- },
-      -- stylua: ignore
-      -- {
-      --   '<leader>lD',
-      --   function() vim.cmd('RustLsp! debuggables') end,
-      --   desc = 'Rerun last debug',
-      --   icon = '',
-      -- },
     })
   end,
 }
