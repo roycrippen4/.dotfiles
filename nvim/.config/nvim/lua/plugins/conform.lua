@@ -58,7 +58,6 @@ return {
       ocaml = { 'ocamlformat' },
       proto = { 'clang-format' },
       python = { 'black' },
-      rust = { 'rustfmt' },
       sh = { 'shfmt' },
       svelte = { 'prettierd', 'prettier', stop_after_first = true },
       toml = { 'taplo' },
