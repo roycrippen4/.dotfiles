@@ -39,6 +39,8 @@ nmap <leader>x :q <cr>
 map <m-j> :m .+1<cr>==
 map <m-k> :m .-1<cr>==
 
+nmap ; :
+
 map <Leader>ff <action>(com.mituuz.fuzzier.Fuzzier)
 
 nmap <c-e> :action ShowHarpoon <cr>
