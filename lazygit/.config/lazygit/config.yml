@@ -33,8 +33,8 @@ git:
 disableStartupPopups: true
 notARepository: 'skip' # one of: 'prompt' | 'create' | 'skip'
 os:
-  edit: ~/.local/share/bob/nightly/nvim-linux64/bin/nvim {{filename}}
-  editAtLine: ~/.local/share/bob/nightly/nvim-linux64/bin/nvim {{filename}}
+  edit: ~/.local/share/bob/nvim-bin/nvim {{filename}}
+  editAtLine: ~/.local/share/bob/nvim-bin/nvim {{filename}}
 keybinding:
   universal:
     scrollUpMain: '<c-p>'
