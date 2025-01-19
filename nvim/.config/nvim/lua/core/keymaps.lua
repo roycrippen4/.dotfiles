@@ -1,6 +1,15 @@
 local map = vim.keymap.set
-local tabline = require('local.tabufline')
+local beeline = require('beeline')
 local wk = require('which-key')
+
+local function send_to_black_hole()
+  local line_content = vim.fn.line('.')
+  if type(line_content) == 'string' and string.match(line_content, '^%s*$') then
+    vim.cmd('normal! "_dd')
+  else
+    vim.cmd('normal! dd')
+  end
+end
 
 wk.add({
   {
@@ -13,7 +22,7 @@ wk.add({
     { '<leader>v',        '<C-w>v',                                desc = 'Vertical Split',    icon = '' },
     { '<leader>h',        '<C-w>s',                                desc = 'Horizontal Split',  icon = '' },
     { '<leader>lf',       vim.diagnostic.open_float,               desc = '[L]SP Show Errors', icon = '' },
-    { '<leader>x',        require('local.tabufline').close_buffer, desc = 'Close Buffer',      icon = '' },
+    { '<leader>x',        require('beeline').close_buffer, desc = 'Close Buffer',      icon = '' },
     -- stylua: ignore end
   },
 })
@@ -30,21 +39,21 @@ map('n', '<C-h>',   '<C-w>h',                    { desc = 'Window left'         
 map('n', '<C-l>',   '<C-w>l',                    { desc = 'Window right'                      })
 map('n', '<C-j>',   '<C-w>j',                    { desc = 'Window down'                       })
 map('n', '<C-k>',   '<C-w>k',                    { desc = 'Window up'                         })
-map('n', '<C-s>',   '<cmd> w <cr>',              { desc = 'Save file'                         })
 map('n', '<C-c>',   '<cmd> %y+ <cr>',            { desc = 'Copy whole file'                   })
 map('n', '<C-S-Y>', 'mZv_y`Z',                   { desc = 'Yank from cursor to start of line' })
 map('n', '<M-S-.>', '<C-w>>',                    { desc = 'Increase window width'             })
 map('n', '<M-S-,>', '<C-w><',                    { desc = 'Decrease window width'             })
 map('n', '<M-j>',   ':m .+1<cr>==',              { desc = 'Shift line down'                   })
 map('n', '<M-k>',   ':m .-2<cr>==',              { desc = 'Shift line up'                     })
-map('n', 'L',       tabline.next,                { desc = 'Go to next tabufline buffer'       })
-map('n', 'H',       tabline.prev,                { desc = 'Go to prev tabufline buffer'       })
-map('n', 'dd',      U.send_to_black_hole,        { desc = 'smart delete'                      })
+map('n', 'L',       beeline.next,                { desc = 'Go to next beeline buffer'       })
+map('n', 'H',       beeline.prev,                { desc = 'Go to prev beeline buffer'       })
+map('n', 'dd',      send_to_black_hole,        { desc = 'smart delete'                      })
 map('n', '<C-a>',   U.ctrl_a,                    { desc = 'Extended increment'                })
 map('n', '<C-x>',   U.ctrl_x,                    { desc = 'Extended decrement'                })
 -- stylua: ignore end
 
 local cursor_moved = '<cmd>lua vim.api.nvim_exec_autocmds("CursorMoved", {})<cr>'
+-- Need to trigger cursor moved event manually for these mappings
 map({ 'i', 'c' }, '<C-h>', '<Left>' .. cursor_moved)
 map({ 'i', 'c' }, '<C-l>', '<Right>' .. cursor_moved)
 map('i', '<C-j>', '<Down>' .. cursor_moved)
@@ -52,8 +61,8 @@ map('i', '<C-k>', '<Up>' .. cursor_moved)
 map('i', '<C-w>', '<C-o>w' .. cursor_moved)
 map('i', '<C-e>', '<C-o>e' .. cursor_moved)
 map('i', '<C-b>', '<C-o>b' .. cursor_moved)
+map({ 'n', 'i' }, '<C-s>', '<cmd> w <cr>', { desc = 'Save file' })
 
-map('i', '<C-s>', '<cmd> w <cr>', { desc = 'Save file' })
 map('v', '<M-j>', ":m '>+1<cr>gv=gv", { desc = 'Shift selection up', nowait = true, silent = true })
 map('v', '<M-k>', ":m '<-2<cr>gv=gv", { desc = 'Shift selection down', nowait = true, silent = true })
 map('i', '<M-j>', '<ESC>:m .+1<cr>==gi', { desc = 'Shift line up', nowait = true, silent = true })
@@ -73,10 +82,4 @@ map('t', '<C-l>', '<cmd> wincmd l<cr>', { desc = 'Move focus right' })
 map('t', '<Esc>', '<C-\\><C-N>', { desc = 'Enter NTerminal Mode' })
 
 -- Command line
-map('c', '(', '()<Left>', { desc = 'Insert parenthesis' })
-map('c', '{', '{}<Left>', { desc = 'Insert curly braces' })
-map('c', '[', '[]<Left>', { desc = 'Insert square brackets' })
-map('c', "'", "''<Left>", { desc = 'Insert single quotes' })
-map('c', '"', '""<Left>', { desc = 'Insert double quotes' })
-map('c', '`', '``<Left>', { desc = 'Insert backticks' })
 map('c', '<Esc>', '<C-c>', { desc = 'Exit command mode' })

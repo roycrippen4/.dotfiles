@@ -1,8 +1,0 @@
-require('local.hlsearch')
-require('local.macro')
-require('local.quitter')
-require('local.scrolleof')
-require('local.statusline')
-require('local.tabufline.lazyload')
-require('local.webdev')
-require('local.inspector')

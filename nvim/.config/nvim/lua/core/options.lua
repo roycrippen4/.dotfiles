@@ -38,28 +38,15 @@ opt.cursorline = true                                 -- Enable highlighting of 
 opt.hlsearch = true
 opt.swapfile = false
 opt.smoothscroll = true
---stylua: ignore end
-
------------------------------------------------------------
--- Fold settings
------------------------------------------------------------
--- stylua: ignore start
--- opt.foldexpr       = 'v:lua.vim.treesitter.foldexpr()' -- Treesitter folding
--- opt.foldmethod     = 'expr' -- Treesitter folding
--- opt.foldcolumn     = '1' -- Enable fold column
--- opt.foldlevel      = 99  -- This is just a default level, it will be changed by ufo 
--- opt.foldlevelstart = 99  -- This is just a default level, it will be changed by ufo
-opt.foldenable     = false
---stylua: ignore end
 
 -----------------------------------------------------------
 -- Indent settings
 -----------------------------------------------------------
 opt.expandtab = true
 opt.shiftwidth = 2
-opt.smartindent = true
-opt.autoindent = true
 opt.tabstop = 2
+-- opt.smartindent = true
+-- opt.autoindent = true
 
 opt.fillchars = {
   vert = ' ',

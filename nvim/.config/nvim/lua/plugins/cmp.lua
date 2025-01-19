@@ -40,26 +40,13 @@ return {
       },
     },
   },
+
   ---@type blink.cmp.Config
   opts = {
     keymap = {
       ['<cr>'] = { 'accept', 'fallback' },
-      ['<C-S-N>'] = {
-        function(cmp)
-          if not U.scroll_signature_down() then
-            cmp.scroll_documentation_down()
-          end
-        end,
-        'fallback',
-      },
-      ['<C-S-P>'] = {
-        function(cmp)
-          if not U.scroll_signature_up() then
-            cmp.scroll_documentation_up()
-          end
-        end,
-        'fallback',
-      },
+      ['<C-S-N>'] = { 'scroll_documentation_down', 'fallback' },
+      ['<C-S-P>'] = { 'scroll_documentation_up', 'fallback' },
       ['<esc>'] = { 'hide', 'fallback' },
     },
     enabled = function()

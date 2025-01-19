@@ -38,6 +38,6 @@ return {
   },
   pickers = {
     highlights = require('plugins.telescope.highlights'),
-    help_tags = require('plugins.telescope.help_tags'),
+    help_tags = require('plugins.telescope.help-tags'),
   },
 }

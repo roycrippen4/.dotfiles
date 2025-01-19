@@ -428,7 +428,7 @@ return {
       },
     })
 
-    if U.has_file('biome.json') then
+    if vim.fn.filereadable(vim.fn.getcwd() .. '/' .. 'biome.json') == 1 and true or false then
       lspconfig['biome'].setup({
         capabilities = U.capabilities,
         on_attach = U.on_attach,

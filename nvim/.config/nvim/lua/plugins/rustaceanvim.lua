@@ -31,7 +31,6 @@ return {
         float_win_config = { border = 'rounded' },
         on_initialized = function()
           vim.lsp.codelens.refresh()
-          vim.lsp.inlay_hint.enable(true)
         end,
       },
     }

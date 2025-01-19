@@ -16,6 +16,25 @@ local function get_args(config)
   return config
 end
 
+--- Gets a path to a package in the Mason registry.
+--- Prefer this to `get_package`, since the package might not always be
+--- available yet and trigger errors.
+---@param pkg string
+---@param path? string
+---@param opts? { warn?: boolean }
+local function get_pkg_path(pkg, path, opts)
+  pcall(require, 'mason')
+  local root = vim.env.MASON or (vim.fn.stdpath('data') .. '/mason')
+  opts = opts or {}
+  opts.warn = opts.warn == nil and true or opts.warn
+  path = path or ''
+  local ret = root .. '/packages/' .. pkg .. '/' .. path
+  if opts.warn and not vim.uv.fs_stat(ret) then
+    Snacks.notify.warn(('Mason package path not found for **%s**:\n- `%s`\nYou may need to force update the package.'):format(pkg, path))
+  end
+  return ret
+end
+
 local function dap_continue()
   if vim.bo.ft == 'rust' then
     vim.cmd.RustLsp('debuggables')
@@ -86,7 +105,7 @@ return {
           executable = {
             command = 'node',
             args = {
-              U.get_pkg_path('js-debug-adapter', 'js-debug/src/dapDebugServer.js'),
+              get_pkg_path('js-debug-adapter', 'js-debug/src/dapDebugServer.js'),
               '${port}',
             },
           },

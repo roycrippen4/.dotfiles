@@ -77,34 +77,6 @@ local function toggle_inlay_hints()
   log(msg)
 end
 
----@param chars string[]
-local function check_trigger_chars(chars)
-  local cur_line = vim.api.nvim_get_current_line()
-  local pos = vim.api.nvim_win_get_cursor(0)[2]
-  return vim.iter(chars):any(function(char)
-    return cur_line:sub(pos, pos) == char or cur_line:sub(pos - 1, pos) == ', '
-  end)
-end
-
--- ---@param bufnr integer
--- ---@param client vim.lsp.Client
--- local function setup_signature_helper(bufnr, client)
---   if client.server_capabilities.signatureHelpProvider then
---     local group = vim.api.nvim_create_augroup('LspSignature', { clear = false })
---     vim.api.nvim_clear_autocmds({ group = group, buffer = bufnr })
-
---     vim.api.nvim_create_autocmd({ 'TextChangedI', 'TextChangedP', 'InsertEnter' }, {
---       group = group,
---       buffer = bufnr,
---       callback = function()
---         if check_trigger_chars(client.server_capabilities.signatureHelpProvider.triggerCharacters) then
---           vim.lsp.buf.signature_help()
---         end
---       end,
---     })
---   end
--- end
-
 ---@param client vim.lsp.Client
 local function svelte(client)
   if client.name == 'svelte' then
@@ -195,30 +167,6 @@ local function ts(client, _)
   end
 end
 
-function U.scroll_signature_up()
-  local signature = require('blink.cmp.signature.window')
-  if not signature.win:is_open() then
-    return
-  end
-
-  vim.schedule(function()
-    signature.scroll_up(4)
-  end)
-  return true
-end
-
-function U.scroll_signature_down()
-  local signature = require('blink.cmp.signature.window')
-  if not signature.win:is_open() then
-    return
-  end
-
-  vim.schedule(function()
-    signature.scroll_down(4)
-  end)
-  return true
-end
-
 ---@param additional_keymaps? wk.Mapping[]
 function U.set_lsp_mappings(additional_keymaps)
   require('which-key').add({
@@ -242,8 +190,6 @@ function U.on_attach(client, bufnr)
   U.set_lsp_mappings()
   svelte(client)
   ts(client, bufnr)
-  -- setup_signature_helper(bufnr, client)
-  -- cpp_setup(client)
 end
 
 U.capabilities = vim.lsp.protocol.make_client_capabilities()
@@ -269,24 +215,6 @@ U.capabilities.textDocument.completion.completionItem = {
 ---@param mode string
 function _G.feed(key, mode)
   vim.api.nvim_feedkeys(vim.api.nvim_replace_termcodes(key, true, true, true), mode, true)
-end
-
----@param diagnostics vim.Diagnostic[]
-function U.add_missing_commas(diagnostics)
-  vim.iter(diagnostics):each(function(diag)
-    if diag.message == 'Miss symbol `,` or `;` .' or diag.message == 'Missed symbol `,`.' then
-      vim.api.nvim_buf_set_text(0, diag.lnum, diag.col, diag.lnum, diag.col, { ',' })
-    end
-  end)
-end
-
-function U.send_to_black_hole()
-  local line_content = vim.fn.line('.')
-  if type(line_content) == 'string' and string.match(line_content, '^%s*$') then
-    vim.cmd('normal! "_dd')
-  else
-    vim.cmd('normal! dd')
-  end
 end
 
 --- @return boolean
@@ -348,11 +276,6 @@ function U.ctrl_a()
   end
 end
 
----@param filename string
-function U.has_file(filename)
-  return vim.fn.filereadable(vim.fn.getcwd() .. '/' .. filename) == 1 and true or false
-end
-
 ---@type fun(ctx: {buf: integer, event?: string, file?: string, id?: integer, match?: string}): nil
 function U.create_backdrop(ctx)
   local backdrop_bufnr = vim.api.nvim_create_buf(false, true)
@@ -386,25 +309,6 @@ function U.create_backdrop(ctx)
       end
     end,
   })
-end
-
---- Gets a path to a package in the Mason registry.
---- Prefer this to `get_package`, since the package might not always be
---- available yet and trigger errors.
----@param pkg string
----@param path? string
----@param opts? { warn?: boolean }
-function U.get_pkg_path(pkg, path, opts)
-  pcall(require, 'mason')
-  local root = vim.env.MASON or (vim.fn.stdpath('data') .. '/mason')
-  opts = opts or {}
-  opts.warn = opts.warn == nil and true or opts.warn
-  path = path or ''
-  local ret = root .. '/packages/' .. pkg .. '/' .. path
-  if opts.warn and not vim.uv.fs_stat(ret) then
-    Snacks.notify.warn(('Mason package path not found for **%s**:\n- `%s`\nYou may need to force update the package.'):format(pkg, path))
-  end
-  return ret
 end
 
 --- Recursively gets a given node's anscestor of a given type

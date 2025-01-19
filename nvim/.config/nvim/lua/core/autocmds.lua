@@ -3,6 +3,17 @@ local autocmd = vim.api.nvim_create_autocmd
 local pattern = { 'DressingInput', 'help', 'logger', 'man', 'qf', 'query', 'scratch', 'undotree', 'telescope', 'TelescopePrompt' }
 local general = augroup('general', { clear = true })
 
+autocmd('CursorMoved', {
+  group = augroup('auto-hlsearch', { clear = true }),
+  callback = function()
+    if vim.v.hlsearch == 1 and vim.fn.searchcount().exact_match == 0 then
+      vim.schedule(function()
+        vim.cmd.nohlsearch()
+      end)
+    end
+  end,
+})
+
 autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = augroup('kickstart-highlight-yank', { clear = true }),
@@ -43,22 +54,6 @@ autocmd('BufWritePost', {
   end,
 })
 
-autocmd('FileType', {
-  desc = "don't list quickfix buffers",
-  pattern = 'qf',
-  callback = function()
-    vim.opt_local.buflisted = false
-  end,
-})
-
-autocmd('FileType', {
-  group = general,
-  pattern = 'hypr',
-  callback = function(args)
-    vim.bo[args.buf].commentstring = '# %s'
-  end,
-})
-
 autocmd('ExitPre', {
   desc = 'Stops all lsp daemons when exiting neovim',
   group = augroup('StopDaemons', { clear = true }),
@@ -74,7 +69,7 @@ autocmd('FileType', {
   callback = function()
     vim.api.nvim_set_option_value('bufhidden', 'unload', { scope = 'local' })
     vim.cmd('wincmd L')
-    vim.api.nvim_win_set_width(0, 100)
+    vim.api.nvim_win_set_width(0, 110)
     vim.cmd('set winhighlight=Normal:HelpNormal')
   end,
 })
@@ -88,7 +83,6 @@ autocmd('FileType', {
   end,
 })
 
---
 autocmd('VimEnter', {
   desc = 'Sets terminal titlestring to the current working directory',
   group = general,
@@ -113,48 +107,22 @@ autocmd('VimEnter', {
   end,
 })
 
-autocmd('BufReadPost', {
-  desc = 'Restore the cursor position when the buffer is read',
-  callback = function(args)
-    local valid_line = vim.fn.line([['"]]) >= 1 and vim.fn.line([['"]]) < vim.fn.line('$')
-    local not_commit = vim.b[args.buf].filetype ~= 'commit'
-
-    if valid_line and not_commit then
-      vim.cmd([[normal! g`"]])
-    end
-  end,
-})
-
-autocmd({ 'BufRead', 'BufNewFile' }, {
-  desc = 'Disable diagnostics in node_modules (0 is current buffer only)',
-  group = general,
-  pattern = '*/node_modules/*',
-  callback = function()
-    vim.diagnostic.enable(false)
-  end,
-})
-
 autocmd('BufWritePre', {
   desc = 'Adds missing commas to lua files',
   group = general,
   pattern = '*',
   callback = function()
     local diagnostics = vim.diagnostic.get(0, { severity = vim.diagnostic.severity.ERROR })
-    if #diagnostics > 0 then
-      U.add_missing_commas(diagnostics)
-    end
-  end,
-})
-
-autocmd('CmdwinEnter', {
-  desc = 'Fixes highlighting in the cmdwin',
-  callback = function()
-    vim.bo.ft = 'python'
-    vim.bo.ft = 'vim'
+    vim.iter(diagnostics):each(function(diag)
+      if diag.message == 'Miss symbol `,` or `;` .' or diag.message == 'Missed symbol `,`.' then
+        vim.api.nvim_buf_set_text(0, diag.lnum, diag.col, diag.lnum, diag.col, { ',' })
+      end
+    end)
   end,
 })
 
 autocmd('FileType', {
+  desc = "Start gitcommit files in 'insert' mode",
   group = general,
   pattern = 'gitcommit',
   callback = function()
@@ -166,4 +134,44 @@ autocmd('FileType', {
   desc = 'Creates a backdrop effect for large windows',
   pattern = { 'TelescopePrompt', 'mason', 'lazy' },
   callback = U.create_backdrop,
+})
+
+local plug_types = {
+  NvimTree = true,
+  TelescopePrompt = true,
+  Trouble = true,
+  poon = true,
+  help = true,
+  logger = true,
+  noice = true,
+  prompt = true,
+  terminal = true,
+  toggleterm = true,
+  fidget = true,
+  notify = true,
+  snacks_notif = true,
+}
+
+local function quit_vim()
+  local wins = vim.api.nvim_list_wins()
+  local file_win_count = 0
+
+  for _, w in ipairs(wins) do
+    local buf = vim.api.nvim_win_get_buf(w)
+    local ft = vim.api.nvim_get_option_value('filetype', { buf = buf })
+    if not plug_types[ft] then
+      file_win_count = file_win_count + 1
+    end
+  end
+
+  if file_win_count == 0 then
+    vim.cmd('qa')
+  end
+end
+
+-- autoquit vim if only plugin windows are open
+vim.api.nvim_create_autocmd('QuitPre', {
+  callback = function()
+    vim.defer_fn(quit_vim, 100)
+  end,
 })

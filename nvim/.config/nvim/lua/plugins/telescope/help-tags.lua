@@ -23,7 +23,7 @@ local help_tag_mapping = {
     local doc_path = selection.filename or selection.path
     require('telescope.actions').close(prompt_bufnr)
 
-    if doc_path:lower():match('snacks') then
+    if doc_path:lower():match('snacks') or doc_path:lower():match('nvim%-tree') then
       vim.cmd.help(selection.value)
       return
     end
@@ -42,6 +42,8 @@ local help_tag_mapping = {
         return
       end
     end
+
+    print(selection.value)
 
     vim.cmd('help ' .. selection.value)
   end,
