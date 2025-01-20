@@ -74,7 +74,7 @@ end
 local function toggle_inlay_hints()
   vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }))
   local msg = vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }) and 'Lsp inlay hints enabled' or 'Lsp inlay hints disabled'
-  log(msg)
+  vim.notify(msg, vim.log.levels.INFO)
 end
 
 ---@param client vim.lsp.Client
