@@ -68,6 +68,43 @@ return {
     auto_install = true,
   },
   config = function(_, opts)
+    vim.filetype.add({
+      extension = {
+        cts = 'typescript',
+        es6 = 'javascript',
+        gif = 'image',
+        jpeg = 'image',
+        jpg = 'image',
+        mts = 'typescript',
+        png = 'image',
+        postcss = 'css',
+        rasi = 'rasi',
+        rofi = 'rasi',
+        wofi = 'rasi',
+        sh = 'sh',
+        zsh = 'sh',
+      },
+      filename = {
+        ['.babelrc'] = 'json',
+        ['.eslintrc'] = 'json',
+        ['.prettierrc'] = 'json',
+        ['.stylelintrc'] = 'json',
+        ['sxhkdrc'] = 'sxhkdrc',
+        ['.zshrc'] = 'sh',
+        ['.zshenv'] = 'sh',
+      },
+      pattern = {
+        ['.*config/git/config'] = 'gitconfig',
+        ['todo%.txt'] = 'todotxt',
+        ['.*/waybar/config'] = 'jsonc',
+        ['.*/kitty/.+%.conf'] = 'kitty',
+        ['.*/hypr/.+%.conf'] = 'hyprlang',
+        ['%.env%.[%w_.-]+'] = 'sh',
+      },
+    })
+
+    vim.treesitter.language.register('bash', 'kitty')
+
     require('nvim-treesitter.configs').setup(opts)
   end,
 }
