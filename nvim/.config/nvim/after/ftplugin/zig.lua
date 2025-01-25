@@ -1,4 +1,4 @@
-vim.hl.priorities.semantic_tokens = 0
+vim.highlight.priorities.semantic_tokens = 0
 vim.lsp.inlay_hint.enable(true)
 
 vim.keymap.set('n', '<leader>b', function()

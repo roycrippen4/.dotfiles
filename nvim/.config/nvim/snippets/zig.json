@@ -1,1 +1,1 @@
-{"eql":{"body":"std.mem.eql(${1:comptime T: type}, ${2:a: []const T}, ${3:b: []const T})","prefix":"eql"}}
+{"eql":{"body":"std.mem.eql(${1:comptime T: type}, ${2:a: []const T}, ${3:b: []const T})","prefix":"eql"},"print":{"body":"std.debug.print(\"${1:content}\\n\", .{${2:items}});","prefix":"print"}}
