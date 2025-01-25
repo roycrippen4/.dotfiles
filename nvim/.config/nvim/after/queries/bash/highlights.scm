@@ -15,3 +15,6 @@
     (word))
   argument: (word) @bash.flag.double
   (#match? @bash.flag.double "^--"))
+
+((comment) @kitty.color
+  (#match? @kitty.color "#[0-9a-fA-F]{3,6}"))
