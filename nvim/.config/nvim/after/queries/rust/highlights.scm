@@ -26,3 +26,5 @@
 
 (use_declaration 
   argument: (_ "::" @punctuation.special))
+
+(scoped_identifier "::" @punctuation.special) 
