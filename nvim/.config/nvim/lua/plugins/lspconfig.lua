@@ -282,9 +282,28 @@ return {
     'williamboman/mason.nvim', -- https://github.com/williamboman/mason.nvim
     'b0o/schemastore.nvim', -- https://github.com/b0o/schemastore.nvim
     { 'j-hui/fidget.nvim', opts = {} }, -- https://github.com/j-hui/fidget.nvim
+    {
+      'p00f/clangd_extensions.nvim',
+      lazy = true,
+      ft = { 'c', 'cpp' },
+      opts = {
+        inlay_hints = { inline = false },
+      },
+    },
   },
   config = function()
     local lspconfig = require('lspconfig')
+
+    lspconfig['clangd'].setup({
+      ---@param client vim.lsp.Client
+      ---@param bufnr integer,
+      on_attach = function(client, bufnr)
+        U.on_attach(client, bufnr)
+        U.set_lsp_mappings({ mode = 'n', { '<leader>ch', '<cmd>ClangdSwitchSourceHeader<cr>', desc = 'Switch Source/Header (C/C++)' } })
+      end,
+      capabilities = vim.tbl_deep_extend('force', U.capabilities, { offsetEncoding = { 'utf-16' } }),
+      init_options = { usePlaceholders = true, completeUnimported = true, clangdFileStatus = true },
+    })
 
     lspconfig['cssls'].setup({
       capabilities = U.capabilities,
