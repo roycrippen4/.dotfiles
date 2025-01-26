@@ -92,6 +92,7 @@ return {
         ['sxhkdrc'] = 'sxhkdrc',
         ['.zshrc'] = 'sh',
         ['.zshenv'] = 'sh',
+        ['bun.lock'] = 'jsonc',
       },
       pattern = {
         ['.*config/git/config'] = 'gitconfig',
