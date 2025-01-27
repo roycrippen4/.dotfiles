@@ -14,9 +14,19 @@ autocmd('CursorMoved', {
   end,
 })
 
+autocmd('FileType', {
+  pattern = 'neotest*',
+  callback = function(args)
+    local winnr = vim.fn.bufwinid(args.buf)
+    vim.wo[winnr].winhighlight = 'Normal:HelpNormal'
+    vim.cmd('set nocul')
+    vim.cmd('norm G')
+  end,
+})
+
 autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
-  group = augroup('kickstart-highlight-yank', { clear = true }),
+  group = augroup('highlight-yank', { clear = true }),
   callback = function()
     if vim.fn.has('nvim-0.11') == 1 then
       vim.hl.on_yank()
@@ -150,6 +160,8 @@ local plug_types = {
   fidget = true,
   notify = true,
   snacks_notif = true,
+  ['neotest-summary'] = true,
+  ['neotest-output-panel'] = true,
 }
 
 local function quit_vim()
