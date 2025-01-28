@@ -10,3 +10,4 @@ DEBS_avail
 venv
 /home/.oh-my-zsh/cache
 home/.bin/serve-cam.sh
+kitty/.config/kitty/kitty.work.conf
