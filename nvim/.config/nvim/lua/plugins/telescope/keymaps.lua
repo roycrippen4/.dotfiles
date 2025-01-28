@@ -16,8 +16,6 @@ M.keys = {
   '<leader>fgs',
   '<leader>fp',
   '<leader>ft',
-  'gd',
-  'gr',
 }
 
 function M.setup()
@@ -25,8 +23,6 @@ function M.setup()
     -- stylua: ignore
     {
       mode = 'n',
-      { 'gd', require('telescope.builtin').lsp_definitions,   desc = 'Goto Definition',          icon = '󰼭' },
-      { 'gr', require('telescope.builtin').lsp_references,    desc = 'Goto References',          icon = '' },
       { '<leader>ff', '<cmd> Telescope find_files      <CR>', desc = '[F]ind files',             icon = '' },
       { '<leader>fa', '<cmd> Telescope autocommands    <CR>', desc = '[F]ind autocommands',      icon = '󱚟' },
       { '<leader>fb', '<cmd> Telescope buffers         <CR>', desc = '[F]ind buffers',           icon = '' },
