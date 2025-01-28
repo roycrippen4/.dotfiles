@@ -47,32 +47,6 @@ return {
           },
         },
       },
-      settings = {
-        complete_function_calls = true,
-        vtsls = {
-          enableMoveToFileCodeAction = true,
-          autoUseWorkspaceTsdk = true,
-          experimental = {
-            completion = {
-              enableServerSideFuzzyMatch = true,
-            },
-          },
-        },
-        typescript = {
-          updateImportsOnFileMove = { enabled = 'always' },
-          suggest = {
-            completeFunctionCalls = true,
-          },
-          inlayHints = {
-            enumMemberValues = { enabled = true },
-            functionLikeReturnTypes = { enabled = true },
-            parameterNames = { enabled = 'literals' },
-            parameterTypes = { enabled = true },
-            propertyDeclarationTypes = { enabled = true },
-            variableTypes = { enabled = false },
-          },
-        },
-      },
     })
 
     configure_server('jsonls', {
@@ -94,14 +68,6 @@ return {
           },
           telemetry = { enable = false },
           hint = { enable = true, arrayIndex = 'Disable' },
-        },
-      },
-    })
-
-    configure_server('svelte', {
-      settings = {
-        workspace = {
-          didChangeOnWatchedFiles = { dynamicRegistration = true },
         },
       },
     })
@@ -148,5 +114,6 @@ return {
     configure_server('ocamllsp')
     configure_server('pyright')
     configure_server('protols')
+    configure_server('svelte')
   end,
 }

@@ -8,7 +8,7 @@ local function send_to_black_hole()
     vim.cmd('normal! dd')
   end
 end
-map('n', '<leaderit>', '<cmd> InspectTree <cr>', { desc = '[I]nspect AST' })
+map('n', '<leader>it', '<cmd> InspectTree <cr>', { desc = '[I]nspect AST' })
 map('n', '<leader>q', '<cmd> EditQuery   <cr>', { desc = 'Edit TS query' })
 map('n', '<leader>m', '<cmd> Mason       <cr>', { desc = '[M]ason' })
 map('n', '<leader><Leader>', '<cmd> Lazy        <cr>', { desc = 'Open Lazy' })
