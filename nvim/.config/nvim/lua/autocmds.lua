@@ -27,7 +27,9 @@ autocmd('FileType', {
 autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = augroup('highlight-yank', { clear = true }),
-  callback = vim.hl.on_yank,
+  callback = function()
+    vim.hl.on_yank()
+  end,
 })
 
 autocmd('InsertEnter', {
