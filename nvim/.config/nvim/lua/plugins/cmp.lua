@@ -85,8 +85,4 @@ return {
       cmdline = {},
     },
   },
-  config = function(_, opts)
-    require('blink.cmp').setup(opts)
-    require('blink.cmp').get_lsp_capabilities(U.capabilities)
-  end,
 }

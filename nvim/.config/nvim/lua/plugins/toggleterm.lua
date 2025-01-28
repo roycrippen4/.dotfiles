@@ -105,7 +105,7 @@ return {
       vim.cmd('startinsert')
       vim.cmd('setlocal nonu nornu signcolumn=no foldcolumn=0')
       if term:is_float() then
-        U.create_backdrop({ buf = term.bufnr })
+        require('utils').create_backdrop({ buf = term.bufnr })
       end
     end,
     highlights = { NormalFloat = { link = 'TelescopeNormal' } },

@@ -1,4 +1,4 @@
-local devicons = require('core.icons').devicon
+local devicons = require('icons').devicon
 
 ---@type LazyPluginSpec
 return {

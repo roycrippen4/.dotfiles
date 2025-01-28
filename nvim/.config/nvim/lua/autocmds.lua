@@ -27,13 +27,7 @@ autocmd('FileType', {
 autocmd('TextYankPost', {
   desc = 'Highlight when yanking (copying) text',
   group = augroup('highlight-yank', { clear = true }),
-  callback = function()
-    if vim.fn.has('nvim-0.11') == 1 then
-      vim.hl.on_yank()
-    else
-      vim.highlight.on_yank()
-    end
-  end,
+  callback = vim.hl.on_yank,
 })
 
 autocmd('InsertEnter', {
@@ -143,7 +137,7 @@ autocmd('FileType', {
 autocmd('FileType', {
   desc = 'Creates a backdrop effect for large windows',
   pattern = { 'TelescopePrompt', 'mason', 'lazy' },
-  callback = U.create_backdrop,
+  callback = require('utils').create_backdrop,
 })
 
 local plug_types = {

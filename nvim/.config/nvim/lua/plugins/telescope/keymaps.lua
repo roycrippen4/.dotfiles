@@ -25,7 +25,7 @@ function M.setup()
     -- stylua: ignore
     {
       mode = 'n',
-      { 'gd', require('plugins.telescope.lsp'),               desc = 'Goto Definition',          icon = '󰼭' },
+      { 'gd', require('telescope.builtin').lsp_definitions,   desc = 'Goto Definition',          icon = '󰼭' },
       { 'gr', require('telescope.builtin').lsp_references,    desc = 'Goto References',          icon = '' },
       { '<leader>ff', '<cmd> Telescope find_files      <CR>', desc = '[F]ind files',             icon = '' },
       { '<leader>fa', '<cmd> Telescope autocommands    <CR>', desc = '[F]ind autocommands',      icon = '󱚟' },

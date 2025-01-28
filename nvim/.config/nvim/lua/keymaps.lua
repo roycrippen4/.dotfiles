@@ -1,6 +1,4 @@
 local map = vim.keymap.set
-local beeline = require('beeline')
-local wk = require('which-key')
 
 local function send_to_black_hole()
   local line_content = vim.fn.line('.')
@@ -10,22 +8,12 @@ local function send_to_black_hole()
     vim.cmd('normal! dd')
   end
 end
-
-wk.add({
-  {
-    mode = 'n',
-    -- stylua: ignore start
-    { '<leader>it',       '<cmd> InspectTree <cr>',                desc = '[I]nspect AST',     icon = '' },
-    { '<leader>q',        '<cmd> EditQuery   <cr>',                desc = 'Edit TS query',     icon = '󱄶' },
-    { '<leader>m',        '<cmd> Mason       <cr>',                desc = '[M]ason',           icon = '' },
-    { '<leader><Leader>', '<cmd> Lazy        <cr>',                desc = 'Open Lazy',         icon = '' },
-    { '<leader>v',        '<C-w>v',                                desc = 'Vertical Split',    icon = '' },
-    { '<leader>h',        '<C-w>s',                                desc = 'Horizontal Split',  icon = '' },
-    { '<leader>lf',       vim.diagnostic.open_float,               desc = '[L]SP Show Errors', icon = '' },
-    { '<leader>x',        require('beeline').close_buffer, desc = 'Close Buffer',      icon = '' },
-    -- stylua: ignore end
-  },
-})
+map('n', '<leaderit>', '<cmd> InspectTree <cr>', { desc = '[I]nspect AST' })
+map('n', '<leader>q', '<cmd> EditQuery   <cr>', { desc = 'Edit TS query' })
+map('n', '<leader>m', '<cmd> Mason       <cr>', { desc = '[M]ason' })
+map('n', '<leader><Leader>', '<cmd> Lazy        <cr>', { desc = 'Open Lazy' })
+map('n', '<leader>v', '<C-w>v', { desc = 'Vertical Split' })
+map('n', '<leader>h', '<C-w>s', { desc = 'Horizontal Split' })
 
 -- stylua: ignore start
 map('n', ';',       ':',                         { desc = 'enter commandline'                 })
@@ -45,11 +33,7 @@ map('n', '<M-S-.>', '<C-w>>',                    { desc = 'Increase window width
 map('n', '<M-S-,>', '<C-w><',                    { desc = 'Decrease window width'             })
 map('n', '<M-j>',   ':m .+1<cr>==',              { desc = 'Shift line down'                   })
 map('n', '<M-k>',   ':m .-2<cr>==',              { desc = 'Shift line up'                     })
-map('n', 'L',       beeline.next,                { desc = 'Go to next beeline buffer'       })
-map('n', 'H',       beeline.prev,                { desc = 'Go to prev beeline buffer'       })
 map('n', 'dd',      send_to_black_hole,        { desc = 'smart delete'                      })
-map('n', '<C-a>',   U.ctrl_a,                    { desc = 'Extended increment'                })
-map('n', '<C-x>',   U.ctrl_x,                    { desc = 'Extended decrement'                })
 -- stylua: ignore end
 
 local cursor_moved = '<cmd>lua vim.api.nvim_exec_autocmds("CursorMoved", {})<cr>'

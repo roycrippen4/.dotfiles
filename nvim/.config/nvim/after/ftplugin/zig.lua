@@ -1,5 +1,6 @@
-vim.highlight.priorities.semantic_tokens = 0
+vim.hl.priorities.semantic_tokens = 0
 vim.lsp.inlay_hint.enable(true)
+vim.g.zig_fmt_parse_errors = 0
 
 vim.keymap.set('n', '<leader>b', function()
   vim.cmd('TermExec direction=horizontal size=16 cmd="zig build"')

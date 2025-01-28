@@ -9,14 +9,11 @@ return {
     ---@type rustaceanvim.Opts
     vim.g.rustaceanvim = {
       server = {
-        on_attach = require('core.utils').on_attach,
+        on_attach = require('lsp').on_attach,
         default_settings = {
           ['rust-analyzer'] = {
             inlayHints = { renderColons = false },
-            cargo = {
-              allFeatures = true,
-              loadOutDirsFromCheck = true,
-            },
+            cargo = { allFeatures = true, loadOutDirsFromCheck = true },
             procMacro = {
               ignored = {
                 ['async-trait'] = { 'async_trait' },
@@ -27,12 +24,7 @@ return {
           },
         },
       },
-      tools = {
-        float_win_config = { border = 'rounded' },
-        on_initialized = function()
-          vim.lsp.codelens.refresh()
-        end,
-      },
+      tools = { float_win_config = { border = 'rounded' } },
     }
 
     require('which-key').add({

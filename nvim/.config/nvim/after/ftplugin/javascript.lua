@@ -15,7 +15,7 @@ local function add_async()
   -- ignore_injections = false makes this snippet work in filetypes where JS is injected
   -- into other languages
   local current_node = vim.treesitter.get_node({ ignore_injections = false })
-  local function_node = U.find_node_ancestor({ 'arrow_function', 'function_declaration', 'function' }, current_node)
+  local function_node = require('utils').find_node_ancestor({ 'arrow_function', 'function_declaration', 'function' }, current_node)
   if not function_node then
     return
   end
