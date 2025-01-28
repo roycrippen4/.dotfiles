@@ -361,6 +361,15 @@ return {
       TelescopeSelection = { bg = colors.black2, fg = colors.white },
     },
 
+    snacks = {
+      SnacksPicker = { link = 'TelescopeNormal' },
+      SnacksPickerBorder = { link = 'TelescopeBorder' },
+      SnacksPickerInput = { fg = colors.white, bg = colors.black2 },
+      SnacksPickerInputBorder = { link = 'TelescopePromptBorder' },
+      SnacksPickerInputTitle = { link = 'TelescopePromptTitle' },
+      SnacksPickerPreviewTitle = { link = 'TelescopePreviewTitle' },
+    },
+
     trouble = {
       TroubleNormal = { bg = colors.black3 },
       TroubleNormalNC = { bg = colors.black3 },
