@@ -64,6 +64,7 @@ return {
       typescript = { 'prettierd', 'prettier', stop_after_first = true },
       typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       yaml = { 'yamlfmt' },
+      rust = { 'rustfmt' },
     },
   },
 }
