@@ -164,7 +164,8 @@ return {
     },
 
     blink = {
-      BlinkCmpLabelMatch = { fg = colors.blue },
+      BlinkCmpDocBorder = { link = 'FloatBorder' },
+      BlinkCmpKind = { link = 'Special' },
       BlinkCmpKindClass = { link = '@type.builtin' },
       BlinkCmpKindEnum = { link = '@lsp.type.enum' },
       BlinkCmpKindEnumMember = { link = '@lsp.type.enumMember' },
@@ -177,11 +178,11 @@ return {
       BlinkCmpKindStruct = { link = '@lsp.type.struct' },
       BlinkCmpKindText = { link = '@text.literal' },
       BlinkCmpLabel = { fg = colors.white },
+      BlinkCmpLabelMatch = { fg = colors.blue },
       BlinkCmpMenu = { link = 'NormalFloat' },
       BlinkCmpMenuBorder = { link = 'FloatBorder' },
-      BlinkCmpSignatureHelpBorder = { link = 'FloatBorder' },
-      BlinkCmpDocBorder = { link = 'FloatBorder' },
       BlinkCmpMenuSelection = { link = 'CursorLine' },
+      BlinkCmpSignatureHelpBorder = { link = 'FloatBorder' },
       BlinkCmpSource = { fg = colors.grey_light },
     },
 
