@@ -3,7 +3,7 @@
 return {
   'zbirenbaum/copilot.lua', -- https://github.com/zbirenbaum/copilot.lua
   event = 'BufReadPost',
-  keys = { { '<leader>lct', '<cmd> Copilot toggle' } },
+  keys = { { '<leader>tc', '<cmd> Copilot toggle <cr>' } },
   ---@type copilot_config
   opts = {
     panel = { enabled = false },

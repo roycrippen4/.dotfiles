@@ -50,7 +50,7 @@ return {
             width = 0.5,
             height = 0.2,
             { win = 'input', height = 1, border = 'rounded', title = '{title} {live} {flags}' },
-            { win = 'list', border = 'solid', height = 1 },
+            { win = 'list', border = 'solid', height = 10 },
           },
         },
         custom = {
