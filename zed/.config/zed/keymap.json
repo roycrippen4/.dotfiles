@@ -1,0 +1,109 @@
+// Zed keymap
+//
+// For information on binding keys, see the Zed
+// documentation: https://zed.dev/docs/key-bindings
+//
+// To see the default key bindings run `zed: open default keymap`
+// from the command palette.
+[
+  {
+    "context": "terminal",
+    "bindings": {
+      "space h": "workspace::ToggleBottomDock"
+    }
+  },
+  {
+    "context": "ProjectPanel && not_editing",
+    "bindings": {
+      "a": "project_panel::NewFile",
+      "d": "project_panel::Delete",
+      "r": "project_panel::Rename"
+    }
+  },
+  {
+    "context": "VimControl || Dock",
+    "bindings": {
+      "space l h": "editor::ToggleInlayHints",
+      "ctrl-h": ["workspace::ActivatePaneInDirection", "Left"],
+      "ctrl-j": ["workspace::ActivatePaneInDirection", "Down"],
+      "ctrl-k": ["workspace::ActivatePaneInDirection", "Up"],
+      "ctrl-l": ["workspace::ActivatePaneInDirection", "Right"],
+      ";": "command_palette::Toggle",
+      "f11": [
+        "task::Spawn",
+        {
+          "task_name": "Lazygit",
+          "reveal_target": "center"
+        }
+      ],
+      "space f f": [
+        "task::Spawn",
+        {
+          "task_name": "Find Files",
+          "reveal_target": "center"
+        }
+      ],
+      "space f w": [
+        "task::Spawn",
+        {
+          "task_name": "Live Grep",
+          "reveal_target": "center"
+        }
+      ]
+    }
+  },
+  {
+    "context": "Editor && (vim_mode == normal || vim_mode == visual) && !VimWating && !menu",
+    "bindings": {
+      "alt-j": "editor::MoveLineDown",
+      "alt-k": "editor::MoveLineUp"
+    }
+  },
+  {
+    "context": "Editor && inline_completion && !showing_completions",
+    "use_key_equivalents": true,
+    "bindings": {
+      "alt-enter": "editor::AcceptInlineCompletion"
+    }
+  },
+  {
+    "context": "Editor && vim_mode == insert",
+    "bindings": {
+      "j k": ["vim::SwitchMode", "Normal"],
+      "ctrl-l": ["workspace::SendKeystrokes", "right"],
+      "ctrl-h": ["workspace::SendKeystrokes", "left"],
+      "ctrl-k": ["workspace::SendKeystrokes", "up"],
+      "ctrl-j": ["workspace::SendKeystrokes", "down"]
+    }
+  },
+  {
+    "context": "vim_mode == visual",
+    "bindings": {
+      "shift-s": [
+        "vim::PushOperator",
+        {
+          "AddSurrounds": {}
+        }
+      ]
+    }
+  },
+  {
+    "context": "VimControl && !menu",
+    "bindings": {
+      "space v": "pane::SplitRight",
+      "L": "pane::ActivateNextItem",
+      "H": "pane::ActivatePrevItem",
+      "ctrl-c": ["workspace::SendKeystrokes", "escape "],
+      "space x": "pane::CloseActiveItem",
+      "g r": "editor::FindAllReferences",
+      "space h": "workspace::ToggleBottomDock",
+      "space l a": "editor::ToggleCodeActions"
+    }
+  },
+  {
+    "context": "Workspace",
+    "bindings": {
+      // "shift shift": "file_finder::Toggle"
+    }
+  }
+]

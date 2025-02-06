@@ -1,0 +1,29 @@
+// Static tasks configuration.
+//
+// Example:
+[
+  {
+    "label": "Live Grep",
+    "command": "zeditor \"$(tv text)\"",
+    "hide": "always",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true,
+    "shell": "system"
+  },
+  {
+    "label": "Find Files",
+    "command": "zeditor \"$(tv)\"",
+    "hide": "always",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true,
+    "shell": "system"
+  },
+  {
+    "label": "Lazygit",
+    "command": "lazygit",
+    "hide": "always",
+    "allow_concurrent_runs": true,
+    "use_new_terminal": true,
+    "shell": "system"
+  }
+]
