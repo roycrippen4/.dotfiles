@@ -147,6 +147,9 @@ alias ndev=go_to_neodev_config
 alias wconf=go_to_wofi_config
 alias bconf=go_to_waybar_config
 
+alias gs="git switch"
+alias gsb="git switch -c"
+
 alias dcb="sudo docker compose build"
 alias dcu="sudo docker compose up"
 alias dcd="sudo docker compose down"

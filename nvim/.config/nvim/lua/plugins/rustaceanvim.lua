@@ -13,10 +13,16 @@ return {
         default_settings = {
           ['rust-analyzer'] = {
             inlayHints = { renderColons = false },
-            cargo = { allFeatures = true, loadOutDirsFromCheck = true },
+            cargo = {
+              allFeatures = true,
+              loadOutDirsFromCheck = true,
+              buildScripts = { enable = true },
+            },
             procMacro = {
+              enable = true,
               ignored = {
-                ['async-trait'] = { 'async_trait' },
+                -- ['tonic'] = { 'async_trait' },
+                -- ['async-trait'] = { 'async_trait' },
                 ['napi-derive'] = { 'napi' },
                 ['async-recursion'] = { 'async_recursion' },
               },
