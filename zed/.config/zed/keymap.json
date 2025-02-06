@@ -60,6 +60,12 @@
     }
   },
   {
+    "context": "showing_completions && VimControl",
+    "bindings": {
+      // "j k": "editor::movelinedown"
+    }
+  },
+  {
     "context": "Editor && inline_completion && !showing_completions",
     "use_key_equivalents": true,
     "bindings": {
@@ -77,7 +83,7 @@
     }
   },
   {
-    "context": "vim_mode == visual",
+    "context": "Editor && vim_mode == visual && !VimWaiting && !VimObject",
     "bindings": {
       "shift-s": [
         "vim::PushOperator",
