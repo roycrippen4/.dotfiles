@@ -72,17 +72,14 @@ opt.relativenumber = true
 opt.numberwidth = 2
 opt.ruler = false
 
--- FoOCItTsl
 -- disable nvim intro
 opt.shortmess:append('qWcCsIS')
 
 vim.o.guicursor = 'n-v-c:block-Cursor/lCursor-blinkon1,i:ver25-Cursor/lCursor-blinkon1,r-cr:hor20-Cursor/lCursor-blinkon1'
 vim.o.formatexpr = "v:lua.require'conform'.formatexpr()"
 
--- Enables mouse support
-vim.o.mouse = 'a'
--- Dont horizontal scroll with mouse
-vim.o.mousescroll = 'ver:3,hor:0'
+vim.o.mouse = 'a' -- Enables mouse support
+vim.o.mousescroll = 'ver:3,hor:0' -- Dont horizontal scroll with mouse
 
 vim.o.timeout = true -- Faster wait time
 vim.o.timeoutlen = 500 -- Timeout wait time
