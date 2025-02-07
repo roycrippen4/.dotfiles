@@ -3,28 +3,6 @@ local autocmd = vim.api.nvim_create_autocmd
 local pattern = { 'DressingInput', 'help', 'logger', 'man', 'qf', 'query', 'scratch', 'undotree', 'telescope', 'TelescopePrompt' }
 local general = augroup('general', { clear = true })
 
-vim.g.searchcount_string = ''
-autocmd('CursorMoved', {
-  group = general,
-  callback = function()
-    local searchcount = vim.fn.searchcount()
-    if vim.v.hlsearch == 0 then
-      return
-    end
-
-    if searchcount.exact_match == 0 then
-      vim.schedule(function()
-        vim.cmd.nohlsearch()
-        vim.g.searchcount_string = ''
-        vim.cmd.redrawstatus()
-      end)
-      return
-    end
-
-    vim.g.searchcount_string = searchcount.current .. '/' .. searchcount.total
-  end,
-})
-
 autocmd('BufReadPost', {
   callback = function(args)
     local mark = vim.api.nvim_buf_get_mark(args.buf, '"')

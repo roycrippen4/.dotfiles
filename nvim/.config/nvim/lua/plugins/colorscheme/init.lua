@@ -330,6 +330,7 @@ return {
       StatusLineTime = { fg = '#cc5e00', bg = colors.black3 },
       StatusLineTrouble = { fg = colors.red_dark, bg = colors.black3, italic = true, bold = true },
       StatusLineVisualMode = { fg = colors.pink, bg = colors.black3 },
+      StatusLineSearchCount = { link = 'StatusLineLspWarning' },
     },
 
     tabline = {
