@@ -11,8 +11,8 @@ return {
   },
   ---@type TailwindTools.Option
   opts = {
-    ---@type TailwindTools.ServerOption
     server = {
+      on_attach = require('lsp').on_attach,
       settings = {
         lint = {
           cssConflict = 'warning',
