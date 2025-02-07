@@ -60,6 +60,12 @@
     }
   },
   {
+    "context": "Editor && vim_mode == waiting",
+    "bindings": {
+      "escape": ["vim::SwitchMode", "Normal"]
+    }
+  },
+  {
     "context": "showing_completions && VimControl",
     "bindings": {
       // "j k": "editor::movelinedown"
