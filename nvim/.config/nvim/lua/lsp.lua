@@ -84,6 +84,15 @@ function M.on_attach(client, bufnr)
   if client.name == 'rust-analyzer' then
     vim.keymap.set('n', 'K', '<cmd>RustLsp hover actions<cr>', { buffer = bufnr })
   end
+  -- if client.name == 'svelte' then
+  --   vim.api.nvim_create_autocmd('BufWritePost', {
+  --     pattern = { '*.js', '*.ts' },
+  --     group = vim.api.nvim_create_augroup('svelte_ondidchangetsorjsfile', { clear = true }),
+  --     callback = function(ctx)
+  --       client:notify('$/onDidChangeTsOrJsFile', { uri = ctx.match })
+  --     end,
+  --   })
+  -- end
   set_lsp_mappings()
 end
 
@@ -112,6 +121,7 @@ vim.lsp.buf.hover = function()
 end
 
 --- HACK: Override `vim.lsp.util.stylize_markdown` to use Treesitter.
+---
 ---@param bufnr integer
 ---@param contents string[]
 ---@param opts table
@@ -144,13 +154,7 @@ end
 vim.api.nvim_create_autocmd('LspAttach', {
   desc = 'Configure LSP keymaps',
   callback = function(args)
-    local client = vim.lsp.get_client_by_id(args.data.client_id)
-
-    -- I don't think this can happen but it's a wild world out there.
-    if not client then
-      return
-    end
-
+    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
     M.on_attach(client, args.buf)
   end,
 })
@@ -162,6 +166,12 @@ vim.api.nvim_create_autocmd('LspAttach', {
 function M.configure_server(server, settings)
   local capabilities = vim.lsp.protocol.make_client_capabilities()
   capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
+
+  if server == 'svelte' then
+    ---@diagnostic disable-next-line: assign-type-mismatch see https://github.com/sveltejs/language-tools/issues/2008
+    capabilities.workspace.didChangeWatchedFiles = false
+  end
+
   require('lspconfig')[server].setup(vim.tbl_deep_extend('error', { capabilities = capabilities, silent = true }, settings or {}))
 end
 
