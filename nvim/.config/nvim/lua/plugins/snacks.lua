@@ -40,6 +40,7 @@ return {
     notifier = { timeout = 5000, enabled = true },
     bigfile = { enabled = true },
     input = { enabled = true },
+    image = { enabled = true },
     picker = {
       prompt = '   ',
       layout = { preset = 'custom' },
