@@ -8,6 +8,7 @@ local function send_to_black_hole()
     vim.cmd('normal! dd')
   end
 end
+
 map('n', '<leader>it', '<cmd> InspectTree <cr>', { desc = '[I]nspect AST' })
 map('n', '<leader>q', '<cmd> EditQuery   <cr>', { desc = 'Edit TS query' })
 map('n', '<leader>m', '<cmd> Mason       <cr>', { desc = '[M]ason' })
@@ -15,7 +16,10 @@ map('n', '<leader><Leader>', '<cmd> Lazy        <cr>', { desc = 'Open Lazy' })
 map('n', '<leader>v', '<C-w>v', { desc = 'Vertical Split' })
 map('n', '<leader>h', '<C-w>s', { desc = 'Horizontal Split' })
 
+
 -- stylua: ignore start
+map('n', '<S-cr>',  'O<esc>',                    { desc = 'Insert newline above current line' })
+map('n', '<cr>',    'o<esc>',                    { desc = 'Insert newline below current line' })
 map('n', ';',       ':',                         { desc = 'enter commandline'                 })
 map('n', 'yil',     '^y$',                       { desc = 'yank in line'                      })
 map('n', '<C-n>',   '<cmd> NvimTreeToggle <cr>', { desc = 'Open NvimTree'                     })
@@ -33,7 +37,7 @@ map('n', '<M-S-.>', '<C-w>>',                    { desc = 'Increase window width
 map('n', '<M-S-,>', '<C-w><',                    { desc = 'Decrease window width'             })
 map('n', '<M-j>',   ':m .+1<cr>==',              { desc = 'Shift line down'                   })
 map('n', '<M-k>',   ':m .-2<cr>==',              { desc = 'Shift line up'                     })
-map('n', 'dd',      send_to_black_hole,        { desc = 'smart delete'                      })
+map('n', 'dd',      send_to_black_hole,          { desc = 'smart delete'                      })
 -- stylua: ignore end
 
 local cursor_moved = '<cmd>lua vim.api.nvim_exec_autocmds("CursorMoved", {})<cr>'
