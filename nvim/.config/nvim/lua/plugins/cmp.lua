@@ -75,14 +75,21 @@ return {
         window = { min_width = 20, max_width = 80, max_height = 20, border = 'rounded' },
       },
     },
+    cmdline = { enabled = false },
     sources = {
       default = { 'lazydev', 'lsp', 'snippets', 'path' },
       providers = {
         lsp = { score_offset = 1 },
         lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', score_offset = 100 },
         snippets = { score_offset = 0 },
+        path = {
+          opts = {
+            get_cwd = function(_)
+              return vim.fn.getcwd()
+            end,
+          },
+        },
       },
-      cmdline = {},
     },
   },
 }
