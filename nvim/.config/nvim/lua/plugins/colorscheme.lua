@@ -84,6 +84,7 @@ local treesitter = {
   ['@markup.heading.4.marker.markdown'] = { fg = colors.red, bold = true },
   ['@markup.heading.5.marker.markdown'] = { fg = colors.purple, bold = true },
   ['@markup.heading.6.marker.markdown'] = { fg = colors.orange, bold = true },
+  ['@string.special.ocaml'] = { link = '@constant' },
 }
 
 ---@module "onedark"
@@ -389,6 +390,7 @@ return {
       ['@lsp.typemod.variable.defaultLibrary'] = treesitter['@variable.builtin'],
       ['@lsp.typemod.variable.injected'] = treesitter['@variable'],
       ['@lsp.typemod.variable.static'] = treesitter['@constant'],
+      ['@lsp.type.string.ocaml'] = {},
     },
   },
 }
