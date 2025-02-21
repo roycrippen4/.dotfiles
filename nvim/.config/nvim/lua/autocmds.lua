@@ -1,6 +1,6 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
-local pattern = { 'DressingInput', 'help', 'logger', 'man', 'qf', 'query', 'scratch', 'undotree', 'telescope', 'TelescopePrompt' }
+local pattern = { 'help', 'logger', 'man', 'qf', 'query', 'scratch', 'undotree', 'telescope', 'TelescopePrompt' }
 local general = augroup('general', { clear = true })
 
 autocmd('BufReadPost', {
@@ -175,10 +175,8 @@ local function quit_vim()
     vim.cmd('qa')
   end
 end
-
--- autoquit vim if only plugin windows are open
+-- stylua: ignore
 vim.api.nvim_create_autocmd('QuitPre', {
-  callback = function()
-    vim.defer_fn(quit_vim, 100)
-  end,
+  callback = function() vim.defer_fn(quit_vim, 100) end,
+  desc = "autoquit vim if only plugin windows are open",
 })

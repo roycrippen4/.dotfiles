@@ -1,4 +1,4 @@
-local colors = require('plugins.colorscheme.palette')
+local colors = require('colors')
 
 local treesitter = {
   ['@boolean.zig'] = { link = '@boolean' },
@@ -237,12 +237,6 @@ return {
       DiagnosticUnnecessary = { fg = colors.grey, italic = true, sp = colors.orange, undercurl = true },
     },
 
-    dressing = {
-      DressingBorder = { fg = colors.red, bg = nil },
-      DressingNormal = { bg = colors.one_bg },
-      DressingTitle = { fg = colors.black, bg = colors.red, italic = true, bold = true },
-    },
-
     poon = {
       PoonOpenMark = { fg = colors.pink },
       PoonTitle = { fg = colors.one_bg, bg = colors.blue, italic = true },
@@ -364,13 +358,13 @@ return {
     },
 
     snacks = {
-      SnacksPickerTitle = { link = 'TelescopePromptTitle' },
-      SnacksPicker = { link = 'TelescopeNormal' },
-      SnacksPickerBorder = { link = 'TelescopeBorder' },
+      SnacksPickerTitle = { fg = colors.black, bg = colors.green },
+      SnacksPicker = { bg = colors.black_darker },
+      SnacksPickerBorder = { fg = colors.black_darker, bg = colors.black_darker },
       SnacksPickerInput = { fg = colors.white, bg = colors.black2 },
-      SnacksPickerInputBorder = { link = 'TelescopePromptBorder' },
-      SnacksPickerInputTitle = { link = 'TelescopePromptTitle' },
-      SnacksPickerPreviewTitle = { link = 'TelescopePreviewTitle' },
+      SnacksPickerInputBorder = { fg = colors.black2, bg = colors.black2 },
+      SnacksPickerInputTitle = { fg = colors.black, bg = colors.red },
+      SnacksPickerPreviewTitle = { fg = colors.black, bg = colors.green },
     },
 
     trouble = {

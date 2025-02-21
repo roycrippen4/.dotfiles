@@ -1,35 +1,81 @@
+---@param opts snacks.picker.files.Config
+---@type snacks.picker.finder
+local function multigrep(opts, ctx)
+  local cwd = not (opts.rtp or (opts.dirs and #opts.dirs > 0)) and vim.fs.normalize(opts and opts.cwd or vim.uv.cwd() or '.') or nil
+  local parts = vim.split(ctx.filter.search, '  ')
+  local args = {}
+
+  if parts[1] then
+    table.insert(args, '-e')
+    table.insert(args, parts[1])
+  end
+
+  if parts[2] then
+    table.insert(args, '-g')
+    table.insert(args, parts[2])
+  end
+
+  vim.list_extend(args, { '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case' })
+
+  return require('snacks.picker.source.proc').proc({
+    opts,
+    {
+      cmd = 'rg',
+      args = args,
+      notify = false,
+      transform = function(item)
+        local file, line, col, text = item.text:match('^(.+):(%d+):(%d+):(.*)$')
+        item.cwd = cwd
+        if not file then
+          if not item.text:match('WARNING') then
+            print('Invalid grep output: ' .. item.text, vim.log.levels.ERROR)
+            vim.notify('Invalid grep output: ' .. item.text, vim.log.levels.ERROR)
+          end
+          return false
+        else
+          item.line = text
+          item.file = file
+          item.pos = { tonumber(line), tonumber(col) - 1 }
+        end
+      end,
+    },
+  }, ctx)
+end
+
 ---@module "snacks"
 ---@type LazyPluginSpec
 return {
   'folke/snacks.nvim',
   priority = 1000,
   lazy = false,
+  -- stylua: ignore
   keys = {
-    {
-      '<leader>z',
-      function()
-        Snacks.zen()
-      end,
-    },
-    {
-      'gd',
-      function()
-        Snacks.picker.lsp_definitions()
-      end,
-      { desc = 'Goto Definition' },
-    },
-    {
-      'gr',
-      function()
-        Snacks.picker.lsp_references()
-      end,
-      { desc = 'Goto References' },
-    },
+    { 'gd', function() Snacks.picker.lsp_definitions() end, desc = 'Goto Definition' },
+    { 'gr', function() Snacks.picker.lsp_references() end, desc = 'Goto References' },
+    { "<leader>u", function() Snacks.picker.undo() end, desc = "View Undo History" },
+    { '<leader>z', function() Snacks.zen() end },
+    { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
+    { "<leader>fa", function() Snacks.picker.autocmds() end, desc = "Find Autocmds" },
+    { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Find Buffers" },
+    { "<leader>fc", function() Snacks.picker.command_history() end, desc = "Find Command History" },
+    { "<leader>fC", function() Snacks.picker.commands() end,  desc = "Find Commands"  },
+    { "<leader>fh", function() Snacks.picker.help() end, desc = "Find Help" },
+    { "<leader>fk", function() Snacks.picker.keymaps() end, desc = "Find Keymaps" },
+    { "<leader>fl", function() Snacks.picker.highlights() end, desc = "Find Highlights" },
+    { "<leader>fm", function() Snacks.picker.marks() end, desc = "Find Marks" },
+    { "<leader>fo", function() Snacks.picker.recent({ filter = { cwd = vim.fn.getcwd() } }) end, desc = "Find Recent Files" },
+    { "<leader>fr", function() Snacks.picker.resume() end, desc = "Resume previous search" },
+    { "<leader>fw", function() Snacks.picker.grep({ finder = multigrep }) end, desc = "Find word" },
+    { "<leader>fW", function() Snacks.picker.grep_word() end, desc = "Grep word under cursor" },
   },
   ---@type snacks.Config
   opts = {
     styles = {
-      input = { relative = 'cursor', row = 1 },
+      input = {
+        relative = 'cursor',
+        row = 1,
+        keys = { n_cr = { '<cr>', { 'confirm' }, mode = 'n' } },
+      },
       notification = { wo = { wrap = true } },
       zen = { max_height = 63, width = 160, backdrop = { blend = 20 } },
     },
@@ -37,11 +83,14 @@ return {
       indent = { enabled = true, char = '▏' },
       scope = { enabled = false },
     },
+    statuscolumn = { enabled = true },
     notifier = { timeout = 5000, enabled = true },
     bigfile = { enabled = true },
     input = { enabled = true },
     image = { enabled = true },
     picker = {
+      backdrop = false,
+      previewers = { diff = { cmd = { 'delta' } } },
       prompt = '   ',
       layout = { preset = 'custom' },
       layouts = {

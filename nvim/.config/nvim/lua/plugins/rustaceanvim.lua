@@ -4,7 +4,15 @@ return {
   'mrcjkb/rustaceanvim', -- https://github.com/mrcjkb/rustaceanvim
   version = '^5',
   lazy = false,
-  ft = 'rust',
+  keys = {
+    {
+      '<leader>lt',
+      function()
+        vim.cmd.RustLsp({ 'testables', bang = true })
+      end,
+      desc = '[L]sp Rerun Last Test',
+    },
+  },
   config = function()
     ---@type rustaceanvim.Opts
     vim.g.rustaceanvim = {
@@ -21,8 +29,6 @@ return {
             procMacro = {
               enable = true,
               ignored = {
-                -- ['tonic'] = { 'async_trait' },
-                -- ['async-trait'] = { 'async_trait' },
                 ['napi-derive'] = { 'napi' },
                 ['async-recursion'] = { 'async_recursion' },
               },
@@ -32,15 +38,5 @@ return {
       },
       tools = { float_win_config = { border = 'rounded' } },
     }
-
-    require('which-key').add({
-      {
-        '<leader>lt',
-        function()
-          vim.cmd.RustLsp({ 'testables', bang = true })
-        end,
-        desc = '[L]sp Rerun Last Test',
-      },
-    })
   end,
 }

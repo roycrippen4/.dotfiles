@@ -49,11 +49,6 @@ return {
       ['<C-S-P>'] = { 'scroll_documentation_up', 'fallback' },
       ['<esc>'] = { 'hide', 'fallback' },
     },
-    enabled = function()
-      return not vim.tbl_contains({ 'DressingInput', 'TelescopePrompt' }, vim.bo.ft)
-        and vim.bo.buftype ~= 'prompt'
-        and vim.api.nvim_get_mode().mode ~= 'c'
-    end,
     snippets = { preset = 'luasnip' },
     signature = {
       enabled = true,
