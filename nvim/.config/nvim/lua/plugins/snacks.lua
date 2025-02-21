@@ -48,6 +48,16 @@ return {
   'folke/snacks.nvim',
   priority = 1000,
   lazy = false,
+  dependencies = {
+    {
+      'cargo-bins/cargo-binstall',
+      build = "curl -L --proto '=https' --tlsv1.2 -sSf https://raw.githubusercontent.com/cargo-bins/cargo-binstall/main/install-from-binstall-release.sh | bash",
+    },
+    { 'sharkdp/fd', build = 'cargo binstall fd-find -y', dependencies = 'cargo-bins/cargo-binstall' },
+    { 'BurntSushi/ripgrep', build = 'cargo binstall ripgrep', dependencies = 'cargo-bins/cargo-binstall' },
+    { 'dandavison/delta', build = 'cargo binstall git-delta', dependencies = 'cargo-bins/cargo-binstall' },
+  },
+
   -- stylua: ignore
   keys = {
     { 'gd', function() Snacks.picker.lsp_definitions() end, desc = 'Goto Definition' },
