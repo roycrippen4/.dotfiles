@@ -171,5 +171,5 @@ esac
 autoload -U add-zsh-hook
 
 # ocaml
-[[ ! -r '$HOME/.opam/opam-init/init.zsh' ]] || source '$HOME/.opam/opam-init/init.zsh' >/dev/null 2>/dev/null
+[[ ! -r "$HOME/.opam/opam-init/init.zsh" ]] || source "$HOME/.opam/opam-init/init.zsh" >/dev/null 2>/dev/null
 . "$HOME/.deno/env"
