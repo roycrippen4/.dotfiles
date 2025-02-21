@@ -64,12 +64,7 @@ return {
     filesystem_watchers = { enable = true },
     actions = {
       open_file = { resize_window = true, eject = true },
-      file_popup = {
-        ---@type vim.api.keyset.win_config
-        open_win_config = {
-          border = 'rounded',
-        },
-      },
+      file_popup = { open_win_config = { border = 'rounded' } },
     },
     renderer = {
       root_folder_label = function(path) ---@param path string

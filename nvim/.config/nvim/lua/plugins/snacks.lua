@@ -83,7 +83,6 @@ return {
       indent = { enabled = true, char = '▏' },
       scope = { enabled = false },
     },
-    statuscolumn = { enabled = true },
     notifier = { timeout = 5000, enabled = true },
     bigfile = { enabled = true },
     input = { enabled = true },
