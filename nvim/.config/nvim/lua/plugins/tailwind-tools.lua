@@ -4,11 +4,7 @@ return {
   'luckasRanarison/tailwind-tools.nvim', -- https://github.com/luckasRanarison/tailwind-tools.nvim
   name = 'tailwind-tools',
   build = ':UpdateRemotePlugins',
-  dependencies = {
-    'nvim-treesitter/nvim-treesitter', -- https://github.com/nvim-treesitter/nvim-treesitter
-    'nvim-telescope/telescope.nvim', -- https://github.com/nvim-telescope/telescope.nvim
-    'neovim/nvim-lspconfig', -- https://github.com/neovim/nvim-lspconfig
-  },
+  dependencies = { 'nvim-treesitter/nvim-treesitter' },
   ---@type TailwindTools.Option
   opts = {
     server = {

@@ -339,24 +339,6 @@ return {
       TbLineFill = { bg = colors.black3 },
     },
 
-    telescope = {
-      TelescopeBorder = { fg = colors.black_darker, bg = colors.black_darker },
-      TelescopeMatching = { fg = colors.blue, bg = colors.one_bg },
-      TelescopeNormal = { bg = colors.black_darker },
-      TelescopePreviewBorder = { fg = colors.black_darker, bg = colors.black_darker },
-      TelescopePreviewTitle = { fg = colors.black, bg = colors.green },
-      TelescopePromptBorder = { fg = colors.black2, bg = colors.black2 },
-      TelescopePromptNormal = { fg = colors.white, bg = colors.black2 },
-      TelescopePromptPrefix = { fg = colors.red, bg = colors.black2 },
-      TelescopePromptTitle = { fg = colors.black, bg = colors.red },
-      TelescopeResultsBorder = { fg = colors.black_darker, bg = colors.black_darker },
-      TelescopeResultsDiffAdd = { fg = colors.green },
-      TelescopeResultsDiffChange = { fg = colors.yellow },
-      TelescopeResultsDiffDelete = { fg = colors.red },
-      TelescopeResultsTitle = { fg = colors.black_darker, bg = colors.black_darker },
-      TelescopeSelection = { bg = colors.black2, fg = colors.white },
-    },
-
     snacks = {
       SnacksPickerTitle = { fg = colors.black, bg = colors.green },
       SnacksPicker = { bg = colors.black_darker },

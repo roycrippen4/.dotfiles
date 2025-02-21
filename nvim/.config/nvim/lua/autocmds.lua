@@ -1,6 +1,6 @@
 local augroup = vim.api.nvim_create_augroup
 local autocmd = vim.api.nvim_create_autocmd
-local pattern = { 'help', 'logger', 'man', 'qf', 'query', 'scratch', 'undotree', 'telescope', 'TelescopePrompt' }
+local pattern = { 'help', 'logger', 'man', 'qf', 'query', 'scratch', 'undotree' }
 local general = augroup('general', { clear = true })
 
 autocmd('BufReadPost', {
@@ -137,13 +137,12 @@ autocmd('FileType', {
 
 autocmd('FileType', {
   desc = 'Creates a backdrop effect for large windows',
-  pattern = { 'TelescopePrompt', 'mason', 'lazy' },
+  pattern = { 'mason', 'lazy' },
   callback = require('utils').create_backdrop,
 })
 
 local plug_types = {
   NvimTree = true,
-  TelescopePrompt = true,
   Trouble = true,
   poon = true,
   help = true,

@@ -1,6 +1,5 @@
 require('utils')
 require('options')
-require('icons')
 require('keymaps')
 require('autocmds')
 require('lsp')
