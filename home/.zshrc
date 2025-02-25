@@ -26,7 +26,7 @@ export PATH="$PATH:/usr/local/go/bin"
 # Editor settings
 export VISUAL=nvim
 export EDITOR="$VISUAL"
-export MANPAGER='nvim +Man!'
+export MANPAGER='nvim --clean +Man!'
 
 # emacs
 export PATH="$HOME/.emacs.d/bin:$PATH"

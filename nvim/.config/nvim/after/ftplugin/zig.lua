@@ -2,10 +2,6 @@ vim.hl.priorities.semantic_tokens = 0
 vim.lsp.inlay_hint.enable(true)
 vim.g.zig_fmt_parse_errors = 0
 
-vim.keymap.set('n', '<leader>b', function()
-  vim.cmd('TermExec direction=horizontal size=16 cmd="zig build"')
-end)
-
 vim.keymap.set('n', 'K', function()
   local pos = vim.api.nvim_win_get_cursor(0)
   local str_content = vim.treesitter.get_node({ pos = { pos[1] - 1, pos[2] } })
@@ -34,3 +30,13 @@ vim.keymap.set('n', 'K', function()
   local cmd = string.format("TermExec direction=horizontal size=16 cmd='%s'", test_cmd)
   vim.cmd(cmd)
 end)
+
+vim.keymap.set('n', '<leader>b', function()
+  vim.cmd('TermExec direction=horizontal size=16 cmd="zig build"')
+end)
+
+vim.keymap.set('n', '<leader>lr', function()
+  if vim.bo.ft == 'zig' then
+    vim.cmd('TermExec direction=horizontal size=16 cmd="zig run ' .. vim.fn.expand('%') .. '"')
+  end
+end, { desc = 'Run current file' })

@@ -253,6 +253,10 @@ return {
       MasonNormal = { bg = colors.black },
     },
 
+    man = {
+      manUnderline = { fg = colors.blue },
+    },
+
     misc = {
       HelpNormal = { bg = colors.black3 },
       SearchVirtualText = { fg = '#53bf00', italic = true },
