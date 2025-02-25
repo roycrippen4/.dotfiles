@@ -120,7 +120,7 @@ return {
             {
               box = 'vertical',
               { win = 'input', height = 1, border = 'rounded', title = '{title} {live} {flags}' },
-              { win = 'list', border = 'solid', width = 0.8 },
+              { win = 'list', border = 'solid' },
             },
             { win = 'preview', title = '{title} Preview', border = 'rounded', width = 0.55 },
           },
