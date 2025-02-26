@@ -179,3 +179,33 @@ vim.api.nvim_create_autocmd('QuitPre', {
   callback = function() vim.defer_fn(quit_vim, 100) end,
   desc = "autoquit vim if only plugin windows are open",
 })
+
+---@type integer?
+local job_id = nil
+vim.api.nvim_create_autocmd('BufEnter', {
+  pattern = { '*.ml', '*.mli', 'dune' },
+  callback = function()
+    if job_id then
+      return
+    end
+
+    job_id = vim.fn.jobstart({ 'env', 'DUNE_BUILD_DIR=_build_lsp', 'dune', 'build', '-w', '@check' }, {
+      env = { DUNE_BUILD_DIR = '_build_lsp' },
+    })
+
+    if job_id <= 0 then
+      vim.notify('Failed to start dune watch.', vim.log.levels.ERROR)
+    else
+      vim.notify('Started dune watch in background (job_id = ' .. job_id .. ')', vim.log.levels.INFO)
+    end
+  end,
+})
+
+vim.api.nvim_create_autocmd('VimLeavePre', {
+  callback = function()
+    if job_id then
+      vim.fn.jobstop(job_id)
+      vim.notify('Stopped dune watch.', vim.log.levels.INFO)
+    end
+  end,
+})
