@@ -1,7 +1,7 @@
 local cwd = vim.fn.getcwd()
 local ocaml_proj = nil
 
-local function run_current_file()
+local function run_project()
   local ft = vim.bo.ft
 
   if ft ~= 'ocaml' then
@@ -24,4 +24,5 @@ local function run_current_file()
 end
 
 vim.keymap.set({ 'n', 'i' }, '<C-s>', '<cmd> w <cr>', { desc = 'Save file' })
-vim.keymap.set('n', '<leader>lr', run_current_file, { desc = 'Run current file' })
+vim.keymap.set('n', '<leader>lR', run_project, { desc = 'Run current file' })
+vim.keymap.set('n', '<leader>b', '<cmd> TermExec direction=horizontal size=16 cmd="dune build" open=0 <cr>', { desc = 'Run current file' })

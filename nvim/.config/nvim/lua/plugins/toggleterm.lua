@@ -3,11 +3,6 @@ vim.api.nvim_create_autocmd('VimEnter', {
     if vim.fn.filereadable('.nvmrc') == 1 then
       vim.cmd('TermExec direction=horizontal size=16 cmd="nvm use" open=0')
     end
-
-    if vim.fn.glob('dune-project') ~= '' or vim.fn.glob('dune') ~= '' then
-      local Terminal = require('toggleterm.terminal').Terminal
-      Terminal:new({ hidden = true, cmd = 'opam exec -- dune build -w', id = 5 })
-    end
   end,
 })
 
@@ -54,6 +49,11 @@ local function run_current_file()
 
   if ft == 'python' then
     vim.cmd('TermExec direction=horizontal size=16 cmd="python ' .. file .. '"')
+    return
+  end
+
+  if ft == 'ocaml' then
+    vim.cmd.TermExec("direction=horizontal size=16 cmd='ocaml " .. file .. "'")
     return
   end
 
