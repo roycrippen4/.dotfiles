@@ -4,8 +4,8 @@
 (type_arguments (primitive_type) @type.argument)
 (type_arguments (generic_type _ @type.argument))
 (type_arguments (lifetime (identifier) @type.argument))
-(type_parameters (lifetime (identifier) @type.argument))
-(type_parameters (type_identifier) @type.argument)
+(type_parameters (lifetime_parameter name: (lifetime (identifier) @type.argument)))
+; (type_parameters (type_identifier) @type.argument)
 
 (attribute_item 
   [
