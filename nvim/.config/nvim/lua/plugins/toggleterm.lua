@@ -11,7 +11,7 @@ local function test_current_file()
   local file = vim.fn.expand('%')
 
   if ft == 'zig' then
-    vim.cmd('TermExec direction=float size=80 cmd="zig test ' .. file .. '"')
+    vim.cmd.TermExec('direction=float size=80 cmd="zig test ' .. file .. '"')
     return
   end
 
@@ -21,11 +21,16 @@ local function test_current_file()
   end
 
   if ft == 'lua' then
-    vim.cmd('TermExec direction=vertical size=80 cmd="./scripts/test"')
+    vim.cmd.TermExec('direction=vertical size=80 cmd="./scripts/test"')
     return
   end
 
-  vim.notify('Unknown filetype detected! Supported filetypes: zig', vim.log.levels.ERROR)
+  if ft == 'ocaml' then
+    vim.cmd.TermExec('direction=horizontal size=16 cmd="dune runtest"')
+    return
+  end
+
+  vim.notify('Unknown filetype detected! Supported filetypes: zig, rust, lua, ocaml', vim.log.levels.ERROR)
 end
 
 local function run_current_file()

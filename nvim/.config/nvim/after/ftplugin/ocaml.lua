@@ -23,6 +23,5 @@ local function run_project()
   vim.cmd("TermExec direction=horizontal size=16 cmd='dune build && dune exec " .. ocaml_proj .. "'")
 end
 
-vim.keymap.set({ 'n', 'i' }, '<C-s>', '<cmd> w <cr>', { desc = 'Save file' })
-vim.keymap.set('n', '<leader>lR', run_project, { desc = 'Run current file' })
-vim.keymap.set('n', '<leader>b', '<cmd> TermExec direction=horizontal size=16 cmd="dune build" open=0 <cr>', { desc = 'Run current file' })
+vim.keymap.set('n', 'R', run_project, { desc = 'Run current file' })
+vim.keymap.set('n', '<leader>b', '<cmd> TermExec direction=horizontal size=16 cmd="dune build" open=0 <cr>', { desc = 'Build project' })
