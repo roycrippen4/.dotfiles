@@ -84,7 +84,6 @@ return {
       input = {
         relative = 'cursor',
         row = 1,
-        keys = { n_cr = { '<cr>', { 'confirm' }, mode = 'n' } },
       },
       notification = { wo = { wrap = true } },
       zen = { max_height = 63, width = 160, backdrop = { blend = 20 } },
