@@ -4,15 +4,6 @@ return {
   'mrcjkb/rustaceanvim', -- https://github.com/mrcjkb/rustaceanvim
   version = '^5',
   lazy = false,
-  keys = {
-    {
-      '<leader>lt',
-      function()
-        vim.cmd.RustLsp({ 'testables', bang = true })
-      end,
-      desc = '[L]sp Rerun Last Test',
-    },
-  },
   config = function()
     ---@type rustaceanvim.Opts
     vim.g.rustaceanvim = {
