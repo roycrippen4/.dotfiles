@@ -6,6 +6,9 @@ font-feature = -calt
 # General settings
 scrollback-limit = 100000000
 copy-on-select = true
+clipboard-read = allow
+clipboard-write = allow
+app-notifications = no-clipboard-copy
 
 window-padding-x = 0
 window-padding-y = 0
