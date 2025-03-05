@@ -2,7 +2,7 @@ control + space
   tdrop -t -P 'wmctrl $wid -b add,sticky' -am kitty --start-as fullscreen
 
 control + shift + space
-  tdrop -t -P 'wmctrl $wid -b add,sticky' -am ghostty
+  tdrop -t -w '100%' -h '100%'  -P 'wmctrl $wid -b add,sticky' -am ghostty --fullscreen
 
 super + k
   pkill -USR1 -x sxhkd || /usr/bin/sxhkd & \

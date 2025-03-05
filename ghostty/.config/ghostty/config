@@ -48,7 +48,6 @@ keybind = alt+zero=reset_font_size
 keybind = shift+alt+u=scroll_page_up
 keybind = shift+alt+d=scroll_page_down
 keybind = shift+ctrl+n=unbind
-keybind = f12=toggle_fullscreen
 
 confirm-close-surface = false
 
