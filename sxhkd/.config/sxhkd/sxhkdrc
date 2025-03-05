@@ -1,6 +1,9 @@
 control + space
   tdrop -t -P 'wmctrl $wid -b add,sticky' -am kitty --start-as fullscreen
 
+control + shift + space
+  tdrop -t -P 'wmctrl $wid -b add,sticky' -am ghostty
+
 super + k
   pkill -USR1 -x sxhkd || /usr/bin/sxhkd & \
   notify-send "sxhkd" "Configuration updated"
