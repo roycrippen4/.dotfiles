@@ -88,10 +88,6 @@ return {
       notification = { wo = { wrap = true } },
       zen = { max_height = 63, width = 160, backdrop = { blend = 20 } },
     },
-    indent = {
-      indent = { enabled = true, char = '▏' },
-      scope = { enabled = false },
-    },
     notifier = { timeout = 5000, enabled = true },
     bigfile = { enabled = true },
     input = { enabled = true },
