@@ -154,7 +154,11 @@ alias dcb="sudo docker compose build"
 alias dcu="sudo docker compose up"
 alias dcd="sudo docker compose down"
 
-[ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+if [[ ! "$PATH" == "*$HOME/.fzf/bin*" ]]; then
+  PATH="${PATH:+${PATH}:}$HOME/.fzf/bin"
+fi
+source <(fzf --zsh)
+
 [ -f "$HOME/.ghcup/env" ] && source "$HOME/.ghcup/env"
 eval "$(zoxide init zsh --cmd c)"
 
