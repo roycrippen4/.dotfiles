@@ -13,12 +13,8 @@ app-notifications = no-clipboard-copy
 window-padding-x = 0
 window-padding-y = 0
 
-# Underline settings
-# adjust-underline-position = 3
-
 # Cell settings
 adjust-cell-height = 7%
-# adjust-cell-width = 7%
 
 # Cursor settings
 cursor-invert-fg-bg = true
@@ -33,9 +29,8 @@ gtk-tabs-location = bottom
 adw-toolbar-style = flat
 
 # keybinds
-# keybind = alt+shift+t=new_tab
-# keybind = alt+shift+n=previous_tab
-# keybind = alt+shift+p=next_tab
+keybind = ctrl+shift+n=previous_tab
+keybind = ctrl+shift+p=next_tab
 keybind = alt+shift+w=close_surface
 keybind = alt+one=goto_tab:1
 keybind = alt+two=goto_tab:2
@@ -47,7 +42,6 @@ keybind = alt+minus=decrease_font_size:1
 keybind = alt+zero=reset_font_size
 keybind = shift+alt+u=scroll_page_up
 keybind = shift+alt+d=scroll_page_down
-keybind = shift+ctrl+n=unbind
 
 confirm-close-surface = false
 
