@@ -84,15 +84,6 @@ function M.on_attach(client, bufnr)
   if client.name == 'rust-analyzer' then
     vim.keymap.set('n', 'K', '<cmd>RustLsp hover actions<cr>', { buffer = bufnr })
   end
-  -- if client.name == 'svelte' then
-  --   vim.api.nvim_create_autocmd('BufWritePost', {
-  --     pattern = { '*.js', '*.ts' },
-  --     group = vim.api.nvim_create_augroup('svelte_ondidchangetsorjsfile', { clear = true }),
-  --     callback = function(ctx)
-  --       client:notify('$/onDidChangeTsOrJsFile', { uri = ctx.match })
-  --     end,
-  --   })
-  -- end
   set_lsp_mappings()
 end
 
@@ -150,14 +141,6 @@ vim.lsp.handlers[methods.client_registerCapability] = function(err, res, ctx)
 
   return register_capability(err, res, ctx)
 end
-
-vim.api.nvim_create_autocmd('LspAttach', {
-  desc = 'Configure LSP keymaps',
-  callback = function(args)
-    local client = assert(vim.lsp.get_client_by_id(args.data.client_id))
-    M.on_attach(client, args.buf)
-  end,
-})
 
 --- Configures the given server with its settings and applying the regular
 --- client capabilities (+ the completion ones from blink.cmp).
