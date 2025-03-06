@@ -77,6 +77,7 @@ return {
     { "<leader>fr", function() Snacks.picker.resume() end, desc = "Resume previous search" },
     { "<leader>fw", function() Snacks.picker.grep({ finder = multigrep }) end, desc = "Find word" },
     { "<leader>fW", function() Snacks.picker.grep_word() end, desc = "Grep word under cursor" },
+    { "<leader>lg", function() Snacks.lazygit() end, desc = "Launch Lazygit" },
   },
   ---@type snacks.Config
   opts = {
