@@ -11,6 +11,9 @@ return {
         on_attach = require('lsp').on_attach,
         default_settings = {
           ['rust-analyzer'] = {
+            completion = {
+              fullFunctionSignatures = { enable = true },
+            },
             inlayHints = { renderColons = false },
             cargo = {
               allFeatures = true,
