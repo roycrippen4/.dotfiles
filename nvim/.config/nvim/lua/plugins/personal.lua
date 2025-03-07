@@ -43,8 +43,8 @@ return {
     'roycrippen4/inspector.nvim', -- https://github.com/roycrippen4/inspector.nvim
     -- stylua: ignore
     keys = {
-      { '<leader>if', function() require('inspector').inspect_in_float() end },
-      { '<leader>iw', function() require('inspector').inspect_in_split() end },
+      { '<leader>if', function() require('inspector').inspect_in_float() end, desc = "[I]nspect in float" },
+      { '<leader>iw', function() require('inspector').inspect_in_split() end, desc = "[I]nspect in split" },
     },
     opts = {},
   },
