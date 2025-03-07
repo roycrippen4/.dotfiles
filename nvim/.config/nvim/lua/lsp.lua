@@ -80,10 +80,8 @@ end
 
 ---@param client vim.lsp.Client
 ---@param bufnr integer,
+---@diagnostic disable-next-line: unused-local
 function M.on_attach(client, bufnr)
-  if client.name == 'rust-analyzer' then
-    vim.keymap.set('n', 'K', '<cmd>RustLsp hover actions<cr>', { buffer = bufnr })
-  end
   set_lsp_mappings()
 end
 

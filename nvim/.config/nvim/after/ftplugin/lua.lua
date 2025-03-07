@@ -11,11 +11,7 @@ require('nvim-surround').buffer_setup({
   },
 })
 
-vim.keymap.set('i', '<', function()
-  if vim.bo.ft ~= 'lua' then
-    return '<'
-  end
-
+local function autopair_angles()
   local pos = vim.api.nvim_win_get_cursor(0)
   local str = vim.treesitter.get_node({ pos = { pos[1] - 1, pos[2] } }):type()
 
@@ -24,4 +20,13 @@ vim.keymap.set('i', '<', function()
   end
 
   return '<'
-end, { desc = 'Auto-pair `>` when typing `<`', expr = true })
+end
+
+vim.keymap.set('i', '<', autopair_angles, { desc = 'Auto-pair `>` when typing `<`', expr = true, buffer = true })
+vim.keymap.set('n', '<leader>lr', '<cmd> source <cr>', { desc = '[R]un file', buffer = true })
+vim.keymap.set(
+  'n',
+  '<leader>lt',
+  '<cmd> TermExec direction=vertical size=80 cmd="./scripts/test" <cr>',
+  { desc = '[R]un file', buffer = true }
+)

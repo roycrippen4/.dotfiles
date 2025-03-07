@@ -2,7 +2,7 @@ vim.hl.priorities.semantic_tokens = 0
 vim.lsp.inlay_hint.enable(true)
 vim.g.zig_fmt_parse_errors = 0
 
-vim.keymap.set('n', 'K', function()
+local function conditional_hover()
   local pos = vim.api.nvim_win_get_cursor(0)
   local str_content = vim.treesitter.get_node({ pos = { pos[1] - 1, pos[2] } })
 
@@ -24,19 +24,19 @@ vim.keymap.set('n', 'K', function()
   end
 
   local test_name = vim.treesitter.get_node_text(str_content, 0)
-  local file = vim.fn.expand('%')
+  local test_cmd = ('zig test %s --test-filter "%s"'):format(vim.fn.expand('%'), test_name)
+  local cmd = ("direction=horizontal size=16 cmd='%s'"):format(test_cmd)
+  vim.cmd.TermExec(cmd)
+end
 
-  local test_cmd = ('zig test %s --test-filter "%s"'):format(file, test_name)
-  local cmd = string.format("TermExec direction=horizontal size=16 cmd='%s'", test_cmd)
-  vim.cmd(cmd)
-end)
+local build = function()
+  vim.cmd.TermExec('direction=horizontal size=16 cmd="zig build"')
+end
 
-vim.keymap.set('n', '<leader>b', function()
-  vim.cmd('TermExec direction=horizontal size=16 cmd="zig build"')
-end)
+local function run_file()
+  vim.cmd.TermExec('direction=horizontal size=16 cmd="zig run ' .. vim.fn.expand('%') .. '"')
+end
 
-vim.keymap.set('n', '<leader>lr', function()
-  if vim.bo.ft == 'zig' then
-    vim.cmd('TermExec direction=horizontal size=16 cmd="zig run ' .. vim.fn.expand('%') .. '"')
-  end
-end, { desc = 'Run current file' })
+vim.keymap.set('n', 'K', conditional_hover, { desc = "Conditionally runs test if it's under the cursor", buffer = true })
+vim.keymap.set('n', '<leader>b', build, { desc = '[B]uild project', buffer = true })
+vim.keymap.set('n', '<leader>lr', run_file, { desc = 'Run current file', buffer = true })

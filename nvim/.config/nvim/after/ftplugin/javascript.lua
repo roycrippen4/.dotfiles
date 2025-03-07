@@ -29,4 +29,9 @@ local function add_async()
   vim.api.nvim_buf_set_text(buffer, start_row, start_col, start_row, start_col, { 'async ' })
 end
 
+local function run_file()
+  vim.cmd.TermExec('direction=horizontal size=16 cmd="bun run ' .. vim.fn.expand('%') .. '"')
+end
+
 vim.keymap.set('i', 't', add_async, { buffer = true })
+vim.keymap.set('n', '<leader>lr', run_file, { desc = '[R]un current file', buffer = true })
