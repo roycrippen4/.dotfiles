@@ -1,10 +1,12 @@
+---@module "trouble"
 ---@type LazyPluginSpec
 return {
   'folke/trouble.nvim', -- https://github.com/folke/trouble.nvim
-  opts = {},
+  ---@type trouble.Config
+  opts = { focus = true },
   keys = {
     {
-      '<leader>td',
+      '<C-S-D>',
       '<cmd> Trouble diagnostics toggle <cr>',
       desc = '[T]rouble Diagnostics',
     },
