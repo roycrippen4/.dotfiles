@@ -1,5 +1,4 @@
 ---@module "neotest"
-
 ---@type LazyPluginSpec
 return {
   'nvim-neotest/neotest',
@@ -11,16 +10,13 @@ return {
   },
   config = function()
     require('neotest').setup({
-      adapters = {
-        require('rustaceanvim.neotest'),
-      },
+      adapters = { require('rustaceanvim.neotest') },
       output_panel = { open = 'vsplit | vertical resize 100' },
       status = { virtual_text = true },
       quickfix = { enabled = false },
     })
 
-    local wk = require('which-key')
-    wk.add({
+    require('which-key').add({
       {
         mode = { 'n' },
         { '<leader>ns', '<cmd>Neotest summary<cr>', desc = 'Toggle Neotest Summary', icon = '󰙨' },
