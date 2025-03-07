@@ -111,7 +111,7 @@ return {
     configure_server('html')
     configure_server('hyprls')
     configure_server('marksman')
-    configure_server('ocamllsp', { cmd_end = { DUNE_BUILD_DIR = '_build_lsp' } })
+    configure_server('ocamllsp')
     configure_server('pyright')
     configure_server('protols')
     configure_server('svelte')
