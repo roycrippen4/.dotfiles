@@ -177,6 +177,8 @@ alias dcb="sudo docker compose build"
 alias dcu="sudo docker compose up"
 alias dcd="sudo docker compose down"
 
+alias attach='zellij attach $(zellij ls -s | fzf)'
+
 if [[ ! "$PATH" == "*$HOME/.fzf/bin*" ]]; then
   PATH="${PATH:+${PATH}:}$HOME/.fzf/bin"
 fi
