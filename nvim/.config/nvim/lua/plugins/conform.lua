@@ -56,6 +56,7 @@ return {
       lua = { 'stylua' },
       markdown = { 'prettierd', 'prettier', stop_after_first = true },
       ocaml = { 'ocamlformat' },
+      ocamlinterface = { 'ocamlformat' },
       proto = { 'clang-format' },
       python = { 'black' },
       sh = { 'shfmt' },

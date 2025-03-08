@@ -85,8 +85,6 @@ local function edit_snippet()
   })
 end
 
--- Snacks.picker['snippets'] = edit_snippet
-
 ---@type LazyPluginSpec
 return {
   'chrisgrieser/nvim-scissors', -- https://github.com/chrisgrieser/nvim-scissors
