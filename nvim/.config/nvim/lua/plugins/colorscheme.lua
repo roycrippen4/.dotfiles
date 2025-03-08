@@ -71,7 +71,7 @@ local treesitter = {
   ['@variable'] = { fg = colors.white },
   ['@variable.builtin'] = { fg = colors.red },
   ['@variable.member'] = { fg = colors.cyan },
-  ['@variable.parameter'] = { fg = colors.red },
+  -- ['@variable.parameter'] = { fg = colors.red },
   ['@markup.heading.1.markdown'] = { fg = colors.red, bold = true },
   ['@markup.heading.2.markdown'] = { fg = colors.purple, bold = true },
   ['@markup.heading.3.markdown'] = { fg = colors.orange, bold = true },
