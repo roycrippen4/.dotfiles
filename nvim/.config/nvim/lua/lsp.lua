@@ -99,6 +99,8 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
+vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, { callback = vim.lsp.codelens.refresh })
+
 local hover = vim.lsp.buf.hover
 ---@diagnostic disable-next-line: duplicate-set-field
 vim.lsp.buf.hover = function()
