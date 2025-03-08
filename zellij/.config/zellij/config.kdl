@@ -33,7 +33,7 @@ keybinds clear-defaults=true {
         bind "Shift Alt p" { GoToNextTab; SwitchToMode "normal"; }
 
         // Custom keybinds/layout launchers
-        bind "F12" { 
+        bind "F11" { 
             NewTab { layout "lazygit"; };
         }
 
