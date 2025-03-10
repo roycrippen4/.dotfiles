@@ -124,7 +124,7 @@ return {
     configure_server('ocamllsp', { cmd_env = { DUNE_BUILD_DIR = '_build_lsp' } })
 
     configure_server('pyright', { cmd = { 'bun', '--bun', 'run', 'pyright-langserver', '--stdio' } })
-    configure_server('svelte', { cmd = { 'bun', '--bun', 'run', 'svelteserver', '--stdio' } })
+    configure_server('svelte')
 
     -- TODO: Investigate the state of protobuf lsp.
     -- Seems like it's merged.
