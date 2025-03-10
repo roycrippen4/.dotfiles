@@ -12,6 +12,14 @@ vim.api.nvim_create_user_command('FormatEnable', function()
   vim.g.disable_autoformat = false
 end, { desc = 'Re-enable autoformat-on-save' })
 
+---@param files string|string[]
+---@return fun(self: conform.FormatterConfig, ctx: conform.Context): nil|string
+local function root_file(files)
+  return function(_, ctx)
+    return vim.fs.root(ctx.dirname, files)
+  end
+end
+
 ---@module "conform"
 ---@type LazyPluginSpec
 return {
@@ -26,11 +34,11 @@ return {
         if not vim.g.disable_autoformat then
           vim.cmd.FormatDisable()
           vim.g.disable_autoformat = true
-          print('Autoformat disabled')
+          vim.notify('Autoformat disabled')
         else
           vim.cmd.FormatEnable()
           vim.g.disable_autoformat = false
-          print('Autoformat enabled')
+          vim.notify('Autoformat enabled')
         end
       end,
       desc = '  Toggle autoformat-on-save',
@@ -66,6 +74,13 @@ return {
       typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       yaml = { 'yamlfmt' },
       rust = { 'rustfmt' },
+    },
+    formatters = {
+      stylua = {
+        cwd = root_file({ '.editorconfig', '.stylua.toml', 'stylua.toml' }),
+      },
+      prettierd = { command = 'bun --bun run prettierd' },
+      prettier = { command = 'bun --bun run prettier' },
     },
   },
 }
