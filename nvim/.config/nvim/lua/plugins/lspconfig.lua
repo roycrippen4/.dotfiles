@@ -13,6 +13,7 @@ return {
     require('lspconfig.ui.windows').default_options.border = 'rounded'
 
     configure_server('cssls', {
+      cmd = { 'bun', '--bun', 'run', 'vscode-css-language-server', '--stdio' },
       settings = {
         validate = true,
         lint = { unknownAtRules = 'ignore' },
@@ -20,6 +21,7 @@ return {
     })
 
     configure_server('vtsls', {
+      cmd = { 'bun', '--bun', 'run', 'vtsls', '--stdio' },
       filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx', 'svelte' },
       settings = {
         complete_function_calls = true,
@@ -50,6 +52,7 @@ return {
     })
 
     configure_server('jsonls', {
+      cmd = { 'bun', '--bun', 'run', 'vscode-json-language-server', '--stdio' },
       settings = {
         json = {
           schemas = require('schemastore').json.schemas(),
@@ -86,6 +89,7 @@ return {
     })
 
     configure_server('yamlls', {
+      cmd = { 'bun', '--bun', 'run', 'yaml-language-server', '--stdio' },
       settings = {
         yaml = {
           schemaStore = { enable = false, url = '' },
@@ -105,15 +109,26 @@ return {
       },
     })
 
-    configure_server('eslint', { settings = { format = false } })
-    configure_server('docker_compose_language_service')
-    configure_server('dockerls')
-    configure_server('html')
+    configure_server('eslint', {
+      cmd = { 'bun', '--bun', 'run', 'vscode-eslint-language-server', '--stdio' },
+      settings = { format = false },
+    })
+
+    configure_server('docker_compose_language_service', { cmd = { 'bun', '--bun', 'run', 'docker-compose-langserver', '--stdio' } })
+    configure_server('dockerls', { cmd = { 'bun', '--bun', 'run', 'docker-langserver', '--stdio' } })
+
+    configure_server('html', { cmd = { 'bun', '--bun', 'run', 'vscode-html-language-server', '--stdio' } })
+
     configure_server('hyprls')
     configure_server('marksman')
     configure_server('ocamllsp', { cmd_env = { DUNE_BUILD_DIR = '_build_lsp' } })
-    configure_server('pyright')
-    configure_server('protols')
-    configure_server('svelte')
+
+    configure_server('pyright', { cmd = { 'bun', '--bun', 'run', 'pyright-langserver', '--stdio' } })
+    configure_server('svelte', { cmd = { 'bun', '--bun', 'run', 'svelteserver', '--stdio' } })
+
+    -- TODO: Investigate the state of protobuf lsp.
+    -- Seems like it's merged.
+    -- https://github.com/bufbuild/buf/pull/3316
+    -- configure_server('protols')
   end,
 }

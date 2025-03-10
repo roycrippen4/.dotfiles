@@ -34,7 +34,6 @@ return {
       'jsonc',
       'lua',
       'luadoc',
-      'luap',
       'markdown',
       'markdown_inline',
       'ocaml',
@@ -96,6 +95,7 @@ return {
         ['bun.lock'] = 'jsonc',
       },
       pattern = {
+        ['d?o?c?k?e?r?%-?compose%.ya?ml'] = 'yaml.docker-compose',
         ['.*config/git/config'] = 'gitconfig',
         ['todo%.txt'] = 'todotxt',
         ['.*/waybar/config'] = 'jsonc',
@@ -106,6 +106,15 @@ return {
     })
 
     vim.treesitter.language.register('bash', 'kitty')
+
+    local parser_configs = require('nvim-treesitter.parsers').get_parser_configs()
+    parser_configs['lua_patterns'] = {
+      install_info = {
+        url = 'https://github.com/OXY2DEV/tree-sitter-lua_patterns',
+        files = { 'src/parser.c' },
+        branch = 'main',
+      },
+    }
 
     require('nvim-treesitter.configs').setup(opts)
   end,
