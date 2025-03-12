@@ -11,16 +11,17 @@ local function make_items()
   local convert = require('scissors.vscode-format.convert-object')
   local ft = vim.bo.filetype
   local all_snippets = {} ---@type Scissors.SnippetObj[]
-  for _, absPath in pairs(convert.getSnippetfilePathsForFt(ft)) do
-    local filetypeSnippets = convert.readVscodeSnippetFile(absPath, ft)
-    vim.list_extend(all_snippets, filetypeSnippets)
-  end
-  for _, absPath in pairs(convert.getSnippetfilePathsForFt('all')) do
-    local globalSnippets = convert.readVscodeSnippetFile(absPath, 'plaintext')
-    vim.list_extend(all_snippets, globalSnippets)
+
+  for _, abs_path in pairs(convert.getSnippetfilePathsForFt(ft)) do
+    local filetype_snippets = convert.readVscodeSnippetFile(abs_path, ft)
+    vim.list_extend(all_snippets, filetype_snippets)
   end
 
-  -- GUARD
+  for _, abs_path in pairs(convert.getSnippetfilePathsForFt('all')) do
+    local global_snippets = convert.readVscodeSnippetFile(abs_path, 'plaintext')
+    vim.list_extend(all_snippets, global_snippets)
+  end
+
   if #all_snippets == 0 then
     vim.notify('No snippets found for filetype: ' .. ft, 'warn')
     return
@@ -68,7 +69,6 @@ local function edit_snippet()
       local bufnr = ctx.buf
       vim.bo[bufnr].modifiable = true
       vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, snip.body)
-
       vim.bo[bufnr].filetype = snip.filetype
       vim.defer_fn(function()
         require('scissors.utils').tokenHighlight(bufnr)
