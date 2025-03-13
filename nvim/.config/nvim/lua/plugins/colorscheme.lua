@@ -63,8 +63,8 @@ local treesitter = {
   ['@operator'] = { fg = colors.fg },
   ['@parameter.reference'] = { fg = colors.fg },
   ['@property'] = { fg = colors.cyan },
-  ['@punctuation.bracket'] = { fg = colors.white },
-  ['@punctuation.delimiter'] = { fg = colors.white },
+  ['@punctuation.bracket'] = { fg = colors.lightgrey },
+  ['@punctuation.delimiter'] = { fg = colors.lightgrey },
   ['@string'] = { fg = colors.green },
   ['@string.escape'] = { fg = colors.red },
   ['@string.regexp'] = { fg = colors.orange },
@@ -76,8 +76,8 @@ local treesitter = {
   ['@test.zig'] = { fg = colors.sun },
   ['@text'] = { fg = colors.white },
   ['@type'] = { fg = colors.yellow },
-  ['@type.builtin'] = { fg = colors.orange },
   ['@type.argument'] = { italic = true },
+  ['@type.builtin'] = { fg = colors.orange },
   ['@type.type_argument'] = { italic = true },
   ['@variable'] = { fg = colors.white },
   ['@variable.builtin'] = { fg = colors.red },
@@ -234,7 +234,6 @@ return {
       DiagnosticUnderlineHint = { sp = colors.blue_light, undercurl = true },
       DiagnosticUnderlineInfo = { sp = colors.green, undercurl = true },
       DiagnosticUnderlineWarn = { sp = colors.orange, undercurl = true },
-      DiagnosticUnnecessary = { fg = colors.grey, italic = true, sp = colors.orange, undercurl = true },
     },
 
     poon = {
