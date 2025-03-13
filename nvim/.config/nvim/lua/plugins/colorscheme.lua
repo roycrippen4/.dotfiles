@@ -234,6 +234,7 @@ return {
       DiagnosticUnderlineHint = { sp = colors.blue_light, undercurl = true },
       DiagnosticUnderlineInfo = { sp = colors.green, undercurl = true },
       DiagnosticUnderlineWarn = { sp = colors.orange, undercurl = true },
+      DiagnosticUnnecessary = { sp = colors.orange, undercurl = true },
     },
 
     poon = {
