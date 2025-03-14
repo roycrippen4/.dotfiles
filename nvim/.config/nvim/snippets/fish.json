@@ -1,0 +1,1 @@
+{"function":{"body":["function ${1:name}","    ${2:body}","end"],"prefix":"func"}}
