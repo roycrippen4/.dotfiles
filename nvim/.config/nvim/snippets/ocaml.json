@@ -1,1 +1,1 @@
-{"test":{"prefix":"test","body":"let%test _ = "}}
+{"aoc":{"prefix":"aoc","body":["open Util","","(* exports *)","","let solve1 () = 42","let solve2 () = 42","let part1 () = validate solve1 42 \"04\" One","let part2 () = validate solve2 42 \"04\" Two","let solution : solution = { part1; part2 }"]},"test":{"prefix":"test","body":"let%test _ = "}}
