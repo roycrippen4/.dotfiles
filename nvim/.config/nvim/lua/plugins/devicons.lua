@@ -3,6 +3,7 @@ return {
   'nvim-tree/nvim-web-devicons', -- https://github.com/nvim-tree/nvim-web-devicons
   opts = {
     override = {
+      fish = { icon = '', color = '#00CC00', name = 'Fish' },
       default_icon = { icon = '󰈚', name = 'Default' },
       c = { icon = '', name = 'c' },
       css = { icon = '', name = 'css', color = '#2196f3' },
