@@ -101,3 +101,6 @@ vim.o.ttimeoutlen = 10 -- Timeout wait time
 vim.env.PATH = vim.fn.stdpath('data') .. '/mason/bin:' .. vim.env.PATH -- add binaries installed by mason.nvim to path
 
 vim.cmd('set complete=') -- disable vim's built-in completion
+
+vim.cmd.aunmenu([[PopUp.How-to\ disable\ mouse]])
+vim.cmd.amenu([[PopUp.Code\ action <Cmd>lua vim.lsp.buf.code_action()<CR>]])
