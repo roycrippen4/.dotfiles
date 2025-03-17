@@ -1,9 +1,5 @@
 add_newline = false
 
-# $git_state\
-# $git_commit\
-# $git_metrics\
-
 format = """
 $directory\
 $git_branch$git_commit\
