@@ -1,3 +1,9 @@
+set fish_greeting
+
+if test -f ~/.fishenv
+    source ~/.fishenv
+end
+
 if status is-interactive
     fish_add_path $HOME/.bun/bin
     fish_add_path $HOME/.local/share/bob/nvim-bin/
@@ -100,3 +106,5 @@ zoxide init --cmd c fish | source
 fzf --fish | source
 
 test -r '/home/roy/.opam/opam-init/init.fish' && source '/home/roy/.opam/opam-init/init.fish' >/dev/null 2>/dev/null; or true
+
+eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"

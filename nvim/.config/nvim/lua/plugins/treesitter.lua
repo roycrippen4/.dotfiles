@@ -85,6 +85,7 @@ return {
         zsh = 'sh',
       },
       filename = {
+        ['.fishenv'] = 'fish',
         ['.babelrc'] = 'json',
         ['.eslintrc'] = 'json',
         ['.prettierrc'] = 'json',
