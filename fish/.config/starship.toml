@@ -1,0 +1,91 @@
+add_newline = false
+
+# $git_state\
+# $git_commit\
+# $git_metrics\
+
+format = """
+$directory\
+$git_branch$git_commit\
+$git_status\
+$git_state\
+${custom.cursor}\
+"""
+
+right_format = """
+[█](fg:#1B1B1B)\
+$status\
+$character
+$nodejs\
+$python\
+"""
+
+[status]
+style = "fg:#CE0C0C bg:#1B1B1B"
+format = '([$status ]($style))'
+disabled = false
+map_symbol = true
+
+[custom.cursor]
+when = true
+format = "[█ ](fg:#1B1B1B)"
+symbol = ""
+
+[character]
+success_symbol = "[✔ ](fg:#5FAF00 bg:#1B1B1B)"
+error_symbol = "[✘ ](fg:#CE0C0C bg:#1B1B1B)"
+vimcmd_symbol = "[ ](fg:#00C5FF bg:#1B1B1B)"
+vimcmd_visual_symbol = "[ ](fg:#FF75A0 bg:#1B1B1B)"
+vimcmd_replace_symbol = "[ ](fg:#FB7A85 bg:#1B1B1B)"
+vimcmd_replace_one_symbol = "[ ](fg:#FB7A85 bg:#1B1B1B)"
+format = "$symbol"
+
+[git_state]
+format = "[ $state](fg:#EF0C0C bg:#1B1B1B)"
+merge = "merge"
+
+[git_status]
+format = '$ahead_behind$conflicted$stashed$deleted$renamed$modified$typechanged$staged$untracked'
+ahead = "[ ⇡($count)](fg:#47E00B bg:#1B1B1B)"
+behind = "[ ⇣($count)(fg:#47E00B bg:#1B1B1B)]"
+deleted = "[ ✘($count)](bold fg:#D30000 bg:#1B1B1B)"
+diverged = '[ ⇡${ahead_count}⇣${behind_count}](fg:#47E00B bg:#1B1B1B)'
+modified = "[ !($count)](bold fg:#C29F04 bg:#1B1B1B)"
+staged = "[ +($count)](fg:#47E00B bg:#1B1B1B)"
+untracked = "[ ?($count)](bold fg:#00AFFF bg:#1B1B1B)"
+conflicted = ""
+
+[git_branch]
+style = "fg:#47E00B bg:#1B1B1B"
+symbol = ""
+format = "[[[ │](fg:#737575 bg:#1B1B1B) on](fg:#838585 bg:#1B1B1B) $branch(:$remote_branch)]($style)"
+only_attached = true
+
+[git_commit]
+style = "bold fg:#47E00B bg:#1B1B1B"
+format = '[[[ │](fg:#737575 bg:#1B1B1B) on @](fg:#838585 bg:#1B1B1B)$hash$tag]($style)'
+only_detached = true
+tag_disabled = false
+commit_hash_length = 8
+
+[directory]
+style = "bold fg:#00AFFF bg:#1B1B1B"
+format = "[ $path]($style)"
+truncation_symbol = "…/"
+
+[directory.substitutions]
+"Documents" = "󰈙 "
+"Downloads" = " "
+"Music" = " "
+"Pictures" = " "
+
+[python]
+symbol = ""
+style = "fg:#0AC4C4 bg:#1B1B1B"
+format = "[[│](fg:#737575 bg:#1B1B1B) ${pyenv_prefix}(${version} )(\\($virtualenv\\) )${symbol} ]($style)"
+detect_extensions = []
+
+[nodejs]
+symbol = ""
+style = "fg:#5FAF00 bg:#1B1B1B"
+format = '[[[│](fg:#737575 bg:#1B1B1B) ($version) $symbol ](fg:#5FAF00 bg:#1B1B1B)]($style)'
