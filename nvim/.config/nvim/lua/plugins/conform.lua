@@ -1,23 +1,22 @@
----@param args { bang: boolean }
-vim.api.nvim_create_user_command('FormatDisable', function(args)
-  if args.bang then
-    vim.b.disable_autoformat = true
-  else
-    vim.g.disable_autoformat = true
-  end
-end, { desc = 'Disable autoformat-on-save', bang = true })
+vim.api.nvim_create_user_command('FormatDisable', function()
+  vim.g.disable_format_on_save = true
+  vim.notify('Format on save disabled')
+end, { desc = 'Disable format on save' })
 
 vim.api.nvim_create_user_command('FormatEnable', function()
-  vim.b.disable_autoformat = false
-  vim.g.disable_autoformat = false
-end, { desc = 'Re-enable autoformat-on-save' })
+  vim.g.disable_format_on_save = false
+  vim.notify('Format on save enabled')
+end, { desc = 'Enable format on save' })
 
----@param files string|string[]
----@return fun(self: conform.FormatterConfig, ctx: conform.Context): nil|string
-local function root_file(files)
-  return function(_, ctx)
-    return vim.fs.root(ctx.dirname, files)
+vim.api.nvim_create_user_command('FormatToggle', function()
+  (vim.g.disable_format_on_save and vim.cmd.FormatEnable or vim.cmd.FormatDisable)()
+end, { desc = 'Toggle format on save' })
+
+local function format_on_save()
+  if vim.g.disable_format_on_save then
+    return
   end
+  return { timeout_ms = 500, lsp_format = 'fallback' }
 end
 
 ---@module "conform"
@@ -26,32 +25,10 @@ return {
   'stevearc/conform.nvim', -- https://github.com/stevearc/conform.nvim
   event = 'BufWritePre',
   cmd = 'ConformInfo',
-  keys = {
-    {
-      '<leader>tf',
-      mode = 'n',
-      function()
-        if not vim.g.disable_autoformat then
-          vim.cmd.FormatDisable()
-          vim.g.disable_autoformat = true
-          vim.notify('Autoformat disabled')
-        else
-          vim.cmd.FormatEnable()
-          vim.g.disable_autoformat = false
-          vim.notify('Autoformat enabled')
-        end
-      end,
-      desc = '  Toggle autoformat-on-save',
-    },
-  },
+  keys = { { '<leader>tf', '<cmd> FormatToggle <cr>', desc = '  Toggle autoformat-on-save' } },
   ---@type conform.setupOpts
   opts = {
-    format_on_save = function(bufnr)
-      if vim.g.disable_autoformat or vim.b[bufnr].disable_autoformat then
-        return
-      end
-      return { timeout_ms = 500, lsp_format = 'fallback' }
-    end,
+    format_on_save = format_on_save,
     log_level = vim.log.levels.DEBUG,
     formatters_by_ft = {
       c = { 'clang-format' },
@@ -77,7 +54,9 @@ return {
     },
     formatters = {
       stylua = {
-        cwd = root_file({ '.editorconfig', '.stylua.toml', 'stylua.toml' }),
+        cwd = function(_, ctx)
+          return vim.fs.root(ctx.dirname, { '.editorconfig', '.stylua.toml', 'stylua.toml' })
+        end,
       },
       prettierd = { command = 'bun --bun run prettierd' },
       prettier = { command = 'bun --bun run prettier' },
