@@ -1,6 +1,8 @@
 set fish_greeting
+set -gx ZVM_SET_CU
 
 if test -f ~/.fishenv
+    # @fish-lsp-disable-next-line 1004
     source ~/.fishenv
 end
 
