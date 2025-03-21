@@ -1,4 +1,5 @@
 ---@type LazyPluginSpec
+---@module "which-key"
 return {
   'folke/which-key.nvim', -- https://github.com/folke/which-key.nvim
   ---@type wk.Opts
