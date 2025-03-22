@@ -1,5 +1,5 @@
+-- vim.lsp.inlay_hint.enable(true)
 vim.hl.priorities.semantic_tokens = 0
-vim.lsp.inlay_hint.enable(true)
 vim.g.zig_fmt_parse_errors = 0
 
 ---@type string | nil
@@ -51,12 +51,16 @@ local function run_last_test()
 end
 
 local function run_project()
-  local main_file = vim.fn.getcwd() .. '/src/main.zig'
-  vim.cmd.TermExec('direction=horizontal size=16 cmd="zig run ' .. main_file .. '"')
+  vim.cmd.TermExec('direction=horizontal size=16 cmd="zig build run"')
 end
 
-vim.keymap.set('n', 'K', conditional_hover, { desc = "Conditionally runs test if it's under the cursor", buffer = true })
+local function run_project_release_fast()
+  vim.cmd.TermExec('direction=horizontal size=16 cmd="zig build run --release=fast"')
+end
+
 vim.keymap.set('n', '<leader>b', build, { desc = '[B]uild project', buffer = true })
+vim.keymap.set('n', '<leader>lR', run_project_release_fast, { desc = 'Run current file', buffer = true })
 vim.keymap.set('n', '<leader>lr', run_file, { desc = 'Run current file', buffer = true })
 vim.keymap.set('n', '<leader>lt', run_last_test, { desc = 'Run last test', buffer = true })
+vim.keymap.set('n', 'K', conditional_hover, { desc = "Conditionally runs test if it's under the cursor", buffer = true })
 vim.keymap.set('n', 'R', run_project, { desc = 'Run current project', buffer = true })
