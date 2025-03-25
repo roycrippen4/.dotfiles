@@ -1,1 +1,25 @@
-{"doc-comment":{"prefix":"doc","body":"\/** ${1:comment} *\/"},"todo":{"prefix":"todo: message","body":"\/\/ TODO: ${1:message}"},"time-function":{"prefix":"timer","body":["console.time('${2:timername}', ${1:items});","console.timeEnd(${1:timername});"]},"doc-block":{"prefix":"doc-block","body":["\/**"," * ${1:content}"," *\/"]}}
+{
+  "doc-comment": {
+    "prefix": "doc",
+    "body": "\/** ${1:comment} *\/"
+  },
+  "todo": {
+    "prefix": "todo: message",
+    "body": "\/\/ TODO: ${1:message}"
+  },
+  "time-function": {
+    "prefix": "timer",
+    "body": [
+      "console.time('${2:timername}', ${1:items});",
+      "console.timeEnd(${1:timername});"
+    ]
+  },
+  "doc-block": {
+    "prefix": "doc-block",
+    "body": [
+      "\/**",
+      " * ${1:content}",
+      " *\/"
+    ]
+  }
+}

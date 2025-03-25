@@ -32,9 +32,11 @@ return {
         {
           'rafamadriz/friendly-snippets',
           config = function()
+            local snippet_path = vim.fn.stdpath('config') .. '/snippets'
+            require('luasnip').filetype_extend('ts', { 'js' })
             require('luasnip.loaders.from_vscode').lazy_load()
-            require('luasnip.loaders.from_vscode').load({ paths = { vim.fn.expand('~/.config/nvim/snippets') } })
-            require('luasnip.loaders.from_lua').load({ paths = { vim.fn.expand('~/.config/nvim/snippets/lua-snippets') } })
+            require('luasnip.loaders.from_vscode').load({ paths = { snippet_path } })
+            require('luasnip.loaders.from_lua').load({ paths = { snippet_path .. '/lua-snippets' } })
           end,
         },
       },
@@ -71,10 +73,27 @@ return {
       },
     },
     cmdline = { enabled = false },
+    fuzzy = {
+      sorts = {
+        function(a, b)
+          if (a.client_name == nil or b.client_name == nil) or (a.client_name == b.client_name) then
+            return
+          end
+          return b.client_name == 'zls'
+        end,
+        'score',
+        'sort_text',
+      },
+    },
     sources = {
       default = { 'lazydev', 'lsp', 'snippets', 'path' },
       providers = {
-        lsp = { score_offset = 1 },
+        lsp = {
+          score_offset = function(ctx, _)
+            local client = vim.lsp.get_client_by_id(ctx.id)
+            return (client and client.name == 'zls') and -3 or 1
+          end,
+        },
         lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', score_offset = 100 },
         snippets = { score_offset = 0 },
         path = {

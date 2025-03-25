@@ -20,6 +20,17 @@ return {
       },
     })
 
+    configure_server('clangd', {
+      cmd = {
+        'clangd',
+        '--clang-tidy',
+        '--header-insertion=iwyu',
+        '--completion-style=detailed',
+        '--fallback-style=none',
+        '--function-arg-placeholders=false',
+      },
+    })
+
     configure_server('vtsls', {
       cmd = { 'bun', '--bun', 'run', 'vtsls', '--stdio' },
       filetypes = { 'javascript', 'javascriptreact', 'javascript.jsx', 'typescript', 'typescriptreact', 'typescript.tsx', 'svelte' },
@@ -102,10 +113,8 @@ return {
       root_dir = lspconfig.util.root_pattern('.git', 'build.zig', 'zls.json'),
       settings = {
         zls = {
-          -- enable_inlay_hints = true,
           enable_build_on_save = true,
-          enable_snippets = true,
-          warn_style = true,
+          enable_snippets = false,
         },
       },
     })
