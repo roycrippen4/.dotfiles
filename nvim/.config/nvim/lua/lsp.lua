@@ -11,24 +11,23 @@ local dap_signs = {
 
 vim.iter(dap_signs):each(vim.fn.sign_define)
 
+local diagnostic_icons = {
+
+  [vim.diagnostic.severity.ERROR] = '',
+  [vim.diagnostic.severity.WARN] = '',
+  [vim.diagnostic.severity.HINT] = '󱡴',
+  [vim.diagnostic.severity.INFO] = '',
+}
+
 vim.diagnostic.config({
-  signs = {
-    text = {
-      [vim.diagnostic.severity.ERROR] = '',
-      [vim.diagnostic.severity.WARN] = '',
-      [vim.diagnostic.severity.HINT] = '󱡴',
-      [vim.diagnostic.severity.INFO] = '',
-    },
-  },
+  signs = { text = diagnostic_icons },
   update_in_insert = false,
   underline = true,
   severity_sort = true,
   virtual_text = true,
   float = {
-    focusable = false,
-    border = 'rounded',
     style = 'minimal',
-    source = true,
+    source = 'if_many',
     header = 'Diagnostic',
     prefix = '',
   },
@@ -105,7 +104,6 @@ local hover = vim.lsp.buf.hover
 ---@diagnostic disable-next-line: duplicate-set-field
 vim.lsp.buf.hover = function()
   return hover({
-    border = 'rounded',
     max_height = math.floor(vim.o.lines * 0.5),
     max_width = math.floor(vim.o.columns * 0.4),
   })

@@ -4,6 +4,8 @@ return {
   'folke/which-key.nvim', -- https://github.com/folke/which-key.nvim
   ---@type wk.Opts
   opts = {
+    show_keys = false,
+    show_help = false,
     spec = {
       --stylua: ignore start
       { '<leader>d',  group = '[D]ebug',      icon = '' },

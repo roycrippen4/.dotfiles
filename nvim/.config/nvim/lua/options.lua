@@ -52,6 +52,8 @@ opt.hlsearch = true            -- Enable highlight search
 opt.swapfile = false           -- Disable swap file
 opt.smoothscroll = true        -- Enable smooth scrolling
 
+vim.o.winborder = "rounded"
+
 -----------------------------------------------------------
 -- Indent settings
 -----------------------------------------------------------

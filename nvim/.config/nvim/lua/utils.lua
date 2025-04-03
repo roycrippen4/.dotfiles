@@ -76,6 +76,7 @@ function M.create_backdrop(ctx)
     height = vim.o.columns,
     focusable = false,
     style = 'minimal',
+    border = 'none',
     zindex = 10,
   })
 
