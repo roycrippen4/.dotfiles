@@ -9,15 +9,7 @@ super + k
   notify-send "sxhkd" "Configuration updated"
 
 super + g
-  if pgrep -x "chrome" > /dev/null; then \
-    wmctrl -a "Google Chrome"; \
-  else \
-    google-chrome & \
-    sleep 2; \
-    right_monitor=$(xrandr --listmonitors | tail -n1 | awk '"'"'{print $NF}'"'"'); \
-    wmctrl -r "Google Chrome" -e 0,0,0,-1,-1 -t $(wmctrl -d | grep "$right_monitor" | cut -d" " -f1); \
-    wmctrl -r "Google Chrome" -b add,maximized_vert,maximized_horz; \
- fi
+  /bin/sh -c 'if pgrep -x "chrome" > /dev/null; then wmctrl -a "Google Chrome"; else google-chrome & sleep 2; right_monitor=$(xrandr --listmonitors | tail -n1 | awk "{print \$NF}"); wmctrl -r "Google Chrome" -e 0,0,0,-1,-1 -t $(wmctrl -d | grep "$right_monitor" | cut -d" " -f1); wmctrl -r "Google Chrome" -b add,maximized_vert,maximized_horz; fi'
 
 super + 1
   google-chrome https://music.youtube.com/ && wmctrl -a "Google Chrome"
@@ -38,8 +30,4 @@ super + 6
   ~/.bin/check_vpn.sh && google-chrome "$WORK_NEXUS" && wmctrl -a "Google Chrome";
 
 super + w
-  if nmcli con show --active | grep -q "$WORK_VPN"; then \
-    nmcli con down "$WORK_VPN"; \
-  else \
-    nmcli con up "$WORK_VPN"; \
-  fi
+  /bin/sh -c 'if nmcli con show --active | grep -q "$WORK_VPN"; then nmcli con down "$WORK_VPN"; else nmcli con up "$WORK_VPN"; fi'
