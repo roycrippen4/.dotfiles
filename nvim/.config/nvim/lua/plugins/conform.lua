@@ -51,6 +51,7 @@ return {
       typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       yaml = { 'yamlfmt' },
       rust = { 'rustfmt' },
+      fish = {},
     },
     formatters = {
       stylua = {

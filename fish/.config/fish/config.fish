@@ -1,9 +1,16 @@
 set fish_greeting
 set -gx ZVM_SET_CU
 
-if test -f ~/.fishenv
-    # @fish-lsp-disable-next-line 1004
-    source ~/.fishenv
+if test -f $HOME/.fishenv
+    source $HOME/.fishenv
+end
+
+if test -d (brew --prefix)"/share/fish/completions"
+    set -p fish_complete_path (brew --prefix)/share/fish/completions
+end
+
+if test -d (brew --prefix)"/share/fish/vendor_completions.d"
+    set -p fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
 end
 
 if status is-interactive
@@ -95,6 +102,7 @@ end
 function lg
     command lazygit
 end
+
 function attach
     command zellij attach (zellij ls -s | fzf)
 end
@@ -107,6 +115,6 @@ starship init fish | source
 zoxide init --cmd c fish | source
 fzf --fish | source
 
-test -r '/home/roy/.opam/opam-init/init.fish' && source '/home/roy/.opam/opam-init/init.fish' >/dev/null 2>/dev/null; or true
+test -r "$HOME/.opam/opam-init/init.fish" && source "$HOME/.opam/opam-init/init.fish" >/dev/null 2>/dev/null; or true
 
 eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
