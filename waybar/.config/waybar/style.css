@@ -1,9 +1,8 @@
 * {
   font-family: "JetBrainsMono Nerd Font";
-  font-size: 14px;
+  font-size: 9px;
   border: none;
   border-radius: 0px;
-  font-weight: bold;
   min-height: 10px;
 }
 
@@ -116,6 +115,7 @@ tooltip {
   border-radius: 10px;
   margin-top: 2px;
 }
+
 #clock:hover,
 #custom-cpuinfo:hover,
 #custom-discord:hover,
