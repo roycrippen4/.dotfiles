@@ -11,3 +11,7 @@ venv
 /home/.oh-my-zsh/cache
 home/.bin/serve-cam.sh
 kitty/.config/kitty/kitty.work.conf
+fish/.config/fish/functions/ssh_laptop.fish
+fish/.config/fish/functions/ssh_testbench.fish
+fish/.config/fish/functions/vm-enter.fish
+fish/.config/fish/functions/vm-revert.fish
