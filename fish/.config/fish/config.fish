@@ -5,19 +5,21 @@ if test -f $HOME/.fishenv
     source $HOME/.fishenv
 end
 
-if test -d (brew --prefix)"/share/fish/completions"
-    set -p fish_complete_path (brew --prefix)/share/fish/completions
-end
-
-if test -d (brew --prefix)"/share/fish/vendor_completions.d"
-    set -p fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
-end
-
 if status is-interactive
     fish_add_path $HOME/.bun/bin
     fish_add_path $HOME/.local/share/bob/nvim-bin/
     fish_add_path $HOME/.local/bin
     fish_add_path /usr/local/man/
+
+    eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
+
+    if test -d (brew --prefix)"/share/fish/completions"
+        set -p fish_complete_path (brew --prefix)/share/fish/completions
+    end
+
+    if test -d (brew --prefix)"/share/fish/vendor_completions.d"
+        set -p fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
+    end
 
     function nvm_use_on_dir --on-variable PWD
         if test -e ./.nvmrc
@@ -116,5 +118,3 @@ zoxide init --cmd c fish | source
 fzf --fish | source
 
 test -r "$HOME/.opam/opam-init/init.fish" && source "$HOME/.opam/opam-init/init.fish" >/dev/null 2>/dev/null; or true
-
-eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
