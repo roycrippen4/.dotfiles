@@ -12,7 +12,7 @@ local function run_project()
     ocaml_proj = vim.split(vim.fn.fnamemodify(project_abs_filepath, ':t'), '.opam')[1]
   end
 
-  vim.cmd("TermExec direction=horizontal size=16 cmd='dune build && dune exec " .. ocaml_proj .. "'")
+  vim.cmd("TermExec direction=vertical size=80 cmd='dune build && dune exec " .. ocaml_proj .. "'")
 end
 
 local function run_file()
