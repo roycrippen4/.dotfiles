@@ -1,8 +1,8 @@
 set fish_greeting
 set -gx ZVM_SET_CU
 
-if test -f $HOME/.fishenv
-    source $HOME/.fishenv
+if test -f $HOME/.config/fish/env.fish
+    source $HOME/.config/fish/env.fish
 end
 
 if status is-interactive

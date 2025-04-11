@@ -19,3 +19,4 @@ fish/.config/fish/functions/vm-save.fish
 fish/.config/fish/functions/vm-stop.fish
 fish/.config/fish/functions/vm-start.fish
 fish/.config/fish/functions/vm-update.fish
+fish/.config/fish/env.fish
