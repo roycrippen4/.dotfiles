@@ -25,7 +25,6 @@ return {
           'dockerfile-language-server',
           'eslint-lsp',
           'html-lsp',
-          'hyprls',
           'json-lsp',
           'lua-language-server',
           'marksman',
