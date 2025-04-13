@@ -15,6 +15,7 @@ $status\
 $character
 $nodejs\
 $python\
+$ocaml\
 """
 
 [status]
@@ -91,3 +92,8 @@ format = '[[[│](fg:#737575 bg:#1B1B1B) ($version) $symbol ](fg:#5FAF00 bg:#1B1
 ssh_symbol = "󰒍 "
 style = "bold fg:#5b96c2 bg:#1B1B1B"
 format = "[$ssh_symbol$hostname]($style)[ │](fg:#737575 bg:#1B1B1B)"
+
+[ocaml]
+symbol = " "
+style = "fg:#ff8f00 bg:#1B1B1B"
+format = '[ $symbol($switch_indicator$switch_name )]($style)'
