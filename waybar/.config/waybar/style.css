@@ -1,6 +1,6 @@
 * {
   font-family: "JetBrainsMono Nerd Font";
-  font-size: 9px;
+  font-size: 10px;
   border: none;
   border-radius: 0px;
   min-height: 10px;
@@ -11,10 +11,14 @@ window#waybar {
 }
 
 tooltip {
-  color: #181926;
-  background: #2a2d47;
-  margin-left: 3px;
-  margin-right: 3px;
+  color: #dce0e8;
+  background: #282C34;
+  border-radius: 4px;
+  border: solid 1px #e7c787;
+}
+
+tooltip label {
+  font-size: 12px;
 }
 
 #workspaces button {
