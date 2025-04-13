@@ -2,6 +2,7 @@ set fish_greeting
 set -gx ZVM_SET_CU
 
 if test -f $HOME/.config/fish/env.fish
+    # @fish-lsp-disable-next-line 1004
     source $HOME/.config/fish/env.fish
 end
 
@@ -78,23 +79,23 @@ function claer
 end
 
 function nconf
-    cd $HOME/.config/nvim/
+    cd $HOME/.dotfiles/nvim/.config/nvim/
 end
 
 function kconf
-    cd $HOME/.config/kitty/
+    cd $HOME/.dotfiles/kitty/.config/kitty/
 end
 
 function gconf
-    cd $HOME/.config/ghostty/
+    cd $HOME/.dotfiles/.ghostty/.config/ghostty/
 end
 
 function hyconf
-    cd $HOME/.config/hypr/
+    cd $HOME/.dotfiles/hypr/.config/hypr/
 end
 
 function fconf
-    cd $HOME/.config/fish/
+    cd $HOME/.dotfiles/fish/.config/fish/
 end
 
 function dot
