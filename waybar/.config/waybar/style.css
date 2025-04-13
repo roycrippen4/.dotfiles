@@ -21,6 +21,18 @@ tooltip label {
   font-size: 12px;
 }
 
+#submap {
+  color: #cad3f5;
+  background-color: #141624;
+  margin: 2px 3px 0 3px;
+  padding: 0 15px 0 10px;
+  border-radius: 6px;
+  background-image: linear-gradient(90deg, #000000, #000000), linear-gradient(170deg, rgba(102, 204, 255, 1) 0%, rgba(0, 255, 153, .93) 100%);
+  background-clip: padding-box, border-box;
+  background-origin: border-box;
+  border: 1px solid transparent;
+}
+
 #workspaces button {
   box-shadow: none;
   text-shadow: none;
@@ -40,8 +52,8 @@ tooltip label {
   color: #e7c787;
   background: #3e4055;
   margin-left: 3px;
-  padding-left: 12px;
-  padding-right: 12px;
+  padding-left: 10px;
+  padding-right: 10px;
   margin-right: 3px;
   animation: ws_active 20s ease-in-out 1;
   transition: all 0.4s cubic-bezier(0.55, -0.68, 0.48, 1.682);

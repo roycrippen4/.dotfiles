@@ -13,6 +13,12 @@
       "5": ""
     }
   },
+  "hyprland/submap": {
+    "format": "<span color='#00E4CF'> </span> Submap: {}",
+    "max-length": 30,
+    "tooltip": true,
+    "tooltip-format": "foo bar"
+  },
   "clock": {
     "format": "{:%I:%M:%S %p}",
     "format-alt": "{:%R 󰃭 %d·%m·%y}",
@@ -141,6 +147,7 @@
     "custom/appmenu",
     "custom/discord",
     "custom/gpt",
-    "custom/paper"
+    "custom/paper",
+    "hyprland/submap"
   ]
 }
