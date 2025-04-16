@@ -94,6 +94,7 @@ return {
         ['.zshrc'] = 'sh',
         ['.zshenv'] = 'sh',
         ['bun.lock'] = 'jsonc',
+        ['Caddyfile'] = 'caddy',
       },
       pattern = {
         ['d?o?c?k?e?r?%-?compose%.ya?ml'] = 'yaml.docker-compose',
