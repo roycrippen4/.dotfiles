@@ -19,10 +19,8 @@
     "]"
   ] @punctuation.special)
 
-(attribute
-  arguments: (_ ["(" ")"] @function.macro))
+(attribute arguments: (_ ["(" ")"] @function.macro))
 
-(use_declaration 
-  argument: (_ "::" @punctuation.special))
-
+(use_declaration argument: (_ "::" @punctuation.special))
 (scoped_identifier "::" @punctuation.special) 
+(scoped_type_identifier "::" @punctuation.special) 
