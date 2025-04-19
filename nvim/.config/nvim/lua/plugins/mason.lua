@@ -1,7 +1,8 @@
 ---@type LazyPluginSpec[]
 return {
   {
-    'williamboman/mason.nvim', -- https://github.com/williamboman/mason.nvim
+    'roycrippen4/mason.nvim', -- https://github.com/williamboman/mason.nvim
+    -- 'williamboman4/mason.nvim', -- https://github.com/williamboman/mason.nvim
     keys = {
       { '<leader>m', '<cmd> Mason <cr>' },
     },
