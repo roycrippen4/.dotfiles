@@ -54,12 +54,11 @@ return {
     snippets = { preset = 'luasnip' },
     signature = {
       enabled = true,
-      window = { border = 'rounded', min_width = 20, max_width = 80, max_height = 20 },
+      window = { min_width = 20, max_width = 80, max_height = 20 },
     },
     completion = {
       trigger = { show_on_blocked_trigger_characters = { ' ', '\n', '\t', '>' } },
       menu = {
-        border = 'rounded',
         draw = {
           columns = { { 'label', 'label_description', gap = 1 }, { 'kind_icon' }, { 'source_name', gap = 1 } },
           components = { source_name = { text = source_name } },
@@ -69,7 +68,7 @@ return {
         auto_show = true,
         auto_show_delay_ms = 250,
         update_delay_ms = 50,
-        window = { min_width = 20, max_width = 80, max_height = 20, border = 'rounded' },
+        window = { min_width = 20, max_width = 80, max_height = 20 },
       },
     },
     cmdline = { enabled = false },
