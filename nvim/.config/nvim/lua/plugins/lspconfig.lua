@@ -121,7 +121,15 @@ return {
     configure_server('docker_compose_language_service', { cmd = { 'bun', '--bun', 'run', 'docker-compose-langserver', '--stdio' } })
     configure_server('dockerls', { cmd = { 'bun', '--bun', 'run', 'docker-langserver', '--stdio' } })
 
-    configure_server('ocamllsp', { cmd_env = { DUNE_BUILD_DIR = '_build_lsp' } })
+    configure_server('ocamllsp', {
+      cmd_env = { DUNE_BUILD_DIR = '_build_lsp' },
+      settings = {
+        codelens = { enable = true },
+        inlayHints = { enable = true },
+        syntaxDocumentation = { enable = true },
+      },
+    })
+
     configure_server('zls', {
       settings = {
         zls = { enable_snippets = false },

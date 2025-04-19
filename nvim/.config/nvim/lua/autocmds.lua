@@ -3,6 +3,17 @@ local autocmd = vim.api.nvim_create_autocmd
 local pattern = { 'help', 'logger', 'man', 'qf', 'query', 'scratch', 'undotree' }
 local general = augroup('general', { clear = true })
 
+vim.g.dune_lsp_build = nil
+autocmd('LspAttach', {
+  callback = function(args)
+    local fts = { 'ocaml', 'menhir', 'ocamlinterface', 'ocamllex', 'reason', 'dune' }
+    if not vim.g.dune_lsp_build and vim.tbl_contains(fts, vim.bo[args.buf].ft) then
+      vim.g.dune_lsp_build = true
+      vim.fn.jobstart({ 'dune', 'build', '-w', '--build-dir', '_build_lsp', '@check' })
+    end
+  end,
+})
+
 autocmd('FileType', {
   pattern = 'fish',
   callback = function()
