@@ -7,9 +7,18 @@
 // custom settings, run `zed: open default settings` from the
 // command palette (cmd-shift-p / ctrl-shift-p)
 {
+  "lsp": {
+    "ocamllsp": {
+      "initialization_options": {
+        "inlayHints": {
+          "enable": true
+        }
+      }
+    }
+  },
   "lsp_highlight_debounce": 99999999999,
   "features": {
-    "inline_completion_provider": "copilot"
+    "edit_prediction_provider": "copilot"
   },
   "toolbar": {
     "breadcrumbs": false,
@@ -33,7 +42,6 @@
   "experimental.theme_overrides": {
     "syntax": {}
   },
-
   "buffer_font_size": 16,
   "relative_line_numbers": true,
   "ui_font_size": 16,
