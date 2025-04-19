@@ -69,6 +69,7 @@ return {
   config = function(_, opts)
     vim.filetype.add({
       extension = {
+        json = 'jsonc',
         cts = 'typescript',
         es6 = 'javascript',
         gif = 'image',
