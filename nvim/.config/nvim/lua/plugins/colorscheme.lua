@@ -99,7 +99,7 @@ return {
       Added = { fg = colors.green },
       Changed = { fg = colors.blue_light },
       ColorColumn = { bg = colors.bg1 },
-      Conceal = { fg = colors.grey, bg = colors.bg1 },
+      Conceal = { fg = colors.lightgrey, bg = colors.bg1 },
       CurSearch = { fg = colors.one_bg, bg = colors.orange },
       Cursor = { reverse = true },
       CursorColumn = { bg = colors.bg1 },

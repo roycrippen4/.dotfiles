@@ -71,7 +71,7 @@ return {
     { "<leader>fC", function() Snacks.picker.commands() end,  desc = "Find Commands"  },
     { "<leader>fh", function() Snacks.picker.help() end, desc = "Find Help" },
     { "<leader>fk", function() Snacks.picker.keymaps() end, desc = "Find Keymaps" },
-    { "<leader>fl", function() Snacks.picker.highlights() end, desc = "Find Highlights" },
+    { "<leader>fl", function() Snacks.picker.highlights({ confirm = { "copy", "close" } }) end, desc = "Find Highlights" },
     { "<leader>fm", function() Snacks.picker.marks() end, desc = "Find Marks" },
     { "<leader>fo", function() Snacks.picker.recent({ filter = { cwd = vim.fn.getcwd() } }) end, desc = "Find Recent Files" },
     { "<leader>fr", function() Snacks.picker.resume() end, desc = "Resume previous search" },
