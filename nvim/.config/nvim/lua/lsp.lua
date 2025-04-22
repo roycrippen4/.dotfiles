@@ -12,7 +12,6 @@ local dap_signs = {
 vim.iter(dap_signs):each(vim.fn.sign_define)
 
 local diagnostic_icons = {
-
   [vim.diagnostic.severity.ERROR] = '',
   [vim.diagnostic.severity.WARN] = '',
   [vim.diagnostic.severity.HINT] = '󱡴',
