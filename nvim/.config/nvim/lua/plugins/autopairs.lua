@@ -8,6 +8,8 @@ return {
     local _, cond = pcall(require, 'nvim-autopairs.conds')
     npairs.setup({})
 
+    require('nvim-autopairs').get_rules("'")[1].not_filetypes = { 'ocamlinterface' }
+
     -- stylua: ignore
     npairs.add_rule(
       rule('<', '>', { '-html', '-javascriptreact', '-typescriptreact', '-svelte', '-lua' })
