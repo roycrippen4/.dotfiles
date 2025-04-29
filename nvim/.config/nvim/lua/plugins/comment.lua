@@ -1,6 +1,6 @@
 ---@type LazyPluginSpec
 return {
-  'numToStr/Comment.nvim', -- https://github.com/roycrippen4/Comment.nvim
+  'numToStr/Comment.nvim', -- https://github.com/numToStr/Comment.nvim
   event = 'BufEnter',
   dependencies = {
     {
