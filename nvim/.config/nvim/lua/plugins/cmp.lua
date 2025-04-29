@@ -50,6 +50,8 @@ return {
       ['<C-S-N>'] = { 'scroll_documentation_down', 'fallback' },
       ['<C-S-P>'] = { 'scroll_documentation_up', 'fallback' },
       ['<esc>'] = { 'hide', 'fallback' },
+      ['<C-i>'] = { 'show_signature', 'hide_signature', 'fallback' },
+      ['<C-k>'] = {},
     },
     snippets = { preset = 'luasnip' },
     signature = {
