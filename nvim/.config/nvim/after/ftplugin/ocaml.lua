@@ -24,7 +24,7 @@ end
 local function allow_unused_rec()
   local buf = vim.fn.bufnr()
 
-  local node = find_node_ancestor({ 'let_expression' }, vim.treesitter.get_node())
+  local node = find_node_ancestor({ 'value_definition', 'let_expression' }, vim.treesitter.get_node())
   if not node then
     return
   end
@@ -50,7 +50,7 @@ end
 local function allow_unused_var()
   local buf = vim.fn.bufnr()
 
-  local node = find_node_ancestor({ 'let_expression' }, vim.treesitter.get_node())
+  local node = find_node_ancestor({ 'value_definition', 'let_expression' }, vim.treesitter.get_node())
   if not node then
     return
   end

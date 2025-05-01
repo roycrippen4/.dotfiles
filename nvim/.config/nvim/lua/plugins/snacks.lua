@@ -62,7 +62,7 @@ return {
   keys = {
     { 'gd', function() Snacks.picker.lsp_definitions() end, desc = 'Goto Definition' },
     { 'gr', function() Snacks.picker.lsp_references() end, desc = 'Goto References' },
-    { "<leader>u", function() Snacks.picker.undo() end, desc = "View Undo History" },
+    { "<leader>ut", function() Snacks.picker.undo() end, desc = "View Undo History" },
     { '<leader>z', function() Snacks.zen() end },
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
     { "<leader>fa", function() Snacks.picker.autocmds() end, desc = "Find Autocmds" },
