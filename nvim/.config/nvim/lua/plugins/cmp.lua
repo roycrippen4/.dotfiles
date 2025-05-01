@@ -47,11 +47,11 @@ return {
   opts = {
     keymap = {
       ['<cr>'] = { 'accept', 'fallback' },
-      ['<C-S-N>'] = { 'scroll_documentation_down', 'fallback' },
-      ['<C-S-P>'] = { 'scroll_documentation_up', 'fallback' },
+      ['<c-s-n>'] = { 'scroll_documentation_down', 'fallback' },
+      ['<c-s-p>'] = { 'scroll_documentation_up', 'fallback' },
       ['<esc>'] = { 'hide', 'fallback' },
-      ['<C-i>'] = { 'show_signature', 'hide_signature', 'fallback' },
-      ['<C-k>'] = {},
+      ['<c-y>'] = { 'show_signature', 'hide_signature', 'fallback' },
+      ['<c-k>'] = {},
     },
     snippets = { preset = 'luasnip' },
     signature = {
