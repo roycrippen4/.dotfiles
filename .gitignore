@@ -23,3 +23,4 @@ fish/.config/fish/env.fish
 fish/.config/fish/functions/ssh_appserver2.fish
 fish/.config/fish/functions/ssh_dad.fish
 fish/.config/fish/conf.d/sdk.fish
+fish/.config/fish/functions/toggle_vpn.fish
