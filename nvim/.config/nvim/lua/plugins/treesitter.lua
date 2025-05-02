@@ -55,7 +55,10 @@ return {
       'yaml',
       'zig',
     },
-    indent = { enable = true },
+    indent = {
+      enable = true,
+      disable = { 'ocaml', "'ocaml_interface'" },
+    },
     highlight = {
       enable = true,
       use_languagetree = true,
