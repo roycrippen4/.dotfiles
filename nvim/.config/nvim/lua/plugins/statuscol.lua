@@ -31,6 +31,7 @@ return {
         { sign = { name = { 'Dap' }, maxwidth = 1, auto = true } },
         { sign = { name = { 'todo' }, maxwidth = 1, auto = true } },
         { text = { builtin.foldfunc }, click = 'v:lua.ScFa' },
+        { text = { ' ' } },
         { text = { builtin.lnumfunc, auto = false } },
         { text = { ' ' } },
         { sign = { namespace = { 'gitsigns' }, maxwidth = 1, auto = false, wrap = false } },

@@ -125,7 +125,7 @@ function _G.custom_foldtext()
   local end_ = vim.trim(end_str)
   local result = {}
   fold_virt_text(result, start, vim.v.foldstart - 1)
-  local delim = ' ... ' .. vim.v.foldend - vim.v.foldstart - 1 .. ' lines ...'
+  local delim = ' ... ' .. vim.v.foldend - vim.v.foldstart - 1 .. ' lines ... '
   table.insert(result, { delim, 'Delimiter' })
   fold_virt_text(result, end_, vim.v.foldend - 1, #(end_str:match('^(%s+)') or ''))
   return result
