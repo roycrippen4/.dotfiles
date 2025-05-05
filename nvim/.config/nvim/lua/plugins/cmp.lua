@@ -82,6 +82,7 @@ return {
           end
           return b.client_name == 'zls'
         end,
+        'exact',
         'score',
         'sort_text',
       },
