@@ -53,6 +53,7 @@ return {
     hijack_unnamed_buffer_when_opening = false,
     sync_root_with_cwd = true,
     update_focused_file = { enable = true, update_root = false },
+    notify = { threshold = vim.log.levels.WARN },
     view = {
       signcolumn = 'auto',
       adaptive_size = true,
@@ -75,9 +76,8 @@ return {
       highlight_bookmarks = 'all',
       indent_markers = { enable = true },
       icons = {
-        bookmarks_placement = 'signcolumn',
         show = {
-          bookmarks = true,
+          bookmarks = false,
           file = true,
           folder = true,
           folder_arrow = true,
