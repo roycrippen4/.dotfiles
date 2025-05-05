@@ -23,11 +23,6 @@ return {
     opts = {},
   },
   {
-    --- Sroll eof implementation
-    'roycrippen4/scrool.nvim', -- https://github.com/roycrippen4/scrool.nvim
-    opts = {},
-  },
-  {
     --- Statusline and bufferline
     'roycrippen4/beeline.nvim', -- https://github.com/roycrippen4/beeline.nvim
     lazy = false,

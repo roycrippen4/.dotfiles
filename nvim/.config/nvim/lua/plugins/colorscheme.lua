@@ -121,6 +121,7 @@ return {
       ErrorMsg = { fg = colors.red, bold = true },
       FloatBorder = { fg = colors.blue_light, bg = colors.one_bg },
       FoldColumn = { fg = colors.blue_light, bg = colors.one_bg },
+      Folded = {},
       IncSearch = { fg = colors.one_bg, bg = colors.orange },
       LineNr = { fg = colors.grey },
       MatchParen = { fg = colors.none, bg = colors.grey },

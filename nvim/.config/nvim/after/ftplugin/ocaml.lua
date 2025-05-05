@@ -79,3 +79,6 @@ vim.keymap.set('n', '<leader>lt', '<cmd> TermExec direction=horizontal size=16 c
 vim.keymap.set('n', '<leader>lr', run_file, { desc = '[R]un file' })
 vim.keymap.set('n', '<leader>ur', allow_unused_rec, { desc = 'Allow unused rec' })
 vim.keymap.set('n', '<leader>uv', allow_unused_var, { desc = 'Allow unused var' })
+
+vim.opt.smartindent = true
+vim.opt.autoindent = true

@@ -116,9 +116,9 @@ return {
             {
               box = 'vertical',
               { win = 'input', height = 1, border = 'rounded', title = '{title} {live} {flags}' },
-              { win = 'list', border = 'solid' },
+              { win = 'list', border = 'solid', wo = { foldcolumn = '0' } },
             },
-            { win = 'preview', title = '{title} Preview', border = 'rounded', width = 0.55 },
+            { win = 'preview', title = '{title} Preview', border = 'rounded', width = 0.55, wo = { foldcolumn = '0' } },
           },
         },
       },
