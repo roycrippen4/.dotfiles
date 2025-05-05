@@ -2,6 +2,8 @@
 return {
   'luukvbaal/statuscol.nvim', -- https://github.com/luukvbaal/statuscol.nvim
   config = function()
+    local builtin = require('statuscol.builtin')
+
     require('statuscol').setup({
       bt_ignore = { 'nofile', 'prompt', 'terminal' },
       ft_ignore = {
@@ -28,7 +30,8 @@ return {
         { sign = { namespace = { 'diagnostic' }, maxwidth = 1, auto = false } },
         { sign = { name = { 'Dap' }, maxwidth = 1, auto = true } },
         { sign = { name = { 'todo' }, maxwidth = 1, auto = true } },
-        { text = { require('statuscol.builtin').lnumfunc, auto = false } },
+        { text = { builtin.foldfunc }, click = 'v:lua.ScFa' },
+        { text = { builtin.lnumfunc, auto = false } },
         { text = { ' ' } },
         { sign = { namespace = { 'gitsigns' }, maxwidth = 1, auto = false, wrap = false } },
       },
