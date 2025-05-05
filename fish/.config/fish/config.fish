@@ -1,9 +1,9 @@
 set fish_greeting
 set -gx ZVM_SET_CU
 
-if test -f $HOME/.config/fish/env.fish
+if test -f $HOME/.config/fish/env.work.fish
     # @fish-lsp-disable-next-line 1004
-    source $HOME/.config/fish/env.fish
+    source $HOME/.config/fish/env.work.fish
 end
 
 if status is-interactive
@@ -22,6 +22,7 @@ if status is-interactive
         set -p fish_complete_path (brew --prefix)/share/fish/vendor_completions.d
     end
 
+    # @fish-lsp-disable-next-line 4004
     function nvm_use_on_dir --on-variable PWD
         if test -e ./.nvmrc
             set nvm_version (cat .nvmrc)

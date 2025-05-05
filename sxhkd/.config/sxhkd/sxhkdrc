@@ -12,13 +12,13 @@ super + g
   /bin/sh -c 'if pgrep -x "chrome" > /dev/null; then wmctrl -a "Google Chrome"; else google-chrome & sleep 2; right_monitor=$(xrandr --listmonitors | tail -n1 | awk "{print \$NF}"); wmctrl -r "Google Chrome" -e 0,0,0,-1,-1 -t $(wmctrl -d | grep "$right_monitor" | cut -d" " -f1); wmctrl -r "Google Chrome" -b add,maximized_vert,maximized_horz; fi'
 
 super + v
-  ~/.bin/toggle_vpn.sh
+  ~/.bin/toggle_vpn_work.sh
 
 super + 1
   google-chrome https://music.youtube.com/ && wmctrl -a "Google Chrome"
 
 super + 2
-  ~/.bin/check_vpn.sh && google-chrome "$WORK_GIT_URL" && wmctrl -a "Google Chrome";
+  ~/.bin/check_vpn.work.sh && google-chrome "$WORK_GIT_URL" && wmctrl -a "Google Chrome";
 
 super + 3
   google-chrome "$WORK_TIMESHEET" && wmctrl -a "Google Chrome";
@@ -27,7 +27,7 @@ super + 4
   google-chrome "$WORK_EMAIL" && wmctrl -a "Google Chrome";
 
 super + 5
-  ~/.bin/check_vpn.sh && google-chrome "$WORK_YOUTRACK" &&  wmctrl -a "Google Chrome";
+  ~/.bin/check_vpn.work.sh && google-chrome "$WORK_YOUTRACK" &&  wmctrl -a "Google Chrome";
 
 super + 6
-  ~/.bin/check_vpn.sh && google-chrome "$WORK_NEXUS" && wmctrl -a "Google Chrome";
+  ~/.bin/check_vpn.work.sh && google-chrome "$WORK_NEXUS" && wmctrl -a "Google Chrome";
