@@ -87,7 +87,11 @@ return {
         row = 1,
       },
       notification = { wo = { wrap = true } },
-      zen = { max_height = 63, width = 160, backdrop = { blend = 20 } },
+      zen = {
+        max_height = 63,
+        width = 160,
+        backdrop = { blend = 20 },
+      },
     },
     notifier = { timeout = 5000, enabled = true },
     bigfile = { enabled = true },
@@ -95,7 +99,11 @@ return {
     image = { enabled = true },
     picker = {
       backdrop = false,
-      previewers = { diff = { cmd = { 'delta' } } },
+      previewers = {
+        diff = {
+          cmd = { 'delta' },
+        },
+      },
       prompt = '   ',
       layout = { preset = 'custom' },
       layouts = {
@@ -104,8 +112,18 @@ return {
             box = 'vertical',
             width = 0.5,
             height = 0.2,
-            { win = 'input', height = 1, border = 'rounded', title = '{title} {live} {flags}' },
-            { win = 'list', border = 'solid', height = 10 },
+            {
+              win = 'input',
+              height = 1,
+              border = 'rounded',
+              title = '{title} {live} {flags}',
+            },
+            {
+              win = 'list',
+              border = 'solid',
+              height = 10,
+              wo = { foldcolumn = '0' },
+            },
           },
         },
         custom = {
@@ -115,10 +133,25 @@ return {
             height = 0.8,
             {
               box = 'vertical',
-              { win = 'input', height = 1, border = 'rounded', title = '{title} {live} {flags}' },
-              { win = 'list', border = 'solid', wo = { foldcolumn = '0' } },
+              {
+                win = 'input',
+                height = 1,
+                border = 'rounded',
+                title = '{title} {live} {flags}',
+              },
+              {
+                win = 'list',
+                border = 'solid',
+                wo = { foldcolumn = '0' },
+              },
             },
-            { win = 'preview', title = '{title} Preview', border = 'rounded', width = 0.55, wo = { foldcolumn = '0' } },
+            {
+              win = 'preview',
+              title = '{title} Preview',
+              border = 'rounded',
+              width = 0.55,
+              wo = { foldcolumn = '0' },
+            },
           },
         },
       },
