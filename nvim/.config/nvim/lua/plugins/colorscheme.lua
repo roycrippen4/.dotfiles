@@ -127,7 +127,6 @@ return {
       MatchParen = { fg = colors.none, bg = colors.grey },
       MoreMsg = { fg = colors.blue, bold = true },
       MsgArea = { bg = colors.black3 },
-      NonText = { fg = colors.grey },
       Normal = { bg = colors.one_bg },
       NormalFloat = { bg = colors.one_bg },
       Pmenu = { fg = colors.white, bg = colors.bg1 },
