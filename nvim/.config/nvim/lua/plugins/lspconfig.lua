@@ -125,8 +125,14 @@ return {
       cmd_env = { DUNE_BUILD_DIR = '_build_lsp' },
       settings = {
         codelens = { enable = true },
-        inlayHints = { enable = true },
+        inlayHints = {
+          hintPatternVariables = true,
+          hintLetBindings = true,
+          hintFunctionParams = true,
+        },
+        extendedHover = { enable = true },
         syntaxDocumentation = { enable = true },
+        merlinJumpCodeActions = { enable = true },
       },
     })
 

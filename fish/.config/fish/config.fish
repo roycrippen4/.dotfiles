@@ -119,4 +119,4 @@ starship init fish | source
 zoxide init --cmd c fish | source
 fzf --fish | source
 
-test -r "$HOME/.opam/opam-init/init.fish" && source "$HOME/.opam/opam-init/init.fish" >/dev/null 2>/dev/null; or true
+test -r '/home/roy/.opam/opam-init/init.fish' && source '/home/roy/.opam/opam-init/init.fish' >/dev/null 2>/dev/null; or true
