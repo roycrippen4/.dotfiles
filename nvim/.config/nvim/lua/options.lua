@@ -47,7 +47,8 @@ opt.title         = true       -- Show the title in the window titlebar
 opt.wrap          = false      -- Display long lines as just one line
 opt.whichwrap:append('<>[]hl') -- go to previous/next line with h,l,left arrow and right arrow
 opt.clipboard = 'unnamedplus'  -- Use system clipboard
-opt.cursorline = true          -- Enable highlighting of the current line
+opt.cursorline = true          -- Enable cursorline
+opt.cursorlineopt = "number"   -- Only highlight the line number in the statuscolumn
 opt.hlsearch = true            -- Enable highlight search
 opt.swapfile = false           -- Disable swap file
 opt.smoothscroll = true        -- Enable smooth scrolling
