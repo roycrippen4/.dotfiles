@@ -7,6 +7,7 @@ return {
   dependencies = { 'nvim-treesitter/nvim-treesitter' },
   ---@type TailwindTools.Option
   opts = {
+    document_color = { enabled = false },
     server = {
       on_attach = require('lsp').on_attach,
       settings = {
