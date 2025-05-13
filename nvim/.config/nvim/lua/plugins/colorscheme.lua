@@ -261,6 +261,11 @@ return {
       SearchVirtualText = { fg = '#53bf00', italic = true },
     },
 
+    neotree = {
+      NeoTreeNormal = { fg = colors.white, bg = colors.black3 },
+      NeoTreeNormalNC = { link = 'NeoTreeNormal' },
+    },
+
     nvimtree = {
       NvimTreeBookmark = { fg = colors.red },
       NvimTreeBookmarkHL = { fg = colors.red },
@@ -319,7 +324,7 @@ return {
       StatusLineMacroB = { fg = colors.yellow, bg = colors.black3 },
       StatusLineMason = { fg = colors.yellow, bg = colors.black3 },
       StatusLineNormalMode = { fg = colors.blue_light, bg = colors.black3 },
-      StatusLineNvimTree = { fg = colors.blue_light, bg = colors.black3, italic = true },
+      StatusLineFileTree = { fg = colors.blue_light, bg = colors.black3, italic = true },
       StatusLinePos = { fg = '#d6a000', bg = colors.black3, bold = false },
       StatusLineReplaceMode = { fg = colors.orange_dark, bg = colors.black3 },
       StatusLineSelectMode = { fg = colors.pink, bg = colors.black3 },
