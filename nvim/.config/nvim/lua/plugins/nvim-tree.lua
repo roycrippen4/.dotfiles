@@ -16,6 +16,7 @@ vim.api.nvim_create_autocmd('User', {
 return {
   'nvim-tree/nvim-tree.lua', -- https://github.com/nvim-tree/nvim-tree.lua
   event = 'VeryLazy',
+  enabled = false,
   opts = {
     ---@param bufnr integer
     on_attach = function(bufnr)

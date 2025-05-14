@@ -47,7 +47,8 @@ opt.title         = true       -- Show the title in the window titlebar
 opt.wrap          = false      -- Display long lines as just one line
 opt.whichwrap:append('<>[]hl') -- go to previous/next line with h,l,left arrow and right arrow
 opt.clipboard = 'unnamedplus'  -- Use system clipboard
-opt.cursorline = true          -- Enable highlighting of the current line
+opt.cursorline = true          -- Enable cursorline
+opt.cursorlineopt = "number"   -- Only highlight the line number in the statuscolumn
 opt.hlsearch = true            -- Enable highlight search
 opt.swapfile = false           -- Disable swap file
 opt.smoothscroll = true        -- Enable smooth scrolling
@@ -88,53 +89,6 @@ opt.numberwidth = 2
 opt.ruler = false
 opt.shortmess:append('qWcCsIS')
 opt.formatexpr = "v:lua.require'conform'.formatexpr()"
-
----@param result table
----@param s string
----@param lnum integer
----@param coloff integer?
-local function fold_virt_text(result, s, lnum, coloff)
-  coloff = coloff or 0
-
-  local text = ''
-  local hl
-
-  for i = 1, #s do
-    local char = s:sub(i, i)
-    local hls = vim.treesitter.get_captures_at_pos(0, lnum, coloff + i - 1)
-    local _hl = hls[#hls]
-    if _hl then
-      local new_hl = '@' .. _hl.capture
-      if new_hl ~= hl then
-        table.insert(result, { text, hl })
-        text = ''
-        hl = nil
-      end
-      text = text .. char
-      hl = new_hl
-    else
-      text = text .. char
-    end
-  end
-  table.insert(result, { text, hl })
-end
-
-function _G.custom_foldtext()
-  local start = vim.fn.getline(vim.v.foldstart):gsub('\t', string.rep(' ', vim.o.tabstop))
-  local end_str = vim.fn.getline(vim.v.foldend)
-  local end_ = vim.trim(end_str)
-  local result = {}
-  fold_virt_text(result, start, vim.v.foldstart - 1)
-  local delim = ' ... ' .. vim.v.foldend - vim.v.foldstart - 1 .. ' lines ... '
-  table.insert(result, { delim, 'Delimiter' })
-  fold_virt_text(result, end_, vim.v.foldend - 1, #(end_str:match('^(%s+)') or ''))
-  return result
-end
-
-vim.opt.foldtext = 'v:lua.custom_foldtext()'
-vim.opt.foldcolumn = '1'
-vim.opt.foldlevel = 99
-vim.opt.foldmethod = 'expr'
 
 vim.o.guicursor = 'n-v-c:block-Cursor/lCursor-blinkon1,i:ver25-Cursor/lCursor-blinkon1,r-cr:hor20-Cursor/lCursor-blinkon1'
 vim.o.mouse = 'a' -- Enables mouse support

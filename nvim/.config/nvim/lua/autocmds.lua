@@ -55,26 +55,6 @@ autocmd('TextYankPost', {
   end,
 })
 
-autocmd('InsertEnter', {
-  desc = 'Disable cursorline in insert mode',
-  group = general,
-  callback = function(args)
-    if not vim.tbl_contains(pattern, vim.bo[args.buf].ft) then
-      vim.cmd('set nocul')
-    end
-  end,
-})
-
-autocmd('InsertLeave', {
-  desc = 'Enable cursorline after leaving insert mode',
-  group = general,
-  callback = function(args)
-    if not vim.tbl_contains(pattern, vim.bo[args.buf].ft) then
-      vim.cmd('set cul')
-    end
-  end,
-})
-
 autocmd('BufWritePost', {
   desc = 'Reload kitty config on save',
   pattern = 'kitty.conf',
