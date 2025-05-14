@@ -16,7 +16,7 @@ local function format_on_save()
   if vim.g.disable_format_on_save then
     return
   end
-  return { timeout_ms = 500, lsp_format = 'fallback' }
+  return { timeout_ms = 1000, lsp_format = 'fallback' }
 end
 
 ---@module "conform"
@@ -45,7 +45,7 @@ return {
       proto = { 'clang-format' },
       python = { 'black' },
       sh = { 'shfmt' },
-      svelte = { 'prettierd', 'prettier', stop_after_first = true },
+      svelte = { 'prettierd' },
       toml = { 'taplo' },
       typescript = { 'prettierd', 'prettier', stop_after_first = true },
       typescriptreact = { 'prettierd', 'prettier', stop_after_first = true },
