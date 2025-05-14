@@ -59,8 +59,6 @@ return {
           return vim.fs.root(ctx.dirname, { '.editorconfig', '.stylua.toml', 'stylua.toml' })
         end,
       },
-      prettierd = { command = 'bun --bun run prettierd' },
-      prettier = { command = 'bun --bun run prettier' },
     },
   },
 }
