@@ -32,41 +32,35 @@ vim.diagnostic.config({
   },
 })
 
+vim.api.nvim_create_user_command('LspOrganizeImports', function()
+  vim.lsp.buf.code_action({
+    apply = true,
+    context = { only = { 'source.organizeImports' } },
+  })
+end, { desc = 'Organize imports via LSP' })
+
+vim.api.nvim_create_user_command('LspToggleInlayHints', function()
+  vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }))
+  local msg = vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }) and 'Lsp inlay hints enabled' or 'Lsp inlay hints disabled'
+  vim.notify(msg, vim.log.levels.INFO)
+end, { desc = 'Toggle LSP Inaly Hints' })
+
+vim.api.nvim_create_user_command('LspToggleDiagnostics', function()
+  vim.diagnostic.enable(not vim.diagnostic.is_enabled())
+end, { desc = 'Toggle LSP diagnostics' })
+
 local M = {}
 
-local function set_lsp_mappings()
+---@param client vim.lsp.Client
+---@param bufnr integer,
+---@diagnostic disable-next-line: unused-local
+function M.on_attach(client, bufnr)
   require('which-key').add({
     {
       mode = 'n',
-      {
-        '<leader>lo',
-        function()
-          vim.lsp.buf.code_action({
-            apply = true,
-            context = { only = { 'source.organizeImports' }, diagnostics = {} },
-          })
-        end,
-        desc = '[L]SP Organize Imports',
-        icon = '󰶘',
-      },
-      {
-        '<leader>lh',
-        function()
-          vim.lsp.inlay_hint.enable(not vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }))
-          local msg = vim.lsp.inlay_hint.is_enabled({ bufnr = 0 }) and 'Lsp inlay hints enabled' or 'Lsp inlay hints disabled'
-          vim.notify(msg, vim.log.levels.INFO)
-        end,
-        desc = '[L]SP Inlay Hints',
-        icon = '󰊠',
-      },
-      {
-        '<leader>ld',
-        function()
-          vim.diagnostic.enable(not vim.diagnostic.is_enabled())
-        end,
-        desc = '[L]SP Diagnostics',
-        icon = '',
-      },
+      { '<leader>lo', '<cmd> LspOrganizeImports <cr>', desc = '[L]SP Organize Imports', icon = '󰶘' },
+      { '<leader>lh', '<cmd> LspToggleInlayHints', desc = '[L]SP Inlay Hints', icon = '󰊠' },
+      { '<leader>ld', '<cmd> LspToggleDiagnostics <cr>', desc = '[L]SP Diagnostics', icon = '' },
       { '<leader>r', vim.lsp.buf.rename, desc = 'Refactor', icon = '' },
       { '<leader>la', vim.lsp.buf.code_action, desc = '[L]SP Code Action', icon = '' },
       { '<leader>lf', vim.diagnostic.open_float, desc = '[L]SP Floating Diagnostics', icon = '󰉪' },
@@ -74,13 +68,6 @@ local function set_lsp_mappings()
       { '<leader>lR', '<cmd> LspRestart <cr>', desc = '[L]SP Restart Servers', icon = '' },
     },
   })
-end
-
----@param client vim.lsp.Client
----@param bufnr integer,
----@diagnostic disable-next-line: unused-local
-function M.on_attach(client, bufnr)
-  set_lsp_mappings()
 end
 
 vim.api.nvim_create_autocmd('LspAttach', {
