@@ -98,11 +98,10 @@ return {
     input = { enabled = true },
     image = { enabled = true },
     picker = {
+      matcher = { frecency = true },
       backdrop = false,
       previewers = {
-        diff = {
-          cmd = { 'delta' },
-        },
+        diff = { cmd = { 'delta' } },
       },
       prompt = '   ',
       layout = { preset = 'custom' },
