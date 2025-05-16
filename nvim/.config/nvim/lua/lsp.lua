@@ -93,6 +93,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
       return
     end
 
+    if client.name == 'svelte' then
+      client.server_capabilities.semanticTokensProvider = nil
+    end
+
     vim.lsp.document_color.enable(true, args.buf)
 
     M.on_attach(client, args.buf)
