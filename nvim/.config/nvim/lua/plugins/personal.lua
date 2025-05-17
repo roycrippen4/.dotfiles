@@ -8,7 +8,7 @@ return {
       { '<c-f>', '<cmd> PoonAdd <cr>' },
       { 'B', '<cmd> PoonAdd! <cr>' },
       { '<c-e>', '<cmd> PoonToggle <cr>' },
-      { '<c-x>', '<cmd> PoonRemove <cr>' },
+      -- { '<c-x>', '<cmd> PoonRemove <cr>' },
       { '<c-1>', '<cmd> PoonJump 1 <cr>' },
       { '<c-2>', '<cmd> PoonJump 2 <cr>' },
       { '<c-3>', '<cmd> PoonJump 3 <cr>' },
