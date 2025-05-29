@@ -136,6 +136,8 @@ return {
       },
     })
 
+    configure_server('gopls')
+
     configure_server('zls', {
       settings = {
         zls = { enable_snippets = false },
