@@ -43,6 +43,8 @@ local function copy_absolute_path(state)
   vim.notify('Copied absolute path to clipboard')
 end
 
+local is_startup = true
+
 return {
   'nvim-neo-tree/neo-tree.nvim',
   branch = 'v3.x',
@@ -52,15 +54,56 @@ return {
   ---@module "neo-tree"
   ---@type neotree.Config?
   opts = {
+    use_popups_for_input = false,
     close_if_last_window = true,
+    default_component_configs = {
+      indent = {
+        with_expanders = true,
+        expander_collapsed = '',
+        expander_expanded = '',
+        expander_highlight = 'NeoTreeExpander',
+      },
+    },
     filesystem = {
+      bind_to_cwd = false,
       follow_current_file = { enabled = true },
+      use_libuv_file_watcher = true,
       window = { mappings = { ['/'] = 'noop' } },
     },
     window = {
       mappings = {
         ['Y'] = copy_path,
         ['gy'] = copy_absolute_path,
+      },
+    },
+    event_handlers = {
+      {
+        -- open the primary mark if we have marked files
+        event = 'neo_tree_window_before_open',
+        handler = function()
+          local poon = require('poon')
+
+          if is_startup and poon.has_marks() then
+            is_startup = false
+            vim.cmd.PoonJump()
+
+            vim.schedule(function()
+              vim.cmd.wincmd('l')
+            end)
+          end
+        end,
+      },
+      {
+        event = 'file_moved',
+        handler = function(data)
+          Snacks.rename.on_rename_file(data.source, data.destination)
+        end,
+      },
+      {
+        event = 'file_renamed',
+        handler = function(data)
+          Snacks.rename.on_rename_file(data.source, data.destination)
+        end,
       },
     },
   },
