@@ -66,6 +66,7 @@ format = '[[[ │](fg:#737575 bg:#1B1B1B) on @](fg:#838585 bg:#1B1B1B)$hash$tag]
 only_detached = true
 tag_disabled = false
 commit_hash_length = 8
+tag_symbol = "  "
 
 [directory]
 style = "bold fg:#00AFFF bg:#1B1B1B"
