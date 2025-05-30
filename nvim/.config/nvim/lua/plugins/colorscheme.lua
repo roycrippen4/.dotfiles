@@ -1,5 +1,3 @@
-local colors = require('colors')
-
 local treesitter = {
   ['@annotation'] = { fg = colors.fg },
   ['@attribute'] = { fg = colors.cyan },
