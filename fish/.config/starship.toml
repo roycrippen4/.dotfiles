@@ -52,6 +52,7 @@ modified = "[ !($count)](bold fg:#C29F04 bg:#1B1B1B)"
 staged = "[ +($count)](fg:#47E00B bg:#1B1B1B)"
 untracked = "[ ?($count)](bold fg:#00AFFF bg:#1B1B1B)"
 conflicted = ""
+stashed = "[*](fg:#47E00B bg:#1B1B1B)"
 
 [git_branch]
 style = "fg:#47E00B bg:#1B1B1B"
@@ -65,6 +66,7 @@ format = '[[[ │](fg:#737575 bg:#1B1B1B) on @](fg:#838585 bg:#1B1B1B)$hash$tag]
 only_detached = true
 tag_disabled = false
 commit_hash_length = 8
+tag_symbol = "  "
 
 [directory]
 style = "bold fg:#00AFFF bg:#1B1B1B"

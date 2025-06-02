@@ -1,5 +1,3 @@
-local colors = require('colors')
-
 local treesitter = {
   ['@annotation'] = { fg = colors.fg },
   ['@attribute'] = { fg = colors.cyan },
@@ -356,6 +354,8 @@ return {
       SnacksPickerInputBorder = { fg = colors.black2, bg = colors.black2 },
       SnacksPickerInputTitle = { fg = colors.black, bg = colors.red },
       SnacksPickerPreviewTitle = { fg = colors.black, bg = colors.green },
+      SnacksInputTitle = { fg = colors.one_bg, bg = colors.blue_light },
+      SnacksInputBorder = { link = 'FloatBorder' },
     },
 
     trouble = {

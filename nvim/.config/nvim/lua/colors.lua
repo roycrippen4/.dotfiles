@@ -1,4 +1,4 @@
-return {
+_G.colors = {
   black = '#1e222a',
   black2 = '#252931',
   black3 = '#21252b',

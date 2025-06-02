@@ -28,7 +28,6 @@ local function multigrep(opts, ctx)
         item.cwd = cwd
         if not file then
           if not item.text:match('WARNING') then
-            print('Invalid grep output: ' .. item.text, vim.log.levels.ERROR)
             vim.notify('Invalid grep output: ' .. item.text, vim.log.levels.ERROR)
           end
           return false
