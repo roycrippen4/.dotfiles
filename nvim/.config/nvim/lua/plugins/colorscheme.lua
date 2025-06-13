@@ -374,6 +374,7 @@ return {
     lsp = {
       LspSignatureActiveParameter = { underline = true, sp = colors.blue },
       ['@lsp.type.class.svelte'] = {},
+      ['@lsp.typemod.variable.readonly.svelte'] = treesitter['@constant'],
       ['@lsp.type.type.lua'] = {},
       ['@lsp.type.comment'] = treesitter['@comment'],
       ['@lsp.type.enum'] = treesitter['@type'],
