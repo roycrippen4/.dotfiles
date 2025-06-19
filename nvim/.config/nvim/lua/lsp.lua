@@ -1,25 +1,22 @@
-local methods = vim.lsp.protocol.Methods
-
----@type table<string, vim.fn.sign_define.dict>
-local dap_signs = {
-  DapBreakpoint = { text = '', texthl = 'DapBreakpoint', linehl = '', numhl = '' },
-  DapBreakpointCondition = { text = '', texthl = 'DapBreakpointCondition', linehl = '', numhl = '' },
-  DapLogPoint = { text = '', texthl = 'DapLogPoint', linehl = '', numhl = '' },
-  DapStopped = { text = '', texthl = 'DapStopped', linehl = '', numhl = '' },
-  DapBreakpointRejected = { text = '', texthl = 'DapBreakpointRejected', linehl = '', numhl = '' },
-}
-
-vim.iter(dap_signs):each(vim.fn.sign_define)
-
-local diagnostic_icons = {
-  [vim.diagnostic.severity.ERROR] = '',
-  [vim.diagnostic.severity.WARN] = '',
-  [vim.diagnostic.severity.HINT] = '󱡴',
-  [vim.diagnostic.severity.INFO] = '',
-}
+vim
+  .iter({
+    DapBreakpoint = { text = '', texthl = 'DapBreakpoint', linehl = '', numhl = '' },
+    DapBreakpointCondition = { text = '', texthl = 'DapBreakpointCondition', linehl = '', numhl = '' },
+    DapLogPoint = { text = '', texthl = 'DapLogPoint', linehl = '', numhl = '' },
+    DapStopped = { text = '', texthl = 'DapStopped', linehl = '', numhl = '' },
+    DapBreakpointRejected = { text = '', texthl = 'DapBreakpointRejected', linehl = '', numhl = '' },
+  })
+  :each(vim.fn.sign_define)
 
 vim.diagnostic.config({
-  signs = { text = diagnostic_icons },
+  signs = {
+    text = {
+      [vim.diagnostic.severity.ERROR] = '',
+      [vim.diagnostic.severity.WARN] = '',
+      [vim.diagnostic.severity.HINT] = '󱡴',
+      [vim.diagnostic.severity.INFO] = '',
+    },
+  },
   update_in_insert = false,
   underline = true,
   severity_sort = true,
@@ -78,7 +75,7 @@ function M.on_attach(client, bufnr)
     {
       mode = 'n',
       { '<leader>lo', '<cmd> LspOrganizeImports <cr>', desc = '[L]SP Organize Imports', icon = '󰶘' },
-      { '<leader>lh', '<cmd> LspToggleInlayHints', desc = '[L]SP Inlay Hints', icon = '󰊠' },
+      { '<leader>lh', '<cmd> LspToggleInlayHints <cr>', desc = '[L]SP Inlay Hints', icon = '󰊠' },
       { '<leader>ld', '<cmd> LspToggleDiagnostics <cr>', desc = '[L]SP Diagnostics', icon = '' },
       { '<leader>r', vim.lsp.buf.rename, desc = 'Refactor', icon = '' },
       { '<leader>la', vim.lsp.buf.code_action, desc = '[L]SP Code Action', icon = '' },
@@ -135,8 +132,8 @@ vim.lsp.util.stylize_markdown = function(bufnr, contents, opts)
 end
 
 -- Update mappings when registering dynamic capabilities.
-local register_capability = vim.lsp.handlers[methods.client_registerCapability]
-vim.lsp.handlers[methods.client_registerCapability] = function(err, res, ctx)
+local register_capability = vim.lsp.handlers[vim.lsp.protocol.Methods.client_registerCapability]
+vim.lsp.handlers[vim.lsp.protocol.Methods.client_registerCapability] = function(err, res, ctx)
   local client = vim.lsp.get_client_by_id(ctx.client_id)
   if not client then
     return
