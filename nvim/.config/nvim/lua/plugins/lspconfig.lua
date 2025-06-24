@@ -14,8 +14,10 @@ return {
     configure_server('cssls', {
       cmd = { 'bun', '--bun', 'run', 'vscode-css-language-server', '--stdio' },
       settings = {
-        validate = true,
-        lint = { unknownAtRules = 'ignore' },
+        css = {
+          validate = true,
+          lint = { unknownAtRules = 'ignore' },
+        },
       },
     })
 
