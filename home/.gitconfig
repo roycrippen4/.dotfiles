@@ -17,6 +17,8 @@
 [delta]
   navigate = true
   line-numbers = true
+  dark = true
+  minus-emph-style = normal "#560a0a"
 [diff]
   colorMoved = default
 [filter "lfs"]
