@@ -39,10 +39,10 @@ return {
       desc = 'Toggle current line blame hint',
     },
     {
-      ']c',
+      ']g',
       function()
         if vim.wo.diff then
-          return '[c'
+          return '[g'
         end
         vim.cmd('Gitsigns nav_hunk next')
         return '<Ignore>'
@@ -52,10 +52,10 @@ return {
       buffer = true,
     },
     {
-      '[c',
+      '[G',
       function()
         if vim.wo.diff then
-          return '[c'
+          return '[G'
         end
         vim.cmd('Gitsigns nav_hunk prev')
         return '<Ignore>'
