@@ -228,3 +228,4 @@ autoload -U add-zsh-hook
 . "$HOME/.deno/env"
 
 eval "$(direnv hook zsh)"
+. "/home/roy/.deno/env"

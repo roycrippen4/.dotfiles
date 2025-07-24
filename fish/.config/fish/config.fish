@@ -118,5 +118,6 @@ end
 starship init fish | source
 zoxide init --cmd c fish | source
 fzf --fish | source
+source $HOME/.deno/env.fish
 
 test -r "$HOME/.opam/opam-init/init.fish" && source "$HOME/.opam/opam-init/init.fish" >/dev/null 2>/dev/null; or true
