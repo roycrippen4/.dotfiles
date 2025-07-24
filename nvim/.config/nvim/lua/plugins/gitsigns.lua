@@ -52,10 +52,10 @@ return {
       buffer = true,
     },
     {
-      '[G',
+      '[g',
       function()
         if vim.wo.diff then
-          return '[G'
+          return '[g'
         end
         vim.cmd('Gitsigns nav_hunk prev')
         return '<Ignore>'
