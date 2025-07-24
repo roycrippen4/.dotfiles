@@ -6,13 +6,19 @@ set visualbell
 set noerrorbells
 set scrolloff=11
 set incsearch
+set smartcase
+set ignorecase
+set ideajoin
+
+let g:highlightedyank_highlight_duration = 100
 
 Plug 'machakann/vim-highlightedyank'
+
 set commentary
 set surround
 
 set NERDTree
-map <c-n> :NERDTreeToggle <cr>
+map <c-n> :NERDTreeFocus <cr>
 
 imap <c-h> <left>
 imap <c-j> <down>
@@ -22,6 +28,9 @@ imap <c-l> <right>
 imap jk <Esc>
 imap kj <Esc>
 
+imap <c-s> <action>(SaveAll)
+nmap <c-s> <action>(SaveAll)
+
 " wins
 map <c-h> <c-w>h
 map <c-l> <c-w>l
@@ -30,18 +39,36 @@ map <c-k> <c-w>k
 nmap <leader>v :vsplit <cr>
 nmap <leader>h :hsplit <cr>
 
+nmap <leader>r <action>(RenameElement)
+nmap <f11> <action>(LazyGit.Open)
+
+" diagnostics
+nmap <leader>ld <action>(ShowErrorDescription)
+nmap ]d <action>(GotoPreviousError)
+nmap [d <action>(GotoNextError)
+
 " tabs
-map <s-h> :bprev <cr>
-map <s-l> :bnext <cr>
+nmap <s-h> <action>(PreviousTab)
+nmap <s-l> <action>(NextTab)
+
 nmap <leader>x :q <cr>
 
 " Move line up/down
-map <m-j> :m .+1<cr>==
-map <m-k> :m .-1<cr>==
+nmap <m-j> <action>(MoveLineDown)
+nmap <m-k> <action>(MoveLineUp)
+imap <m-j> <action>(MoveLineDown)
+imap <m-k> <action>(MoveLineUp)
+vmap <m-j> <action>(MoveLineDown)
+vmap <m-k> <action>(MoveLineUp)
+
+" multi-cursor
+nmap <s-m-j> <action>(EditorCloneCaretBelow)
+nmap <s-m-k> <action>(EditorCloneCaretAbove)
 
 nmap ; :
 
-map <Leader>ff <action>(com.mituuz.fuzzier.Fuzzier)
+nmap <leader>fw <action>(FindInPath)
+nmap <leader>ff <action>(GotoFile)
 
 nmap <c-e> :action ShowHarpoon <cr>
 nmap <c-b> :action AddToHarpoon <cr>
