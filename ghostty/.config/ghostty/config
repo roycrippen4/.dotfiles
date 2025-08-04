@@ -24,7 +24,6 @@ fullscreen = true
 
 # Window settings
 gtk-titlebar = false
-gtk-adwaita = true
 gtk-tabs-location = bottom
 adw-toolbar-style = flat
 
@@ -44,5 +43,7 @@ keybind = shift+alt+u=scroll_page_up
 keybind = shift+alt+d=scroll_page_down
 
 confirm-close-surface = false
+
+custom-shader = ./shaders/cursor.glsl
 
 # vim set ft=conf
