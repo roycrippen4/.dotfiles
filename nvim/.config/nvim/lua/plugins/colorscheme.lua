@@ -399,6 +399,7 @@ return {
       ['@lsp.typemod.variable.injected'] = treesitter['@variable'],
       ['@lsp.typemod.variable.static'] = treesitter['@constant'],
       ['@lsp.type.string.ocaml'] = {},
+      ['@lsp.type.string.rust'] = {},
       ['@lsp.type.typeParameter.ocamlinterface'] = { fg = '#56B6C2', italic = true },
       ['@lsp.type.formatSpecifier.rust'] = { fg = colors.red },
     },
