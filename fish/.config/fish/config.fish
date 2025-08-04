@@ -89,7 +89,7 @@ function kconf
 end
 
 function gconf
-    cd $HOME/.dotfiles/.ghostty/.config/ghostty/
+    cd $HOME/.dotfiles/ghostty/.config/ghostty/
 end
 
 function hyconf
