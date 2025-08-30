@@ -45,7 +45,7 @@ merge = "merge"
 [git_status]
 format = '$ahead_behind$conflicted$stashed$deleted$renamed$modified$typechanged$staged$untracked'
 ahead = "[ ⇡($count)](fg:#47E00B bg:#1B1B1B)"
-behind = "[ ⇣($count)(fg:#47E00B bg:#1B1B1B)]"
+behind = "[ ⇣($count)](fg:#47E00B bg:#1B1B1B)"
 deleted = "[ ✘($count)](bold fg:#D30000 bg:#1B1B1B)"
 diverged = '[ ⇡${ahead_count}⇣${behind_count}](fg:#47E00B bg:#1B1B1B)'
 modified = "[ !($count)](bold fg:#C29F04 bg:#1B1B1B)"
