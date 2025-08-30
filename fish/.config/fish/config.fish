@@ -6,12 +6,18 @@ if test -f $HOME/.config/fish/env.work.fish
     source $HOME/.config/fish/env.work.fish
 end
 
+if test -f $HOME/.config/fish/env.wsl.fish
+    # @fish-lsp-disable-next-line 1004
+    source $HOME/.config/fish/env.wsl.fish
+end
+
 if status is-interactive
     fish_add_path $HOME/.bun/bin
     fish_add_path $HOME/.local/share/bob/nvim-bin
     fish_add_path $HOME/.local/bin
     fish_add_path /usr/local/man
     fish_add_path $HOME/.cargo/bin
+    fish_add_path /usr/local/go/bin
 
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
@@ -33,7 +39,7 @@ if status is-interactive
             end
             nvm use
         else
-            nvm -s use system
+            nvm -s use $nvm_default_version
         end
     end
 
