@@ -1,4 +1,5 @@
 set fish_greeting
+set -gx EDITOR vim
 set -gx ZVM_SET_CU
 
 if test -f $HOME/.config/fish/env.work.fish
