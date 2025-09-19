@@ -14,19 +14,6 @@ autocmd('LspAttach', {
   end,
 })
 
-autocmd('FileType', {
-  pattern = 'fish',
-  callback = function()
-    vim.opt_local.shiftwidth = 4
-    vim.opt_local.tabstop = 4
-    vim.lsp.start({
-      name = 'fish-lsp',
-      cmd = { 'fish-lsp', 'start' },
-      cmd_env = { fish_lsp_show_client_popups = false },
-    })
-  end,
-})
-
 autocmd('BufReadPost', {
   callback = function(args)
     local mark = vim.api.nvim_buf_get_mark(args.buf, '"')

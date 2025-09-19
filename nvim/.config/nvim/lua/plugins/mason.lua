@@ -20,6 +20,7 @@ return {
       vim
         .iter({
           -- Language servers
+          'bash-language-server',
           'clangd',
           'css-lsp',
           'docker-compose-language-service',

@@ -84,6 +84,8 @@ function M.on_attach(client, bufnr)
       { '<leader>lR', '<cmd> LspRestart <cr>', desc = '[L]SP Restart Servers', icon = '' },
     },
   })
+
+  vim.lsp.document_color.enable(true, bufnr)
 end
 
 vim.api.nvim_create_autocmd('LspAttach', {
@@ -95,8 +97,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
     if not client then
       return
     end
-
-    vim.lsp.document_color.enable(true, args.buf)
 
     M.on_attach(client, args.buf)
   end,
@@ -144,20 +144,18 @@ vim.lsp.handlers[vim.lsp.protocol.Methods.client_registerCapability] = function(
   return register_capability(err, res, ctx)
 end
 
---- Configures the given server with its settings and applying the regular
---- client capabilities (+ the completion ones from blink.cmp).
----@param server string
----@param settings? table
-function M.configure_server(server, settings)
-  local capabilities = vim.lsp.protocol.make_client_capabilities()
-  capabilities = require('blink.cmp').get_lsp_capabilities(capabilities)
+vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
+  once = true,
+  callback = function()
+    local configs = vim
+      .iter(vim.api.nvim_get_runtime_file('lsp/*.lua', true))
+      :map(function(file)
+        return vim.fn.fnamemodify(file, ':t:r')
+      end)
+      :totable()
 
-  if server == 'svelte' then
-    ---@diagnostic disable-next-line: assign-type-mismatch see https://github.com/sveltejs/language-tools/issues/2008
-    capabilities.workspace.didChangeWatchedFiles = false
-  end
-
-  require('lspconfig')[server].setup(vim.tbl_deep_extend('error', { capabilities = capabilities, silent = true }, settings or {}))
-end
+    vim.lsp.enable(configs)
+  end,
+})
 
 return M
