@@ -20,7 +20,7 @@ function nvm --description "Node version manager"
         end
 
         if ! set --query ver[1]
-            echo "nvm: Invalid version or missing \".nvmrc\" file" >&2
+            # echo "nvm: Invalid version or missing \".nvmrc\" file" >&2
             return 1
         end
     end

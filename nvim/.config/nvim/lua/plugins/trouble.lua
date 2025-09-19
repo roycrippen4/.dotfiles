@@ -4,6 +4,7 @@ return {
   'folke/trouble.nvim', -- https://github.com/folke/trouble.nvim
   ---@type trouble.Config
   opts = { focus = true },
+  dev = true,
   keys = {
     {
       '<C-S-D>',
