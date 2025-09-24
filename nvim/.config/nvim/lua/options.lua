@@ -87,7 +87,7 @@ opt.number = true
 opt.relativenumber = true
 opt.numberwidth = 2
 opt.ruler = false
-opt.shortmess:append('qWcCsIS')
+-- opt.shortmess:append('qWcCsIS')
 opt.formatexpr = "v:lua.require'conform'.formatexpr()"
 
 vim.o.guicursor = 'n-v-c:block-Cursor/lCursor-blinkon1,i:ver25-Cursor/lCursor-blinkon1,r-cr:hor20-Cursor/lCursor-blinkon1'
