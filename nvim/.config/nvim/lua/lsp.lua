@@ -46,44 +46,20 @@ vim.api.nvim_create_user_command('LspToggleDiagnostics', function()
   vim.diagnostic.enable(not vim.diagnostic.is_enabled())
 end, { desc = 'Toggle LSP diagnostics' })
 
-local locations_to_items = vim.lsp.util.locations_to_items
----@diagnostic disable-next-line: duplicate-set-field
-vim.lsp.util.locations_to_items = function(locations, offset_encoding)
-  local lines = {}
-  local loc_i = 1
-  for _, loc in ipairs(vim.deepcopy(locations)) do
-    local uri = loc.uri or loc.targetUri
-    local range = loc.range or loc.targetSelectionRange
-    if lines[uri .. range.start.line] then -- already have a location on this line
-      table.remove(locations, loc_i) -- remove from the original list
-    else
-      loc_i = loc_i + 1
-    end
-    lines[uri .. range.start.line] = true
-  end
-
-  return locations_to_items(locations, offset_encoding)
-end
-
 local M = {}
 
 ---@param client vim.lsp.Client
 ---@param bufnr integer,
 ---@diagnostic disable-next-line: unused-local
 function M.on_attach(client, bufnr)
-  require('which-key').add({
-    {
-      mode = 'n',
-      { '<leader>lo', '<cmd> LspOrganizeImports <cr>', desc = '[L]SP Organize Imports', icon = '󰶘' },
-      { '<leader>lh', '<cmd> LspToggleInlayHints <cr>', desc = '[L]SP Inlay Hints', icon = '󰊠' },
-      { '<leader>ld', '<cmd> LspToggleDiagnostics <cr>', desc = '[L]SP Diagnostics', icon = '' },
-      { '<leader>r', vim.lsp.buf.rename, desc = 'Refactor', icon = '' },
-      { '<leader>la', vim.lsp.buf.code_action, desc = '[L]SP Code Action', icon = '' },
-      { '<leader>lf', vim.diagnostic.open_float, desc = '[L]SP Floating Diagnostics', icon = '󰉪' },
-      { '<leader>li', '<cmd> LspInfo <cr>', desc = '[L]SP Server Info', icon = '' },
-      { '<leader>lR', '<cmd> LspRestart <cr>', desc = '[L]SP Restart Servers', icon = '' },
-    },
-  })
+  vim.keymap.set('n', '<leader>lo', '<cmd> LspOrganizeImports <cr>', { desc = '[L]SP Organize Imports' })
+  vim.keymap.set('n', '<leader>lh', '<cmd> LspToggleInlayHints <cr>', { desc = '[L]SP Inlay Hints' })
+  vim.keymap.set('n', '<leader>ld', '<cmd> LspToggleDiagnostics <cr>', { desc = '[L]SP Diagnostics' })
+  vim.keymap.set('n', '<leader>r', vim.lsp.buf.rename, { desc = 'Refactor' })
+  vim.keymap.set('n', '<leader>la', vim.lsp.buf.code_action, { desc = '[L]SP Code Action' })
+  vim.keymap.set('n', '<leader>lf', vim.diagnostic.open_float, { desc = '[L]SP Floating Diagnostics' })
+  vim.keymap.set('n', '<leader>li', '<cmd> LspInfo <cr>', { desc = '[L]SP Server Info' })
+  vim.keymap.set('n', '<leader>lR', '<cmd> LspRestart <cr>', { desc = '[L]SP Restart Servers' })
 
   vim.lsp.document_color.enable(true, bufnr)
 end
@@ -103,33 +79,6 @@ vim.api.nvim_create_autocmd('LspAttach', {
 })
 
 vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, { callback = vim.lsp.codelens.refresh })
-
-local hover = vim.lsp.buf.hover
----@diagnostic disable-next-line: duplicate-set-field
-vim.lsp.buf.hover = function()
-  return hover({
-    max_height = math.floor(vim.o.lines * 0.5),
-    max_width = math.floor(vim.o.columns * 0.4),
-  })
-end
-
---- HACK: Override `vim.lsp.util.stylize_markdown` to use Treesitter.
----
----@param bufnr integer
----@param contents string[]
----@param opts table
----@return string[]
----@diagnostic disable-next-line: duplicate-set-field
-vim.lsp.util.stylize_markdown = function(bufnr, contents, opts)
-  contents = vim.lsp.util._normalize_markdown(contents, {
-    width = vim.lsp.util._make_floating_popup_size(contents, opts),
-  })
-  vim.bo[bufnr].filetype = 'markdown'
-  vim.treesitter.start(bufnr)
-  vim.api.nvim_buf_set_lines(bufnr, 0, -1, false, contents)
-
-  return contents
-end
 
 -- Update mappings when registering dynamic capabilities.
 local register_capability = vim.lsp.handlers[vim.lsp.protocol.Methods.client_registerCapability]
