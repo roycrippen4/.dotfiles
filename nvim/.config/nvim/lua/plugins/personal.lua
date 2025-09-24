@@ -8,7 +8,6 @@ return {
       { '<c-f>', '<cmd> PoonAdd <cr>' },
       { 'B', '<cmd> PoonAdd! <cr>' },
       { '<c-e>', '<cmd> PoonToggle <cr>' },
-      -- { '<c-x>', '<cmd> PoonRemove <cr>' },
       { '<c-1>', '<cmd> PoonJump 1 <cr>' },
       { '<c-2>', '<cmd> PoonJump 2 <cr>' },
       { '<c-3>', '<cmd> PoonJump 3 <cr>' },
@@ -30,7 +29,11 @@ return {
       { 'H', '<cmd> BeelineBufPrev <cr>', { desc = 'Go to previous beeline buffer' } },
       { 'L', '<cmd> BeelineBufNext <cr>', { desc = 'Go to next beeline buffer' } },
     },
-    opts = {},
+    ---@module "beeline"
+    ---@type Beeline.Opts
+    opts = {
+      statusline = { enable = false },
+    },
   },
   {
     --- Highlight group inspection tools
