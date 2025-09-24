@@ -139,7 +139,7 @@ return {
       SpellCap = { fg = colors.none, undercurl = true, sp = colors.yellow },
       SpellLocal = { fg = colors.none, undercurl = true, sp = colors.blue },
       SpellRare = { fg = colors.none, undercurl = true, sp = colors.purple },
-      StatusLine = { fg = colors.white, bg = colors.bg2 },
+      StatusLine = { fg = colors.white, bg = colors.black3 },
       StatusLineNC = { fg = colors.grey, bg = colors.bg1 },
       StatusLineTerm = { fg = colors.white, bg = colors.bg2 },
       StatusLineTermNC = { fg = colors.grey, bg = colors.bg1 },
@@ -361,14 +361,6 @@ return {
     trouble = {
       TroubleNormal = { bg = colors.black3 },
       TroubleNormalNC = { bg = colors.black3 },
-    },
-
-    whichkey = {
-      WhichKey = { fg = colors.red },
-      WhichKeyDesc = { fg = colors.blue },
-      WhichKeyGroup = { fg = colors.orange },
-      WhichKeyNormal = { bg = colors.black3 },
-      WhichKeySeparator = { fg = colors.green },
     },
 
     lsp = {
