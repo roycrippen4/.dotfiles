@@ -5,7 +5,7 @@
 return {
   'mrcjkb/rustaceanvim', -- https://github.com/mrcjkb/rustaceanvim
   version = '^6',
-  lazy = false,
+  ft = 'rust',
   dependencies = {
     {
       'nvim-neotest/neotest',
@@ -18,6 +18,16 @@ return {
       keys = {
         { '<leader>ns', '<cmd> Neotest summary <cr>', { desc = 'Toggle Neotest Summary' } },
         { '<leader>no', '<cmd> Neotest output-panel <cr>', { desc = 'Toggle Neotest Output Panel' } },
+      },
+    },
+    {
+      'saecki/crates.nvim', -- https://github.com/saecki/crates.nvim
+      event = { 'BufRead Cargo.toml' },
+      ---@type crates.UserConfig
+      opts = {
+        lsp = { enabled = true, actions = true, completion = true },
+        popup = { border = 'rounded' },
+        completion = { crates = { enabled = true, min_chars = 3, max_results = 20 } },
       },
     },
   },
