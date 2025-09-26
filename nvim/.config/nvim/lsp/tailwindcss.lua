@@ -169,6 +169,3 @@ return {
     on_dir(vim.fs.dirname(vim.fs.find(root_files, { path = fname, upward = true })[1]))
   end,
 }
-
---     },
---   },
