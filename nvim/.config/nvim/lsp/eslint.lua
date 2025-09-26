@@ -1,20 +1,3 @@
-local lsp = vim.lsp
-
-local eslint_config_files = {
-  '.eslintrc',
-  '.eslintrc.js',
-  '.eslintrc.cjs',
-  '.eslintrc.yaml',
-  '.eslintrc.yml',
-  '.eslintrc.json',
-  'eslint.config.js',
-  'eslint.config.mjs',
-  'eslint.config.cjs',
-  'eslint.config.ts',
-  'eslint.config.mts',
-  'eslint.config.cts',
-}
-
 --- Appends `new_names` to `root_files` if `field` is found in any such file in any ancestor of `fname`.
 ---
 --- NOTE: this does a "breadth-first" search, so is broken for multi-project workspaces:
@@ -44,6 +27,23 @@ end
 local function insert_package_json(root_files, field, fname)
   return root_markers_with_field(root_files, { 'package.json', 'package.json5' }, field, fname)
 end
+
+local lsp = vim.lsp
+
+local eslint_config_files = {
+  '.eslintrc',
+  '.eslintrc.js',
+  '.eslintrc.cjs',
+  '.eslintrc.yaml',
+  '.eslintrc.yml',
+  '.eslintrc.json',
+  'eslint.config.js',
+  'eslint.config.mjs',
+  'eslint.config.cjs',
+  'eslint.config.ts',
+  'eslint.config.mts',
+  'eslint.config.cts',
+}
 
 ---@type vim.lsp.Config
 return {
@@ -96,6 +96,7 @@ return {
   -- Refer to https://github.com/Microsoft/vscode-eslint#settings-options for documentation.
   settings = {
     validate = 'on',
+    ---@diagnostic disable-next-line: assign-type-mismatch
     packageManager = nil,
     useESLintClass = false,
     experimental = {

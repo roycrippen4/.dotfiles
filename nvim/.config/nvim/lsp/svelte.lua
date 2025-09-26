@@ -1,8 +1,13 @@
 ---@type vim.lsp.Config
----@type vim.lsp.Config
 return {
   cmd = { 'svelteserver', '--stdio' },
   filetypes = { 'svelte' },
+  capabilities = {
+    workspace = {
+      ---@diagnostic disable-next-line: assign-type-mismatch
+      didChangeWatchedFiles = false,
+    },
+  },
   root_dir = function(bufnr, on_dir)
     local fname = vim.api.nvim_buf_get_name(bufnr)
     if vim.uv.fs_stat(fname) ~= nil then
