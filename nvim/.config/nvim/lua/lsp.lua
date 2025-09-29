@@ -32,6 +32,7 @@ vim.diagnostic.config({
 vim.api.nvim_create_user_command('LspOrganizeImports', function()
   vim.lsp.buf.code_action({
     apply = true,
+    ---@diagnostic disable-next-line: missing-fields
     context = { only = { 'source.organizeImports' } },
   })
 end, { desc = 'Organize imports via LSP' })
@@ -106,5 +107,40 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
     vim.lsp.enable(configs)
   end,
 })
+
+local function lsp_restart()
+  local bufnr = vim.api.nvim_get_current_buf()
+  local clients = vim.lsp.get_clients({ bufnr = bufnr })
+
+  if #clients == 0 then
+    vim.api.nvim_exec_autocmds('FileType', {
+      group = 'nvim.lsp.enable',
+      buffer = bufnr,
+    })
+    return
+  end
+
+  for _, c in ipairs(clients) do
+    local attached_buffers = vim.tbl_keys(c.attached_buffers) ---@type integer[]
+    local config = c.config
+    vim.lsp.stop_client(c.id, true)
+
+    vim.defer_fn(function()
+      local id = vim.lsp.start(config)
+      if id then
+        for _, b in ipairs(attached_buffers) do
+          vim.lsp.buf_attach_client(b, id)
+        end
+        local msg = string.format('Lsp `%s` has been restarted.', config.name)
+        vim.notify(msg)
+      else
+        local msg = string.format('Error restarting `%s`.', config.name)
+        vim.notify(msg, vim.log.levels.ERROR)
+      end
+    end, 600)
+  end
+end
+
+vim.api.nvim_create_user_command('LspRestart', lsp_restart, { desc = 'Restart all Lsp clients' })
 
 return M

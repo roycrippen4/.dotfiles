@@ -38,6 +38,7 @@ return {
       javascript = { 'prettierd', 'prettier', stop_after_first = true },
       javascriptreact = { 'prettierd', 'prettier', stop_after_first = true },
       json = { 'prettierd', 'prettier', stop_after_first = true },
+      jsonc = { 'prettierd', 'prettier', stop_after_first = true },
       lua = { 'stylua' },
       markdown = { 'prettierd', 'prettier', stop_after_first = true },
       ocaml = { 'ocamlformat' },
