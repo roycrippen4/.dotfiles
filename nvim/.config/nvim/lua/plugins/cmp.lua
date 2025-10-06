@@ -28,7 +28,7 @@ return {
       'L3MON4D3/LuaSnip',
       version = 'v2.*',
       build = 'make install_jsregexp',
-      -- dependencies = {  'rafamadriz/friendly-snippets' }
+      -- dependencies = { 'rafamadriz/friendly-snippets' },
       config = function()
         require('luasnip').filetype_extend('ts', { 'js' })
         require('luasnip.loaders.from_vscode').lazy_load({ paths = { vim.fn.stdpath('config') .. '/snippets' } })
@@ -81,8 +81,7 @@ return {
       },
     },
     sources = {
-      default = { 'lsp', 'snippets', 'path' },
-      -- default = { 'lazydev', 'lsp', 'snippets', 'path' },
+      default = { 'lazydev', 'lsp', 'snippets', 'path' },
       providers = {
         lsp = {
           score_offset = function(ctx, _)
@@ -90,7 +89,7 @@ return {
             return (client and client.name == 'zls') and -3 or 1
           end,
         },
-        -- lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', score_offset = 100 },
+        lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', score_offset = 100 },
         snippets = { score_offset = 0 },
         path = {
           opts = {
