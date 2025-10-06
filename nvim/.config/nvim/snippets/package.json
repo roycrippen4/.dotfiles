@@ -1,1 +1,85 @@
-{"name":"personal-snippets","contributes":{"snippets":[{"path":"./python.json","language":"python"},{"path":"./lua.json","language":"lua"},{"path":"./javascript.json","language":["javascript","typescript"]},{"path":"./rust.json","language":["rust"]},{"path":"./markdown.json","language":["markdown"]},{"path":"./zig.json","language":["zig"]},{"path":"./svelte.json","language":["svelte"]},{"path":"./ocaml.json","language":["ocaml"]},{"path":"./fish.json","language":["fish"]},{"path":"./text.json","language":["text"]},{"language":["sh"],"path":"./sh.json"}]}}
+{
+  "name": "personal-snippets",
+  "contributes": {
+    "snippets": [
+      {
+        "path": "./global.json",
+        "language": [
+          "plaintext",
+          "markdown",
+          "tex",
+          "html",
+          "global",
+          "all"
+        ]
+      },
+      {
+        "path": "./python.json",
+        "language": "python"
+      },
+      {
+        "path": "./gitcommit.json",
+        "language": "gitcommit"
+      },
+      {
+        "path": "./lua.json",
+        "language": "lua"
+      },
+      {
+        "path": "./javascript.json",
+        "language": [
+          "javascript",
+          "typescript"
+        ]
+      },
+      {
+        "path": "./rust.json",
+        "language": [
+          "rust"
+        ]
+      },
+      {
+        "path": "./markdown.json",
+        "language": [
+          "markdown"
+        ]
+      },
+      {
+        "path": "./zig.json",
+        "language": [
+          "zig"
+        ]
+      },
+      {
+        "path": "./svelte.json",
+        "language": [
+          "svelte"
+        ]
+      },
+      {
+        "path": "./ocaml.json",
+        "language": [
+          "ocaml"
+        ]
+      },
+      {
+        "path": "./fish.json",
+        "language": [
+          "fish"
+        ]
+      },
+      {
+        "path": "./text.json",
+        "language": [
+          "text"
+        ]
+      },
+      {
+        "language": [
+          "sh"
+        ],
+        "path": "./sh.json"
+      }
+    ]
+  }
+}

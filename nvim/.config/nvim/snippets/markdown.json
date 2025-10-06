@@ -1,1 +1,8 @@
-{"details":{"body":["<details>","    <summary>$0</summary>","</details>"],"prefix":"details"},"checkbox":{"body":"- [${1: }] ${2:text content}","prefix":"checkbox"}}
+{
+  "details": {
+    "body": ["<details>", "    <summary>$0</summary>", "</details>"],
+    "prefix": "details"
+  },
+  "checkbox": { "body": "- [${1: }] ${2:text content}", "prefix": "checkbox" }
+}
+
