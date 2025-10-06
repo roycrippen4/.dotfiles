@@ -31,7 +31,6 @@ return {
           'lua-language-server',
           'marksman',
           'pyright',
-          'rust-analyzer',
           'svelte-language-server',
           'tailwindcss-language-server',
           'taplo',
