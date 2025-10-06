@@ -19,6 +19,7 @@ if status is-interactive
     fish_add_path /usr/local/man
     fish_add_path $HOME/.cargo/bin
     fish_add_path /usr/local/go/bin
+    fish_add_path $HOME/.conda/conda_bin
 
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
