@@ -23,6 +23,7 @@ return {
     {
       'saecki/crates.nvim', -- https://github.com/saecki/crates.nvim
       event = { 'BufRead Cargo.toml' },
+      ---@module 'crates'
       ---@type crates.UserConfig
       opts = {
         lsp = { enabled = true, actions = true, completion = true },
@@ -35,7 +36,6 @@ return {
     ---@type rustaceanvim.Opts
     vim.g.rustaceanvim = {
       server = {
-        on_attach = require('lsp').on_attach,
         default_settings = {
           ['rust-analyzer'] = {
             completion = { fullFunctionSignatures = { enable = true } },
