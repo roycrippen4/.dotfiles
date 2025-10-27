@@ -31,7 +31,7 @@ function M.create_backdrop(ctx)
     once = true,
     buffer = ctx.buf,
     callback = function()
-      vim.api.nvim_set_hl(0, 'MsgArea', { bg = colors.black3 })
+      vim.api.nvim_set_hl(0, 'MsgArea', { bg = require('onedark.colors').black3 })
       if vim.api.nvim_win_is_valid(winnr) then
         vim.api.nvim_win_close(winnr, true)
       end

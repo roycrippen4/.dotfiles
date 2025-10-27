@@ -24,7 +24,7 @@ return {
       png = { icon = '󰉏', name = 'png' },
       py = { icon = '', name = 'py' },
       toml = { icon = '', name = 'toml', color = '#838383' },
-      ts = { icon = '', name = 'ts', color = require('onedark.colors').blue_light },
+      ts = { icon = '', name = 'ts', color = '#00C5FF' },
       vue = { icon = '', name = 'vue' },
       jsx = { icon = '', color = '#ccaa00', name = 'jsx' },
       ['bun.lockb'] = { icon = '󰌾', color = '#fbf0df', name = 'bun.lockb' },

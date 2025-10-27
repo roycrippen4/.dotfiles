@@ -52,4 +52,9 @@ return {
     keys = { { '<leader>nr', '<cmd> PackageInfoRunScript <cr>', desc = 'Run script under the cursor' } },
     opts = {},
   },
+  {
+    'roycrippen4/onedark', -- https://github.com/roycrippen4/onedark
+    priority = 1500,
+    opts = {},
+  },
 }
