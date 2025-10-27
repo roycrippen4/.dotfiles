@@ -18,7 +18,7 @@ return {
         require('utils').create_backdrop({ buf = term.bufnr })
       end
     end,
-    highlights = { NormalFloat = { bg = colors.black_darker } },
+    highlights = { NormalFloat = { bg = require('onedark.colors').black_darker } },
     float_opts = { border = 'none' },
   },
 }
