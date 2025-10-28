@@ -17,9 +17,8 @@ local function multigrep(opts, ctx)
 
   vim.list_extend(args, { '--color=never', '--no-heading', '--with-filename', '--line-number', '--column', '--smart-case' })
 
-  return require('snacks.picker.source.proc').proc({
-    opts,
-    {
+  return require('snacks.picker.source.proc').proc(
+    ctx:opts({
       cmd = 'rg',
       args = args,
       notify = false,
@@ -37,8 +36,9 @@ local function multigrep(opts, ctx)
           item.pos = { tonumber(line), tonumber(col) - 1 }
         end
       end,
-    },
-  }, ctx)
+    }),
+    ctx
+  )
 end
 
 ---@module "snacks"
