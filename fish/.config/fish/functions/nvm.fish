@@ -1,7 +1,7 @@
 function nvm --description "Node version manager"
     for silent in --silent -s
         if set --local index (contains --index -- $silent $argv)
-            set --erase argv[$index] && break
+            set -q --erase argv[$index] && break
         end
         set --erase silent
     end
@@ -16,7 +16,7 @@ function nvm --description "Node version manager"
 
     if ! set --query ver[1] && contains -- "$cmd" install use
         for file in .nvmrc .node-version
-            set file (_nvm_find_up $PWD $file) && read ver <$file && break
+            set file (_nvm_find_up $PWD $file) && read -q ver <$file && break
         end
 
         if ! set --query ver[1]
@@ -28,13 +28,14 @@ function nvm --description "Node version manager"
     set --local their_version $ver
 
     switch "$cmd"
-        case -v --version
+        case -v --version version
             echo "nvm, version 2.2.18"
-        case "" -h --help
+        case "" -h --help help
             echo "Usage: nvm install <version>    Download and activate the specified Node version"
             echo "       nvm install              Install the version specified in the nearest .nvmrc file"
             echo "       nvm use <version>        Activate the specified Node version in the current shell"
             echo "       nvm use                  Activate the version specified in the nearest .nvmrc file"
+            echo "       nvm set-default          Set the specified Node version as the system default"
             echo "       nvm list                 List installed Node versions"
             echo "       nvm list-remote          List available Node versions to install"
             echo "       nvm list-remote <regex>  List Node versions matching a given regex pattern"
@@ -178,6 +179,35 @@ function nvm --description "Node version manager"
             command rm -rf $nvm_data/$ver
         case current
             _nvm_current
+        case set-default
+            _nvm_index_update
+
+            string match --entire --regex -- (_nvm_version_match $ver) <$nvm_data/.index | read ver alias
+            if ! set --query ver[1]
+                echo "nvm: Invalid version number or alias: \"$their_version\"" >&2
+                return 1
+            end
+
+            if status is-interactive
+                # TODO: 
+                # Create an issue on the fish-lsp repo. 
+                # I've checked that the current session is interactive via the if-conditional above,
+                # The lint "Universal scope set in non-interactive session [2003]" should not apply.
+                #
+                # @fish-lsp-disable-next-line 2003 
+                set --universal nvm_default_version $ver
+                echo "nvm: set $ver as default node version"
+
+                if test $ver != "$nvm_current_version"
+                    set --query nvm_current_version && _nvm_version_deactivate $nvm_current_version
+                    _nvm_version_activate $ver
+
+                    set --query nvm_default_packages[1] && npm install --global $silent $nvm_default_packages
+                end
+            else
+                echo "nvm: Must use an interactive shell to set default node version."
+                return 1
+            end
         case ls list
             _nvm_list | _nvm_list_format (_nvm_current) $argv[2]
         case lsr {ls,list}-remote
