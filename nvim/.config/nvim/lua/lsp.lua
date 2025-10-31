@@ -62,7 +62,7 @@ function M.on_attach(client, bufnr)
   vim.keymap.set('n', '<leader>li', '<cmd> LspInfo <cr>', { desc = '[L]SP Server Info' })
   vim.keymap.set('n', '<leader>lR', '<cmd> LspRestart <cr>', { desc = '[L]SP Restart Servers' })
 
-  vim.lsp.document_color.enable(true, bufnr)
+  -- vim.lsp.document_color.enable(true, bufnr)
 end
 
 vim.api.nvim_create_autocmd('LspAttach', {
