@@ -1,7 +1,7 @@
 function nvm --description "Node version manager"
     for silent in --silent -s
         if set --local index (contains --index -- $silent $argv)
-            set -q --erase argv[$index] && break
+            set --erase argv[$index] && break
         end
         set --erase silent
     end
@@ -16,7 +16,7 @@ function nvm --description "Node version manager"
 
     if ! set --query ver[1] && contains -- "$cmd" install use
         for file in .nvmrc .node-version
-            set file (_nvm_find_up $PWD $file) && read -q ver <$file && break
+            set file (_nvm_find_up $PWD $file) && read ver <$file && break
         end
 
         if ! set --query ver[1]
@@ -43,8 +43,8 @@ function nvm --description "Node version manager"
             echo "       nvm uninstall <version>  Uninstall the specified Node version"
             echo "Options:"
             echo "       -s, --silent             Suppress standard output"
-            echo "       -v, --version            Print the version of nvm"
-            echo "       -h, --help               Print this help message"
+            echo "       -v, --version, version   Print the version of nvm"
+            echo "       -h, --help, help         Print this help message"
             echo "Variables:"
             echo "       nvm_arch                 Override architecture, e.g. x64-musl"
             echo "       nvm_mirror               Use a mirror for downloading Node binaries"
