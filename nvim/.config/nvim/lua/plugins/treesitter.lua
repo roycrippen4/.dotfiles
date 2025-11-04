@@ -2,8 +2,7 @@
 return {
   'nvim-treesitter/nvim-treesitter',
   build = ':TSUpdate',
-  event = 'VeryLazy',
-  lazy = vim.fn.argc(-1) == 0,
+  lazy = false,
   init = function(plugin)
     require('lazy.core.loader').add_to_rtp(plugin)
     require('nvim-treesitter.query_predicates')
@@ -23,9 +22,7 @@ return {
       'gitcommit',
       'gitignore',
       'go',
-      'graphql',
       'html',
-      'http',
       'hyprlang',
       'java',
       'javascript',
@@ -41,12 +38,9 @@ return {
       'ocaml_interface',
       'python',
       'query',
-      'rasi',
       'regex',
-      'ron',
       'rust',
       'svelte',
-      'sxhkdrc',
       'toml',
       'tsx',
       'typescript',
