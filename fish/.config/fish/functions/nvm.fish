@@ -1,6 +1,7 @@
 function nvm --description "Node version manager"
     for silent in --silent -s
         if set --local index (contains --index -- $silent $argv)
+            # @fish-lsp-disable-next-line 3002
             set --erase argv[$index] && break
         end
         set --erase silent
@@ -16,6 +17,7 @@ function nvm --description "Node version manager"
 
     if ! set --query ver[1] && contains -- "$cmd" install use
         for file in .nvmrc .node-version
+            # @fish-lsp-disable-next-line 3002
             set file (_nvm_find_up $PWD $file) && read ver <$file && break
         end
 
