@@ -15,6 +15,21 @@ if os.getenv('SSH_TTY') ~= nil or os.getenv('SSH_CONNECTION') ~= nil then
   }
 end
 
+if os.getenv('WSL_DISTRO_NAME') then
+  vim.g.clipboard = {
+    name = 'WslClipboard',
+    copy = {
+      ['+'] = 'clip.exe',
+      ['*'] = 'clip.exe',
+    },
+    paste = {
+      ['+'] = 'ripboard',
+      ['*'] = 'ripboard',
+    },
+    cache_enabled = 0,
+  }
+end
+
 g.loaded_python3_provider = 0
 g.loaded_ruby_provider = 0
 g.loaded_perl_provider = 0
