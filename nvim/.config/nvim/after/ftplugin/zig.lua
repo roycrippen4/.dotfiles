@@ -56,8 +56,12 @@ local function run_build_test()
   vim.cmd.TermExec(vim.g.zig_test_cmd)
 end
 
-local function run_project()
+local function release_run_project()
   vim.cmd.TermExec('direction=horizontal size=16 cmd="zig build run --release=fast"')
+end
+
+local function debug_run_project()
+  vim.cmd.TermExec('direction=horizontal size=16 cmd="zig build run"')
 end
 
 vim.keymap.set('n', '<leader>b', build, { desc = '[B]uild project', buffer = true })
@@ -65,4 +69,5 @@ vim.keymap.set('n', '<leader>lr', run_file, { desc = 'Run current file', buffer 
 vim.keymap.set('n', '<leader>lT', run_build_test, { desc = 'Run build test', buffer = true })
 vim.keymap.set('n', '<leader>lt', run_last_test, { desc = 'Run last test', buffer = true })
 vim.keymap.set('n', 'K', conditional_hover, { desc = "Conditionally runs test if it's under the cursor", buffer = true })
-vim.keymap.set('n', 'R', run_project, { desc = 'Run current project', buffer = true })
+vim.keymap.set('n', 'R', release_run_project, { desc = 'Run current project', buffer = true })
+vim.keymap.set('n', '<leader>R', debug_run_project, { desc = 'Run current project', buffer = true })
