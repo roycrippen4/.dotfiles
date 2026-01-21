@@ -10,7 +10,7 @@ end
 
 if status is-interactive
     set fish_greeting
-    set -gx EDITOR $HOME/.dotfiles/home/.bin/vim-cli $argv
+    set -gx EDITOR $HOME/.dotfiles/home/.bin/vim-cli
     set -gx ZVM_SET_CU
     fish_add_path $HOME/.bun/bin
     fish_add_path $HOME/.local/share/bob/nvim-bin
@@ -46,6 +46,14 @@ if status is-interactive
     end
 
     set -g fish_key_bindings fish_hybrid_key_bindings
+end
+
+function vim
+    command $HOME/.bin/vim-cli $argv
+end
+
+function nvim
+    command $HOME/.bin/vim-cli $argv
 end
 
 function ls
