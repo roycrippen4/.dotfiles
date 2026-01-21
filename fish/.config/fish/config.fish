@@ -1,7 +1,3 @@
-set fish_greeting
-set -gx EDITOR vim
-set -gx ZVM_SET_CU
-
 if test -f $HOME/.config/fish/env.work.fish
     # @fish-lsp-disable-next-line 1004
     source $HOME/.config/fish/env.work.fish
@@ -13,6 +9,9 @@ if test -f $HOME/.config/fish/env.wsl.fish
 end
 
 if status is-interactive
+    set fish_greeting
+    set -gx EDITOR $HOME/.dotfiles/home/.bin/vim-cli $argv
+    set -gx ZVM_SET_CU
     fish_add_path $HOME/.bun/bin
     fish_add_path $HOME/.local/share/bob/nvim-bin
     fish_add_path $HOME/.local/bin
@@ -67,18 +66,6 @@ end
 
 function path
     echo $PATH\n
-end
-
-function nvim
-    $HOME/.dotfiles/home/.bin/vim-cli $argv
-end
-
-function vim
-    $HOME/.dotfiles/home/.bin/vim-cli $argv
-end
-
-function bp
-    command nvim $HOME/.config/fish/config.fish
 end
 
 function x
