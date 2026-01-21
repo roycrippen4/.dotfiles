@@ -1,6 +1,3 @@
-local opt = vim.opt
-local g = vim.g
-
 if os.getenv('SSH_TTY') ~= nil or os.getenv('SSH_CONNECTION') ~= nil then
   vim.g.clipboard = {
     name = 'OSC 52',
@@ -30,56 +27,50 @@ if os.getenv('WSL_DISTRO_NAME') then
   }
 end
 
-g.loaded_python3_provider = 0
-g.loaded_ruby_provider = 0
-g.loaded_perl_provider = 0
-g.mapleader = ' '
-g.maplocalleader = ' '
-g.have_nerd_font = true
-g.skip_ts_context_commentstring_module = true
-g.markdown_fenced_languages = { 'ts=typescript' }
-g.loaded_netrw = 1
-g.loaded_netrwPlugin = 1
+vim.g.have_nerd_font = true
+vim.g.loaded_netrw = 1
+vim.g.loaded_netrwPlugin = 1
+vim.g.loaded_perl_provider = 0
+vim.g.loaded_python3_provider = 0
+vim.g.loaded_ruby_provider = 0
+vim.g.mapleader = ' '
+vim.g.maplocalleader = ' '
+vim.g.markdown_fenced_languages = { 'ts=typescript' }
+vim.g.skip_ts_context_commentstring_module = true
 
------------------------------------------------------------
--- General
------------------------------------------------------------
--- stylua: ignore start
-opt.scrolloff     = 14         -- Show x lines above and below the cursor
-opt.signcolumn    = 'yes'      -- Show signs in the signcolumn
-opt.ignorecase    = true       -- Ignores case in search
-opt.smartcase     = true       -- Override the 'ignorecase' option if the search pattern contains upper case characters
-opt.splitbelow    = true       -- Split below instead of above
-opt.splitright    = true       -- Split right instead of left
-opt.termguicolors = true       -- Enable true color support
-opt.undofile      = true       -- Save undo history to file
-opt.updatetime    = 250        -- interval for writing swap file to disk, also used by gitsigns
-opt.cmdheight     = 1          -- Height of the command bar
-opt.formatoptions = 'j'        -- Don't use vim for formatting
-opt.laststatus    = 3          -- global statusline
-opt.showmode      = false      -- Don't display mode
-opt.title         = true       -- Show the title in the window titlebar
-opt.wrap          = false      -- Display long lines as just one line
-opt.whichwrap:append('<>[]hl') -- go to previous/next line with h,l,left arrow and right arrow
-opt.clipboard = 'unnamedplus'  -- Use system clipboard
-opt.cursorline = true          -- Enable cursorline
-opt.cursorlineopt = "number"   -- Only highlight the line number in the statuscolumn
-opt.hlsearch = true            -- Enable highlight search
-opt.swapfile = false           -- Disable swap file
-opt.smoothscroll = true        -- Enable smooth scrolling
-
-vim.o.winborder = "rounded"
-
------------------------------------------------------------
--- Indent settings
------------------------------------------------------------
-opt.expandtab = true
-opt.shiftwidth = 2
-opt.tabstop = 2
--- opt.smartindent = true
--- opt.autoindent = true
-
-opt.fillchars = {
+vim.opt.clipboard = 'unnamedplus' -- Use system clipboard
+vim.opt.cmdheight = 1 -- Height of the command bar
+vim.opt.cursorline = true -- Enable cursorline
+vim.opt.cursorlineopt = 'number' -- Only highlight the line number in the statuscolumn
+vim.opt.expandtab = true
+vim.opt.formatoptions = 'j' -- Don't use vim for formatting
+vim.opt.hlsearch = true -- Enable highlight search
+vim.opt.ignorecase = true -- Ignores case in search
+vim.opt.laststatus = 3 -- global statusline
+vim.opt.scrolloff = 14 -- Show x lines above and below the cursor
+vim.opt.shiftwidth = 2
+vim.opt.showmode = false -- Don't display mode
+vim.opt.signcolumn = 'yes' -- Show signs in the signcolumn
+vim.opt.smartcase = true -- Override the 'ignorecase' option if the search pattern contains upper case characters
+vim.opt.smoothscroll = true -- Enable smooth scrolling
+vim.opt.splitbelow = true -- Split below instead of above
+vim.opt.splitright = true -- Split right instead of left
+vim.opt.swapfile = false -- Disable swap file
+vim.opt.tabstop = 2
+vim.opt.termguicolors = true -- Enable true color support
+vim.opt.title = true -- Show the title in the window titlebar
+vim.opt.undofile = true -- Save undo history to file
+vim.opt.updatetime = 250 -- interval for writing swap file to disk, also used by gitsigns
+vim.opt.whichwrap:append('<>[]hl') -- go to previous/next line with h,l,left arrow and right arrow
+vim.opt.wrap = false -- Display long lines as just one line
+-- vim.opt.smartindent = true
+-- vim.opt.autoindent = true
+vim.opt.formatexpr = "v:lua.require'conform'.formatexpr()"
+vim.opt.number = true
+vim.opt.numberwidth = 2
+vim.opt.relativenumber = true
+vim.opt.ruler = false
+vim.opt.fillchars = {
   vert = ' ',
   vertright = ' ',
   vertleft = ' ',
@@ -95,16 +86,7 @@ opt.fillchars = {
   stl = ' ',
 }
 
------------------------------------------------------------
--- Numbers
------------------------------------------------------------
-opt.number = true
-opt.relativenumber = true
-opt.numberwidth = 2
-opt.ruler = false
--- opt.shortmess:append('qWcCsIS')
-opt.formatexpr = "v:lua.require'conform'.formatexpr()"
-
+vim.o.winborder = 'rounded'
 vim.o.guicursor = 'n-v-c:block-Cursor/lCursor-blinkon1,i:ver25-Cursor/lCursor-blinkon1,r-cr:hor20-Cursor/lCursor-blinkon1'
 vim.o.mouse = 'a' -- Enables mouse support
 vim.o.mousescroll = 'ver:3,hor:0' -- Dont horizontal scroll with mouse

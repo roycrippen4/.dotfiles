@@ -1,73 +1,13 @@
 ---@type LazyPluginSpec
 return {
   'nvim-treesitter/nvim-treesitter',
+  branch = 'main',
   build = ':TSUpdate',
   lazy = false,
-  init = function(plugin)
-    require('lazy.core.loader').add_to_rtp(plugin)
-    require('nvim-treesitter.query_predicates')
-  end,
-  cmd = { 'TSUpdateSync', 'TSUpdate', 'TSInstall' },
-  opts = {
-    ensure_installed = {
-      'bash',
-      'c',
-      'comment',
-      'cpp',
-      'css',
-      'dockerfile',
-      'git_config',
-      'git_rebase',
-      'gitattributes',
-      'gitcommit',
-      'gitignore',
-      'go',
-      'html',
-      'hyprlang',
-      'java',
-      'javascript',
-      'jsdoc',
-      'json',
-      'jsonc',
-      'lua',
-      'luap',
-      'luadoc',
-      'markdown',
-      'markdown_inline',
-      'ocaml',
-      'ocaml_interface',
-      'python',
-      'query',
-      'regex',
-      'rust',
-      'svelte',
-      'toml',
-      'tsx',
-      'typescript',
-      'vim',
-      'vimdoc',
-      'xml',
-      'yaml',
-      'zig',
-    },
-    indent = {
-      enable = true,
-      disable = { 'ocaml', "'ocaml_interface'", 'fish' },
-    },
-    highlight = {
-      enable = true,
-      use_languagetree = true,
-      additional_vim_regex_highlighting = false,
-      disable = function(_, bufnr)
-        return vim.api.nvim_buf_line_count(bufnr) > 50000
-      end,
-    },
-    auto_install = true,
-  },
-  config = function(_, opts)
+  config = function()
     vim.filetype.add({
       extension = {
-        json = 'jsonc',
+        -- json = 'jsonc',
         cts = 'typescript',
         es6 = 'javascript',
         gif = 'image',
@@ -92,14 +32,14 @@ return {
         ['sxhkdrc'] = 'sxhkdrc',
         ['.zshrc'] = 'sh',
         ['.zshenv'] = 'sh',
-        ['bun.lock'] = 'jsonc',
+        -- ['bun.lock'] = 'jsonc',
         ['Caddyfile'] = 'caddy',
       },
       pattern = {
         ['d?o?c?k?e?r?%-?compose%.ya?ml'] = 'yaml.docker-compose',
         ['.*config/git/config'] = 'gitconfig',
         ['todo%.txt'] = 'todotxt',
-        ['.*/waybar/config'] = 'jsonc',
+        -- ['.*/waybar/config'] = 'jsonc',
         ['.*/kitty/.+%.conf'] = 'kitty',
         ['.*/hypr/.+%.conf'] = 'hyprlang',
         ['%.env%.[%w_.-]+'] = 'sh',
@@ -107,7 +47,70 @@ return {
     })
 
     vim.treesitter.language.register('bash', 'kitty')
+    local filetypes = {
+      'bash',
+      'c',
+      'comment',
+      'cpp',
+      'css',
+      'dockerfile',
+      'fish',
+      'git_config',
+      'git_rebase',
+      'gitattributes',
+      'gitcommit',
+      'gitignore',
+      'go',
+      'html',
+      'hyprlang',
+      'java',
+      'javascript',
+      'jsdoc',
+      'json',
+      'lua',
+      'luadoc',
+      'luap',
+      'markdown',
+      'markdown_inline',
+      'ocaml',
+      'ocaml_interface',
+      'python',
+      'query',
+      'regex',
+      'rust',
+      'svelte',
+      'toml',
+      'tsx',
+      'typescript',
+      'vim',
+      'vimdoc',
+      'xml',
+      'yaml',
+      'zig',
+    }
 
-    require('nvim-treesitter.configs').setup(opts)
+    local ts = require('nvim-treesitter')
+    ts.install(filetypes)
+
+    vim.api.nvim_create_autocmd('FileType', {
+      group = vim.api.nvim_create_augroup('treesitter.setup', {}),
+      pattern = filetypes,
+      callback = function(args)
+        local buf = args.buf
+        local ft = args.match
+
+        local lang = vim.treesitter.language.get_lang(ft) or ft
+        if not vim.treesitter.language.add(lang) then
+          return
+        end
+
+        if vim.api.nvim_buf_line_count(buf) < 50000 then
+          vim.treesitter.start()
+        else
+          vim.notify('Big file detected. Disabling treesitter highlighting')
+          vim.treesitter.stop(buf)
+        end
+      end,
+    })
   end,
 }
