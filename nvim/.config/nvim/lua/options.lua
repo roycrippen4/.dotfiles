@@ -16,8 +16,8 @@ if os.getenv('WSL_DISTRO_NAME') then
   vim.g.clipboard = {
     name = 'WslClipboard',
     copy = {
-      ['+'] = 'clip.exe',
-      ['*'] = 'clip.exe',
+      ['+'] = 'ripboard --copy',
+      ['*'] = 'ripboard --copy',
     },
     paste = {
       ['+'] = 'ripboard',
