@@ -93,22 +93,16 @@ return {
     ts.install(filetypes)
 
     vim.api.nvim_create_autocmd('FileType', {
-      group = vim.api.nvim_create_augroup('treesitter.setup', {}),
-      pattern = filetypes,
+      group = vim.api.nvim_create_augroup('treesitter_folding', { clear = true }),
+      desc = 'Enable Treesitter folding',
       callback = function(args)
-        local buf = args.buf
-        local ft = args.match
-
-        local lang = vim.treesitter.language.get_lang(ft) or ft
-        if not vim.treesitter.language.add(lang) then
-          return
-        end
-
-        if vim.api.nvim_buf_line_count(buf) < 50000 then
-          vim.treesitter.start()
-        else
-          vim.notify('Big file detected. Disabling treesitter highlighting')
-          vim.treesitter.stop(buf)
+        local bufnr = args.buf
+        if vim.bo[bufnr].filetype ~= 'bigfile' and pcall(vim.treesitter.start, bufnr) then
+          vim.api.nvim_buf_call(bufnr, function()
+            vim.wo[0][0].foldmethod = 'expr'
+            vim.wo[0][0].foldexpr = 'v:lua.vim.treesitter.foldexpr()'
+            vim.cmd.normal('zx')
+          end)
         end
       end,
     })

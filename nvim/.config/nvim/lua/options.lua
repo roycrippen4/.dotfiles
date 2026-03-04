@@ -79,12 +79,17 @@ vim.opt.fillchars = {
   horizdown = '/',
   horiz = ' ',
   eob = ' ',
-  fold = ' ',
+  stl = ' ',
+  fold = '-',
   foldopen = '',
   foldclose = '',
   foldsep = ' ',
-  stl = ' ',
+  foldinner = ' ',
 }
+
+vim.o.foldlevelstart = 99
+vim.o.foldtext = ''
+vim.o.foldcolumn = '1'
 
 vim.o.winborder = 'rounded'
 vim.o.guicursor = 'n-v-c:block-Cursor/lCursor-blinkon1,i:ver25-Cursor/lCursor-blinkon1,r-cr:hor20-Cursor/lCursor-blinkon1'
