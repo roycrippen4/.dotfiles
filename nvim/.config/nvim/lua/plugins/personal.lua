@@ -32,7 +32,7 @@ return {
     ---@module "beeline"
     ---@type Beeline.Opts
     opts = {
-      statusline = { enable = false },
+      statusline = { enable = true },
     },
   },
   {
