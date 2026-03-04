@@ -68,12 +68,6 @@ return {
     cmdline = { enabled = false },
     fuzzy = {
       sorts = {
-        function(a, b)
-          if (a.client_name == nil or b.client_name == nil) or (a.client_name == b.client_name) then
-            return
-          end
-          return b.client_name == 'zls'
-        end,
         'exact',
         'score',
         'sort_text',
@@ -82,12 +76,6 @@ return {
     sources = {
       default = { 'lazydev', 'lsp', 'snippets', 'path' },
       providers = {
-        lsp = {
-          score_offset = function(ctx, _)
-            local client = vim.lsp.get_client_by_id(ctx.id)
-            return (client and client.name == 'zls') and -3 or 1
-          end,
-        },
         lazydev = { name = 'LazyDev', module = 'lazydev.integrations.blink', score_offset = 100 },
         snippets = { score_offset = 0 },
         path = {
