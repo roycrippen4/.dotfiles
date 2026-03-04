@@ -79,7 +79,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
   end,
 })
 
-vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, { callback = vim.lsp.codelens.refresh })
+vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
+  callback = function(args)
+    vim.lsp.codelens.enable(true, { bufnr = args.buf })
+  end,
+})
 
 -- Update mappings when registering dynamic capabilities.
 local register_capability = vim.lsp.handlers[vim.lsp.protocol.Methods.client_registerCapability]
