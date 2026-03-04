@@ -3,6 +3,7 @@
 return {
   'folke/flash.nvim', -- https//github.com/folke/flash.nvim
   event = 'VeryLazy',
+  enabled = false,
   ---@type Flash.Config
   opts = {
     prompt = {
