@@ -84,7 +84,7 @@ vim.opt.fillchars = {
   foldopen = '',
   foldclose = '',
   foldsep = ' ',
-  foldinner = ' ',
+  -- foldinner = ' ',
 }
 
 vim.o.foldlevelstart = 99

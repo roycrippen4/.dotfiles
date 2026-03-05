@@ -81,7 +81,11 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
   callback = function(args)
-    vim.lsp.codelens.enable(true, { bufnr = args.buf })
+    if vim.version().minor == 12 then
+      vim.lsp.codelens.enable(true, { bufnr = args.buf })
+    else
+      vim.lsp.codelens.refresh({ bufnr = args.buf })
+    end
   end,
 })
 
@@ -114,8 +118,6 @@ vim.api.nvim_create_autocmd({ 'BufReadPre', 'BufNewFile' }, {
   end,
 })
 
-vim.api.nvim_create_user_command('LspRestart', 'lsp restart', {
-  desc = 'Restart all Lsp clients',
-})
+vim.api.nvim_create_user_command('LspRestart', 'lsp restart', { desc = 'Restart all Lsp clients' })
 
 return M
