@@ -40,6 +40,7 @@ return {
       json = { 'prettierd', 'prettier', stop_after_first = true },
       jsonc = { 'prettierd', 'prettier', stop_after_first = true },
       lua = { 'stylua' },
+      go = { 'goimports', 'gofumpt' },
       markdown = { 'prettierd', 'prettier', stop_after_first = true },
       ocaml = { 'ocamlformat' },
       ocamlinterface = { 'ocamlformat' },

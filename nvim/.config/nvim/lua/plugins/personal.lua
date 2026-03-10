@@ -32,7 +32,7 @@ return {
     ---@module "beeline"
     ---@type Beeline.Opts
     opts = {
-      statusline = { enable = false },
+      statusline = { enable = true },
     },
   },
   {
@@ -50,11 +50,6 @@ return {
     'roycrippen4/package-info.nvim', -- https://github.com/roycrippen4/package-info.nvim
     event = { 'BufRead package.json' },
     keys = { { '<leader>nr', '<cmd> PackageInfoRunScript <cr>', desc = 'Run script under the cursor' } },
-    opts = {},
-  },
-  {
-    'roycrippen4/onedark', -- https://github.com/roycrippen4/onedark
-    priority = 1500,
     opts = {},
   },
 }

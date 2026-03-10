@@ -25,12 +25,13 @@ return {
     relculright = true,
   },
   config = function(_, opts)
+    local builtin = require('statuscol.builtin')
     opts.segments = {
-      { text = { ' ' } },
+      { text = { builtin.foldfunc }, click = 'v:lua.ScFa' },
       { sign = { namespace = { 'diagnostic' }, maxwidth = 1, auto = false } },
       { sign = { name = { 'Dap' }, maxwidth = 1, auto = true } },
       { sign = { name = { 'todo' }, maxwidth = 1, auto = true } },
-      { text = { require('statuscol.builtin').lnumfunc, auto = false } },
+      { text = { builtin.lnumfunc, auto = false } },
       { text = { ' ' } },
       { sign = { namespace = { 'gitsigns' }, maxwidth = 1, auto = false, wrap = false } },
     }

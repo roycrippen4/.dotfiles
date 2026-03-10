@@ -54,6 +54,7 @@ return {
     { 'gr', function() Snacks.picker.lsp_references() end, desc = 'Goto References' },
     { "<leader>ut", function() Snacks.picker.undo() end, desc = "View Undo History" },
     { '<leader>z', function() Snacks.zen() end },
+    { "<leader>fd", function() Snacks.picker.diagnostics() end, desc = "Find Diagnostics" },
     { "<leader>ff", function() Snacks.picker.files() end, desc = "Find Files" },
     { "<leader>fa", function() Snacks.picker.autocmds() end, desc = "Find Autocmds" },
     { "<leader>fb", function() Snacks.picker.buffers() end, desc = "Find Buffers" },

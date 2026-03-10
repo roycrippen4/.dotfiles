@@ -1,7 +1,3 @@
-set fish_greeting
-set -gx EDITOR vim
-set -gx ZVM_SET_CU
-
 if test -f $HOME/.config/fish/env.work.fish
     # @fish-lsp-disable-next-line 1004
     source $HOME/.config/fish/env.work.fish
@@ -13,6 +9,9 @@ if test -f $HOME/.config/fish/env.wsl.fish
 end
 
 if status is-interactive
+    set fish_greeting
+    set -gx EDITOR $HOME/.dotfiles/home/.bin/vim-cli
+    set -gx ZVM_SET_CU
     fish_add_path $HOME/.bun/bin
     fish_add_path $HOME/.local/share/bob/nvim-bin
     fish_add_path $HOME/.local/bin
@@ -20,6 +19,7 @@ if status is-interactive
     fish_add_path $HOME/.cargo/bin
     fish_add_path /usr/local/go/bin
     fish_add_path $HOME/.conda/conda_bin
+    fish_add_path $HOME/go/bin
 
     eval "$(/home/linuxbrew/.linuxbrew/bin/brew shellenv)"
 
@@ -48,6 +48,14 @@ if status is-interactive
     set -g fish_key_bindings fish_hybrid_key_bindings
 end
 
+function vim
+    command $HOME/.bin/vim-cli $argv
+end
+
+function nvim
+    command $HOME/.bin/vim-cli $argv
+end
+
 function ls
     command lsd $argv
 end
@@ -66,18 +74,6 @@ end
 
 function path
     echo $PATH\n
-end
-
-function nvim
-    $HOME/.dotfiles/home/.bin/vim-cli $argv
-end
-
-function vim
-    $HOME/.dotfiles/home/.bin/vim-cli $argv
-end
-
-function bp
-    command nvim $HOME/.config/fish/config.fish
 end
 
 function x

@@ -1,16 +1,3 @@
-require('nvim-surround').buffer_setup({
-  surrounds = {
-    F = {
-      add = function()
-        return {
-          { ('function %s() '):format(require('nvim-surround.config').get_input('Enter the function name: ')) },
-          { ' end' },
-        }
-      end,
-    },
-  },
-})
-
 local function autopair_angles()
   local pos = vim.api.nvim_win_get_cursor(0)
   local str = vim.treesitter.get_node({ pos = { pos[1] - 1, pos[2] } }):type()

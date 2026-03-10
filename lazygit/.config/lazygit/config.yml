@@ -1,3 +1,4 @@
+# yaml-language-server: $schema=https://raw.githubusercontent.com/jesseduffield/lazygit/master/schema/config.json
 gui:
   theme:
     activeBorderColor:
@@ -8,30 +9,24 @@ gui:
     optionsTextColor:
       - blue
     selectedLineBgColor:
-      - black
-    selectedRangeBgColor:
-      - default
+      - "#3B3F4C"
     cherryPickedCommitBgColor:
       - cyan
     cherryPickedCommitFgColor:
       - blue
     unstagedChangesColor:
       - red
-    defaultFgColor:
-      - default
-  showFileTree: true # for rendering changes files in a tree format
-  showListFooter: false # for seeing the '5 of 20' message in list panels
+  showFileTree: true
+  showListFooter: false
   showRandomTip: false
-  showBottomLine: false # for hiding the bottom information line (unless it has important information to tell you)
+  showBottomLine: false
   showCommandLog: true
   showIcons: true
   nerdFontsVersion: "3"
 git:
-  paging:
-    colorArg: always
-    pager: delta --dark --paging=never
+  pagers: [{colorArg: always, pager: delta --dark --paging=never}]
 disableStartupPopups: true
-notARepository: 'skip' # one of: 'prompt' | 'create' | 'skip'
+notARepository: create
 os:
   edit: ~/.local/share/bob/nvim-bin/nvim {{filename}}
   editAtLine: ~/.local/share/bob/nvim-bin/nvim {{filename}}
