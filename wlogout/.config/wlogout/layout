@@ -12,7 +12,7 @@
 }
 {
     "label" : "logout",
-    "action" : "$HOME/.dotfiles/waybar/.config/waybar/scripts/exit.sh",
+    "action" : "sleep 1; hyprctl dispatch exit",
     "text" : "Logout (e)",
     "keybind" : "e"
 }
