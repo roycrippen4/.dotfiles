@@ -81,9 +81,10 @@ vim.api.nvim_create_autocmd('LspAttach', {
 
 vim.api.nvim_create_autocmd({ 'BufEnter', 'CursorHold', 'InsertLeave' }, {
   callback = function(args)
-    if vim.version().minor == 12 then
+    if vim.version().minor == 13 then
       vim.lsp.codelens.enable(true, { bufnr = args.buf })
     else
+      ---@diagnostic disable-next-line
       vim.lsp.codelens.refresh({ bufnr = args.buf })
     end
   end,

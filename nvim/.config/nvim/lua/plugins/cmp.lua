@@ -48,7 +48,16 @@ return {
     snippets = { preset = 'luasnip' },
     signature = {
       enabled = true,
-      window = { min_width = 20, max_width = 80, max_height = 20 },
+      trigger = {
+        show_on_keyword = true,
+      },
+      window = {
+        direction_priority = { 'n' },
+        min_width = 20,
+        max_width = 80,
+        max_height = 20,
+        show_documentation = false,
+      },
     },
     completion = {
       trigger = { show_on_blocked_trigger_characters = { ' ', '\n', '\t', '>' } },
